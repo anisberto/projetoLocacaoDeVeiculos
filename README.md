@@ -7,7 +7,7 @@ Sistema de gerenciamento de locação de veículos
 </h3>
 --------------------------------------------------------------------
 FACULDADE SENAI FATESG
-----------------------------------
+------------------------------------------------
 ALUNOS:
   ├─ Anisberto dos Reis do Nascimento
   ├─ Edivan Carvalho
