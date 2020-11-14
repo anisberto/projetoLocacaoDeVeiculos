@@ -2,13 +2,12 @@
     < 📜 > <br>
 PROJETO INTEGRADOR
 </h1>
---------------------------------------------------------------------
-<h4 align="center">
+<h3 align="center">
 Sistema de gerenciamento de locação de veículos
-</h4>
+</h3>
 --------------------------------------------------------------------
 FACULDADE SENAI FATESG
---------------------------------------------------------------------
+----------------------------------
 ALUNOS:
   ├─ Anisberto dos Reis do Nascimento
   ├─ Edivan Carvalho
