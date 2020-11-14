@@ -2,10 +2,13 @@
     < 📜 > <br>
 PROJETO INTEGRADOR
 </h1>
-<h3 align="center">
+    <h2 align="center">
+    FACULDADE SENAI FATESG
+    </h2>
+<h4 align="center">
 Sistema de gerenciamento de locação de veículos
-</h3>
-FACULDADE SENAI FATESG
+</h4>
+
 <p align="center">
   <a href="https://github.com/anisberto">
     <img alt="Anisberto Reis" src="https://img.shields.io/badge/Anisberto Reis-P.I-red">
