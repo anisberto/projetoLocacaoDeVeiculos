@@ -1,6 +1,11 @@
-# PROJETO INTEGRADOR
+<h1 align="center">
+    < 📜 > <br>
+PROJETO INTEGRADOR
+</h1>
 --------------------------------------------------------------------
+<h4 align="center">
 Sistema de gerenciamento de locação de veículos
+</h4>
 --------------------------------------------------------------------
 FACULDADE SENAI FATESG
 --------------------------------------------------------------------
