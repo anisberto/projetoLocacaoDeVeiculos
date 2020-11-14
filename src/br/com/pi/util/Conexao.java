@@ -13,7 +13,6 @@ public class Conexao {
 
     private static Conexao conexao = null;
     private static Connection conect = null;
-    private boolean isConnected = true;
 
     private Conexao() {
     }
@@ -32,8 +31,7 @@ public class Conexao {
                 String urlDb = props.getProperty("dburl");
                 conect = DriverManager.getConnection(urlDb, props);
             } catch (Exception errorConectCreate) {
-                isConnected = false;
-                throw new Exception("Erro ao conectar no banco de dados! 22655" + errorConectCreate.getMessage());
+                throw new Exception("Erro ao conectar no banco de dados! " + errorConectCreate.getMessage());
             }
         }
         return conect;
