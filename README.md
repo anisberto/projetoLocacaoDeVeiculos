@@ -1,9 +1,8 @@
-# ProjetoLocaçãoDeVeículos
+# PROJETO INTEGRADOR
 --------------------------------------------------------------------
 Sistema de gerenciamento de locação de veículos
 --------------------------------------------------------------------
 FACULDADE SENAI FATESG
-PROJETO INTEGRADOR
 --------------------------------------------------------------------
 ALUNOS:
   ├─ Anisberto dos Reis do Nascimento
