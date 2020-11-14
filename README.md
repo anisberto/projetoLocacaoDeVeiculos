@@ -11,16 +11,16 @@ Sistema de gerenciamento de locação de veículos
 
 <p align="center">
   <a href="https://github.com/anisberto">
-    <img alt="Anisberto Reis" src="https://img.shields.io/badge/Anisberto Reis-P.I-red">
+    <img alt="Anisberto Reis" src="https://img.shields.io/badge/Anisberto Reis-P.I-blue">
   </a>
     <a href="https://github.com/Watlas">
-    <img alt="Watlas Rick" src="https://img.shields.io/badge/Watlas Rick-P.I-red">
+    <img alt="Watlas Rick" src="https://img.shields.io/badge/Watlas Rick-P.I-green">
   </a>
     <a href="https://github.com/edivancarvalho">
     <img alt="Edivan Carvalho" src="https://img.shields.io/badge/Edivan Carvalho-P.I-red">
   </a>
     <a href="https://github.com/AnthonnyMax">
-    <img alt="Anthonny Max" src="https://img.shields.io/badge/Anthonny Max-P.I-red">
+    <img alt="Anthonny Max" src="https://img.shields.io/badge/Anthonny Max-P.I-yellow">
   </a>
 </p>
 <br>
