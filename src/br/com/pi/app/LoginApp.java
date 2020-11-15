@@ -5,6 +5,10 @@
  */
 package br.com.pi.app;
 
+import br.com.pi.util.Conexao;
+
+import java.sql.Connection;
+
 /**
  *
  * @author Anisb
@@ -15,7 +19,13 @@ public class LoginApp extends javax.swing.JFrame {
      * Creates new form LoginApp
      */
     public LoginApp() {
+
         initComponents();
+        try {
+            Connection con = Conexao.getInstance().getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

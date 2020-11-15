@@ -1,0 +1,16 @@
+Classes 
+1- Administrador
+2- Mantem_adm_control
+3- Reserva
+4- Veiculo
+5- Marca
+6- Modelo
+7- Locacao
+8- Mantem_veiculo_Locacao
+9- Pessoa (PessoaPF & PessoaPJ) herança ou classes invididuais
+10- Mantem_aluga
+11- Endereco
+12- Motorista
+13- Multa
+14- CNH
+15- Mantem_motorista_multa_CNH;

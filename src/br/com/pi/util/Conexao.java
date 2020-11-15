@@ -68,7 +68,7 @@ public class Conexao {
     }
 
     private static Properties loadProperties() throws IOException {
-        try (FileInputStream fs = new FileInputStream("./src/br/com/torrent/util/db.properties")) {
+        try (FileInputStream fs = new FileInputStream(".\\src\\br\\com\\pi\\util\\db.properties")) {
             Properties fileProperties = new Properties();
             fileProperties.load(fs);
             return fileProperties;
