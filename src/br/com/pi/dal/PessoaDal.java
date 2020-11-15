@@ -27,7 +27,7 @@ public class PessoaDal implements ICRUD_GENERIC {
         pessoa = (Pessoa) objeto;
         String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)" +
                 "VALUES (?,?,?)";
-
+        
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoa.getPessoa_nome());
         ps.setObject(2,pessoa.getPessoa_telefone());
