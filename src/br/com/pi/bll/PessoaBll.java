@@ -9,6 +9,8 @@ import br.com.pi.dal.PessoaDal;
 import br.com.pi.model.Pessoa;
 import br.com.pi.util.ICRUD_GENERIC;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +59,7 @@ public class PessoaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public List getAll() throws Exception {
+    public Iterator getAll() throws Exception {
         try {
             return dal.getAll();
         } catch (Exception e) {
@@ -124,8 +126,9 @@ public class PessoaBll implements ICRUD_GENERIC {
             throw new Exception("Informe a Senha do usuario");
         }
 
-        List<Pessoa> listaDeUsuario = dal.getAll();
-        for (Pessoa aux : listaDeUsuario) {
+        Iterator<Pessoa> listaDeUsuario = dal.getAll();
+        for (Iterator<Pessoa> it = listaDeUsuario; it.hasNext(); ) {
+            Pessoa aux = it.next();
 
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_email().toUpperCase().
                     equalsIgnoreCase(aux.getPessoa_email().toUpperCase()))){

@@ -7,6 +7,7 @@ import br.com.pi.util.ICRUD_GENERIC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Iterator;
 import java.util.List;
 
 public class PessoaPFDal implements ICRUD_GENERIC {
@@ -42,7 +43,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public List getAll() throws Exception {
+    public Iterator getAll() throws Exception {
         return null;
     }
 

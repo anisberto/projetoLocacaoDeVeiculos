@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PessoaDal implements ICRUD_GENERIC {
@@ -27,7 +28,7 @@ public class PessoaDal implements ICRUD_GENERIC {
         pessoa = (Pessoa) objeto;
         String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)" +
                 "VALUES (?,?,?)";
-        
+
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoa.getPessoa_nome());
         ps.setObject(2,pessoa.getPessoa_telefone());
@@ -59,7 +60,7 @@ public class PessoaDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public List getAll() throws Exception {
+    public Iterator getAll() throws Exception {
         String sql = "SELECT * FROM pessoas";
         List<Pessoa> pessoaList = new ArrayList<>();
 
@@ -75,7 +76,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
             pessoaList.add(pessoa);
         }
-        return pessoaList;
+        return pessoaList.iterator();
     }
 
     @Override
