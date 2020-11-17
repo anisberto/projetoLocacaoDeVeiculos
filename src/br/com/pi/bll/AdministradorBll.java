@@ -24,26 +24,47 @@ public class AdministradorBll implements ICRUD_GENERIC {
 
     @Override
     public void delete(int n) throws Exception {
+        try {
+            dal.delete(n);
+        }catch (Exception e){
+            throw e;
+        }
 
     }
 
     @Override
     public void update(Object objeto) throws Exception {
-
+        try {
+            dal.update(objeto);
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     @Override
     public Iterator getAll() throws Exception {
-        return null;
+        try {
+            return dal.getAll();
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     @Override
     public Object getById(int n) throws Exception {
-        return null;
+        try {
+            return dal.getById(n);
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     @Override
     public Object getByNome(String nome) throws Exception {
-        return null;
+        try {
+            return dal.getByNome(nome);
+        }catch (Exception e){
+            throw e;
+        }
     }
 }
