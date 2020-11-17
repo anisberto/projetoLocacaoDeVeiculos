@@ -186,7 +186,7 @@ ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
  
  
 ALTER TABLE mantem_multa_cnh ADD CONSTRAINT FK_mantem_multa_cnh_1
-    FOREIGN KEY (mantem_multa_habilitacao_idem)
+    FOREIGN KEY (mantem_multa_cnh_idem)
     REFERENCES cnh (cnh_idem)
     ON DELETE RESTRICT;
  
@@ -200,12 +200,12 @@ ALTER TABLE mantem_multa_cnh ADD CONSTRAINT FK_mantem_multa_cnh_3
     REFERENCES multas (multa_idem)
     ON DELETE NO ACTION;
  
-ALTER TABLE contem ADD CONSTRAINT FK_contem_1
+ALTER TABLE mantem_veiculo_locacao ADD CONSTRAINT FK_contem_1
     FOREIGN KEY (mantem_loca_Veiculos_idem)
     REFERENCES veiculos (veiculo_idem)
     ON DELETE RESTRICT;
  
-ALTER TABLE contem ADD CONSTRAINT FK_contem_2
+ALTER TABLE mantem_veiculo_locacao ADD CONSTRAINT FK_contem_2
     FOREIGN KEY (mantem_loca_locacao_idem)
     REFERENCES locacao (loca_idem)
     ON DELETE RESTRICT;
