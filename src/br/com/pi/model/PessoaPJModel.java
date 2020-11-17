@@ -1,6 +1,6 @@
 package br.com.pi.model;
 
-public class PessoaModelPJ extends PessoaModel {
+public class PessoaPJModel extends PessoaModel {
     private String pessoa_pj_cnpj;
     private String pessoa_pj_nomeFantasia;
     private String pessoa_pj_razaoSocial;
@@ -40,7 +40,7 @@ public class PessoaModelPJ extends PessoaModel {
 
     @Override
     public String toString() {
-        return "PessoaModelPJ{" +
+        return "PessoaPJModel{" +
                 "pessoa_pj_cnpj='" + pessoa_pj_cnpj + '\'' +
                 ", pessoa_pj_nomeFantasia='" + pessoa_pj_nomeFantasia + '\'' +
                 ", pessoa_pj_razaoSocial='" + pessoa_pj_razaoSocial + '\'' +

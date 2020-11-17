@@ -1,6 +1,6 @@
 package br.com.pi.dal;
 
-import br.com.pi.model.PessoaModelPF;
+import br.com.pi.model.PessoaPFModel;
 import br.com.pi.util.Conexao;
 import br.com.pi.util.ICRUD_GENERIC;
 
@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class PessoaPFDal implements ICRUD_GENERIC {
 
     private Connection conexao;
-    PessoaModelPF pessoa = new PessoaModelPF();
+    PessoaPFModel pessoa = new PessoaPFModel();
 
     public PessoaPFDal() throws Exception {
         conexao = Conexao.getInstance().getConnection();
@@ -19,7 +19,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
     @Override
     public void add(Object objeto) throws Exception {
-        pessoa =(PessoaModelPF) objeto;
+        pessoa =(PessoaPFModel) objeto;
         String sql = "INSERT INT pessoas_pf(pessoa_pf_cpf, pessoa_pf_rg)" +
                 "VALUES (?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
