@@ -1,13 +1,12 @@
 package br.com.pi.util;
 
 import br.com.pi.bll.PessoaBll;
-import br.com.pi.model.Pessoa;
-import br.com.pi.model.PessoaPF;
+import br.com.pi.model.PessoaModel;
 
 public class main {
     public static void main(String[] args) {
      try {
-         Pessoa p = new Pessoa();
+         PessoaModel p = new PessoaModel();
 
          PessoaBll a = new PessoaBll();
 

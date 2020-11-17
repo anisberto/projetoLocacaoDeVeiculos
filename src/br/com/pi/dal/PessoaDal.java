@@ -1,7 +1,7 @@
 package br.com.pi.dal;
 
 
-import br.com.pi.model.Pessoa;
+import br.com.pi.model.PessoaModel;
 import br.com.pi.util.Conexao;
 import br.com.pi.util.ICRUD_GENERIC;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class PessoaDal implements ICRUD_GENERIC {
 
     private Connection conexao;
-    Pessoa pessoa = new Pessoa();
+    PessoaModel pessoaModel = new PessoaModel();
 
     public PessoaDal() throws Exception {
         this.conexao = Conexao.getInstance().getConnection();
@@ -25,14 +25,14 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public void add(Object objeto) throws Exception {
-        pessoa = (Pessoa) objeto;
+        pessoaModel = (PessoaModel) objeto;
         String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)" +
                 "VALUES (?,?,?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, pessoa.getPessoa_nome());
-        ps.setObject(2,pessoa.getPessoa_telefone());
-        ps.setObject(3,pessoa.getPessoa_email());
+        ps.setObject(1, pessoaModel.getPessoa_nome());
+        ps.setObject(2, pessoaModel.getPessoa_telefone());
+        ps.setObject(3, pessoaModel.getPessoa_email());
         ps.executeUpdate();
 
     }
@@ -51,10 +51,10 @@ public class PessoaDal implements ICRUD_GENERIC {
         String sql ="UPDATE pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?" +
                 " WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, pessoa.getPessoa_nome());
-        ps.setObject(2,pessoa.getPessoa_telefone());
-        ps.setObject(3,pessoa.getPessoa_email());
-        ps.setObject(4,pessoa.getPessoa_idem());
+        ps.setObject(1, pessoaModel.getPessoa_nome());
+        ps.setObject(2, pessoaModel.getPessoa_telefone());
+        ps.setObject(3, pessoaModel.getPessoa_email());
+        ps.setObject(4, pessoaModel.getPessoa_idem());
         ps.executeUpdate();
 
     }
@@ -62,21 +62,21 @@ public class PessoaDal implements ICRUD_GENERIC {
     @Override
     public Iterator getAll() throws Exception {
         String sql = "SELECT * FROM pessoas";
-        List<Pessoa> pessoaList = new ArrayList<>();
+        List<PessoaModel> pessoaModelList = new ArrayList<>();
 
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){
-            pessoa = new Pessoa();
-            pessoa.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoa.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoa.setPessoa_email(rs.getString("pessoa_email"));
-            pessoa.setPessoa_telefone(rs.getString("pessoa_telefone"));
+            pessoaModel = new PessoaModel();
+            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
+            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
+            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
+            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
 
-            pessoaList.add(pessoa);
+            pessoaModelList.add(pessoaModel);
         }
-        return pessoaList.iterator();
+        return pessoaModelList.iterator();
     }
 
     @Override
@@ -88,14 +88,14 @@ public class PessoaDal implements ICRUD_GENERIC {
         ResultSet rs = preparedStatement.executeQuery();
 
         if(rs.next()){
-            pessoa = new Pessoa();
-            pessoa.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoa.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoa.setPessoa_email(rs.getString("pessoa_email"));
-            pessoa.setPessoa_telefone(rs.getString("pessoa_telefone"));
+            pessoaModel = new PessoaModel();
+            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
+            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
+            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
+            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
         }
 
-        return pessoa;
+        return pessoaModel;
     }
 
     @Override
@@ -107,13 +107,13 @@ public class PessoaDal implements ICRUD_GENERIC {
         ResultSet rs = preparedStatement.executeQuery();
 
         if(rs.next()){
-            pessoa = new Pessoa();
-            pessoa.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoa.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoa.setPessoa_email(rs.getString("pessoa_email"));
-            pessoa.setPessoa_telefone(rs.getString("pessoa_telefone"));
+            pessoaModel = new PessoaModel();
+            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
+            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
+            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
+            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
         }
 
-        return pessoa;
+        return pessoaModel;
     }
 }

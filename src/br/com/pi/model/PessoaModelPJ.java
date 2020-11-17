@@ -1,10 +1,10 @@
 package br.com.pi.model;
 
-public class PessoaPJ extends Pessoa{
+public class PessoaModelPJ extends PessoaModel {
     private String pessoa_pj_cnpj;
     private String pessoa_pj_nomeFantasia;
     private String pessoa_pj_razaoSocial;
-    private Pessoa pessoa;
+    private PessoaModel pessoaModel;
 
     public String getPessoa_pj_cnpj() {
         return pessoa_pj_cnpj;
@@ -30,21 +30,21 @@ public class PessoaPJ extends Pessoa{
         this.pessoa_pj_razaoSocial = pessoa_pj_razaoSocial;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public PessoaModel getPessoa() {
+        return pessoaModel;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setPessoa(PessoaModel pessoaModel) {
+        this.pessoaModel = pessoaModel;
     }
 
     @Override
     public String toString() {
-        return "PessoaPJ{" +
+        return "PessoaModelPJ{" +
                 "pessoa_pj_cnpj='" + pessoa_pj_cnpj + '\'' +
                 ", pessoa_pj_nomeFantasia='" + pessoa_pj_nomeFantasia + '\'' +
                 ", pessoa_pj_razaoSocial='" + pessoa_pj_razaoSocial + '\'' +
-                ", pessoa=" + pessoa +
+                ", pessoaModel=" + pessoaModel +
                 '}';
     }
 }

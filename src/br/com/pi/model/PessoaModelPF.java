@@ -1,10 +1,10 @@
 package br.com.pi.model;
 
-public class PessoaPF extends Pessoa {
+public class PessoaModelPF extends PessoaModel {
     private int pessoa_pf_idem;
     private String pessoa_pf_cpf;
     private String pessoa_pf_rg;
-    private Pessoa pessoa;
+    private PessoaModel pessoaModel;
 
     public int getPessoa_pf_idem() {
         return pessoa_pf_idem;
@@ -30,21 +30,21 @@ public class PessoaPF extends Pessoa {
         this.pessoa_pf_rg = pessoa_pf_rg;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public PessoaModel getPessoa() {
+        return pessoaModel;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setPessoa(PessoaModel pessoaModel) {
+        this.pessoaModel = pessoaModel;
     }
 
     @Override
     public String toString() {
-        return "PessoaPF{" +
+        return "PessoaModelPF{" +
                 "pessoa_pf_idem=" + pessoa_pf_idem +
                 ", pessoa_pf_cpf='" + pessoa_pf_cpf + '\'' +
                 ", pessoa_pf_rg='" + pessoa_pf_rg + '\'' +
-                ", pessoa=" + pessoa +
+                ", pessoaModel=" + pessoaModel +
                 '}';
     }
 }

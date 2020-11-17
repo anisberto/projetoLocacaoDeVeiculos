@@ -6,12 +6,10 @@
 package br.com.pi.bll;
 
 import br.com.pi.dal.PessoaDal;
-import br.com.pi.model.Pessoa;
+import br.com.pi.model.PessoaModel;
 import br.com.pi.util.ICRUD_GENERIC;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +27,7 @@ public class PessoaBll implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         try {
-            validaPessoa((Pessoa) objeto);
+            validaPessoa((PessoaModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
 
@@ -50,7 +48,7 @@ public class PessoaBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
-            validaPessoa((Pessoa) objeto);
+            validaPessoa((PessoaModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
 
@@ -100,7 +98,7 @@ public class PessoaBll implements ICRUD_GENERIC {
         return isEmailIdValid;
     }
 
-    public void validaPessoa(Pessoa objeto)throws Exception{
+    public void validaPessoa(PessoaModel objeto)throws Exception{
         String nome = objeto.getPessoa_nome().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -126,9 +124,9 @@ public class PessoaBll implements ICRUD_GENERIC {
             throw new Exception("Informe a Senha do usuario");
         }
 
-        Iterator<Pessoa> listaDeUsuario = dal.getAll();
-        for (Iterator<Pessoa> it = listaDeUsuario; it.hasNext(); ) {
-            Pessoa aux = it.next();
+        Iterator<PessoaModel> listaDeUsuario = dal.getAll();
+        for (Iterator<PessoaModel> it = listaDeUsuario; it.hasNext(); ) {
+            PessoaModel aux = it.next();
 
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_email().toUpperCase().
                     equalsIgnoreCase(aux.getPessoa_email().toUpperCase()))){

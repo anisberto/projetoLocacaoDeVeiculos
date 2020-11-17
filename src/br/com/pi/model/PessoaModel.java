@@ -1,6 +1,6 @@
 package br.com.pi.model;
 
-public class Pessoa {
+public class PessoaModel {
     private int pessoa_idem;
     private String pessoa_nome;
     private String pessoa_telefone;
@@ -40,7 +40,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" +
+        return "PessoaModel{" +
                 "pessoa_idem=" + pessoa_idem +
                 ", pessoa_nome='" + pessoa_nome + '\'' +
                 ", pessoa_telefone='" + pessoa_telefone + '\'' +
