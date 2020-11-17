@@ -106,13 +106,12 @@ CREATE TABLE reserva (
 
 CREATE TABLE mantem_multa_cnh (
 	mantem_motorista_idem SERIAL PRIMARY KEY, 
-    mantem_multa_habilitacao_idem INTEGER,
     mantem_multa_motorista_idem INTEGER,
     mantem_multa_multas_idem INTEGER,
     mantem_multa_cnh_idem INTEGER
 );
 
-CREATE TABLE contem (
+CREATE TABLE mantem_veiculo_locacao (
 	mantem_loca_idem SERIAL PRIMARY KEY,
     mantem_loca_Veiculos_idem INTEGER,
     mantem_loca_locacao_idem INTEGER
