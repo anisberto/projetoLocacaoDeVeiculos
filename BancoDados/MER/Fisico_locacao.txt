@@ -24,6 +24,7 @@ CREATE TABLE pessoas_pj (
 
 CREATE TABLE endereco (
     endere_idem SERIAL PRIMARY KEY,
+    endere_uf VARCHAR,
     endere_cep VARCHAR,
     endere_cidade VARCHAR,
     endere_bairro VARCHAR,
@@ -88,7 +89,9 @@ CREATE TABLE locacao (
     loca_valorCalcao NUMERIC,
     loca_valorDoSeguro NUMERIC,
     loca_multaAtraso NUMERIC,
+    loca_tanqueCheio INTEGER,
     loca_motorista_idem INTEGER
+    
 );
 
 CREATE TABLE multas (
