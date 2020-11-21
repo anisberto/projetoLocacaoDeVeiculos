@@ -8,6 +8,7 @@ public class LocacaoModel {
     private int locacao_codigoDelocacao;
     private Date locacao_dataRetirada;
     private Date locacao_dataDevolucao;
+    private Date locacao_dataDeAlugamento; //data que cara foi na loja
     private float locacao_quilometragemInicial;
     private float locacao_quilometragemFinal;
     private float locacao_valorLocacao;
@@ -15,6 +16,10 @@ public class LocacaoModel {
     private float locacao_valorSeguro;
     private float locacao_multaAtraso;
     private MotoristaModel locacao_motorista;
+    private VeiculoModel locacao_veiculo;
+    private PessoaPFModel locacao_pessoaPF;
+    private PessoaPJModel locacao_pessoaPJ;
+    private AdministradorModel locacao_administrador;
 
     public int getLocacao_idem() {
         return locacao_idem;
@@ -46,6 +51,14 @@ public class LocacaoModel {
 
     public void setLocacao_dataDevolucao(Date locacao_dataDevolucao) {
         this.locacao_dataDevolucao = locacao_dataDevolucao;
+    }
+
+    public Date getLocacao_dataDeAlugamento() {
+        return locacao_dataDeAlugamento;
+    }
+
+    public void setLocacao_dataDeAlugamento(Date locacao_dataDeAlugamento) {
+        this.locacao_dataDeAlugamento = locacao_dataDeAlugamento;
     }
 
     public float getLocacao_quilometragemInicial() {
@@ -102,5 +115,37 @@ public class LocacaoModel {
 
     public void setLocacao_motorista(MotoristaModel locacao_motorista) {
         this.locacao_motorista = locacao_motorista;
+    }
+
+    public VeiculoModel getLocacao_veiculo() {
+        return locacao_veiculo;
+    }
+
+    public void setLocacao_veiculo(VeiculoModel locacao_veiculo) {
+        this.locacao_veiculo = locacao_veiculo;
+    }
+
+    public PessoaPFModel getLocacao_pessoaPF() {
+        return locacao_pessoaPF;
+    }
+
+    public void setLocacao_pessoaPF(PessoaPFModel locacao_pessoaPF) {
+        this.locacao_pessoaPF = locacao_pessoaPF;
+    }
+
+    public PessoaPJModel getLocacao_pessoaPJ() {
+        return locacao_pessoaPJ;
+    }
+
+    public void setLocacao_pessoaPJ(PessoaPJModel locacao_pessoaPJ) {
+        this.locacao_pessoaPJ = locacao_pessoaPJ;
+    }
+
+    public AdministradorModel getLocacao_administrador() {
+        return locacao_administrador;
+    }
+
+    public void setLocacao_administrador(AdministradorModel locacao_administrador) {
+        this.locacao_administrador = locacao_administrador;
     }
 }

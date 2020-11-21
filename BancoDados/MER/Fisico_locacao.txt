@@ -88,7 +88,8 @@ CREATE TABLE Locacao (
     locacao_tanqueCheio INTEGER,
     locacao_veiculos_idem INTEGER,
     locacao_pessoas_idem INTEGER,
-    locacao_motorista_idem INTEGER
+    locacao_motorista_idem INTEGER,
+    locacao_administrador_idem INTEGER	
 );
 
 CREATE TABLE multas (
@@ -161,6 +162,11 @@ ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_3
 ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_4
     FOREIGN KEY (locacao_motorista_idem)
     REFERENCES motorista (motorista_idem)
+    ON DELETE CASCADE;
+
+ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_5
+    FOREIGN KEY (locacao_administrador_idem)
+    REFERENCES motorista (adm_idem)
     ON DELETE CASCADE;
  
 ALTER TABLE multas ADD CONSTRAINT FK_multas_2

@@ -1,5 +1,7 @@
 package br.com.pi.model;
 
+import java.util.Date;
+
 public class MotoristaModel {
 
     private int motorista_idem;
@@ -8,6 +10,43 @@ public class MotoristaModel {
     private String motorista_rg;
     private String motorista_telefone;
     private String motorista_email;
+    //CNH
+    private String cnh_categoria;
+    private Date cnh_dataValidade;
+    private String cnh_imagem;
+    private int cnh_numeroRegistro;
+
+    public String getCnh_categoria() {
+        return cnh_categoria;
+    }
+
+    public void setCnh_categoria(String cnh_categoria) {
+        this.cnh_categoria = cnh_categoria;
+    }
+
+    public Date getCnh_dataValidade() {
+        return cnh_dataValidade;
+    }
+
+    public void setCnh_dataValidade(Date cnh_dataValidade) {
+        this.cnh_dataValidade = cnh_dataValidade;
+    }
+
+    public String getCnh_imagem() {
+        return cnh_imagem;
+    }
+
+    public void setCnh_imagem(String cnh_imagem) {
+        this.cnh_imagem = cnh_imagem;
+    }
+
+    public int getCnh_numeroRegistro() {
+        return cnh_numeroRegistro;
+    }
+
+    public void setCnh_numeroRegistro(int cnh_numeroRegistro) {
+        this.cnh_numeroRegistro = cnh_numeroRegistro;
+    }
 
     public int getMotorista_idem() {
         return motorista_idem;
