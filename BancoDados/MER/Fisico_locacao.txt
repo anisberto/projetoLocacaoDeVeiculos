@@ -112,13 +112,6 @@ CREATE TABLE reserva (
     reserva_pessoas_idem INTEGER
 );
 
-CREATE TABLE control_adm (
-    control_adm_idem SERIAL PRIMARY KEY,
-    controL_adm__administrador_idem INTEGER,
-    controL_adm__pessoas_idem INTEGER,
-    controL_adm__veiculos_idem INTEGER,
-    controL_adm__locacao_idem INTEGER
-);
  
 ALTER TABLE pessoas_pf ADD CONSTRAINT FK_pessoas_pf_2
     FOREIGN KEY (pf_pessoas_idem)
@@ -166,7 +159,7 @@ ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_4
 
 ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_5
     FOREIGN KEY (locacao_administrador_idem)
-    REFERENCES motorista (adm_idem)
+    REFERENCES administrador (adm_idem)
     ON DELETE CASCADE;
  
 ALTER TABLE multas ADD CONSTRAINT FK_multas_2
@@ -184,22 +177,3 @@ ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
     REFERENCES veiculos (veiculo_idem)
     ON DELETE SET NULL;
  
-ALTER TABLE control_adm ADD CONSTRAINT FK_control_adm_1
-    FOREIGN KEY (controL_adm__administrador_idem)
-    REFERENCES administrador (adm_idem)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE control_adm ADD CONSTRAINT FK_control_adm_2
-    FOREIGN KEY (controL_adm__pessoas_idem)
-    REFERENCES Pessoas (pessoa_idem)
-    ON DELETE NO ACTION;
- 
-ALTER TABLE control_adm ADD CONSTRAINT FK_control_adm_3
-    FOREIGN KEY (controL_adm__veiculos_idem)
-    REFERENCES veiculos (veiculo_idem)
-    ON DELETE NO ACTION;
- 
-ALTER TABLE control_adm ADD CONSTRAINT FK_control_adm_4
-    FOREIGN KEY (controL_adm__locacao_idem)
-    REFERENCES Locacao (locacao_idem)
-    ON DELETE NO ACTION;
