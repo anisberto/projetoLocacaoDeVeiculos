@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 
 public class LoginView extends javax.swing.JFrame {
 
-    public LoginView() throws Exception {
-        super("Sistema Torrent Filmes");
+    public LoginView() {
+
         initComponents();
     }
 
