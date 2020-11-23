@@ -112,7 +112,6 @@ CREATE TABLE reserva (
     reserva_pessoas_idem INTEGER
 );
 
-
  
 ALTER TABLE pessoas_pf ADD CONSTRAINT FK_pessoas_pf_2
     FOREIGN KEY (pf_pessoas_idem)
@@ -160,7 +159,7 @@ ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_4
 
 ALTER TABLE Locacao ADD CONSTRAINT FK_Locacao_5
     FOREIGN KEY (locacao_administrador_idem)
-    REFERENCES motorista (adm_idem)
+    REFERENCES administrador (adm_idem)
     ON DELETE CASCADE;
  
 ALTER TABLE multas ADD CONSTRAINT FK_multas_2
