@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.pi.bll;
 
 import br.com.pi.dal.ModeloDal;
@@ -12,10 +8,6 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Anthonny Max
- */
 public class ModeloBll implements ICRUD_GENERIC {
 
     private ModeloDal dal;
