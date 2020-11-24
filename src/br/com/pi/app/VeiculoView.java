@@ -455,7 +455,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane3.addTab("Hitorico de Veiculos", jPanel11);
+        jTabbedPane3.addTab("Controle de Veiculos", jPanel11);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
