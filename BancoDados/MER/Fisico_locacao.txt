@@ -1,7 +1,7 @@
 /* logico_locacao: */
 
 CREATE TABLE Pessoas (
-    pessoa_idem SERIAl PRIMARY KEY,
+    pessoa_idem SERIAL PRIMARY KEY,
     pessoa_nome VARCHAR,
     pessoa_telefone VARCHAR,
     pessoa_email VARCHAR
@@ -23,9 +23,9 @@ CREATE TABLE pessoas_pj (
 );
 
 CREATE TABLE Endereco (
-    endereco_idem INTEGER PRIMARY KEY,
+    endereco_idem SERIAL PRIMARY KEY,
     endereco_cep VARCHAR,
-    endereco_cidade TIMESTAMP,
+    endereco_cidade VARCHAR,
     endereco_bairro VARCHAR,
     endereco_rua VARCHAR,
     endereco_numero INTEGER,
@@ -35,7 +35,7 @@ CREATE TABLE Endereco (
 );
 
 CREATE TABLE modelo (
-    modelo_idem INTEGER PRIMARY KEY,
+    modelo_idem SERIAL PRIMARY KEY,
     modelo_descricao VARCHAR,
     modelo_marca_idem INTEGER
 );
@@ -56,7 +56,7 @@ CREATE TABLE veiculos (
 );
 
 CREATE TABLE marca (
-    marca_idem INTEGER PRIMARY KEY,
+    marca_idem SERIAL PRIMARY KEY,
     marca_descricao VARCHAR
 );
 
