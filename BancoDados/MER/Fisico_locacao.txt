@@ -25,7 +25,7 @@ CREATE TABLE pessoas_pj (
 CREATE TABLE Endereco (
     endereco_idem INTEGER PRIMARY KEY,
     endereco_cep VARCHAR,
-    endereco_cidade TIMESTAMP,
+    endereco_cidade VARCHAR,
     endereco_bairro VARCHAR,
     endereco_rua VARCHAR,
     endereco_numero INTEGER,
