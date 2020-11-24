@@ -7,7 +7,7 @@ package br.com.pi.dal;
 
 import br.com.pi.model.ModeloModel;
 import br.com.pi.util.Conexao;
-import br.com.pi.util.ICRUD_GENERIC;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -7,7 +7,7 @@ package br.com.pi.bll;
 
 import br.com.pi.dal.PessoaDal;
 import br.com.pi.model.PessoaModel;
-import br.com.pi.util.ICRUD_GENERIC;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 
 import java.util.Iterator;
 import java.util.regex.Matcher;

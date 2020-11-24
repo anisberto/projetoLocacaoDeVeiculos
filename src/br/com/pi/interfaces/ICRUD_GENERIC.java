@@ -1,7 +1,6 @@
-package br.com.pi.util;
+package br.com.pi.interfaces;
 
 import java.util.Iterator;
-import java.util.List;
 
 public interface ICRUD_GENERIC<T> {
 
@@ -13,9 +12,9 @@ public interface ICRUD_GENERIC<T> {
 
     public Iterator getAll()throws Exception;
 
-    public Object getById(int n)throws Exception;
+    public T getById(int n)throws Exception;
 
-    public Object getByNome(String nome)throws Exception;
+    public T getByNome(String nome)throws Exception;
 
 
 }
