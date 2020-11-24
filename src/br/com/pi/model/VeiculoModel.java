@@ -9,11 +9,12 @@ public class VeiculoModel {
     private float veiculo_precoCompra;
     private float veiculo_precoVenda;
     private int veiculo_numeroDePassageiro;
-    private Date veiculo_anoFabrica;
-    private Date veiculo_anoModelo;
+    private String veiculo_anoFabrica;
+    private String veiculo_anoModelo;
     private float veiculo_quilometragem;
     private String veiculo_tipoCombustivel;
     private String veiculo_tipoVeiculo;
+    private String veiculo_situacaoVeiculo;
     private ModeloModel veiculo_modelo;
 
     public int getVeiculo_idem() {
@@ -56,19 +57,19 @@ public class VeiculoModel {
         this.veiculo_numeroDePassageiro = veiculo_numeroDePassageiro;
     }
 
-    public Date getVeiculo_anoFabrica() {
+    public String getVeiculo_anoFabrica() {
         return veiculo_anoFabrica;
     }
 
-    public void setVeiculo_anoFabrica(Date veiculo_anoFabrica) {
+    public void setVeiculo_anoFabrica(String veiculo_anoFabrica) {
         this.veiculo_anoFabrica = veiculo_anoFabrica;
     }
 
-    public Date getVeiculo_anoModelo() {
+    public String getVeiculo_anoModelo() {
         return veiculo_anoModelo;
     }
 
-    public void setVeiculo_anoModelo(Date veiculo_anoModelo) {
+    public void setVeiculo_anoModelo(String veiculo_anoModelo) {
         this.veiculo_anoModelo = veiculo_anoModelo;
     }
 
@@ -103,4 +104,13 @@ public class VeiculoModel {
     public void setVeiculo_modelo(ModeloModel veiculo_modelo) {
         this.veiculo_modelo = veiculo_modelo;
     }
+
+    public String getVeiculo_situacaoVeiculo() {
+        return veiculo_situacaoVeiculo;
+    }
+
+    public void setVeiculo_situacaoVeiculo(String veiculo_situacaoVeiculo) {
+        this.veiculo_situacaoVeiculo = veiculo_situacaoVeiculo;
+    }
+    
 }

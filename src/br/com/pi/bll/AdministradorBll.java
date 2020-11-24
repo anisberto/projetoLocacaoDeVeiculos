@@ -1,7 +1,7 @@
 package br.com.pi.bll;
 
 import br.com.pi.dal.AdministradorDal;
-import br.com.pi.util.ICRUD_GENERIC;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 
 import java.util.Iterator;
 

@@ -1,13 +1,14 @@
 package br.com.pi.app;
 
 public class VeiculoView extends javax.swing.JFrame {
+
     
     boolean incluir = true;
-    
+
     public VeiculoView() {
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -508,7 +509,13 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
+            
             enableButtFields(false);
+            if (incluir) {
+                
+            } else {
+
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -661,5 +668,5 @@ public class VeiculoView extends javax.swing.JFrame {
         txtAnoModelo.setText("");
         txtRenavam.setText("");
         txtQuilometragem.setText("");
-     }
+    }
 }
