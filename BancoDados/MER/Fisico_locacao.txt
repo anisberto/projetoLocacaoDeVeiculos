@@ -64,7 +64,7 @@ CREATE TABLE motorista (
     motorista_idem SERIAL PRIMARY KEY,
     motorista_categoria VARCHAR,
     motorista_dataDeValidade DATE,
-    motorista_imagem VARCHAR,
+    motorista_imagem bytea,
     motorista_numeroDoRegistro INTEGER,
     motorista_cpf VARCHAR,
     motorista_nome VARCHAR,

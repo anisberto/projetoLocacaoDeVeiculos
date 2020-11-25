@@ -1,7 +1,5 @@
 package br.com.pi.model;
 
-import java.util.Date;
-
 public class VeiculoModel {
 
     private int veiculo_idem;

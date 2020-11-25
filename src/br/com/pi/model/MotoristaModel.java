@@ -10,10 +10,9 @@ public class MotoristaModel {
     private String motorista_rg;
     private String motorista_telefone;
     private String motorista_email;
-    //CNH
     private String cnh_categoria;
     private Date cnh_dataValidade;
-    private String cnh_imagem;
+    private byte[] cnh_imagem;
     private int cnh_numeroRegistro;
 
     public String getCnh_categoria() {
@@ -32,11 +31,11 @@ public class MotoristaModel {
         this.cnh_dataValidade = cnh_dataValidade;
     }
 
-    public String getCnh_imagem() {
+    public byte[] getCnh_imagem() {
         return cnh_imagem;
     }
 
-    public void setCnh_imagem(String cnh_imagem) {
+    public void setCnh_imagem(byte[] cnh_imagem) {
         this.cnh_imagem = cnh_imagem;
     }
 
