@@ -1,7 +1,6 @@
 package br.com.pi.util;
 
 import java.util.Iterator;
-import java.util.List;
 
 public interface ICRUD_GENERIC<T> {
 
