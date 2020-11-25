@@ -40,3 +40,4 @@ nbproject/private/private.properties
 nbproject/private/private.xml
 nbproject/build-impl.xml~
 /dist/
+./idea/*
