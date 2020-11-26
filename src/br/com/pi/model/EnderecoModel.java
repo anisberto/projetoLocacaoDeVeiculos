@@ -7,15 +7,16 @@ public class EnderecoModel {
     private String endereco_cidade;
     private String endereco_bairro;
     private String endereco_rua;
-    private String endereco_numero;
+    private int endereco_numero;
     private String endereco_complemento;
+    private String endereco_estado;
     private PessoaModel endereco_pessoa;
     private MotoristaModel endereco_motorista;
 
     public EnderecoModel() {
     }
 
-    public EnderecoModel(int endereco_iden, String endereco_cep, String endereco_cidade, String endereco_bairro, String endereco_rua, String endereco_numero, String endereco_complemento, PessoaModel endereco_pessoa, MotoristaModel endereco_motorista) {
+    public EnderecoModel(int endereco_iden, String endereco_cep, String endereco_cidade, String endereco_bairro, String endereco_rua, int endereco_numero, String endereco_complemento, String endereco_estado, PessoaModel endereco_pessoa, MotoristaModel endereco_motorista) {
         this.endereco_iden = endereco_iden;
         this.endereco_cep = endereco_cep;
         this.endereco_cidade = endereco_cidade;
@@ -23,11 +24,19 @@ public class EnderecoModel {
         this.endereco_rua = endereco_rua;
         this.endereco_numero = endereco_numero;
         this.endereco_complemento = endereco_complemento;
+        this.endereco_estado = endereco_estado;
         this.endereco_pessoa = endereco_pessoa;
         this.endereco_motorista = endereco_motorista;
     }
 
-    
+    public String getEndereco_estado() {
+        return endereco_estado;
+    }
+
+    public void setEndereco_estado(String endereco_estado) {
+        this.endereco_estado = endereco_estado;
+    }
+
     public int getEndereco_iden() {
         return endereco_iden;
     }
@@ -68,11 +77,11 @@ public class EnderecoModel {
         this.endereco_rua = endereco_rua;
     }
 
-    public String getEndereco_numero() {
+    public int getEndereco_numero() {
         return endereco_numero;
     }
 
-    public void setEndereco_numero(String endereco_numero) {
+    public void setEndereco_numero(int endereco_numero) {
         this.endereco_numero = endereco_numero;
     }
 
@@ -99,6 +108,5 @@ public class EnderecoModel {
     public void setEndereco_motorista(MotoristaModel endereco_motorista) {
         this.endereco_motorista = endereco_motorista;
     }
-    
-    
+
 }
