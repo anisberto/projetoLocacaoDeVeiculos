@@ -19,9 +19,9 @@ public class EnderecoDal implements EnderecoInterface {
     @Override
     public void adicionarEndereco(EnderecoModel endereco) {
         try {
-            String sql = "INSERT INTO public.endereco\n" +
-"(endereco_cep)\n" +
-"VALUES(?);";
+            String sql = "INSERT INTO endereco (\n" +
+"	endereco_cep, endereco_cidade, endereco_bairro, endereco_rua, endereco_numero, endereco_complemento, endereco_estado)\n" +
+"	VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement ps = conect.prepareStatement(sql);
 
@@ -31,9 +31,10 @@ public class EnderecoDal implements EnderecoInterface {
             ps.setString(4, endereco.getEndereco_rua());
             ps.setObject(5, endereco.getEndereco_numero());
             ps.setString(6, endereco.getEndereco_complemento());
+            ps.setString(7, endereco.getEndereco_estado());
             ps.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao salva no banco de dados | DAL");
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
