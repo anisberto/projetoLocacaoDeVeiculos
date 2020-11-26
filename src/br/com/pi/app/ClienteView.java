@@ -4,19 +4,17 @@ import br.com.pi.bll.EnderecoBll;
 import br.com.pi.model.EnderecoModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import interfaces.EnderecoInterface;
+import javax.swing.JOptionPane;
 
 public class ClienteView extends javax.swing.JFrame {
 
-    EnderecoModel endereco = new EnderecoModel();
-    EnderecoInterface novoClienteInterface = null;
-
+    EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
 
     public ClienteView() throws Exception {
         initComponents();
-        novoClienteInterface = new EnderecoBll();
+        novoEnderecoInter = new EnderecoBll();
     }
 
     /**
@@ -332,7 +330,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel19.setText("Complemento");
 
-        jComboClientesUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UF" }));
+        jComboClientesUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "GO", "PA" }));
 
         jLabel8.setText("Número");
 
@@ -529,6 +527,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtClientesRua.setText("");
         txtClientesComplemento.setText("");
         txtClientesNumero.setText("");
+        jComboClientesUF.setSelectedItem("<Selecione UF>");
     }
 
     private void jTableUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios2MouseClicked
@@ -544,25 +543,26 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
+        EnderecoModel end = new EnderecoModel();
+
+        if (jComboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
+            JOptionPane.showMessageDialog(null, "Opção inválida !!!");
+        }
         try {
 
-            endereco.setEndereco_cidade(txtClientesCidade.getText());
-            endereco.setEndereco_bairro(txtClientesBairro.getText());
-            endereco.setEndereco_cep(txtClientesCep.getText());
-            endereco.setEndereco_rua(txtClientesRua.getText());
-            endereco.setEndereco_complemento(txtClientesComplemento.getText());
-            endereco.setEndereco_numero(txtClientesNumero.getText());
-            System.out.println(endereco);
+            end.setEndereco_cidade(txtClientesCidade.getText());
+            end.setEndereco_bairro(txtClientesBairro.getText());
+            end.setEndereco_cep(txtClientesCep.getText());
+            end.setEndereco_rua(txtClientesRua.getText());
+            end.setEndereco_complemento(txtClientesComplemento.getText());
+            end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
 
+            end.setEndereco_estado(String.valueOf(jComboClientesUF.getSelectedItem()));
+
+            System.out.println(end);
             if (incluirEndereco) {
-                novoClienteInterface.adicionarEndereco(endereco);
+                novoEnderecoInter.adicionarEndereco(end);
                 limparEndereco();
-                JOptionPane.showMessageDialog(null, "Endereço incluido com Sucesso.");
-                System.out.println("salvando endereço");
-            } else {
-//                nUsuario.setIden(idDeleteUsuario);
-//                    novoUsuarioInter.updateUsuario(nUsuario);
-//                    System.out.println("Alterado dados de usuario !!!");
             }
 
         } catch (Exception e) {
