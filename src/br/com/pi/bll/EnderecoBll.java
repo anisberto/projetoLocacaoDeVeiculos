@@ -2,70 +2,53 @@ package br.com.pi.bll;
 
 import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
+import br.com.pi.util.ICRUD_GENERIC;
 import java.util.ArrayList;
 import interfaces.EnderecoInterface;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EnderecoBll implements EnderecoInterface {
+public class EnderecoBll implements ICRUD_GENERIC {
 
-    EnderecoInterface novoEndereco;
+    ICRUD_GENERIC icrud;
 
     public EnderecoBll() throws Exception {
-        novoEndereco = new EnderecoDal();
+        icrud = (ICRUD_GENERIC) new EnderecoDal();
     }
 
     @Override
-    public void adicionarEndereco(EnderecoModel endereco) {
-        novoEndereco.adicionarEndereco(endereco);
+    public void add(Object objeto) throws Exception {
+        icrud.add(objeto);
     }
 
     @Override
-    public void deleteEndereco(int endereco) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(int n) throws Exception {
+        icrud.delete(n);
     }
 
     @Override
-    public void updateEndereco(EnderecoModel endereco) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Object objeto) throws Exception {
+        icrud.update(objeto);
     }
 
     @Override
-    public ArrayList<EnderecoModel> getAllEndereco() {
+    public Iterator getAll() throws Exception {
+        return icrud.getAll();
+    }
+
+    @Override
+    public Object getById(int n) throws Exception {
         try {
-            return novoEndereco.getAllEndereco();
-
+            return icrud.getById(n);
         } catch (Exception e) {
-            try {
-                throw new Exception(e.getMessage());
-
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoBll.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return null;
     }
 
     @Override
-    public EnderecoModel getEnderecoById(int id) {
-        try {
-            return novoEndereco.getEnderecoById(id);
-        } catch (Exception e) {
-            try {
-                throw new Exception(e.getMessage());
-
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoBll.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public EnderecoModel findEnderecoName(String cep) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object getByNome(String nome) throws Exception {
+        return icrud.getByNome(nome);
     }
 
     /**
