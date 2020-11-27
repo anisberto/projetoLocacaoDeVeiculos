@@ -23,7 +23,7 @@ public class TelaEndereco extends javax.swing.JFrame {
     public TelaEndereco() throws Exception {
         initComponents();
 
-        novoEnderecoInter = new EnderecoBll();
+        novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
         //JOptionPane.showMessageDialog(null, "Bom dia");
     }
