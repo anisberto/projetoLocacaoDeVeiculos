@@ -3,21 +3,29 @@ package br.com.pi.app;
 import br.com.pi.bll.EnderecoBll;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaEndereco extends javax.swing.JFrame {
 
+    EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
-    boolean incluirUsuarios = true;
+
+    boolean incluirEndereco = true;
+    int idDeleteEndereco;
 
     /**
      * Creates new form TelaEndereco
      */
     public TelaEndereco() throws Exception {
         initComponents();
+
         novoEnderecoInter = new EnderecoBll();
+        consultarEndereco(novoEnderecoInter.getAllEndereco());
+        //JOptionPane.showMessageDialog(null, "Bom dia");
     }
 
     /**
@@ -44,8 +52,13 @@ public class TelaEndereco extends javax.swing.JFrame {
         txtCep = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableTeste = new javax.swing.JTable();
+        btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel1.setText("Rua");
 
@@ -73,44 +86,89 @@ public class TelaEndereco extends javax.swing.JFrame {
             }
         });
 
+        tableTeste.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "CIDADE", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableTeste.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableTesteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableTeste);
+        if (tableTeste.getColumnModel().getColumnCount() > 0) {
+            tableTeste.getColumnModel().getColumn(0).setResizable(false);
+            tableTeste.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableTeste.getColumnModel().getColumn(1).setResizable(false);
+            tableTeste.getColumnModel().getColumn(2).setResizable(false);
+            tableTeste.getColumnModel().getColumn(3).setResizable(false);
+            tableTeste.getColumnModel().getColumn(4).setResizable(false);
+            tableTeste.getColumnModel().getColumn(5).setResizable(false);
+            tableTeste.getColumnModel().getColumn(6).setResizable(false);
+        }
+
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(8, 8, 8)
-                                    .addComponent(jLabel6)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(58, 58, 58)
-                                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addComponent(txtCidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(69, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(76, 76, 76)
+                                        .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel2))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel4))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel6)))
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 399, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,32 +176,29 @@ public class TelaEndereco extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnIncluir))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnIncluir)
+                    .addComponent(btnConsultar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,22 +213,19 @@ public class TelaEndereco extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void limparCampos() {
-        txtBairro.setText("");
-        txtCep.setText("");
-        txtCidade.setText("");
-        txtComplemento.setText("");
-        txtNumero.setText("");
-        txtRua.setText("");
 
-    }
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         EnderecoModel end = new EnderecoModel();
         end.setEndereco_rua(txtRua.getText());
@@ -185,17 +237,39 @@ public class TelaEndereco extends javax.swing.JFrame {
         //end.setEndereco_estado(txt);
 
         System.out.println(end);
-        if (incluirUsuarios) {
+        if (incluirEndereco) {
             novoEnderecoInter.adicionarEndereco(end);
             limparCampos();
         }
 
-
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIncluirActionPerformed
+    private void tableTesteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTesteMouseClicked
+        try {
+            int codigo = Integer.parseInt(tableTeste.getValueAt(tableTeste.getSelectedRow(), 0).toString());
+            transferirDadosClienteEndereco();
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_tableTesteMouseClicked
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try {
+            consultarEnderecoCli(novoEnderecoInter.getAllEndereco());
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void limparCampos() {
+        txtBairro.setText("");
+        txtCep.setText("");
+        txtCidade.setText("");
+        txtComplemento.setText("");
+        txtNumero.setText("");
+        txtRua.setText("");
+
+    }
 
     /**
      * @param args the command line arguments
@@ -238,6 +312,7 @@ public class TelaEndereco extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
@@ -247,6 +322,8 @@ public class TelaEndereco extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableTeste;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCep;
     private javax.swing.JTextField txtCidade;
@@ -254,4 +331,76 @@ public class TelaEndereco extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtRua;
     // End of variables declaration//GEN-END:variables
+
+    private void transferirDadosClienteEndereco() {
+        try {
+            int codigo = Integer.parseInt(tableTeste.getValueAt(tableTeste.getSelectedRow(), 0).toString());
+            EnderecoModel deleteEndClientes = novoEnderecoInter.getEnderecoById(codigo);
+            idDeleteEndereco = codigo;
+
+            txtCidade.setText(deleteEndClientes.getEndereco_cidade());
+            txtBairro.setText(deleteEndClientes.getEndereco_bairro());
+            txtCep.setText(deleteEndClientes.getEndereco_cep());
+            txtRua.setText(deleteEndClientes.getEndereco_rua());
+            //txtClientesNumero.setText(String.valueOf(deleteEndClientes.getEndereco_numero()));
+            txtNumero.setText(deleteEndClientes.getEndereco_numero() + "");
+            txtComplemento.setText(deleteEndClientes.getEndereco_complemento());
+            //jComboUF.setSelectedItem(deleteEndClientes.getEndereco_estado());
+
+        } catch (Exception e) {
+        }
+    }
+
+    private void consultarEnderecoCli(List<EnderecoModel> lista) throws Exception {
+        DefaultTableModel modelo = (DefaultTableModel) tableTeste.getModel();
+        modelo.setNumRows(0);
+
+        for (int pos = 0; pos < lista.size(); pos++) {
+            String[] linha = new String[2];
+            EnderecoModel aux = lista.get(pos);
+            linha[0] = aux.getEndereco_iden() + "";
+            linha[1] = aux.getEndereco_cidade() + "";
+            modelo.addRow(linha);
+
+        }
+    }
+
+//    private void preencheEndereco(int id) throws Exception {
+//        try {
+//            if (id > 0) {
+//
+//            }
+//        } catch (Exception e) {
+//        }
+//    }
+
+    private void preencheCampos(int id) throws Exception {
+        try {
+            if (id > 0) {
+                endereco = novoEnderecoInter.getEnderecoById(id);
+                // txtId.setText(id + "");
+                txtCidade.setText(endereco.getEndereco_cidade());
+                txtCep.setText(endereco.getEndereco_cep());
+                //txtNome.setText(alunoModel.getNome());
+                System.out.println(endereco.getEndereco_iden());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
+        // pega os dados da tableAlunos e colocar em modelo;
+        DefaultTableModel modelo = (DefaultTableModel) tableTeste.getModel();
+        modelo.setNumRows(0);
+
+        for (int pos = 0; pos < lista.size(); pos++) {
+            String[] linha = new String[2];
+            EnderecoModel aux = lista.get(pos);
+            linha[0] = aux.getEndereco_iden() + "";
+            linha[1] = aux.getEndereco_cidade() + "";
+            modelo.addRow(linha);
+
+        }
+    }
 }
