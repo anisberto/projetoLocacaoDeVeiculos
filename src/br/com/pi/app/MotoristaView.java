@@ -15,7 +15,7 @@ public class MotoristaView extends javax.swing.JFrame {
 
     public MotoristaView() throws Exception {
         initComponents();
-        novoEnderecoInter = new EnderecoBll();
+        novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
     }
 
     @SuppressWarnings("unchecked")
