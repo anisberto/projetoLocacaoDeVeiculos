@@ -4,6 +4,8 @@ import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import java.util.ArrayList;
 import interfaces.EnderecoInterface;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EnderecoBll implements EnderecoInterface {
 
@@ -29,19 +31,43 @@ public class EnderecoBll implements EnderecoInterface {
     }
 
     @Override
-    public ArrayList<EnderecoModel> getAllUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<EnderecoModel> getAllEndereco() {
+        try {
+            return novoEndereco.getAllEndereco();
+
+        } catch (Exception e) {
+            try {
+                throw new Exception(e.getMessage());
+
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoBll.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 
     @Override
-    public EnderecoModel getUsuarioById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public EnderecoModel getEnderecoById(int id) {
+        try {
+            return novoEndereco.getEnderecoById(id);
+        } catch (Exception e) {
+            try {
+                throw new Exception(e.getMessage());
+
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoBll.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 
     @Override
-    public EnderecoModel findUsuarioName(String cep) {
+    public EnderecoModel findEnderecoName(String cep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     /**
      * Validação do CEP
      *
