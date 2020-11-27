@@ -13,22 +13,6 @@ public class EnderecoModel {
     private PessoaModel endereco_pessoa;
     private MotoristaModel endereco_motorista;
 
-    public EnderecoModel() {
-    }
-
-    public EnderecoModel(int endereco_iden, String endereco_cep, String endereco_cidade, String endereco_bairro, String endereco_rua, int endereco_numero, String endereco_complemento, String endereco_estado, PessoaModel endereco_pessoa, MotoristaModel endereco_motorista) {
-        this.endereco_iden = endereco_iden;
-        this.endereco_cep = endereco_cep;
-        this.endereco_cidade = endereco_cidade;
-        this.endereco_bairro = endereco_bairro;
-        this.endereco_rua = endereco_rua;
-        this.endereco_numero = endereco_numero;
-        this.endereco_complemento = endereco_complemento;
-        this.endereco_estado = endereco_estado;
-        this.endereco_pessoa = endereco_pessoa;
-        this.endereco_motorista = endereco_motorista;
-    }
-
     public String getEndereco_estado() {
         return endereco_estado;
     }
@@ -108,12 +92,5 @@ public class EnderecoModel {
     public void setEndereco_motorista(MotoristaModel endereco_motorista) {
         this.endereco_motorista = endereco_motorista;
     }
-    
 
-    @Override
-    public String toString() {
-        return "EnderecoModel{" + "endereco_iden=" + endereco_iden + ", endereco_cep=" + endereco_cep + ", endereco_cidade=" + endereco_cidade + ", endereco_bairro=" + endereco_bairro + ", endereco_rua=" + endereco_rua + ", endereco_numero=" + endereco_numero + ", endereco_complemento=" + endereco_complemento + ", endereco_estado=" + endereco_estado + ", endereco_pessoa=" + endereco_pessoa + ", endereco_motorista=" + endereco_motorista + '}';
-    }
-    
-    
 }
