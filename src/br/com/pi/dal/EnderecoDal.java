@@ -7,6 +7,11 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import interfaces.EnderecoInterface;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EnderecoDal implements EnderecoInterface {
 
@@ -19,9 +24,9 @@ public class EnderecoDal implements EnderecoInterface {
     @Override
     public void adicionarEndereco(EnderecoModel endereco) {
         try {
-            String sql = "INSERT INTO endereco (\n" +
-"	endereco_cep, endereco_cidade, endereco_bairro, endereco_rua, endereco_numero, endereco_complemento, endereco_estado)\n" +
-"	VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO endereco (\n"
+                    + "	endereco_cep, endereco_cidade, endereco_bairro, endereco_rua, endereco_numero, endereco_complemento, endereco_estado)\n"
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement ps = conect.prepareStatement(sql);
 
@@ -40,26 +45,111 @@ public class EnderecoDal implements EnderecoInterface {
 
     @Override
     public void deleteEndereco(int endereco) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM endereco WHERE endereco_ide=?";
+        try {
+            PreparedStatement preparedStatement = conect.prepareStatement(sql);
+
+            preparedStatement.setInt(1, endereco);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException erro) {
+            try {
+                throw new Exception("Ocorreu um erro ao deletar este registro!\n"
+                        + erro.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
     public void updateEndereco(EnderecoModel endereco) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE aluno set endereco_rua=? where endereco_ide=?";
+
+        try {
+            PreparedStatement preparedStatement = conect.prepareStatement(sql);
+
+            preparedStatement.setString(1, endereco.getEndereco_rua());
+            preparedStatement.setInt(2, endereco.getEndereco_iden());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception erro) {
+            try {
+                throw new Exception("Ocorreu um erro ao alterar este registro\n"
+                        + erro.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
-    public ArrayList<EnderecoModel> getAllUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<EnderecoModel> getAllEndereco() {
+        ArrayList<EnderecoModel> endereco = new ArrayList<EnderecoModel>();
+        String sql = "SELECT * FROM endereco";
+        try {
+            Statement statement = conect.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                //CupomModel cupom = new CupomModel();
+                EnderecoModel novoEndereco = new EnderecoModel();
+                novoEndereco.setEndereco_iden(rs.getInt("endereco_ide"));
+                novoEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
+//                novoUsuario.setEndereco_bairro(rs.getString("endereco_bairro"));
+//                novoUsuario.setEndereco_cep(rs.getString("endereco_cep"));
+//                novoUsuario.setEndereco_rua(rs.getString("endereco_rua"));
+//                novoUsuario.setEndereco_numero(rs.getInt("endereco_numero"));
+//                novoUsuario.setEndereco_complemento(rs.getString("endereco_complemento"));
+//                novoUsuario.setEndereco_estado(rs.getString("endereco_estado"));
+                //cupom.setPorcentagem(rs.getDouble("cup_porcentagem"));
+                //novoUsuario.setCupom(cupom);
+                endereco.add(novoEndereco);
+            }
+
+        } catch (Exception erro) {
+            try {
+                throw new Exception("Ocorreu um erro ao consultar os registros de fabricantes\n"
+                        + erro.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return endereco;
     }
 
     @Override
-    public EnderecoModel getUsuarioById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public EnderecoModel getEnderecoById(int id) {
+        EnderecoModel retEndereco = new EnderecoModel();
+        try {
+            String sql = "SELECT * FROM endereco WHERE endereco_ide=?";
+            PreparedStatement preparedStatement = conect.prepareStatement(sql);
+            preparedStatement.setInt(0, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                retEndereco.setEndereco_iden(rs.getInt("endereco_ide"));
+//                retEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
+//                retEndereco.setEndereco_bairro(rs.getString("endereco_bairro"));
+//                retEndereco.setEndereco_cep(rs.getString("endereco_cep"));
+//                retEndereco.setEndereco_rua(rs.getString("endereco_rua"));
+//                retEndereco.setEndereco_numero(rs.getInt("endereco_numero"));
+//                retEndereco.setEndereco_complemento(rs.getString("endereco_complemento"));
+//                retEndereco.setEndereco_estado(rs.getString("endereco_estado"));
+                System.out.println(sql);
+            }
+
+        } catch (Exception erro) {
+            try {
+                throw new Exception("Erro ao buscar no banco de dados: !!\n" + erro.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return retEndereco;
     }
 
     @Override
-    public EnderecoModel findUsuarioName(String cep) {
+    public EnderecoModel findEnderecoName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
