@@ -11,9 +11,9 @@ public interface EnderecoInterface {
 
     public void updateEndereco(EnderecoModel endereco);
 
-    public ArrayList<EnderecoModel> getAllUsuario();
+    public ArrayList<EnderecoModel> getAllEndereco();
 
-    public EnderecoModel getUsuarioById(int id);
+    public EnderecoModel getEnderecoById(int id);
 
-    public EnderecoModel findUsuarioName(String cep);
+    public EnderecoModel findEnderecoName(String cep);
 }
