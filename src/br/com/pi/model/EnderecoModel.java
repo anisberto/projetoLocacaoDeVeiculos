@@ -108,5 +108,12 @@ public class EnderecoModel {
     public void setEndereco_motorista(MotoristaModel endereco_motorista) {
         this.endereco_motorista = endereco_motorista;
     }
+    
 
+    @Override
+    public String toString() {
+        return "EnderecoModel{" + "endereco_iden=" + endereco_iden + ", endereco_cep=" + endereco_cep + ", endereco_cidade=" + endereco_cidade + ", endereco_bairro=" + endereco_bairro + ", endereco_rua=" + endereco_rua + ", endereco_numero=" + endereco_numero + ", endereco_complemento=" + endereco_complemento + ", endereco_estado=" + endereco_estado + ", endereco_pessoa=" + endereco_pessoa + ", endereco_motorista=" + endereco_motorista + '}';
+    }
+    
+    
 }
