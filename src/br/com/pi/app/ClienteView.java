@@ -10,18 +10,17 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ClienteView extends javax.swing.JFrame {
-    EnderecoModel endereco = new EnderecoModel();
-    EnderecoInterface novoEnderecoInter = null;
-    boolean incluirEndereco = true;
-    
 
+    EnderecoModel endereco = new EnderecoModel();
+    EnderecoInterface novoEnderecoInter = null;    
+    boolean incluirEndereco = true;
     int idDeleteEndCliente;
 
     public ClienteView() throws Exception {
         initComponents();
         novoEnderecoInter = new EnderecoBll();
         consultarEnderecoCli(novoEnderecoInter.getAllEndereco());
-        
+
         //jTableUsuarios.setModel(tabelaEnderecoModel);
     }
 
@@ -68,7 +67,7 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtClientesRua = new javax.swing.JFormattedTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtClientesCidade = new javax.swing.JFormattedTextField();
+        txtCidade = new javax.swing.JFormattedTextField();
         jLabel17 = new javax.swing.JLabel();
         txtClientesBairro = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -80,6 +79,8 @@ public class ClienteView extends javax.swing.JFrame {
         txtClientesNumero = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableEndereco = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -319,7 +320,7 @@ public class ClienteView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 917, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -350,7 +351,7 @@ public class ClienteView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Cidade", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "null"
+                "ID", "Cidade", "Bairro", "CEP", "Rua", "Número", "Complemento", "UF"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -379,6 +380,10 @@ public class ClienteView extends javax.swing.JFrame {
             tableEndereco.getColumnModel().getColumn(7).setResizable(false);
         }
 
+        jLabel9.setText("ID");
+
+        txtId.setEnabled(false);
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -390,37 +395,40 @@ public class ClienteView extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtClientesRua, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel8))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtClientesCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)))
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
+                                .addGap(37, 37, 37)
                                 .addComponent(jLabel17))
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtClientesNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtClientesBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                                .addComponent(txtClientesBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtClientesCep, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
                                 .addComponent(jLabel19)
-                                .addGap(41, 41, 41)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboClientesUF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboClientesUF, 0, 193, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -436,18 +444,18 @@ public class ClienteView extends javax.swing.JFrame {
                         .addComponent(txtClientesBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
-                        .addComponent(txtClientesCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel19)
-                        .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboClientesUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(txtClientesRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)
-                        .addComponent(txtClientesNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtClientesRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtClientesNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboClientesUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -524,7 +532,7 @@ public class ClienteView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox4, 0, 341, Short.MAX_VALUE)
+                .addComponent(jComboBox4, 0, 355, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -570,7 +578,7 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void limparEndereco() {
-        txtClientesCidade.setText("");
+        txtCidade.setText("");
         txtClientesBairro.setText("");
         txtClientesCep.setText("");
         txtClientesRua.setText("");
@@ -595,26 +603,36 @@ public class ClienteView extends javax.swing.JFrame {
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
         EnderecoModel end = new EnderecoModel();
 
+        if (txtClientesNumero.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor, digite um numero.");
+        }
+
         if (jComboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
-            JOptionPane.showMessageDialog(null, "Opção inválida !!!");
+            JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
+
         }
         try {
 
-            end.setEndereco_cidade(txtClientesCidade.getText());
+            end.setEndereco_cidade(txtCidade.getText());
             end.setEndereco_bairro(txtClientesBairro.getText());
             end.setEndereco_cep(txtClientesCep.getText());
             end.setEndereco_rua(txtClientesRua.getText());
-            end.setEndereco_complemento(txtClientesComplemento.getText());
             end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
-
+            end.setEndereco_complemento(txtClientesComplemento.getText());
             end.setEndereco_estado(String.valueOf(jComboClientesUF.getSelectedItem()));
 
             System.out.println(end);
-            if (incluirEndereco) {
-                novoEnderecoInter.adicionarEndereco(end);
-                limparEndereco();
-            }
 
+            novoEnderecoInter.adicionarEndereco(end);
+            consultarEnderecoCli(novoEnderecoInter.getAllEndereco());
+            JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
+            limparEndereco();
+            System.out.println("Dados não salvos");
+
+//            if (incluirEndereco) {
+//                novoEnderecoInter.adicionarEndereco(end);
+//                limparEndereco();
+//            }
         } catch (Exception e) {
         }
 
@@ -650,14 +668,16 @@ public class ClienteView extends javax.swing.JFrame {
     private void btnClienteDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteDeletarActionPerformed
 
     }//GEN-LAST:event_btnClienteDeletarActionPerformed
-/**Tabela que mostra os endereços do Clientes.
- * @param evt 
- */
+    /**
+     * Tabela que mostra os endereços do Clientes.
+     *
+     * @param evt
+     */
     private void tableEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEnderecoMouseClicked
         int linha = tableEndereco.getSelectedRow();
         Integer codigo = Integer.parseInt(tableEndereco.getValueAt(linha, 0).toString());
         try {
-            preencheEndereco((int) codigo);
+            preencheEnderecoCliente((int) codigo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao preencher campo");
         }
@@ -734,6 +754,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -749,12 +770,13 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabViewClientes;
     private javax.swing.JTable tableEndereco;
+    private javax.swing.JFormattedTextField txtCidade;
     private javax.swing.JFormattedTextField txtClientesBairro;
     private javax.swing.JFormattedTextField txtClientesCep;
-    private javax.swing.JFormattedTextField txtClientesCidade;
     private javax.swing.JFormattedTextField txtClientesComplemento;
     private javax.swing.JTextField txtClientesNumero;
     private javax.swing.JFormattedTextField txtClientesRua;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 
     private void enderecoClienteEnableButtons(boolean butt) {
@@ -765,7 +787,7 @@ public class ClienteView extends javax.swing.JFrame {
             btnClienteDeletar.setEnabled(false);
             btnClientesSalvar.setEnabled(true);
 
-            txtClientesCidade.setEnabled(true);
+            txtCidade.setEnabled(true);
             txtClientesBairro.setEnabled(true);
             txtClientesCep.setEnabled(true);
             txtClientesRua.setEnabled(true);
@@ -777,7 +799,7 @@ public class ClienteView extends javax.swing.JFrame {
             btnClienteCancelar.setEnabled(true);
             btnClienteDeletar.setEnabled(true);
 
-            txtClientesCidade.setEnabled(false);
+            txtCidade.setEnabled(false);
             txtClientesBairro.setEnabled(false);
             txtClientesCep.setEnabled(false);
             txtClientesRua.setEnabled(false);
@@ -792,7 +814,7 @@ public class ClienteView extends javax.swing.JFrame {
             EnderecoModel deleteEndClientes = novoEnderecoInter.getEnderecoById(codigo);
             idDeleteEndCliente = codigo;
 
-            txtClientesCidade.setText(deleteEndClientes.getEndereco_cidade());
+            txtCidade.setText(deleteEndClientes.getEndereco_cidade());
             txtClientesBairro.setText(deleteEndClientes.getEndereco_bairro());
             txtClientesCep.setText(deleteEndClientes.getEndereco_cep());
             txtClientesRua.setText(deleteEndClientes.getEndereco_rua());
@@ -810,14 +832,20 @@ public class ClienteView extends javax.swing.JFrame {
         modelo.setNumRows(0);
 
         for (int pos = 0; pos < lista.size(); pos++) {
-            String[] linha = new String[2];
+            String[] linha = new String[7];
             EnderecoModel aux = lista.get(pos);
             linha[0] = aux.getEndereco_iden() + "";
             linha[1] = aux.getEndereco_cidade() + "";
+            linha[2] = aux.getEndereco_bairro() + "";
+            linha[3] = aux.getEndereco_cep() + "";
+            linha[4] = aux.getEndereco_rua() + "";
+            linha[5] = aux.getEndereco_complemento() + "";
+            linha[6] = aux.getEndereco_estado() + "";
+
             modelo.addRow(linha);
         }
     }
-    
+
     private void preencheEndereco(int id) throws Exception {
         try {
             if (id > 0) {
@@ -825,5 +853,37 @@ public class ClienteView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    
+
+    /**
+     * Peencher os dados endereço do clente da tabela de cadastro do cliente
+     * endereço, consultar por ID da tabela endereço.
+     *
+     * @param id
+     * @throws Exception
+     */
+    private void preencheEnderecoCliente(int id) throws Exception {
+
+        try {
+            if (id > 0) {
+                endereco = novoEnderecoInter.getEnderecoById(id);
+                txtId.setText(id + "");
+
+                txtCidade.setText(endereco.getEndereco_cidade());
+                txtClientesBairro.setText(endereco.getEndereco_bairro());
+                txtClientesCep.setText(endereco.getEndereco_cep());
+                txtClientesRua.setText(endereco.getEndereco_rua());
+                txtClientesNumero.setText(endereco.getEndereco_numero() + "");
+                txtClientesComplemento.setText(endereco.getEndereco_complemento());
+                txtClientesNumero.setText(String.valueOf(endereco.getEndereco_numero()));
+                //jComboClientesUF.setActionCommand(endereco.getEndereco_estado());
+                // falta 
+                System.out.println();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }
+
 }
