@@ -28,7 +28,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
                     + "veiculo_renavam, veiculo_precodecompra, veiculo_precodevenda, "
                     + "veiculo_numerodepassageiros, veiculo_anodefabricacao, veiculo_anodomodelo, veiculo_quilometragem, "
                     + "veiculo_tipodecombustivel, veiculo_tipodeveiculo, veiculo_situacaodoveiculo, veiculo_modelo_idem)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null);");
             prep.setString(1, objeto.getVeiculo_renavam());
             prep.setDouble(2, objeto.getVeiculo_precoCompra());
             prep.setDouble(3, objeto.getVeiculo_precoVenda());
@@ -39,7 +39,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             prep.setString(8, objeto.getVeiculo_tipoCombustivel());
             prep.setString(9, objeto.getVeiculo_tipoVeiculo());
             prep.setString(10, objeto.getVeiculo_situacaoVeiculo());
-            prep.setInt(11, objeto.getVeiculo_modelo().getModelo_idem());
+//            prep.setInt(11, objeto.getVeiculo_modelo().getModelo_idem());
             prep.executeUpdate();
         } catch (Exception e) {
         }

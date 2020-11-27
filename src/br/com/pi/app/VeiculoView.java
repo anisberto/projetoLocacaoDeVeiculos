@@ -1,14 +1,26 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.ModeloBll;
+import br.com.pi.bll.VeiculoBll;
+import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.ModeloModel;
+import br.com.pi.model.VeiculoModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class VeiculoView extends javax.swing.JFrame {
-
     
+    ICRUD_GENERIC veiculoInclud;
+    ICRUD_GENERIC modeloBll;
     boolean incluir = true;
-
-    public VeiculoView() {
+    
+    public VeiculoView() throws Exception {
         initComponents();
+        veiculoInclud = new VeiculoBll();
+        modeloBll = new ModeloBll();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -518,14 +530,27 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            
-            enableButtFields(false);
+            VeiculoModel newVeiculo = new VeiculoModel();
+            newVeiculo.setVeiculo_renavam(txtRenavam.getText());
+            newVeiculo.setVeiculo_precoCompra(Float.parseFloat(txtPrecoCompra.getText()));
+            newVeiculo.setVeiculo_precoVenda(Float.parseFloat(txtPrecoVenda.getText()));
+            newVeiculo.setVeiculo_numeroDePassageiro(Integer.parseInt(txtNumeroPessoas.getText()));
+            newVeiculo.setVeiculo_anoFabrica(txtAnoFabricacao.getText());
+            newVeiculo.setVeiculo_anoModelo(txtAnoModelo.getText());
+            newVeiculo.setVeiculo_quilometragem(Float.parseFloat(txtQuilometragem.getText()));
+            newVeiculo.setVeiculo_tipoCombustivel(jcTipoCombustivel.getSelectedItem().toString());
+            newVeiculo.setVeiculo_tipoVeiculo(jcTipoVeiculo.getSelectedItem().toString());
+            newVeiculo.setVeiculo_situacaoVeiculo(jcSituacao.getSelectedItem().toString());
+            newVeiculo.setVeiculo_modelo((ModeloModel) modeloBll.getByNome(jcModelo.getSelectedItem().toString()));
             if (incluir) {
-                
+                veiculoInclud.add(newVeiculo);
+                JOptionPane.showMessageDialog(null, "Included");
             } else {
-
+                
             }
         } catch (Exception e) {
+        } finally {
+            enableButtFields(false);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -566,10 +591,7 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -597,7 +619,11 @@ public class VeiculoView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VeiculoView().setVisible(true);
+                try {
+                    new VeiculoView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -667,7 +693,7 @@ public class VeiculoView extends javax.swing.JFrame {
             btnVender.setEnabled(true);
         }
     }
-
+    
     public void clearFields() {
         jcModelo.removeAllItems();
         jcModelo.addItem("Modelo");

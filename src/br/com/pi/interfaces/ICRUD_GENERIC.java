@@ -16,5 +16,4 @@ public interface ICRUD_GENERIC<T> {
 
     public T getByNome(String nome)throws Exception;
 
-
 }
