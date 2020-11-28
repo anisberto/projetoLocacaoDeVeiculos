@@ -1,30 +1,27 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.EnderecoBll;
+import br.com.pi.dal.EnderecoDal1;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.ICRUD_GENERIC;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import interfaces.EnderecoInterface;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClienteView extends javax.swing.JFrame {
 
     EnderecoModel endereco = new EnderecoModel();
-    ICRUD_GENERIC icrud = null;
-    //EnderecoInterface novoEnderecoInter = null;    
+    EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
-    int idDeleteEndCliente;
+    int idDeleteCliente;
 
     public ClienteView() throws Exception {
         initComponents();
-        icrud = new EnderecoBll();
-        //novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
-        //consultarEnderecoCli(novoEnderecoInter.getAllEndereco());
+        novoEnderecoInter = new EnderecoDal1();
+        consultarEndereco(novoEnderecoInter.getAllEndereco());
 
-        //jTableUsuarios.setModel(tabelaEnderecoModel);
     }
 
     /**
@@ -45,6 +42,7 @@ public class ClienteView extends javax.swing.JFrame {
         btnClienteVoltar = new javax.swing.JButton();
         btnClientesSalvar = new javax.swing.JButton();
         btnClienteAlterar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -77,7 +75,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtClientesCep = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
         txtClientesComplemento = new javax.swing.JFormattedTextField();
-        jComboClientesUF = new javax.swing.JComboBox<>();
+        cboClientesUF = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtClientesNumero = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -168,6 +166,13 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
+        btnBuscar.setText("buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,6 +187,8 @@ public class ClienteView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClienteDeletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnClienteCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClienteVoltar)
@@ -191,6 +198,9 @@ public class ClienteView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscar))
                     .addComponent(btnClienteVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -345,7 +355,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel19.setText("Complemento");
 
-        jComboClientesUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cboClientesUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel8.setText("Número");
 
@@ -427,7 +437,7 @@ public class ClienteView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboClientesUF, 0, 193, Short.MAX_VALUE)
+                                .addComponent(cboClientesUF, 0, 193, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -456,7 +466,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(txtClientesNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
                     .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboClientesUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboClientesUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -587,7 +597,8 @@ public class ClienteView extends javax.swing.JFrame {
         txtClientesRua.setText("");
         txtClientesComplemento.setText("");
         txtClientesNumero.setText("");
-        jComboClientesUF.setSelectedItem("<Selecione UF>");
+        cboClientesUF.setSelectedItem("<Selecione UF>");
+        txtId.setText("");
     }
 
     private void jTableUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios2MouseClicked
@@ -600,43 +611,52 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_tabViewClientesMouseClicked
 
     private void btnClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteAlterarActionPerformed
-        // TODO add your handling code here:
+        try {
+            incluirEndereco = false;
+            enableBuEndereco(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
-        EnderecoModel end = new EnderecoModel();
 
         if (txtClientesNumero.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor, digite um numero.");
         }
 
-        if (jComboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
+        if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
             JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
 
         }
         try {
-
+            EnderecoModel end = new EnderecoModel();
+            
             end.setEndereco_cidade(txtCidade.getText());
             end.setEndereco_bairro(txtClientesBairro.getText());
             end.setEndereco_cep(txtClientesCep.getText());
             end.setEndereco_rua(txtClientesRua.getText());
             end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
             end.setEndereco_complemento(txtClientesComplemento.getText());
-            end.setEndereco_estado(String.valueOf(jComboClientesUF.getSelectedItem()));
+            end.setEndereco_estado(String.valueOf(cboClientesUF.getSelectedItem()));
 
             System.out.println(end);
+            if (incluirEndereco) {
 
-            icrud.add(end);
-            //consultarEnderecoCli(icrud.getAll());
-            JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
-            limparEndereco();
-            System.out.println("Dados não salvos");
+                novoEnderecoInter.adicionarEndereco(end);
+                JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
+                
+            } else {
+                end.setEndereco_iden(idDeleteCliente);
+                novoEnderecoInter.updateEndereco(end);
+                JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
+//                enableBuEndereco(false);
+//                System.out.println("Alterado dados de de endereço !!!");
+            }
+            consultarEndereco(novoEnderecoInter.getAllEndereco());
 
-//            if (incluirEndereco) {
-//                novoEnderecoInter.adicionarEndereco(end);
-//                limparEndereco();
-//            }
         } catch (Exception e) {
+        }finally{
+            enableBuEndereco(false);
         }
 
     }//GEN-LAST:event_btnClientesSalvarActionPerformed
@@ -651,7 +671,10 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteVoltarActionPerformed
 
     private void btnClienteCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteCancelarActionPerformed
-
+        try {
+            enderecoEnableButtons(false);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnClienteCancelarActionPerformed
     /**
      * Botão incluir um novo dado no banco de dados e ativa o botão SALVAR
@@ -669,22 +692,77 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteIncluirActionPerformed
 
     private void btnClienteDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteDeletarActionPerformed
+        try {
+            if (txtId.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Selecione um ID na Tabela", "Selecione:", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a exclusão do endereço: " + txtCidade.getText(), "EXCLUSÃO",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+                if (conf == 0) {
 
+                    novoEnderecoInter.deleteEndereco(idDeleteCliente);
+                    limparEndereco();
+                    JOptionPane.showMessageDialog(null, "Endereço deletado(o) com sucesso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Deletação Cancelada!");
+                }
+            }
+            // edivan
+            consultarEndereco(novoEnderecoInter.getAllEndereco());
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnClienteDeletarActionPerformed
+
+//    private void btnClienteDeletarActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+//        try {
+//            if (txtCidade.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "Selecione a cidade na Tabela", "Deleção", JOptionPane.ERROR_MESSAGE);
+//            } else {
+//                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a exclusão do endereço: " + txtCidade.getText(), "EXCLUSÃO",
+//                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+//                if (conf == 0) {
+//
+//                    novoEnderecoInter.deleteEndereco(idDeleteCliente);
+//                    limparEndereco();
+//                    JOptionPane.showMessageDialog(null, "Endereço deletado(o) com sucesso");
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Deletação Cancelada!");
+//                }
+//            }
+//            // edivan
+//            consultarEndereco(novoEnderecoInter.getAllEndereco());
+//        } catch (Exception e) {
+//        }
+//    }  
     /**
      * Tabela que mostra os endereços do Clientes.
      *
      * @param evt
      */
     private void tableEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEnderecoMouseClicked
-        int linha = tableEndereco.getSelectedRow();
-        Integer codigo = Integer.parseInt(tableEndereco.getValueAt(linha, 0).toString());
+        //int linha = tableEndereco.getSelectedRow();
         try {
-//            preencheEnderecoCliente((int) codigo);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao preencher campo");
+            Integer codigo = Integer.parseInt(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 0).toString());
+            transferirDadosEndereco();
+
+//        try {
+////            preencheEnderecoCliente((int) codigo);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao preencher campo");
+//        }
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tableEnderecoMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 0).toString();
+        try {
+            consultarEndereco(novoEnderecoInter.getAllEndereco());
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -726,15 +804,16 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnClienteAlterar;
     private javax.swing.JButton btnClienteCancelar;
     private javax.swing.JButton btnClienteDeletar;
     private javax.swing.JButton btnClienteIncluir;
     private javax.swing.JButton btnClienteVoltar;
     private javax.swing.JButton btnClientesSalvar;
+    private javax.swing.JComboBox<String> cboClientesUF;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboClientesUF;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
@@ -811,44 +890,6 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }
 
-//    private void transferirDadosClienteEndereco() {
-//        try {
-//            int codigo = Integer.parseInt(tabViewClientes.getValueAt(tabViewClientes.getSelectedRow(), 0).toString());
-//            EnderecoModel deleteEndClientes = novoEnderecoInter.getEnderecoById(codigo);
-//            idDeleteEndCliente = codigo;
-//
-//            txtCidade.setText(deleteEndClientes.getEndereco_cidade());
-//            txtClientesBairro.setText(deleteEndClientes.getEndereco_bairro());
-//            txtClientesCep.setText(deleteEndClientes.getEndereco_cep());
-//            txtClientesRua.setText(deleteEndClientes.getEndereco_rua());
-//            //txtClientesNumero.setText(String.valueOf(deleteEndClientes.getEndereco_numero()));
-//            txtClientesNumero.setText(deleteEndClientes.getEndereco_numero() + "");
-//            txtClientesComplemento.setText(deleteEndClientes.getEndereco_complemento());
-//            jComboClientesUF.setSelectedItem(deleteEndClientes.getEndereco_estado());
-//
-//        } catch (Exception e) {
-//        }
-//    }
-
-    private void consultarEnderecoCli(List<EnderecoModel> lista) throws Exception {
-        DefaultTableModel modelo = (DefaultTableModel) tableEndereco.getModel();
-        modelo.setNumRows(0);
-
-        for (int pos = 0; pos < lista.size(); pos++) {
-            String[] linha = new String[7];
-            EnderecoModel aux = lista.get(pos);
-            linha[0] = aux.getEndereco_iden() + "";
-            linha[1] = aux.getEndereco_cidade() + "";
-            linha[2] = aux.getEndereco_bairro() + "";
-            linha[3] = aux.getEndereco_cep() + "";
-            linha[4] = aux.getEndereco_rua() + "";
-            linha[5] = aux.getEndereco_complemento() + "";
-            linha[6] = aux.getEndereco_estado() + "";
-
-            modelo.addRow(linha);
-        }
-    }
-
     private void preencheEndereco(int id) throws Exception {
         try {
             if (id > 0) {
@@ -857,36 +898,113 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Peencher os dados endereço do clente da tabela de cadastro do cliente
-     * endereço, consultar por ID da tabela endereço.
-     *
-     * @param id
-     * @throws Exception
-     */
-//    private void preencheEnderecoCliente(int id) throws Exception {
-//
-//        try {
-//            if (id > 0) {
-//                endereco = icrud.getById(id);
-//                txtId.setText(id + "");
-//
-//                txtCidade.setText(endereco.getEndereco_cidade());
-//                txtClientesBairro.setText(endereco.getEndereco_bairro());
-//                txtClientesCep.setText(endereco.getEndereco_cep());
-//                txtClientesRua.setText(endereco.getEndereco_rua());
-//                txtClientesNumero.setText(endereco.getEndereco_numero() + "");
-//                txtClientesComplemento.setText(endereco.getEndereco_complemento());
-//                txtClientesNumero.setText(String.valueOf(endereco.getEndereco_numero()));
-//                //jComboClientesUF.setActionCommand(endereco.getEndereco_estado());
-//                // falta 
-//                System.out.println();
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        }
-//
-//    }
+    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
+        DefaultTableModel modelo = (DefaultTableModel) tableEndereco.getModel();
+        modelo.setNumRows(0);
 
+        for (int pos = 0; pos < lista.size(); pos++) {
+            String[] linha = new String[8];
+            EnderecoModel aux = lista.get(pos);
+            linha[0] = aux.getEndereco_iden() + "";
+            linha[1] = aux.getEndereco_cidade() + "";
+            linha[2] = aux.getEndereco_bairro() + "";
+            linha[3] = aux.getEndereco_cep() + "";
+            linha[4] = aux.getEndereco_rua() + "";
+            linha[5] = aux.getEndereco_numero() + "";
+            linha[6] = aux.getEndereco_complemento() + "";
+            linha[7] = aux.getEndereco_estado() + "";
+            modelo.addRow(linha);
+        }
+    }
+
+    private void transferirDadosEndereco() {
+        try {
+            int codigo = Integer.parseInt(tableEndereco.getValueAt(tableEndereco.getSelectedRow(), 0).toString());
+            EnderecoModel deleteEnd = novoEnderecoInter.getEnderecoById(codigo);
+            idDeleteCliente = codigo;
+
+            txtCidade.setText(deleteEnd.getEndereco_cidade());
+            txtClientesBairro.setText(deleteEnd.getEndereco_bairro());
+            txtClientesCep.setText(deleteEnd.getEndereco_cep());
+            txtClientesRua.setText(deleteEnd.getEndereco_rua());
+            txtClientesNumero.setText(deleteEnd.getEndereco_numero() + "");
+            txtClientesComplemento.setText(deleteEnd.getEndereco_complemento());
+            cboClientesUF.setSelectedItem(deleteEnd.getEndereco_estado());
+            txtId.setText(deleteEnd.getEndereco_iden() + "");
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    private void enableBuEndereco(boolean butt) {
+        if (butt) {
+            btnClienteIncluir.setEnabled(false);
+            btnClienteAlterar.setEnabled(false);
+            btnClienteCancelar.setEnabled(true);
+            btnClienteDeletar.setEnabled(false);
+            btnClientesSalvar.setEnabled(true);
+
+            txtCidade.setEnabled(true);
+            txtClientesBairro.setEnabled(true);
+            txtClientesCep.setEnabled(true);
+            txtClientesRua.setEnabled(true);
+            txtClientesComplemento.setEnabled(true);
+            txtClientesNumero.setEnabled(true);
+            //txt.setEnabled(true);
+
+        } else {
+
+            btnClienteIncluir.setEnabled(true);
+            btnClienteAlterar.setEnabled(true);
+            btnClienteCancelar.setEnabled(true);
+            btnClienteDeletar.setEnabled(true);
+            btnClientesSalvar.setEnabled(false);
+
+            txtCidade.setEnabled(false);
+            txtClientesBairro.setEnabled(false);
+            txtClientesCep.setEnabled(false);
+            txtClientesRua.setEnabled(false);
+            txtClientesComplemento.setEnabled(false);
+            txtClientesNumero.setEnabled(false);
+            //txt.setEnabled(true);
+
+            //limparEndereco();
+        }
+    }
+
+    private void enderecoEnableButtons(boolean butt) {
+        if (butt) {
+            btnClienteIncluir.setEnabled(false);
+            btnClienteAlterar.setEnabled(false);
+            btnClienteCancelar.setEnabled(true);
+            btnClienteDeletar.setEnabled(false);
+            btnClientesSalvar.setEnabled(true);
+
+            txtCidade.setEnabled(true);
+            txtClientesBairro.setEnabled(true);
+            txtClientesCep.setEnabled(true);
+            txtClientesRua.setEnabled(true);
+            txtClientesComplemento.setEnabled(true);
+            txtClientesNumero.setEnabled(true);
+            //txt.setEnabled(true);
+
+        } else {
+            btnClienteIncluir.setEnabled(true);
+            btnClienteAlterar.setEnabled(true);
+            btnClienteCancelar.setEnabled(true);
+            btnClienteDeletar.setEnabled(true);
+
+            txtCidade.setEnabled(false);
+            txtClientesBairro.setEnabled(false);
+            txtClientesCep.setEnabled(false);
+            txtClientesRua.setEnabled(false);
+            txtClientesComplemento.setEnabled(false);
+            txtClientesNumero.setEnabled(false);
+            //txt.setEnabled(true);
+
+            limparEndereco();
+
+        }
+    }
 }
