@@ -2,6 +2,7 @@ package br.com.pi.app;
 
 import br.com.pi.bll.EnderecoBll;
 import br.com.pi.model.EnderecoModel;
+import br.com.pi.util.ICRUD_GENERIC;
 import interfaces.EnderecoInterface;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,20 +13,24 @@ import javax.swing.table.DefaultTableModel;
 public class TelaEndereco extends javax.swing.JFrame {
 
     EnderecoModel endereco = new EnderecoModel();
-    EnderecoInterface novoEnderecoInter = null;
-
+    ICRUD_GENERIC icrud = null;
     boolean incluirEndereco = true;
     int idDeleteEndereco;
 
+//    EnderecoModel endereco = new EnderecoModel();
+//    EnderecoInterface novoEnderecoInter = null;
+//    boolean incluirEndereco = true;
+//    int idDeleteEndereco;
     /**
      * Creates new form TelaEndereco
      */
     public TelaEndereco() throws Exception {
         initComponents();
+        icrud = new EnderecoBll();
+       // consultarEndereco((List<EnderecoModel>) icrud.getAll());
+//        novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
+//        consultarEndereco(novoEnderecoInter.getAllEndereco());
 
-        novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
-        consultarEndereco(novoEnderecoInter.getAllEndereco());
-        //JOptionPane.showMessageDialog(null, "Bom dia");
     }
 
     /**
@@ -228,18 +233,23 @@ public class TelaEndereco extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         EnderecoModel end = new EnderecoModel();
+        end.setEndereco_cidade(txtCidade.getText());
+        end.setEndereco_bairro(txtBairro.getText());
+        end.setEndereco_cep(txtCep.getText());
         end.setEndereco_rua(txtRua.getText());
         end.setEndereco_numero(Integer.parseInt(txtNumero.getText()));
         end.setEndereco_complemento(txtComplemento.getText());
-        end.setEndereco_bairro(txtBairro.getText());
-        end.setEndereco_cidade(txtCidade.getText());
-        end.setEndereco_cep(txtCep.getText());
-        //end.setEndereco_estado(txt);
 
+        //end.setEndereco_estado(txt);
         System.out.println(end);
         if (incluirEndereco) {
-            novoEnderecoInter.adicionarEndereco(end);
-            limparCampos();
+            try {
+                icrud.add(end);
+                limparCampos();
+            } catch (Exception ex) {
+                Logger.getLogger(TelaEndereco.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -255,7 +265,7 @@ public class TelaEndereco extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         try {
-            consultarEnderecoCli(novoEnderecoInter.getAllEndereco());
+            consultarEnderecoCli((List<EnderecoModel>) icrud.getAll());
         } catch (Exception e) {
             e.getMessage();
         }
@@ -335,7 +345,7 @@ public class TelaEndereco extends javax.swing.JFrame {
     private void transferirDadosClienteEndereco() {
         try {
             int codigo = Integer.parseInt(tableTeste.getValueAt(tableTeste.getSelectedRow(), 0).toString());
-            EnderecoModel deleteEndClientes = novoEnderecoInter.getEnderecoById(codigo);
+            EnderecoModel deleteEndClientes = (EnderecoModel) icrud.getById(codigo);
             idDeleteEndereco = codigo;
 
             txtCidade.setText(deleteEndClientes.getEndereco_cidade());
@@ -352,7 +362,7 @@ public class TelaEndereco extends javax.swing.JFrame {
     }
 
     private void consultarEnderecoCli(List<EnderecoModel> lista) throws Exception {
-        DefaultTableModel modelo = (DefaultTableModel) tableTeste.getModel();
+        DefaultTableModel modelo = (DefaultTableModel)tableTeste.getModel();
         modelo.setNumRows(0);
 
         for (int pos = 0; pos < lista.size(); pos++) {
@@ -365,42 +375,41 @@ public class TelaEndereco extends javax.swing.JFrame {
         }
     }
 
-//    private void preencheEndereco(int id) throws Exception {
-//        try {
-//            if (id > 0) {
-//
-//            }
-//        } catch (Exception e) {
-//        }
-//    }
-
-    private void preencheCampos(int id) throws Exception {
+    private void preencheEndereco(int id) throws Exception {
         try {
             if (id > 0) {
-                endereco = novoEnderecoInter.getEnderecoById(id);
-                // txtId.setText(id + "");
-                txtCidade.setText(endereco.getEndereco_cidade());
-                txtCep.setText(endereco.getEndereco_cep());
-                //txtNome.setText(alunoModel.getNome());
-                System.out.println(endereco.getEndereco_iden());
+
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
-    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
-        // pega os dados da tableAlunos e colocar em modelo;
-        DefaultTableModel modelo = (DefaultTableModel) tableTeste.getModel();
-        modelo.setNumRows(0);
-
-        for (int pos = 0; pos < lista.size(); pos++) {
-            String[] linha = new String[2];
-            EnderecoModel aux = lista.get(pos);
-            linha[0] = aux.getEndereco_iden() + "";
-            linha[1] = aux.getEndereco_cidade() + "";
-            modelo.addRow(linha);
-
-        }
-    }
+//    private void preencheCampos(int id) throws Exception {
+//        try {
+//            if (id > 0) {
+//                endereco = (EnderecoModel) icrud.getById(id);
+//                // txtId.setText(id + "");
+//                txtCidade.setText(endereco.getEndereco_cidade());
+//                txtCep.setText(endereco.getEndereco_cep());
+//                //txtNome.setText(alunoModel.getNome());
+//                System.out.println(endereco.getEndereco_iden());
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+//        }
+//    }
+//
+//    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
+//        // pega os dados da tableAlunos e colocar em modelo;
+//        DefaultTableModel modelo = (DefaultTableModel) tableTeste.getModel();
+//        modelo.setNumRows(0);
+//
+//        for (int pos = 0; pos < lista.size(); pos++) {
+//            String[] linha = new String[2];
+//            EnderecoModel aux = lista.get(pos);
+//            linha[0] = aux.getEndereco_iden() + "";
+//            linha[1] = aux.getEndereco_cidade() + "";
+//            modelo.addRow(linha);
+//
+//        }
+//    }
 }
