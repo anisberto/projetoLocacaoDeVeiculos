@@ -2,6 +2,7 @@ package br.com.pi.bll;
 
 import br.com.pi.dal.AdministradorDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.AdministradorModel;
 
 import java.util.Iterator;
 
@@ -15,8 +16,9 @@ public class AdministradorBll implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         try {
+            validaadm((AdministradorModel) objeto);
             dal.add(objeto);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
@@ -25,8 +27,9 @@ public class AdministradorBll implements ICRUD_GENERIC {
     @Override
     public void delete(int n) throws Exception {
         try {
+
             dal.delete(n);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
@@ -35,8 +38,9 @@ public class AdministradorBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
+            validaadm((AdministradorModel) objeto);
             dal.update(objeto);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -45,7 +49,7 @@ public class AdministradorBll implements ICRUD_GENERIC {
     public Iterator getAll() throws Exception {
         try {
             return dal.getAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -54,7 +58,7 @@ public class AdministradorBll implements ICRUD_GENERIC {
     public Object getById(int n) throws Exception {
         try {
             return dal.getById(n);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -63,8 +67,37 @@ public class AdministradorBll implements ICRUD_GENERIC {
     public Object getByNome(String nome) throws Exception {
         try {
             return dal.getByNome(nome);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
+        }
+    }
+
+    public void validaadm(AdministradorModel objeto) throws Exception {
+        String nome = objeto.getAdministrador_nome().trim().toLowerCase();
+        String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
+        for (int i = 0; i < invalidos.length(); i++) {
+            if (nome.contains("" + invalidos.charAt(i))) {
+                throw new Exception("Nome de usuario inválido!");
+            }
+        }
+
+
+        if (objeto.getAdministrador_nome().equals("")) {
+            throw new Exception("Informe a Senha do usuario");
+        }
+        if (objeto.getAdministrador_senha().equals("")) {
+            throw new Exception("Informe a Senha do usuario");
+        }
+
+        Iterator<AdministradorModel> listaDeUsuario = dal.getAll();
+        for (Iterator<AdministradorModel> it = listaDeUsuario; it.hasNext(); ) {
+            AdministradorModel aux = it.next();
+
+            if ((objeto.getAdministrador_idem() != aux.getAdministrador_idem()) && (objeto.getAdministrador_nome().toUpperCase().
+                    equalsIgnoreCase(aux.getAdministrador_nome().toUpperCase()))) {
+                throw new Exception("O nom --> " + objeto.getAdministrador_nome() + "\nJá existe no cadastro de Administradores!\n");
+            }
+
         }
     }
 }
