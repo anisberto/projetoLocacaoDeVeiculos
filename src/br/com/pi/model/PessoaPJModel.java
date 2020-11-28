@@ -1,6 +1,7 @@
 package br.com.pi.model;
 
 public class PessoaPJModel extends PessoaModel {
+    private int pessoa_pj_idem;
     private String pessoa_pj_cnpj;
     private String pessoa_pj_nomeFantasia;
     private String pessoa_pj_razaoSocial;
@@ -32,6 +33,22 @@ public class PessoaPJModel extends PessoaModel {
 
     public PessoaModel getPessoa() {
         return pessoaModel;
+    }
+
+    public int getPessoa_pj_idem() {
+        return pessoa_pj_idem;
+    }
+
+    public void setPessoa_pj_idem(int pessoa_pj_idem) {
+        this.pessoa_pj_idem = pessoa_pj_idem;
+    }
+
+    public PessoaModel getPessoaModel() {
+        return pessoaModel;
+    }
+
+    public void setPessoaModel(PessoaModel pessoaModel) {
+        this.pessoaModel = pessoaModel;
     }
 
     public void setPessoa(PessoaModel pessoaModel) {

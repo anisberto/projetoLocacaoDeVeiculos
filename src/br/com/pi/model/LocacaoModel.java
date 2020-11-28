@@ -15,10 +15,10 @@ public class LocacaoModel {
     private float locacao_valorCalcao;
     private float locacao_valorSeguro;
     private float locacao_multaAtraso;
+    private int locacao_tanqueCheio;
     private MotoristaModel locacao_motorista;
     private VeiculoModel locacao_veiculo;
-    private PessoaPFModel locacao_pessoaPF;
-    private PessoaPJModel locacao_pessoaPJ;
+    private PessoaModel locacao_pessoa;
     private AdministradorModel locacao_administrador;
 
     public int getLocacao_idem() {
@@ -125,27 +125,27 @@ public class LocacaoModel {
         this.locacao_veiculo = locacao_veiculo;
     }
 
-    public PessoaPFModel getLocacao_pessoaPF() {
-        return locacao_pessoaPF;
-    }
-
-    public void setLocacao_pessoaPF(PessoaPFModel locacao_pessoaPF) {
-        this.locacao_pessoaPF = locacao_pessoaPF;
-    }
-
-    public PessoaPJModel getLocacao_pessoaPJ() {
-        return locacao_pessoaPJ;
-    }
-
-    public void setLocacao_pessoaPJ(PessoaPJModel locacao_pessoaPJ) {
-        this.locacao_pessoaPJ = locacao_pessoaPJ;
-    }
-
     public AdministradorModel getLocacao_administrador() {
         return locacao_administrador;
     }
 
     public void setLocacao_administrador(AdministradorModel locacao_administrador) {
         this.locacao_administrador = locacao_administrador;
+    }
+
+    public int getLocacao_tanqueCheio() {
+        return locacao_tanqueCheio;
+    }
+
+    public void setLocacao_tanqueCheio(int locacao_tanqueCheio) {
+        this.locacao_tanqueCheio = locacao_tanqueCheio;
+    }
+
+    public PessoaModel getLocacao_pessoa() {
+        return locacao_pessoa;
+    }
+
+    public void setLocacao_pessoa(PessoaModel locacao_pessoa) {
+        this.locacao_pessoa = locacao_pessoa;
     }
 }
