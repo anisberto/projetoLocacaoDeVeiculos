@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class EnderecoDal implements ICRUD_GENERIC<EnderecoModel> {
 
@@ -57,8 +58,10 @@ public class EnderecoDal implements ICRUD_GENERIC<EnderecoModel> {
 
     @Override
     public Iterator getAll() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+        
     }
+    
 
     @Override
     public Object getById(int n) throws Exception {
@@ -89,5 +92,10 @@ public class EnderecoDal implements ICRUD_GENERIC<EnderecoModel> {
     public Object getByNome(String nome) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+     public Object getAllNome() throws Exception {
+        return null;
+         
+     }
 
 }
