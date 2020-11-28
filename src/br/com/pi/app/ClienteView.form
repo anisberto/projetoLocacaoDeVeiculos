@@ -107,6 +107,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnClienteDeletar" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnBuscar" min="-2" pref="132" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnClienteCancelar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnClienteVoltar" max="-2" attributes="0"/>
@@ -118,6 +120,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="btnClienteVoltar" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
@@ -236,6 +242,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClienteAlterarActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnBuscar">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="buscar"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -543,7 +557,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="txtClientesComplemento" min="-2" pref="169" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jComboClientesUF" pref="193" max="32767" attributes="0"/>
+                                          <Component id="cboClientesUF" pref="193" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel9" min="-2" pref="22" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -582,7 +596,7 @@
                               <Component id="txtClientesNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtClientesComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboClientesUF" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboClientesUF" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -629,7 +643,7 @@
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtClientesComplemento">
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboClientesUF">
+                <Component class="javax.swing.JComboBox" name="cboClientesUF">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="28">
