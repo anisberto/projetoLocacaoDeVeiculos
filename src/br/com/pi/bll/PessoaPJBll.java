@@ -7,8 +7,7 @@ import br.com.pi.model.PessoaPJModel;
 
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class PessoaPJBll implements ICRUD_GENERIC {
 
@@ -179,12 +178,6 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             }
         }
 
-        public String imprimeCNPJ(String CNPJ) {
-// máscara do CNPJ: 99.999.999.9999-99
-            return(CNPJ.substring(0, 2) + "." + CNPJ.substring(2, 5) + "." +
-                    CNPJ.substring(5, 8) + "." + CNPJ.substring(8, 12) + "-" +
-                    CNPJ.substring(12, 14));
-        }
     }
 
 
