@@ -1,7 +1,7 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.EnderecoBll1;
-import br.com.pi.dal.EnderecoDal1;
+import br.com.pi.bll.EnderecoBll;
+import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class ClienteView extends javax.swing.JFrame {
 
-    EnderecoBll1 endBll = new EnderecoBll1();
+    EnderecoBll endBll = new EnderecoBll();
     EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
@@ -20,7 +20,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     public ClienteView() throws Exception {
         initComponents();
-        novoEnderecoInter = new EnderecoDal1();
+        novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 
     }
@@ -600,44 +600,46 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
-        if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
-            JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
-        }
-        if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
-            JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
-        }
-        if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
-            JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
-        }
 
         try {
-            EnderecoModel end = new EnderecoModel();
-
-            end.setEndereco_cidade(txtCidade.getText());
-            end.setEndereco_bairro(txtClientesBairro.getText());
-            end.setEndereco_cep(txtClientesCep.getText());
-            end.setEndereco_rua(txtClientesRua.getText());
-            end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
-            end.setEndereco_complemento(txtClientesComplemento.getText());
-            end.setEndereco_estado(String.valueOf(cboClientesUF.getSelectedItem()));
-
-            System.out.println(end);
-            if (incluirEndereco) {
-                novoEnderecoInter.adicionarEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
-                limparEndereco();
+            if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
+                JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
+            }
+            if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número\n"
+                        + "e números positivos!");
+            }
+            if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
+                JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
             } else {
-                end.setEndereco_iden(idDeleteCliente);
-                novoEnderecoInter.updateEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
-                limparEndereco();
+                EnderecoModel end = new EnderecoModel();
+
+                end.setEndereco_cidade(txtCidade.getText());
+                end.setEndereco_bairro(txtClientesBairro.getText());
+                end.setEndereco_cep(txtClientesCep.getText());
+                end.setEndereco_rua(txtClientesRua.getText());
+                end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
+                end.setEndereco_complemento(txtClientesComplemento.getText());
+                end.setEndereco_estado(String.valueOf(cboClientesUF.getSelectedItem()));
+
+                System.out.println(end);
+                if (incluirEndereco) {
+                    novoEnderecoInter.adicionarEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
+                    limparEndereco();
+                } else {
+                    end.setEndereco_iden(idDeleteCliente);
+                    novoEnderecoInter.updateEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
+                    limparEndereco();
 //                enableBuEndereco(false);
 //                System.out.println("Alterado dados de de endereço !!!");
+                }
             }
             consultarEndereco(novoEnderecoInter.getAllEndereco());
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos " + e.getMessage());
         } finally {
             enableBuEndereco(false);
         }
