@@ -1,8 +1,8 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.EnderecoBll1;
-import lixo.EnderecoBll;
-import br.com.pi.dal.EnderecoDal1;
+import br.com.pi.bll.EnderecoBll;
+import lixo.EnderecoBllTeste;
+import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class MotoristaView extends javax.swing.JFrame {
 
-    EnderecoBll1 endBll = new EnderecoBll1();
+    EnderecoBll endBll = new EnderecoBll();
     EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
@@ -21,7 +21,7 @@ public class MotoristaView extends javax.swing.JFrame {
 
     public MotoristaView() throws Exception {
         initComponents();
-        novoEnderecoInter = new EnderecoDal1();
+        novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 //        camposMotoristaDisable();
     }
