@@ -5,22 +5,24 @@ import br.com.pi.bll.VeiculoBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.ModeloModel;
 import br.com.pi.model.VeiculoModel;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class VeiculoView extends javax.swing.JFrame {
-    
+
     ICRUD_GENERIC veiculoInclud;
     ICRUD_GENERIC modeloBll;
     boolean incluir = true;
-    
+
     public VeiculoView() throws Exception {
         initComponents();
         veiculoInclud = new VeiculoBll();
         modeloBll = new ModeloBll();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -71,6 +73,11 @@ public class VeiculoView extends javax.swing.JFrame {
         btnDeletarTable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Veiculos"));
 
@@ -546,7 +553,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 veiculoInclud.add(newVeiculo);
                 JOptionPane.showMessageDialog(null, "Included");
             } else {
-                
+
             }
         } catch (Exception e) {
         } finally {
@@ -582,7 +589,19 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    private void imprimirDadosNaGrid(Iterator conjunto) {
+        DefaultTableModel model = (DefaultTableModel) tableVeiculos.getModel();
+        model.setNumRows(0);
+        while (conjunto.hasNext()) {
+            String[] linha = new String[3];
+            VeiculoModel veiculoGenerate = (VeiculoModel) conjunto.next();
+            linha[0] = veiculoGenerate.getVeiculo_idem() + "";
+            linha[1] = veiculoGenerate.getVeiculo_modelo().getModelo_descricao();
+            linha[2] = veiculoGenerate.getVeiculo_modelo().getModelo_marca().getMarca_descricao();
+            model.addRow(linha);
+            System.out.println(linha);
+        }
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             MarcaView marcaNew = new MarcaView();
@@ -591,7 +610,14 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        try {
+            imprimirDadosNaGrid(veiculoInclud.getAll());
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowActivated
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -693,7 +719,7 @@ public class VeiculoView extends javax.swing.JFrame {
             btnVender.setEnabled(true);
         }
     }
-    
+
     public void clearFields() {
         jcModelo.removeAllItems();
         jcModelo.addItem("Modelo");

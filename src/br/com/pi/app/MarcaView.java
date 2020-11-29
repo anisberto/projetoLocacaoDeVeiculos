@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.pi.app;
 
-/**
- *
- * @author Anisb
- */
+
 public class MarcaView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MarcaView
-     */
     public MarcaView() {
         initComponents();
     }
@@ -245,6 +235,7 @@ public class MarcaView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
@@ -265,8 +256,8 @@ public class MarcaView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-            LoginView login = new LoginView();
-            login.setVisible(true);
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
             this.dispose();
         } catch (Exception e) {
         }
@@ -320,20 +311,14 @@ public class MarcaView extends javax.swing.JFrame {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSalvar10;
     private javax.swing.JButton btnSalvar11;
-    private javax.swing.JButton btnSalvar2;
-    private javax.swing.JButton btnSalvar3;
-    private javax.swing.JButton btnSalvar4;
     private javax.swing.JButton btnSalvar9;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JFormattedTextField jFormattedTextField18;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUsuarios;
     // End of variables declaration//GEN-END:variables

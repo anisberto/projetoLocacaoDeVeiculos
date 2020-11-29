@@ -1,19 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.pi.app;
 
-/**
- *
- * @author Anisb
- */
+
 public class ModeloView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ModeloView
-     */
     public ModeloView() {
         initComponents();
     }
@@ -217,7 +206,7 @@ public class ModeloView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -255,6 +244,7 @@ public class ModeloView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar2ActionPerformed
@@ -271,8 +261,8 @@ public class ModeloView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-            LoginView login = new LoginView();
-            login.setVisible(true);
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
             this.dispose();
         } catch (Exception e) {
         }

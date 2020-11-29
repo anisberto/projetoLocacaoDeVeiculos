@@ -540,8 +540,8 @@ public class MotoristaView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-            LoginView login = new LoginView();
-            login.setVisible(true);
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
             this.dispose();
         } catch (Exception e) {
         }

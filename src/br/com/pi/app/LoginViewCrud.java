@@ -3,9 +3,6 @@ package br.com.pi.app;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
 public class LoginViewCrud extends javax.swing.JFrame {
 
     boolean incluir = true;

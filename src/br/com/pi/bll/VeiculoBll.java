@@ -43,7 +43,7 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
             return veiculoDal.getAll();
         } catch (Exception e) {
         }
-        return null;
+        throw new IllegalArgumentException("Erro Bll");
     }
 
     @Override
