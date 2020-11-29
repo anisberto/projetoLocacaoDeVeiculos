@@ -1,21 +1,27 @@
 package br.com.pi.app;
 
 import br.com.pi.bll.EnderecoBll;
+import br.com.pi.dal.EnderecoDal1;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class MotoristaView extends javax.swing.JFrame {
 
+    EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
-    boolean incluir = true;
+    int idDeleteCliente;
 
     public MotoristaView() throws Exception {
         initComponents();
-        novoEnderecoInter = (EnderecoInterface) new EnderecoBll();
+        novoEnderecoInter = new EnderecoDal1();
+        consultarEndereco(novoEnderecoInter.getAllEndereco());
+//        camposMotoristaDisable();
     }
 
     @SuppressWarnings("unchecked")
@@ -64,9 +70,13 @@ public class MotoristaView extends javax.swing.JFrame {
         txtMotoristaCep = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
         txtMotoristaComplemento = new javax.swing.JFormattedTextField();
-        jComboMotoristaUF = new javax.swing.JComboBox<>();
+        cboMotoristaUF = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtMotoristaNumero = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtIdEndMotorista = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableEndMotorista = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -159,32 +169,28 @@ public class MotoristaView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnIncluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAlterar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDeletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVoltar)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnIncluir)
-                            .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnIncluir)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados dos Motorista"));
@@ -211,7 +217,7 @@ public class MotoristaView extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 77, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,18 +235,18 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField15))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jFormattedTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel2)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +255,7 @@ public class MotoristaView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jFormattedTextField16))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -277,19 +283,21 @@ public class MotoristaView extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -326,14 +334,13 @@ public class MotoristaView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -348,9 +355,47 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jLabel19.setText("Complemento");
 
-        jComboMotoristaUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cboMotoristaUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel3.setText("Número");
+
+        jLabel8.setText("ID");
+
+        txtIdEndMotorista.setEnabled(false);
+
+        tableEndMotorista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "CIDADE", "BAIRRO", "CEP", "RUA", "NUMERO", "COMPLEMENTO", "UF"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableEndMotorista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEndMotoristaMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tableEndMotorista);
+        if (tableEndMotorista.getColumnModel().getColumnCount() > 0) {
+            tableEndMotorista.getColumnModel().getColumn(0).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(1).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(2).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(3).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(4).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(5).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(6).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(7).setResizable(false);
+            tableEndMotorista.getColumnModel().getColumn(7).setPreferredWidth(20);
+        }
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -358,63 +403,71 @@ public class MotoristaView extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMotoristaCidade)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIdEndMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMotoristaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMotoristaBairro)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMotoristaNumero)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMotoristaComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMotoristaBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMotoristaCep, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMotoristaNumero)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMotoristaComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboMotoristaUF, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMotoristaCep)
+                            .addComponent(cboMotoristaUF, 0, 140, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel18)
-                        .addComponent(txtMotoristaCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel17)
-                        .addComponent(txtMotoristaBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(txtMotoristaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtMotoristaCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMotoristaBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtMotoristaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtIdEndMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel19)
                         .addComponent(txtMotoristaComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboMotoristaUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cboMotoristaUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
                         .addComponent(txtMotoristaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -427,7 +480,7 @@ public class MotoristaView extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 983, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -438,9 +491,9 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 221, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -506,15 +559,15 @@ public class MotoristaView extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(108, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addContainerGap(465, Short.MAX_VALUE))
+                .addContainerGap(547, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(66, Short.MAX_VALUE)
+                    .addContainerGap(203, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -535,39 +588,47 @@ public class MotoristaView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     public void limparEnderecoMotorista() {
         txtMotoristaCidade.setText("");
         txtMotoristaBairro.setText("");
         txtMotoristaCep.setText("");
-       txtMotoristaRua.setText("");
+        txtMotoristaRua.setText("");
         txtMotoristaComplemento.setText("");
         txtMotoristaNumero.setText("");
-        jComboMotoristaUF.setSelectedItem("<Selecione UF>");
+        cboMotoristaUF.setSelectedItem("<Selecione UF>");
+        txtIdEndMotorista.setText("");
     }
-    
+
     private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
 
     }//GEN-LAST:event_jTableUsuariosMouseClicked
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
+        try {
+            incluirEndereco = false;
+            enableBuEndereco(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-         //enableButtFields(false);
-         EnderecoModel end = new EnderecoModel();
+        //enableButtFields(false);      
+        if (txtMotoristaCidade.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor, digite um numero.");
+        }
 
-        if (jComboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
-            JOptionPane.showMessageDialog(null, "Opção inválida !!!");
+        if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
+            JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
         }
         try {
+            EnderecoModel end = new EnderecoModel();
 
             end.setEndereco_cidade(txtMotoristaCidade.getText());
             end.setEndereco_bairro(txtMotoristaBairro.getText());
@@ -575,16 +636,24 @@ public class MotoristaView extends javax.swing.JFrame {
             end.setEndereco_rua(txtMotoristaRua.getText());
             end.setEndereco_complemento(txtMotoristaComplemento.getText());
             end.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
-
-            end.setEndereco_estado(String.valueOf(jComboMotoristaUF.getSelectedItem()));
+            end.setEndereco_estado(String.valueOf(cboMotoristaUF.getSelectedItem()));
 
             System.out.println(end);
             if (incluirEndereco) {
                 novoEnderecoInter.adicionarEndereco(end);
-                limparEnderecoMotorista();
-            }
+                JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
 
+            } else {
+                end.setEndereco_iden(idDeleteCliente);
+                novoEnderecoInter.updateEndereco(end);
+                JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
+
+            }
+            consultarEndereco(novoEnderecoInter.getAllEndereco());
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            enableBuEndereco(false);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -594,13 +663,15 @@ public class MotoristaView extends javax.swing.JFrame {
             login.setVisible(true);
             this.dispose();
         } catch (Exception e) {
+
         }
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
+            enderecoEnableButtons(false);
             enableButtFields(false);
-            incluir = true;
+            //incluir = true;
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -611,7 +682,7 @@ public class MotoristaView extends javax.swing.JFrame {
 //            incluir = true;
 //        } catch (Exception e) {
 //        }
-try {
+        try {
             limparEnderecoMotorista();
             incluirEndereco = true;
             enderecoMotoristaEnableButtons(true);
@@ -620,12 +691,37 @@ try {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-
+        try {
+            if (txtIdEndMotorista.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Selecione um ID na Tabela", "Selecione:", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a exclusão do endereço: " + txtMotoristaCidade.getText(), "EXCLUSÃO",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+                if (conf == 0) {
+                    novoEnderecoInter.deleteEndereco(idDeleteCliente);
+                    limparEnderecoMotorista();
+                    JOptionPane.showMessageDialog(null, "Endereço deletado(o) com sucesso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Exclusão Cancelada!");
+                }
+            }
+            // edivan
+            consultarEndereco(novoEnderecoInter.getAllEndereco());
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void jTableUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableUsuarios1MouseClicked
+
+    private void tableEndMotoristaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEndMotoristaMouseClicked
+        try {
+            Integer codigo = Integer.parseInt(tableEndMotorista.getValueAt(tableEndMotorista.getSelectedRow(), 0).toString());
+            transferirDadosEndereco();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_tableEndMotoristaMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -672,10 +768,10 @@ try {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> cboMotoristaUF;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboMotoristaUF;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField15;
     private javax.swing.JFormattedTextField jFormattedTextField16;
@@ -695,6 +791,7 @@ try {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -706,11 +803,14 @@ try {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableUsuarios;
     private javax.swing.JTable jTableUsuarios1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tableEndMotorista;
+    private javax.swing.JTextField txtIdEndMotorista;
     private javax.swing.JFormattedTextField txtMotoristaBairro;
     private javax.swing.JFormattedTextField txtMotoristaCep;
     private javax.swing.JFormattedTextField txtMotoristaCidade;
@@ -737,6 +837,7 @@ try {
             btnImagem.setEnabled(false);
         }
     }
+
     private void enderecoMotoristaEnableButtons(boolean butt) {
         if (butt) {
             btnIncluir.setEnabled(false);
@@ -748,6 +849,7 @@ try {
             txtMotoristaCidade.setEnabled(true);
             txtMotoristaBairro.setEnabled(true);
             txtMotoristaCep.setEnabled(true);
+            txtMotoristaNumero.setEnabled(true);
             txtMotoristaRua.setEnabled(true);
             txtMotoristaComplemento.setEnabled(true);
 
@@ -761,8 +863,127 @@ try {
             txtMotoristaBairro.setEnabled(false);
             txtMotoristaCep.setEnabled(false);
             txtMotoristaRua.setEnabled(false);
+            txtMotoristaNumero.setEnabled(false);
             txtMotoristaComplemento.setEnabled(false);
 
         }
+    }
+
+    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
+        DefaultTableModel modelo = (DefaultTableModel) tableEndMotorista.getModel();
+        modelo.setNumRows(0);
+
+        for (int pos = 0; pos < lista.size(); pos++) {
+            String[] linha = new String[8];
+            EnderecoModel aux = lista.get(pos);
+            linha[0] = aux.getEndereco_iden() + "";
+            linha[1] = aux.getEndereco_cidade() + "";
+            linha[2] = aux.getEndereco_bairro() + "";
+            linha[3] = aux.getEndereco_cep() + "";
+            linha[4] = aux.getEndereco_rua() + "";
+            linha[5] = aux.getEndereco_numero() + "";
+            linha[6] = aux.getEndereco_complemento() + "";
+            linha[7] = aux.getEndereco_estado() + "";
+            modelo.addRow(linha);
+        }
+    }
+
+    private void enderecoEnableButtons(boolean butt) {
+        if (butt) {
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnDeletar.setEnabled(false);
+            btnSalvar.setEnabled(true);
+
+            txtMotoristaCidade.setEnabled(true);
+            txtMotoristaBairro.setEnabled(true);
+            txtMotoristaCep.setEnabled(true);
+            txtMotoristaRua.setEnabled(true);
+            txtMotoristaComplemento.setEnabled(true);
+            txtMotoristaNumero.setEnabled(true);
+            //txt.setEnabled(true);
+
+        } else {
+            btnIncluir.setEnabled(true);
+            btnAlterar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnDeletar.setEnabled(true);
+
+            txtMotoristaCidade.setEnabled(false);
+            txtMotoristaBairro.setEnabled(false);
+            txtMotoristaCep.setEnabled(false);
+            txtMotoristaRua.setEnabled(false);
+            txtMotoristaComplemento.setEnabled(false);
+            txtMotoristaNumero.setEnabled(false);
+            //txt.setEnabled(true);
+
+            limparEnderecoMotorista();
+
+        }
+    }
+
+//    public void camposMotoristaDisable() {
+//        txtMotoristaCidade.setEnabled(false);
+//        txtMotoristaBairro.setEnabled(false);
+//        txtMotoristaCep.setEnabled(false);
+//        txtMotoristaRua.setEnabled(false);
+//        txtMotoristaComplemento.setEnabled(false);
+//        txtMotoristaNumero.setEnabled(false);
+//    }
+    private void enableBuEndereco(boolean butt) {
+        if (butt) {
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnDeletar.setEnabled(false);
+            btnSalvar.setEnabled(true);
+
+            txtMotoristaCidade.setEnabled(true);
+            txtMotoristaBairro.setEnabled(true);
+            txtMotoristaCep.setEnabled(true);
+            txtMotoristaRua.setEnabled(true);
+            txtMotoristaComplemento.setEnabled(true);
+            txtMotoristaNumero.setEnabled(true);
+            //txt.setEnabled(true);
+
+        } else {
+
+            btnIncluir.setEnabled(true);
+            btnAlterar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnDeletar.setEnabled(true);
+            btnSalvar.setEnabled(false);
+
+            txtMotoristaCidade.setEnabled(false);
+            txtMotoristaBairro.setEnabled(false);
+            txtMotoristaCep.setEnabled(false);
+            txtMotoristaRua.setEnabled(false);
+            txtMotoristaComplemento.setEnabled(false);
+            txtMotoristaNumero.setEnabled(false);
+            //txt.setEnabled(true);
+
+            //limparEndereco();
+        }
+    }
+
+    private void transferirDadosEndereco() {
+        try {
+            int codigo = Integer.parseInt(tableEndMotorista.getValueAt(tableEndMotorista.getSelectedRow(), 0).toString());
+            EnderecoModel deleteEnd = novoEnderecoInter.getEnderecoById(codigo);
+            idDeleteCliente = codigo;
+
+            txtMotoristaCidade.setText(deleteEnd.getEndereco_cidade());
+            txtMotoristaBairro.setText(deleteEnd.getEndereco_bairro());
+            txtMotoristaCep.setText(deleteEnd.getEndereco_cep());
+            txtMotoristaRua.setText(deleteEnd.getEndereco_rua());
+            txtMotoristaNumero.setText(deleteEnd.getEndereco_numero() + "");
+            txtMotoristaComplemento.setText(deleteEnd.getEndereco_complemento());
+            cboMotoristaUF.setSelectedItem(deleteEnd.getEndereco_estado());
+            txtIdEndMotorista.setText(deleteEnd.getEndereco_iden() + "");
+
+        } catch (Exception e) {
+        }
+
     }
 }
