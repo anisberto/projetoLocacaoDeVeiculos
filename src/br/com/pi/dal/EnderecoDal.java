@@ -13,26 +13,29 @@ import java.util.ArrayList;
 public class EnderecoDal implements ICRUD_GENERIC<EnderecoModel> {
 
     private Connection conect;
-
+    private EnderecoModel end;
+    
     public EnderecoDal() throws Exception {
         this.conect = Conexao.getInstance().getConnection();
     }
 
     @Override
     public void add(EnderecoModel objeto) throws Exception {
+        end = objeto;
         try {
+            
             PreparedStatement ps = conect.prepareStatement("INSERT INTO endereco (\n"
                     + "	endereco_cep, endereco_cidade, endereco_bairro, endereco_rua,"
                     + " endereco_numero, endereco_complemento, endereco_estado)\n"
                     + "	VALUES (?, ?, ?, ?, ?, ?, ?);");
 
-            ps.setString(1, objeto.getEndereco_cep());
-            ps.setString(2, objeto.getEndereco_cidade());
-            ps.setString(3, objeto.getEndereco_bairro());
-            ps.setString(4, objeto.getEndereco_rua());
-            ps.setObject(5, objeto.getEndereco_numero());
-            ps.setString(6, objeto.getEndereco_complemento());
-            ps.setString(7, objeto.getEndereco_estado());
+            ps.setString(1, end.getEndereco_cep());
+            ps.setString(2, end.getEndereco_cidade());
+            ps.setString(3, end.getEndereco_bairro());
+            ps.setString(4, end.getEndereco_rua());
+            ps.setObject(5, end.getEndereco_numero());
+            ps.setString(6, end.getEndereco_complemento());
+            ps.setString(7, end.getEndereco_estado());
             ps.executeUpdate();
 
         } catch (Exception e) {
