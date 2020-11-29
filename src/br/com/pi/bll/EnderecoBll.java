@@ -3,11 +3,7 @@ package br.com.pi.bll;
 import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.ICRUD_GENERIC;
-import java.util.ArrayList;
-import interfaces.EnderecoInterface;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class EnderecoBll implements ICRUD_GENERIC {
 
@@ -65,6 +61,18 @@ public class EnderecoBll implements ICRUD_GENERIC {
                 throw new Exception("Cep inválido");
             }
         }
+    }
+    
+    public static boolean validarNumeros(String dados){
+        return dados.matches("[0-9]*");
+    }
+    
+    public static boolean validarNumerosCEP(String dados){
+        return dados.matches("[0-9]*(8,8)");
+    }
+    
+    public static boolean validarNomes(String dados){
+        return dados.matches("[a-zA-Z]*");
     }
 
 }
