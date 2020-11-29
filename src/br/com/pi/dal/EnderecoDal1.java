@@ -1,5 +1,6 @@
 package br.com.pi.dal;
 
+import lixo.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.Conexao;
 import java.sql.Connection;
