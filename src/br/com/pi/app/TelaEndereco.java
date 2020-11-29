@@ -1,6 +1,6 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.EnderecoBll;
+import lixo.EnderecoBll;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.ICRUD_GENERIC;
 import interfaces.EnderecoInterface;
