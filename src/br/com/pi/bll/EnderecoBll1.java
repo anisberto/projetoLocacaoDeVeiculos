@@ -42,30 +42,27 @@ public class EnderecoBll1 implements EnderecoInterface {
     public EnderecoModel findEnderecoName(String cep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     /**
-     * Validação do CEP
-     *
-     * @param objeto
-     * @throws Exception
+     * Validações de apenas números
+     * @param dados
+     * @return 
      */
-    private void validaEndereco(EnderecoModel objeto) throws Exception {
-        String nome = objeto.getEndereco_cep().trim().toLowerCase();
-        String invalidos = "abcdefghijklmnopqrstuvxwyz'\"!@#$%¨&*()_+={[}]/?><;:";
-        for (int i = 0; i < invalidos.length(); i++) {
-            if (nome.contains("" + invalidos.charAt(i))) {
-                throw new Exception("Cep inválido");
-            }
-        }
-    }
     public static boolean validarNumeros(String dados){
         return dados.matches("[0-9]*");
     }
-    
+    /**
+     * Validações de apenas o número do CEP com 8 números
+     * @param dados
+     * @return 
+     */
     public static boolean validarNumerosCEP(String dados){
         return dados.matches("[0-9]*(8,8)");
     }
-    
+    /**
+     * Valida apenas nome de a-z A-Z
+     * @param dados
+     * @return 
+     */
     public static boolean validarNomes(String dados){
         return dados.matches("[a-zA-Z]*");
     }
