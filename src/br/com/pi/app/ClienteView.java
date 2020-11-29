@@ -1,6 +1,6 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.EnderecoBll;
+import br.com.pi.bll.EnderecoBll1;
 import br.com.pi.dal.EnderecoDal1;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class ClienteView extends javax.swing.JFrame {
 
-    EnderecoBll endBll = new EnderecoBll();
+    EnderecoBll1 endBll = new EnderecoBll1();
     EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
