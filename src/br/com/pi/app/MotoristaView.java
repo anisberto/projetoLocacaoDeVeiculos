@@ -1,5 +1,6 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.EnderecoBll1;
 import lixo.EnderecoBll;
 import br.com.pi.dal.EnderecoDal1;
 import br.com.pi.model.EnderecoModel;
@@ -12,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class MotoristaView extends javax.swing.JFrame {
 
+    EnderecoBll1 endBll = new EnderecoBll1();
     EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
@@ -619,9 +621,12 @@ public class MotoristaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        //enableButtFields(false);      
-        if (txtMotoristaCidade.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Por favor, digite um numero.");
+        //enableButtFields(false); 
+        if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())){
+            JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
+        }
+        if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim())) {
+            JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
         }
 
         if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
