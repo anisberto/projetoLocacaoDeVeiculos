@@ -1,6 +1,6 @@
 package br.com.pi.bll;
 
-import br.com.pi.dal.EnderecoDal;
+import lixo.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
 import java.util.ArrayList;
@@ -58,5 +58,15 @@ public class EnderecoBll1 implements EnderecoInterface {
             }
         }
     }
-
+    public static boolean validarNumeros(String dados){
+        return dados.matches("[0-9]*");
+    }
+    
+    public static boolean validarNumerosCEP(String dados){
+        return dados.matches("[0-9]*(8,8)");
+    }
+    
+    public static boolean validarNomes(String dados){
+        return dados.matches("[a-zA-Z]*");
+    }
 }
