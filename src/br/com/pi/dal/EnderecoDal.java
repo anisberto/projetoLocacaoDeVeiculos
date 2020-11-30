@@ -29,7 +29,7 @@ public class EnderecoDal implements EnderecoInterface {
                     + "endereco_cep, endereco_cidade, endereco_bairro, "
                     + "endereco_rua, endereco_numero, endereco_complemento, "
                     + "endereco_estado, endereco_pessoas_idem)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, 1);";
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = conect.prepareStatement(sql);
             ps.setString(1, endereco.getEndereco_cep());
@@ -39,7 +39,7 @@ public class EnderecoDal implements EnderecoInterface {
             ps.setObject(5, endereco.getEndereco_numero());
             ps.setString(6, endereco.getEndereco_complemento());
             ps.setString(7, endereco.getEndereco_estado());
-            //ps.setObject(8, endereco.getEndereco_pessoa().getPessoa_idem());            
+            ps.setObject(8, endereco.getEndereco_pessoa().getPessoa_idem());            
             //ps.setObject(8, endereco.getEndereco_motorista().getMotorista_idem());
             ps.executeUpdate();
         } catch (Exception e) {

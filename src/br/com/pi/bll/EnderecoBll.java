@@ -43,34 +43,40 @@ public class EnderecoBll implements EnderecoInterface {
     public EnderecoModel findEnderecoName(String cep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     /**
      * Validações de apenas números com 5 casas
+     *
      * @param dados
-     * @return 
+     * @return
      */
-    public static boolean validarNumeros(String dados){
-        return dados.matches("[0-9]*(1,5)");
+    public static boolean validarNumeros(String dados) {
+        return dados.matches("[0-9]*");
     }
+
     /**
      * Validações de apenas o número do CEP com 8 números
+     *
      * @param dados
-     * @return 
+     * @return
      */
-    public static boolean validarNumerosCEP(String dados){
-        return dados.matches("[0-9]*(8)");
+    public static boolean validarNumerosCEP(String dados) {
+        return dados.matches("\\d\\d\\d\\d\\d\\d\\d\\d");
+        //return dados.matches("[0-9]+8");
     }
+
     /**
      * Valida apenas nome de a-z A-Z
+     *
      * @param dados
-     * @return 
+     * @return
      */
-    public static boolean validarNomes(String dados){
+    public static boolean validarNomes(String dados) {
         return dados.matches("[a-zA-Z]*");
     }
-    
-    public static boolean validarNumerosInt(String dados){
+
+    public static boolean validarNumerosInt(String dados) {
         return dados.matches("^-[0-9]+?");
     }
-    
-    
+
 }
