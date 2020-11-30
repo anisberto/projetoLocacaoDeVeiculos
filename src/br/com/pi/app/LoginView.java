@@ -1,5 +1,7 @@
 package br.com.pi.app;
 
+import javax.swing.JOptionPane;
+
 public class LoginView extends javax.swing.JFrame {
 
     public LoginView() {
@@ -189,9 +191,14 @@ public class LoginView extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            LoginViewCrud loginCrud = new LoginViewCrud();
-            loginCrud.setVisible(true);
-            dispose();
+            String user = JOptionPane.showInputDialog(null, "Login Master", "Acesso Restrito", JOptionPane.INFORMATION_MESSAGE);
+            if (user.equalsIgnoreCase("Master")) {
+                LoginViewCrud loginCrud = new LoginViewCrud();
+                loginCrud.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Credencias Negadas", "Acesso Não permitido", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
