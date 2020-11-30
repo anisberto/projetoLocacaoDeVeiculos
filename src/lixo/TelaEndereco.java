@@ -1,13 +1,10 @@
 package lixo;
 
-import lixo.EnderecoBllTeste;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
-import br.com.pi.util.ICRUD_GENERIC;
-import interfaces.EnderecoInterface;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaEndereco extends javax.swing.JFrame {

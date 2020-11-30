@@ -1,9 +1,7 @@
 package lixo;
 
-import lixo.EnderecoBllTeste;
 import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
-import br.com.pi.util.ICRUD_GENERIC;
 import interfaces.EnderecoInterface;
 import java.util.List;
 import java.util.logging.Level;
