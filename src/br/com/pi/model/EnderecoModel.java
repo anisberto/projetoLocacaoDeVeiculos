@@ -2,22 +2,31 @@ package br.com.pi.model;
 
 public class EnderecoModel {
 
-    private int endereco_idem;
+    private int endereco_iden;
     private String endereco_cep;
-    private String enrederco_cidade;
+    private String endereco_cidade;
     private String endereco_bairro;
     private String endereco_rua;
-    private String endereco_numero;
+    private int endereco_numero;
     private String endereco_complemento;
+    private String endereco_estado;
     private PessoaModel endereco_pessoa;
     private MotoristaModel endereco_motorista;
 
-    public int getEndereco_idem() {
-        return endereco_idem;
+    public String getEndereco_estado() {
+        return endereco_estado;
     }
 
-    public void setEndereco_idem(int endereco_idem) {
-        this.endereco_idem = endereco_idem;
+    public void setEndereco_estado(String endereco_estado) {
+        this.endereco_estado = endereco_estado;
+    }
+
+    public int getEndereco_iden() {
+        return endereco_iden;
+    }
+
+    public void setEndereco_iden(int endereco_iden) {
+        this.endereco_iden = endereco_iden;
     }
 
     public String getEndereco_cep() {
@@ -28,12 +37,12 @@ public class EnderecoModel {
         this.endereco_cep = endereco_cep;
     }
 
-    public String getEnrederco_cidade() {
-        return enrederco_cidade;
+    public String getEndereco_cidade() {
+        return endereco_cidade;
     }
 
-    public void setEnrederco_cidade(String enrederco_cidade) {
-        this.enrederco_cidade = enrederco_cidade;
+    public void setEndereco_cidade(String endereco_cidade) {
+        this.endereco_cidade = endereco_cidade;
     }
 
     public String getEndereco_bairro() {
@@ -52,11 +61,11 @@ public class EnderecoModel {
         this.endereco_rua = endereco_rua;
     }
 
-    public String getEndereco_numero() {
+    public int getEndereco_numero() {
         return endereco_numero;
     }
 
-    public void setEndereco_numero(String endereco_numero) {
+    public void setEndereco_numero(int endereco_numero) {
         this.endereco_numero = endereco_numero;
     }
 
@@ -83,4 +92,5 @@ public class EnderecoModel {
     public void setEndereco_motorista(MotoristaModel endereco_motorista) {
         this.endereco_motorista = endereco_motorista;
     }
+
 }
