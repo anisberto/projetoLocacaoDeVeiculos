@@ -39,7 +39,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             prep.setString(8, objeto.getVeiculo_tipoCombustivel());
             prep.setString(9, objeto.getVeiculo_tipoVeiculo());
             prep.setString(10, objeto.getVeiculo_situacaoVeiculo());
-//            prep.setInt(11, objeto.getVeiculo_modelo().getModelo_idem());
+            prep.setInt(11, objeto.getVeiculo_modelo().getModelo_idem());
             prep.executeUpdate();
         } catch (Exception e) {
         }

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.html.HTMLDocument;
 
 public class VeiculoView extends javax.swing.JFrame {
 
@@ -558,6 +559,11 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (Exception e) {
         } finally {
             enableButtFields(false);
+            try {
+                imprimirDadosNaGrid(veiculoInclud.getAll());
+            } catch (Exception ex) {
+                Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -592,15 +598,14 @@ public class VeiculoView extends javax.swing.JFrame {
     private void imprimirDadosNaGrid(Iterator conjunto) {
         DefaultTableModel model = (DefaultTableModel) tableVeiculos.getModel();
         model.setNumRows(0);
+        String[] linha = new String[3];
         while (conjunto.hasNext()) {
-            String[] linha = new String[3];
             VeiculoModel veiculoGenerate = (VeiculoModel) conjunto.next();
             linha[0] = veiculoGenerate.getVeiculo_idem() + "";
-            linha[1] = veiculoGenerate.getVeiculo_modelo().getModelo_descricao();
-            linha[2] = veiculoGenerate.getVeiculo_modelo().getModelo_marca().getMarca_descricao();
-            model.addRow(linha);
-            System.out.println(linha);
+            linha[1] = veiculoGenerate.getVeiculo_situacaoVeiculo();
+            linha[2] = veiculoGenerate.getVeiculo_tipoCombustivel();
         }
+        model.addRow(linha);
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {

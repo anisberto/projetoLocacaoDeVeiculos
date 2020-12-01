@@ -1,8 +1,10 @@
 package br.com.pi.model;
 
 public class AdministradorModel {
+
     private int administrador_idem;
     private String administrador_nome;
+    private String administrador_usuario;
     private String administrador_senha;
 
     public int getAdministrador_idem() {
@@ -19,6 +21,14 @@ public class AdministradorModel {
 
     public void setAdministrador_nome(String administrador_nome) {
         this.administrador_nome = administrador_nome;
+    }
+
+    public String getAdministrador_usuario() {
+        return administrador_usuario;
+    }
+
+    public void setAdministrador_usuario(String administrador_usuario) {
+        this.administrador_usuario = administrador_usuario;
     }
 
     public String getAdministrador_senha() {

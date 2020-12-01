@@ -24,11 +24,12 @@ public class AdministradorDal implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         administradorModel = (AdministradorModel) objeto;
-        String sql = "INSERT INTO administrador (adm_nome, adm_senha)" +
-                "VALUES (?,?)";
+        String sql = "INSERT INTO administrador (adm_nome, adm_senha,adm_usuario)" +
+                "VALUES (?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,administradorModel.getAdministrador_nome());
         ps.setObject(2,administradorModel.getAdministrador_senha());
+        ps.setObject(3,administradorModel.getAdministrador_usuario());
         ps.executeUpdate();
     }
 
@@ -38,19 +39,18 @@ public class AdministradorDal implements ICRUD_GENERIC {
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,n);
         ps.executeUpdate();
-
     }
 
     @Override
     public void update(Object objeto) throws Exception {
-        String sql = "UPDATE administrador SET adm_nome =?, adm_senha=?" +
+        String sql = "UPDATE administrador SET adm_nome =?, adm_senha=?,adm_usuario=?" +
                 " WHERE adm_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,administradorModel.getAdministrador_nome());
         ps.setObject(2,administradorModel.getAdministrador_senha());
-        ps.setObject(3, administradorModel.getAdministrador_idem());
+        ps.setObject(3, administradorModel.getAdministrador_usuario());
+        ps.setObject(4, administradorModel.getAdministrador_idem());
         ps.executeUpdate();
-
     }
 
     @Override
@@ -61,32 +61,27 @@ public class AdministradorDal implements ICRUD_GENERIC {
         ResultSet rs = st.executeQuery(sql);
         while(rs.next()){
             administradorModel = new AdministradorModel();
-
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
             administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
-
+            administradorModel.setAdministrador_usuario(rs.getString("adm_usuario"));
             list.add(administradorModel);
-
         }
-
         return list.iterator();
     }
 
     @Override
     public Object getById(int n) throws Exception {
         String sql = "SELECT * FROM administrador WHERE adm_idem=?";
-
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,n);
         ResultSet rs = preparedStatement.executeQuery();
-
         if(rs.next()){
             administradorModel = new AdministradorModel();
-
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
             administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
+            administradorModel.setAdministrador_usuario(rs.getString("adm_usuario"));
         }
         return administradorModel;
     }
@@ -94,17 +89,15 @@ public class AdministradorDal implements ICRUD_GENERIC {
     @Override
     public Object getByNome(String nome) throws Exception {
         String sql = "SELECT * FROM administrador WHERE adm_nome=?";
-
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,nome);
         ResultSet rs = preparedStatement.executeQuery();
-
         if(rs.next()){
             administradorModel = new AdministradorModel();
-
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
             administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
+            administradorModel.setAdministrador_usuario(rs.getString("adm_usuario"));
         }
         return administradorModel;
     }

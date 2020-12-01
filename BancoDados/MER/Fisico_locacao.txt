@@ -177,3 +177,7 @@ ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
     REFERENCES veiculos (veiculo_idem)
     ON DELETE SET NULL;
  
+
+/------ Alterações DB -----/
+
+alter table administrador add column adm_usuario varchar(50);
