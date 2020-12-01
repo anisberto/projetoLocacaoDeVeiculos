@@ -20,6 +20,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     public ClienteView() throws Exception {
         initComponents();
+        enderecoEnableButtons(false);
         novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 
@@ -603,14 +604,15 @@ public class ClienteView extends javax.swing.JFrame {
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
 
         try {
+            
             if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
-                JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
-            }
-            if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número\n"
-                        + "e números positivos!");
-            }
-            if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
+                JOptionPane.showMessageDialog(rootPane, "CAMPO: Cep, Com 8 números Inteiros: '0-9'");
+                txtClientesCep.setText("");
+
+            } else if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");
+                txtClientesNumero.setText("");
+            } else if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
                 JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
             } else {
                 EnderecoModel end = new EnderecoModel();
@@ -622,6 +624,7 @@ public class ClienteView extends javax.swing.JFrame {
                 end.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
                 end.setEndereco_complemento(txtClientesComplemento.getText());
                 end.setEndereco_estado(String.valueOf(cboClientesUF.getSelectedItem()));
+//                end.setEndereco_pessoa(endereco_pessoa);
 
                 System.out.println(end);
                 if (incluirEndereco) {
@@ -641,9 +644,10 @@ public class ClienteView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos " + e.getMessage());
-        } finally {
-            enableBuEndereco(false);
-        }
+        } 
+//        finally {
+//            enableBuEndereco(false);
+//        }
 
     }//GEN-LAST:event_btnClientesSalvarActionPerformed
 
