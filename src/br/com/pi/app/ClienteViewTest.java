@@ -24,8 +24,7 @@ public class ClienteViewTest extends javax.swing.JFrame {
         initComponents();
         enderecoEnableButtons(false);
         
-        novoEnderecoInter = new EnderecoDaltest();
-        
+        novoEnderecoInter = new EnderecoDaltest();        
         consultarEndereco(novoEnderecoInter.getAll());
 
     }
@@ -685,8 +684,10 @@ public class ClienteViewTest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteIncluirActionPerformed
 
     private void btnClienteDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteDeletarActionPerformed
+
+//txtId.getText().isEmpty()
         try {
-            if (txtId.getText().isEmpty()) {
+            if (!txtId.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Selecione um ID na Tabela", "Selecione:", JOptionPane.ERROR_MESSAGE);
             } else {
                 int conf = JOptionPane.showConfirmDialog(null, "Confirmar a exclusão do endereço: " + txtCidade.getText(), "EXCLUSÃO",
