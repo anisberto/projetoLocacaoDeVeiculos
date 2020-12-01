@@ -6,7 +6,7 @@ import br.com.pi.model.AdministradorModel;
 
 import java.util.Iterator;
 
-public class AdministradorBll implements ICRUD_GENERIC {
+public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
     AdministradorDal dal;
 
     public AdministradorBll() throws Exception {
@@ -14,7 +14,7 @@ public class AdministradorBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(AdministradorModel objeto) throws Exception {
         try {
             validaadm((AdministradorModel) objeto);
             dal.add(objeto);
@@ -36,9 +36,9 @@ public class AdministradorBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(AdministradorModel objeto) throws Exception {
         try {
-            validaadm((AdministradorModel) objeto);
+            validaadm(objeto);
             dal.update(objeto);
         } catch (Exception e) {
             throw e;
@@ -55,7 +55,7 @@ public class AdministradorBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public AdministradorModel getById(int n) throws Exception {
         try {
             return dal.getById(n);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class AdministradorBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public AdministradorModel getByNome(String nome) throws Exception {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {
@@ -97,7 +97,6 @@ public class AdministradorBll implements ICRUD_GENERIC {
                     equalsIgnoreCase(aux.getAdministrador_nome().toUpperCase()))) {
                 throw new Exception("O nom --> " + objeto.getAdministrador_nome() + "\nJá existe no cadastro de Administradores!\n");
             }
-
         }
     }
 }

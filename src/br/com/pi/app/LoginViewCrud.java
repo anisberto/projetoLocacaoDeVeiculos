@@ -1,15 +1,23 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.AdministradorBll;
+import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.AdministradorModel;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class LoginViewCrud extends javax.swing.JFrame {
 
     boolean incluir = true;
+    ICRUD_GENERIC inclurUsuario;
+    int idDelete;
 
     public LoginViewCrud() throws Exception {
         initComponents();
-
+        inclurUsuario = new AdministradorBll();
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +56,7 @@ public class LoginViewCrud extends javax.swing.JFrame {
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/salve-24.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSalvar.setEnabled(false);
         btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalvar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -128,7 +137,7 @@ public class LoginViewCrud extends javax.swing.JFrame {
                 .addComponent(btnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVoltar)
@@ -226,7 +235,15 @@ public class LoginViewCrud extends javax.swing.JFrame {
             new String [] {
                 "NOME", "LOGIN", "ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableUsuariosMouseClicked(evt);
@@ -282,12 +299,39 @@ public class LoginViewCrud extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+        try {
+            if (!txtLogin.getText().isEmpty() && !txtNome.getText().isEmpty() && !txtSenha.getPassword().toString().isEmpty()) {
+                AdministradorModel adm = new AdministradorModel();
+                adm.setAdministrador_nome(txtNome.getText());
+                adm.setAdministrador_usuario(txtLogin.getText());
+                adm.setAdministrador_senha(String.copyValueOf(txtSenha.getPassword()));
+                if (incluir) {
+                    inclurUsuario.add(adm);
+                    JOptionPane.showMessageDialog(null, "Usuario Cadastrado com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    adm.setAdministrador_idem(Integer.parseInt(jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 2).toString()));
+                    inclurUsuario.update(adm);
+                    JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(adm);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+        } finally {
+            enableButt(false);
+            try {
+                imprimirDadosNaGrid(inclurUsuario.getAll());
+            } catch (Exception ex) {
+                Logger.getLogger(LoginViewCrud.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         try {
-            ContratoEnableButtons(true);
+            clearFields();
+            enableButt(true);
             incluir = true;
         } catch (Exception e) {
         }
@@ -295,7 +339,7 @@ public class LoginViewCrud extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
-            ContratoEnableButtons(false);
+            enableButt(false);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -308,16 +352,29 @@ public class LoginViewCrud extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnVoltarActionPerformed
-    private void imprimirDadosNaGrid(Iterator conjunto){
+    private void imprimirDadosNaGrid(Iterator conjunto) {
+        DefaultTableModel model = (DefaultTableModel) jTableUsuarios.getModel();
+        model.setNumRows(0);
+        while (conjunto.hasNext()) {
+            String[] linha = new String[3];
+            AdministradorModel objetoAluno = (AdministradorModel) conjunto.next();
+            linha[0] = objetoAluno.getAdministrador_nome();
+            linha[1] = objetoAluno.getAdministrador_usuario();
+            linha[2] = objetoAluno.getAdministrador_idem() + "";
 
+            model.addRow(linha);
+        }
     }
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
 
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
-            ContratoEnableButtons(true);
+            enableButt(true);
             incluir = false;
         } catch (Exception e) {
         }
@@ -332,11 +389,18 @@ public class LoginViewCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonShowSenhaActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-
+        try {
+            imprimirDadosNaGrid(inclurUsuario.getAll());
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
-
+        try {
+            int id = Integer.parseInt(jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 2).toString());
+            transFerirDados(id);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jTableUsuariosMouseClicked
 
     public static void main(String args[]) {
@@ -397,7 +461,7 @@ public class LoginViewCrud extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 
-    private void ContratoEnableButtons(boolean butt) {
+    private void enableButt(boolean butt) {
         if (butt) {
             btnIncluir.setEnabled(false);
             btnAlterar.setEnabled(false);
@@ -434,7 +498,11 @@ public class LoginViewCrud extends javax.swing.JFrame {
 
     private void transFerirDados(int codigo) {
         try {
-
+            AdministradorModel adm = (AdministradorModel) inclurUsuario.getById(codigo);
+            txtLogin.setText(adm.getAdministrador_usuario());
+            txtNome.setText(adm.getAdministrador_nome());
+            txtSenha.setText(adm.getAdministrador_senha());
+            idDelete = codigo;
         } catch (Exception e) {
         }
     }

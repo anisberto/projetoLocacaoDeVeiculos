@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class AdministradorDal implements ICRUD_GENERIC {
+public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
 
     private Connection conexao;
     AdministradorModel administradorModel;
@@ -22,14 +22,14 @@ public class AdministradorDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(AdministradorModel objeto) throws Exception {
         administradorModel = (AdministradorModel) objeto;
-        String sql = "INSERT INTO administrador (adm_nome, adm_senha,adm_usuario)" +
-                "VALUES (?,?,?)";
+        String sql = "INSERT INTO administrador (adm_nome, adm_senha,adm_usuario)"
+                + "VALUES (?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1,administradorModel.getAdministrador_nome());
-        ps.setObject(2,administradorModel.getAdministrador_senha());
-        ps.setObject(3,administradorModel.getAdministrador_usuario());
+        ps.setObject(1, administradorModel.getAdministrador_nome());
+        ps.setObject(2, administradorModel.getAdministrador_senha());
+        ps.setObject(3, administradorModel.getAdministrador_usuario());
         ps.executeUpdate();
     }
 
@@ -37,17 +37,17 @@ public class AdministradorDal implements ICRUD_GENERIC {
     public void delete(int n) throws Exception {
         String sql = "DELETE FROM administrador WHERE adm_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1,n);
+        ps.setObject(1, n);
         ps.executeUpdate();
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
-        String sql = "UPDATE administrador SET adm_nome =?, adm_senha=?,adm_usuario=?" +
-                " WHERE adm_idem =?";
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1,administradorModel.getAdministrador_nome());
-        ps.setObject(2,administradorModel.getAdministrador_senha());
+    public void update(AdministradorModel objeto) throws Exception {
+        PreparedStatement ps = conexao.prepareStatement("UPDATE administrador\n"
+                + "	SET adm_nome=?, adm_senha=?, adm_usuario=?\n"
+                + "	WHERE adm_idem=?;");
+        ps.setObject(1, administradorModel.getAdministrador_nome());
+        ps.setObject(2, administradorModel.getAdministrador_senha());
         ps.setObject(3, administradorModel.getAdministrador_usuario());
         ps.setObject(4, administradorModel.getAdministrador_idem());
         ps.executeUpdate();
@@ -59,7 +59,7 @@ public class AdministradorDal implements ICRUD_GENERIC {
         List<AdministradorModel> list = new ArrayList<>();
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             administradorModel = new AdministradorModel();
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
@@ -71,12 +71,12 @@ public class AdministradorDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public AdministradorModel getById(int n) throws Exception {
         String sql = "SELECT * FROM administrador WHERE adm_idem=?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,n);
+        preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             administradorModel = new AdministradorModel();
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
@@ -87,12 +87,12 @@ public class AdministradorDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public AdministradorModel getByNome(String nome) throws Exception {
         String sql = "SELECT * FROM administrador WHERE adm_nome=?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,nome);
+        preparedStatement.setObject(1, nome);
         ResultSet rs = preparedStatement.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             administradorModel = new AdministradorModel();
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));

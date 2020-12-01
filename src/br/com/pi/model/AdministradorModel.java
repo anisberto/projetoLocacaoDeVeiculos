@@ -38,4 +38,10 @@ public class AdministradorModel {
     public void setAdministrador_senha(String administrador_senha) {
         this.administrador_senha = administrador_senha;
     }
+
+    @Override
+    public String toString() {
+        return "administrador_idem=" + administrador_idem + ", administrador_nome=" + administrador_nome + ", administrador_usuario=" + administrador_usuario + ", administrador_senha=" + administrador_senha;
+    }
+
 }
