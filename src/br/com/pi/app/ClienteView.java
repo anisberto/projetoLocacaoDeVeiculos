@@ -962,7 +962,6 @@ public class ClienteView extends javax.swing.JFrame {
             //txt.setEnabled(true);
 
             limparEndereco();
-
         }
     }
 }
