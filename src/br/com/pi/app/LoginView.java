@@ -1,11 +1,19 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.AdministradorBll;
+import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.AdministradorModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class LoginView extends javax.swing.JFrame {
 
-    public LoginView() {
+    ICRUD_GENERIC<AdministradorModel> userValid;
+
+    public LoginView() throws Exception {
         initComponents();
+        userValid = new AdministradorBll();
     }
 
     /**
@@ -118,7 +126,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Gerir Usuarios");
@@ -158,10 +166,31 @@ public class LoginView extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         try {
-            MenuPrincipal menu = new MenuPrincipal();
-            menu.setVisible(true);
-            dispose();
+            if (txtSenha.getPassword().length == 0 || txtUsuario.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos os Campos precisam ser Informados");
+            } else {
+                AdministradorModel usuAuth = new AdministradorModel();
+                usuAuth.setAdministrador_usuario(txtUsuario.getText());
+                usuAuth.setAdministrador_senha(new String(txtSenha.getPassword()));
+                System.out.println(AdministradorBll.validaLogin(usuAuth));
+
+                if (AdministradorBll.validaLogin(usuAuth)) {
+                    MenuPrincipal menu = new MenuPrincipal();
+                    menu.transferirDados(userValid.getByNome(txtUsuario.getText()).getAdministrador_nome());
+                    menu.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha inváĺido!");
+                    txtSenha.setText("");
+                    txtUsuario.setText("");
+                    txtUsuario.setRequestFocusEnabled(true);
+                }
+            }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique suas credenciais", "Acesso Negado", JOptionPane.ERROR_MESSAGE);
+            txtSenha.setText("");
+            txtUsuario.setText("");
+            txtUsuario.setRequestFocusEnabled(true);
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -230,7 +259,11 @@ public class LoginView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginView().setVisible(true);
+                try {
+                    new LoginView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

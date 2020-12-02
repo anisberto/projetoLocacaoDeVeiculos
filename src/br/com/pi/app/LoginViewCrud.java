@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class LoginViewCrud extends javax.swing.JFrame {
 
     boolean incluir = true;
-    ICRUD_GENERIC inclurUsuario;
+    ICRUD_GENERIC<AdministradorModel> inclurUsuario;
     int idDelete;
 
     public LoginViewCrud() throws Exception {
@@ -312,7 +312,6 @@ public class LoginViewCrud extends javax.swing.JFrame {
                     adm.setAdministrador_idem(Integer.parseInt(jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 2).toString()));
                     inclurUsuario.update(adm);
                     JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println(adm);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
@@ -367,7 +366,20 @@ public class LoginViewCrud extends javax.swing.JFrame {
     }
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-
+            if (!txtLogin.getText().isEmpty() && !txtNome.getText().isEmpty() && !txtSenha.getPassword().toString().isEmpty()) {
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Usuario: " + inclurUsuario.getById(idDelete).getAdministrador_nome(), "Deleção",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+                if (conf == 0) {
+                    inclurUsuario.delete(idDelete);
+                    JOptionPane.showMessageDialog(null, "Usuario deletado com sucesso");
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
+                }
+                imprimirDadosNaGrid(inclurUsuario.getAll());
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione o Usuario na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed

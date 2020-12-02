@@ -3,10 +3,15 @@ package br.com.pi.bll;
 import br.com.pi.dal.AdministradorDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.AdministradorModel;
+import java.util.ArrayList;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
+
     AdministradorDal dal;
 
     public AdministradorBll() throws Exception {
@@ -81,7 +86,6 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
             }
         }
 
-
         if (objeto.getAdministrador_nome().equals("")) {
             throw new Exception("Informe a Senha do usuario");
         }
@@ -90,13 +94,25 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
         }
 
         Iterator<AdministradorModel> listaDeUsuario = dal.getAll();
-        for (Iterator<AdministradorModel> it = listaDeUsuario; it.hasNext(); ) {
+        for (Iterator<AdministradorModel> it = listaDeUsuario; it.hasNext();) {
             AdministradorModel aux = it.next();
 
             if ((objeto.getAdministrador_idem() != aux.getAdministrador_idem()) && (objeto.getAdministrador_nome().toUpperCase().
                     equalsIgnoreCase(aux.getAdministrador_nome().toUpperCase()))) {
                 throw new Exception("O nom --> " + objeto.getAdministrador_nome() + "\nJá existe no cadastro de Administradores!\n");
             }
+        }
+    }
+
+    public static boolean validaLogin(AdministradorModel usuarioTeste) throws Exception {
+        AdministradorModel adm = null;
+        AdministradorDal dal = new AdministradorDal();
+        adm = dal.getByNome(usuarioTeste.getAdministrador_usuario());
+        if (adm.getAdministrador_usuario().equalsIgnoreCase(usuarioTeste.getAdministrador_usuario())
+                && adm.getAdministrador_senha().equalsIgnoreCase(usuarioTeste.getAdministrador_senha())) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

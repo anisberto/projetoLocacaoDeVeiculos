@@ -46,10 +46,10 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
         PreparedStatement ps = conexao.prepareStatement("UPDATE administrador\n"
                 + "	SET adm_nome=?, adm_senha=?, adm_usuario=?\n"
                 + "	WHERE adm_idem=?;");
-        ps.setObject(1, administradorModel.getAdministrador_nome());
-        ps.setObject(2, administradorModel.getAdministrador_senha());
-        ps.setObject(3, administradorModel.getAdministrador_usuario());
-        ps.setObject(4, administradorModel.getAdministrador_idem());
+        ps.setObject(1, objeto.getAdministrador_nome());
+        ps.setObject(2, objeto.getAdministrador_senha());
+        ps.setObject(3, objeto.getAdministrador_usuario());
+        ps.setObject(4, objeto.getAdministrador_idem());
         ps.executeUpdate();
     }
 
@@ -88,17 +88,18 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
 
     @Override
     public AdministradorModel getByNome(String nome) throws Exception {
-        String sql = "SELECT * FROM administrador WHERE adm_nome=?";
+        AdministradorModel adm = new AdministradorModel();
+        String sql = "SELECT * FROM administrador WHERE adm_usuario=?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1, nome);
+        preparedStatement.setString(1, nome);
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {
-            administradorModel = new AdministradorModel();
-            administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
-            administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
-            administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
-            administradorModel.setAdministrador_usuario(rs.getString("adm_usuario"));
+            adm = new AdministradorModel();
+            adm.setAdministrador_idem(rs.getInt("adm_idem"));
+            adm.setAdministrador_nome(rs.getString("adm_nome"));
+            adm.setAdministrador_senha(rs.getString("adm_senha"));
+            adm.setAdministrador_usuario(rs.getString("adm_usuario"));
         }
-        return administradorModel;
+        return adm;
     }
 }
