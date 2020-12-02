@@ -636,7 +636,7 @@ public class ClienteView extends javax.swing.JFrame {
                     novoEnderecoInter.updateEndereco(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
                     limparEndereco();
-//                enableBuEndereco(false);
+                enableBuEndereco(false);
 //                System.out.println("Alterado dados de de endereço !!!");
                 }
             }

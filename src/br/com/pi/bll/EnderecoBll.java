@@ -49,7 +49,7 @@ public class EnderecoBll implements EnderecoInterface {
      * @return 
      */
     public static boolean validarNumeros(String dados){
-        return dados.matches("[0-9]*(1,5)");
+        return dados.matches("[0-9]*");
     }
     /**
      * Validações de apenas o número do CEP com 8 números
@@ -57,7 +57,8 @@ public class EnderecoBll implements EnderecoInterface {
      * @return 
      */
     public static boolean validarNumerosCEP(String dados){
-        return dados.matches("[0-9]*(8)");
+        return dados.matches("\\d\\d\\d\\d\\d\\d\\d\\d"); 
+        //return dados.matches("[0-9]*(8)");
     }
     /**
      * Valida apenas nome de a-z A-Z
