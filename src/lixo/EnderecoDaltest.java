@@ -1,10 +1,11 @@
 package lixo;
 
 import br.com.pi.dal.EnderecoDal;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.Conexao;
 import br.com.pi.util.EnderecoIterator;
-import br.com.pi.util.ICRUD_GENERIC;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Iterator;
@@ -116,7 +117,7 @@ public class EnderecoDaltest implements ICRUD_GENERIC<EnderecoModel> {
             novoEndereco.setEndereco_numero(rs.getInt("endereco_numero"));
             novoEndereco.setEndereco_complemento(rs.getString("endereco_complemento"));
             novoEndereco.setEndereco_estado(rs.getString("endereco_estado"));
-            
+
             endereco.add(novoEndereco);
         }
         EnderecoIterator enderecoInt = new EnderecoIterator(endereco);
@@ -153,7 +154,8 @@ public class EnderecoDaltest implements ICRUD_GENERIC<EnderecoModel> {
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(EnderecoModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

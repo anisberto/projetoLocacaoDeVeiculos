@@ -1,21 +1,18 @@
-package br.com.pi.app;
+package lixo;
 
+import br.com.pi.app.LoginView;
 import br.com.pi.model.EnderecoModel;
-import br.com.pi.util.ICRUD_GENERIC;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lixo.EnderecoBllTeste;
-import lixo.EnderecoDaltest;
 
 public class ClienteViewTest extends javax.swing.JFrame {
 
     EnderecoBllTeste endBll = new EnderecoBllTeste();
     EnderecoModel endereco = new EnderecoModel();
-    ICRUD_GENERIC novoEnderecoInter = null;
+    //ICRUD_GENERIC novoEnderecoInter = null;
     //EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
     int idDeleteCliente;
@@ -24,8 +21,8 @@ public class ClienteViewTest extends javax.swing.JFrame {
         initComponents();
         enderecoEnableButtons(false);
         
-        novoEnderecoInter = new EnderecoDaltest();        
-        consultarEndereco(novoEnderecoInter.getAll());
+//        novoEnderecoInter = new EnderecoDaltest();        
+//        consultarEndereco(novoEnderecoInter.getAll());
 
     }
 
@@ -630,19 +627,19 @@ public class ClienteViewTest extends javax.swing.JFrame {
 
                 System.out.println(end);
                 if (incluirEndereco) {
-                    novoEnderecoInter.add(end);
+                    //novoEnderecoInter.add(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
                     limparEndereco();
                 } else {
                     end.setEndereco_iden(idDeleteCliente);
-                    novoEnderecoInter.update(end);
+                    //novoEnderecoInter.update(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
                     limparEndereco();
 //                enableBuEndereco(false);
 //                System.out.println("Alterado dados de de endereço !!!");
                 }
             }
-            consultarEndereco( novoEnderecoInter.getAll());
+            //consultarEndereco( novoEnderecoInter.getAll());
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos " + e.getMessage());
@@ -694,7 +691,7 @@ public class ClienteViewTest extends javax.swing.JFrame {
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
 
-                    novoEnderecoInter.delete(idDeleteCliente);
+//                    novoEnderecoInter.delete(idDeleteCliente);
                     limparEndereco();
                     JOptionPane.showMessageDialog(null, "Endereço deletado(o) com sucesso");
                 } else {
@@ -702,7 +699,7 @@ public class ClienteViewTest extends javax.swing.JFrame {
                 }
             }
             // edivan
-            consultarEndereco(novoEnderecoInter.getAll());
+            //consultarEndereco(novoEnderecoInter.getAll());
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnClienteDeletarActionPerformed
@@ -886,17 +883,17 @@ public class ClienteViewTest extends javax.swing.JFrame {
     private void transferirDadosEndereco() {
         try {
             int codigo = Integer.parseInt(tableEnderecoTest.getValueAt(tableEnderecoTest.getSelectedRow(), 0).toString());
-            EnderecoModel deleteEnd = (EnderecoModel) novoEnderecoInter.getById(codigo);
+//            EnderecoModel deleteEnd = (EnderecoModel) novoEnderecoInter.getById(codigo);
             idDeleteCliente = codigo;
 
-            txtCidade.setText(deleteEnd.getEndereco_cidade());
-            txtClientesBairro.setText(deleteEnd.getEndereco_bairro());
-            txtClientesCep.setText(deleteEnd.getEndereco_cep());
-            txtClientesRua.setText(deleteEnd.getEndereco_rua());
-            txtClientesNumero.setText(deleteEnd.getEndereco_numero() + "");
-            txtClientesComplemento.setText(deleteEnd.getEndereco_complemento());
-            cboClientesUF.setSelectedItem(deleteEnd.getEndereco_estado());
-            txtId.setText(deleteEnd.getEndereco_iden() + "");
+//            txtCidade.setText(deleteEnd.getEndereco_cidade());
+//            txtClientesBairro.setText(deleteEnd.getEndereco_bairro());
+//            txtClientesCep.setText(deleteEnd.getEndereco_cep());
+//            txtClientesRua.setText(deleteEnd.getEndereco_rua());
+//            txtClientesNumero.setText(deleteEnd.getEndereco_numero() + "");
+//            txtClientesComplemento.setText(deleteEnd.getEndereco_complemento());
+//            cboClientesUF.setSelectedItem(deleteEnd.getEndereco_estado());
+//            txtId.setText(deleteEnd.getEndereco_iden() + "");
 
         } catch (Exception e) {
         }
