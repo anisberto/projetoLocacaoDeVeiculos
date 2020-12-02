@@ -69,7 +69,8 @@ public class EnderecoBllTeste implements ICRUD_GENERIC {
     }
     
     public static boolean validarNumerosCEP(String dados){
-        return dados.matches("[0-9]*(8,8)");
+ return dados.matches("\\d\\d\\d\\d\\d\\d\\d\\d");        
+//return dados.matches("[0-9]*");
     }
     
     public static boolean validarNomes(String dados){
