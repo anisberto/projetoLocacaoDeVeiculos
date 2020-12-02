@@ -604,8 +604,8 @@ public class ClienteView extends javax.swing.JFrame {
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
 
         try {
-            
-            if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
+
+            if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim()) || txtClientesNumero.getText().equals("")) {
                 JOptionPane.showMessageDialog(rootPane, "CAMPO: Cep, Com 8 números Inteiros: '0-9'");
                 txtClientesCep.setText("");
 
@@ -636,7 +636,7 @@ public class ClienteView extends javax.swing.JFrame {
                     novoEnderecoInter.updateEndereco(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
                     limparEndereco();
-                enableBuEndereco(false);
+                    enableBuEndereco(false);
 //                System.out.println("Alterado dados de de endereço !!!");
                 }
             }
@@ -644,7 +644,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos " + e.getMessage());
-        } 
+        }
 //        finally {
 //            enableBuEndereco(false);
 //        }

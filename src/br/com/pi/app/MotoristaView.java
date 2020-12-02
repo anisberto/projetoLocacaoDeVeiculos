@@ -24,7 +24,7 @@ public class MotoristaView extends javax.swing.JFrame {
         novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 //        camposMotoristaDisable();
-this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -623,17 +623,15 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         //enableButtFields(false); 
-        if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())){
-            JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
-        }
-        if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim())) {
-            JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
-        }
-
-        if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
-            JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
-        }
         try {
+            if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())) {
+                JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
+            } else if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim()) || txtMotoristaNumero.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
+            } else if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
+                JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
+            } else {
+
             EnderecoModel end = new EnderecoModel();
 
             end.setEndereco_cidade(txtMotoristaCidade.getText());
@@ -645,22 +643,26 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
             end.setEndereco_estado(String.valueOf(cboMotoristaUF.getSelectedItem()));
 
             System.out.println(end);
-            if (incluirEndereco) {
-                novoEnderecoInter.adicionarEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
+                if (incluirEndereco) {
+                    novoEnderecoInter.adicionarEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
 
-            } else {
-                end.setEndereco_iden(idDeleteCliente);
-                novoEnderecoInter.updateEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
-
+                } else {
+                    end.setEndereco_iden(idDeleteCliente);
+                    novoEnderecoInter.updateEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
+                    limparEnderecoMotorista();
+                    enableBuEndereco(false);
+                }
             }
+
             consultarEndereco(novoEnderecoInter.getAllEndereco());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            enableBuEndereco(false);
-        }
+        } 
+//        finally {
+//            enableBuEndereco(false);
+//        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
