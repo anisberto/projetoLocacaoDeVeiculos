@@ -6,6 +6,7 @@ import br.com.pi.model.EnderecoModel;
 import java.util.Iterator;
 
 public class EnderecoBllTeste implements ICRUD_GENERIC {
+    
 
     ICRUD_GENERIC icrud;
 
@@ -73,6 +74,11 @@ public class EnderecoBllTeste implements ICRUD_GENERIC {
     
     public static boolean validarNomes(String dados){
         return dados.matches("[a-zA-Z]*");
+    }
+
+    @Override
+    public int addReturn(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

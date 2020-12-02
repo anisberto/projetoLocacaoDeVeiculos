@@ -67,4 +67,9 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         throw new IllegalArgumentException("Dados não acessiveis");
     }
 
+    @Override
+    public int addReturn(MotoristaModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -151,4 +151,9 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
         }
         throw new IllegalArgumentException("Busca não concluida! Verifique sql");
     }
+
+    @Override
+    public int addReturn(MotoristaModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -30,7 +30,7 @@ public class EnderecoDal implements EnderecoInterface {
                     + "endereco_rua, endereco_numero, endereco_complemento, "
                     + "endereco_estado, endereco_pessoas_idem)\n"
                     + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
+            // return 
             PreparedStatement ps = conect.prepareStatement(sql);
             ps.setString(1, endereco.getEndereco_cep());
             ps.setString(2, endereco.getEndereco_cidade());

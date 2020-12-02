@@ -99,4 +99,9 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
             }
         }
     }
+
+    @Override
+    public int addReturn(AdministradorModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

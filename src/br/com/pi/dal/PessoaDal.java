@@ -1,6 +1,5 @@
 package br.com.pi.dal;
 
-
 import br.com.pi.model.PessoaModel;
 import br.com.pi.util.Conexao;
 import br.com.pi.interfaces.ICRUD_GENERIC;
@@ -22,34 +21,48 @@ public class PessoaDal implements ICRUD_GENERIC {
         this.conexao = Conexao.getInstance().getConnection();
     }
 
-
     @Override
-    public void add(Object objeto) throws Exception {
+    public int addReturn(Object objeto) throws Exception {
         pessoaModel = (PessoaModel) objeto;
-        String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)" +
-                "VALUES (?,?,?)";
+        int id = 0;
+        String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)"
+                + "VALUES (?,?,?)";
 
-        PreparedStatement ps = conexao.prepareStatement(sql);
+        PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setObject(1, pessoaModel.getPessoa_nome());
         ps.setObject(2, pessoaModel.getPessoa_telefone());
         ps.setObject(3, pessoaModel.getPessoa_email());
-        ps.executeUpdate();
+        id = ps.executeUpdate();
 
+        if (id == 0) {
+            
+            throw new Exception("Falhar ao inserir cliente do banco.");
+        }
+
+        try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            } else {
+                throw new Exception("Falhar ao inserir cliente com ID.");
+    ///throw new SQLException("Creating user failed, no ID obtained.");
+            }
+        }
+        return id;
     }
 
     @Override
     public void delete(int n) throws Exception {
         String sql = "DELETE FROM pessoas WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1,n);
+        ps.setObject(1, n);
         ps.executeUpdate();
 
     }
 
     @Override
     public void update(Object objeto) throws Exception {
-        String sql ="UPDATE pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?" +
-                " WHERE pessoa_idem =?";
+        String sql = "UPDATE pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?"
+                + " WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoaModel.getPessoa_nome());
         ps.setObject(2, pessoaModel.getPessoa_telefone());
@@ -67,7 +80,7 @@ public class PessoaDal implements ICRUD_GENERIC {
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
 
-        while(rs.next()){
+        while (rs.next()) {
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
@@ -84,10 +97,10 @@ public class PessoaDal implements ICRUD_GENERIC {
         String sql = "SELECT * FROM pessoas WHERE pessoa_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,n);
+        preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
@@ -103,10 +116,10 @@ public class PessoaDal implements ICRUD_GENERIC {
         String sql = "SELECT * FROM pessoas WHERE pessoa_nome = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,nome);
+        preparedStatement.setObject(1, nome);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
@@ -115,5 +128,10 @@ public class PessoaDal implements ICRUD_GENERIC {
         }
 
         return pessoaModel;
+    }
+
+    @Override
+    public void add(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

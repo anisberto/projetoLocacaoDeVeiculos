@@ -178,6 +178,11 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             }
         }
 
+    @Override
+    public int addReturn(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     }
 
 
