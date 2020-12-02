@@ -215,7 +215,10 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaKeyReleased
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
+        try {
+            System.exit(0);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

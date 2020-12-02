@@ -63,4 +63,9 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         }
         return null;
     }
+
+    @Override
+    public int addReturn(VeiculoModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

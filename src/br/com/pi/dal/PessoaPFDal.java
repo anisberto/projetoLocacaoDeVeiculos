@@ -129,4 +129,9 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
         return pessoa;
     }
+
+    @Override
+    public int addReturn(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

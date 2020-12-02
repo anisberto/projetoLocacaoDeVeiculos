@@ -4,6 +4,8 @@ import br.com.pi.dal.EnderecoDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.Conexao;
+import br.com.pi.util.EnderecoIterator;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Iterator;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EnderecoDaltest implements ICRUD_GENERIC {
+public class EnderecoDaltest implements ICRUD_GENERIC<EnderecoModel> {
 
     private Connection conect;
     private EnderecoModel end;
@@ -26,14 +28,14 @@ public class EnderecoDaltest implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(EnderecoModel objeto) throws Exception {
         end = (EnderecoModel) objeto;
         try {
 
             PreparedStatement ps = conect.prepareStatement("INSERT INTO endereco (\n"
                     + "	endereco_cep, endereco_cidade, endereco_bairro, endereco_rua,"
-                    + " endereco_numero, endereco_complemento, endereco_estado)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?);");
+                    + " endereco_numero, endereco_complemento, endereco_estado, endereco_pessoas_idem)\n"
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, end.getEndereco_cep());
             ps.setString(2, end.getEndereco_cidade());
@@ -42,6 +44,7 @@ public class EnderecoDaltest implements ICRUD_GENERIC {
             ps.setObject(5, end.getEndereco_numero());
             ps.setString(6, end.getEndereco_complemento());
             ps.setString(7, end.getEndereco_estado());
+            ps.setObject(8, end.getEndereco_motorista().getMotorista_idem());
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -67,7 +70,7 @@ public class EnderecoDaltest implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(EnderecoModel objeto) throws Exception {
         end = (EnderecoModel) objeto;
         try {
             PreparedStatement prep = conect.prepareStatement("UPDATE endereco SET "
@@ -114,14 +117,15 @@ public class EnderecoDaltest implements ICRUD_GENERIC {
             novoEndereco.setEndereco_numero(rs.getInt("endereco_numero"));
             novoEndereco.setEndereco_complemento(rs.getString("endereco_complemento"));
             novoEndereco.setEndereco_estado(rs.getString("endereco_estado"));
-            
+
             endereco.add(novoEndereco);
         }
-        return endereco.iterator();
+        EnderecoIterator enderecoInt = new EnderecoIterator(endereco);
+        return enderecoInt;
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public EnderecoModel getById(int n) throws Exception {
         EnderecoModel retEndereco = new EnderecoModel();
         try {
             String sql = "SELECT * FROM endereco WHERE endereco_ide=?";
@@ -145,7 +149,13 @@ public class EnderecoDaltest implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public EnderecoModel getByNome(String nome) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int addReturn(EnderecoModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

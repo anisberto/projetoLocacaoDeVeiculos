@@ -104,6 +104,7 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
         }
     }
 
+
     public static boolean validaLogin(AdministradorModel usuarioTeste) throws Exception {
         AdministradorModel adm = null;
         AdministradorDal dal = new AdministradorDal();
@@ -114,5 +115,11 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
         } else {
             return false;
         }
+        
+}
+
+    @Override
+    public int addReturn(AdministradorModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

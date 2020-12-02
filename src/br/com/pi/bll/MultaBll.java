@@ -63,4 +63,9 @@ public class MultaBll implements ICRUD_GENERIC<MultaModel> {
         }
         throw new IllegalArgumentException("Erro estrutural ao consultar");
     }
+
+    @Override
+    public int addReturn(MultaModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 public interface ICRUD_GENERIC<T> {
 
+    public int addReturn(T objeto) throws Exception;
+    
     public void add(T objeto) throws Exception;
 
     public void delete(int n)throws Exception;

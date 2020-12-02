@@ -102,4 +102,9 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
         }
         return adm;
     }
+
+    @Override
+    public int addReturn(AdministradorModel objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

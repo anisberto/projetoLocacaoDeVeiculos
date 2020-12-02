@@ -158,4 +158,9 @@ public class LocacaoDal implements ICRUD_GENERIC {
     public Object getByNome(String nome) throws Exception {
         return null;
     }
+
+    @Override
+    public int addReturn(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
