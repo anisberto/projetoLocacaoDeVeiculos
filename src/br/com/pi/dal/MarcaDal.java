@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Anthonny Max
  */
-public class MarcaDal implements ICRUD_GENERIC {
+public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
 
     private Connection conexao;
     MarcaModel marcaModel = new MarcaModel();
@@ -27,9 +27,9 @@ public class MarcaDal implements ICRUD_GENERIC {
 
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(MarcaModel objeto) throws Exception {
         marcaModel = (MarcaModel) objeto;
-        String sql = "INSERT INTO marcas(marca_descricao)" +
+        String sql = "INSERT INTO marca(marca_descricao)" +
                 "VALUES (?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class MarcaDal implements ICRUD_GENERIC {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM pessoas WHERE marca_idem =?";
+        String sql = "DELETE FROM marca WHERE marca_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,n);
         ps.executeUpdate();
@@ -48,7 +48,7 @@ public class MarcaDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(MarcaModel objeto) throws Exception {
         String sql ="UPDATE marca SET marca_descricao =?" +
                 " WHERE marca_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
@@ -60,7 +60,7 @@ public class MarcaDal implements ICRUD_GENERIC {
 
     @Override
     public Iterator getAll() throws Exception {
-        String sql = "SELECT * FROM pessoas";
+        String sql = "SELECT * FROM marca";
         List<MarcaModel> pessoaModelList = new ArrayList<>();
 
         Statement st = conexao.createStatement();;
@@ -77,7 +77,7 @@ public class MarcaDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public MarcaModel getById(int n) throws Exception {
         String sql = "SELECT * FROM marca WHERE marca_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
@@ -94,7 +94,7 @@ public class MarcaDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public MarcaModel getByNome(String nome) throws Exception {
         String sql = "SELECT * FROM marca WHERE marca_descricao = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
@@ -111,7 +111,7 @@ public class MarcaDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(MarcaModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

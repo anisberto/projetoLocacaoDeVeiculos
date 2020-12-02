@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  * @author Anthonny Max
  */
-public class MarcaBll implements ICRUD_GENERIC {
+public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
 
     private MarcaDal dal;
 
@@ -25,7 +25,7 @@ public class MarcaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(MarcaModel objeto) throws Exception {
         try {
             validaMarca((MarcaModel) objeto);
             dal.add(objeto);
@@ -46,7 +46,7 @@ public class MarcaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(MarcaModel objeto) throws Exception {
         try {
             validaMarca((MarcaModel) objeto);
             dal.update(objeto);
@@ -67,7 +67,7 @@ public class MarcaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public MarcaModel getById(int n) throws Exception {
         try {
             return dal.getById(n);
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class MarcaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public MarcaModel getByNome(String nome) throws Exception {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class MarcaBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(MarcaModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
