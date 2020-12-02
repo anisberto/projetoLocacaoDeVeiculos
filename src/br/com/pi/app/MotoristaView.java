@@ -24,6 +24,7 @@ public class MotoristaView extends javax.swing.JFrame {
         novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 //        camposMotoristaDisable();
+this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")

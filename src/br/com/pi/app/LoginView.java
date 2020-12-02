@@ -14,8 +14,8 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() throws Exception {
         initComponents();
         userValid = new AdministradorBll();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -9,6 +9,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     public MenuPrincipal() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     /**

@@ -5,6 +5,7 @@ public class ModeloView extends javax.swing.JFrame {
 
     public ModeloView() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     /**

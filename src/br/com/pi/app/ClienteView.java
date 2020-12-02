@@ -23,7 +23,7 @@ public class ClienteView extends javax.swing.JFrame {
         enderecoEnableButtons(false);
         novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
-
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     /**

@@ -16,6 +16,7 @@ public class RelatorioView extends javax.swing.JFrame {
      */
     public RelatorioView() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     /**
