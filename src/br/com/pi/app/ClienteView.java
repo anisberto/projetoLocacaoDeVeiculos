@@ -602,19 +602,15 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
-
         try {
-
-            if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim()) || txtClientesNumero.getText().equals("")) {
+            if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
                 JOptionPane.showMessageDialog(rootPane, "CAMPO: Cep, Com 8 números Inteiros: '0-9'");
-                txtClientesCep.setText("");
-
             } else if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");
-                txtClientesNumero.setText("");
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");                
             } else if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
                 JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
             } else {
+                
                 EnderecoModel end = new EnderecoModel();
 
                 end.setEndereco_cidade(txtCidade.getText());
