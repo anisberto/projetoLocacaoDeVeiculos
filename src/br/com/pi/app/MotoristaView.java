@@ -38,7 +38,7 @@ public class MotoristaView extends javax.swing.JFrame {
         btnIncluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
+        btnSalvarMotorista = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -141,16 +141,16 @@ public class MotoristaView extends javax.swing.JFrame {
             }
         });
 
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/salve-24.png"))); // NOI18N
-        btnSalvar.setText("Salvar");
-        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnSalvar.setEnabled(false);
-        btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalvar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvarMotorista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/salve-24.png"))); // NOI18N
+        btnSalvarMotorista.setText("Salvar");
+        btnSalvarMotorista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSalvarMotorista.setEnabled(false);
+        btnSalvarMotorista.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalvarMotorista.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnSalvarMotorista.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalvarMotorista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
+                btnSalvarMotoristaActionPerformed(evt);
             }
         });
 
@@ -174,7 +174,7 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnIncluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvar)
+                .addComponent(btnSalvarMotorista)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -192,7 +192,7 @@ public class MotoristaView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnIncluir)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSalvarMotorista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -622,9 +622,8 @@ public class MotoristaView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        //enableButtFields(false); 
-        try {
+    private void btnSalvarMotoristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMotoristaActionPerformed
+             try {
             if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())) {
                 JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
             } else if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim()) || txtMotoristaNumero.getText().equals("")) {
@@ -647,7 +646,8 @@ public class MotoristaView extends javax.swing.JFrame {
                 if (incluirEndereco) {
                     novoEnderecoInter.adicionarEndereco(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
-
+limparEnderecoMotorista();
+                    enableBuEndereco(false);
                 } else {
                     end.setEndereco_iden(idDeleteCliente);
                     novoEnderecoInter.updateEndereco(end);
@@ -664,7 +664,7 @@ public class MotoristaView extends javax.swing.JFrame {
 //        finally {
 //            enableBuEndereco(false);
 //        }
-    }//GEN-LAST:event_btnSalvarActionPerformed
+    }//GEN-LAST:event_btnSalvarMotoristaActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
@@ -775,7 +775,7 @@ public class MotoristaView extends javax.swing.JFrame {
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnImagem;
     private javax.swing.JButton btnIncluir;
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnSalvarMotorista;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cboMotoristaUF;
     private javax.swing.JButton jButton1;
@@ -829,7 +829,7 @@ public class MotoristaView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public void enableButtFields(boolean yet) {
         if (yet) {
-            btnSalvar.setEnabled(true);
+            btnSalvarMotorista.setEnabled(true);
             btnIncluir.setEnabled(false);
             btnAlterar.setEnabled(false);
             btnCancelar.setEnabled(true);
@@ -842,7 +842,7 @@ public class MotoristaView extends javax.swing.JFrame {
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(true);
             btnVoltar.setEnabled(true);
-            btnSalvar.setEnabled(false);
+            btnSalvarMotorista.setEnabled(false);
             btnImagem.setEnabled(false);
         }
     }
@@ -853,7 +853,7 @@ public class MotoristaView extends javax.swing.JFrame {
             btnAlterar.setEnabled(false);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(false);
-            btnSalvar.setEnabled(true);
+            btnSalvarMotorista.setEnabled(true);
 
             txtMotoristaCidade.setEnabled(true);
             txtMotoristaBairro.setEnabled(true);
@@ -903,7 +903,7 @@ public class MotoristaView extends javax.swing.JFrame {
             btnAlterar.setEnabled(false);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(false);
-            btnSalvar.setEnabled(true);
+            btnSalvarMotorista.setEnabled(true);
 
             txtMotoristaCidade.setEnabled(true);
             txtMotoristaBairro.setEnabled(true);
@@ -946,7 +946,7 @@ public class MotoristaView extends javax.swing.JFrame {
             btnAlterar.setEnabled(false);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(false);
-            btnSalvar.setEnabled(true);
+            btnSalvarMotorista.setEnabled(true);
 
             txtMotoristaCidade.setEnabled(true);
             txtMotoristaBairro.setEnabled(true);
@@ -962,7 +962,7 @@ public class MotoristaView extends javax.swing.JFrame {
             btnAlterar.setEnabled(true);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(true);
-            btnSalvar.setEnabled(false);
+            btnSalvarMotorista.setEnabled(false);
 
             txtMotoristaCidade.setEnabled(false);
             txtMotoristaBairro.setEnabled(false);
