@@ -52,8 +52,8 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         String sql ="UPDATE marca SET marca_descricao =?" +
                 " WHERE marca_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, marcaModel.getMarca_descricao());
-        ps.setObject(2, marcaModel.getMarca_idem());
+        ps.setObject(1, objeto.getMarca_descricao());
+        ps.setObject(2, objeto.getMarca_idem());
         ps.executeUpdate();
 
     }
