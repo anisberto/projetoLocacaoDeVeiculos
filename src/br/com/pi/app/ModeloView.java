@@ -34,6 +34,7 @@ public class ModeloView extends javax.swing.JFrame {
         jTableUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Modelos");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão dos Modelos"));
 
