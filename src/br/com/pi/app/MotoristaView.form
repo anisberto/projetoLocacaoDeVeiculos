@@ -103,7 +103,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnIncluir" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvar" max="-2" attributes="0"/>
+                          <Component id="btnSalvarMotorista" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnAlterar" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -124,7 +124,7 @@
                           <Component id="btnIncluir" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="btnSalvar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnSalvarMotorista" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnAlterar" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnDeletar" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -198,7 +198,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnSalvar">
+                <Component class="javax.swing.JButton" name="btnSalvarMotorista">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/br/com/pi/icons/salve-24.png"/>
@@ -213,7 +213,7 @@
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarMotoristaActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterar">
