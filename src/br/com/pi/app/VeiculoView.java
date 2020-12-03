@@ -1,10 +1,13 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.MarcaBll;
 import br.com.pi.bll.ModeloBll;
 import br.com.pi.bll.VeiculoBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.MarcaModel;
 import br.com.pi.model.ModeloModel;
 import br.com.pi.model.VeiculoModel;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -228,6 +231,15 @@ public class VeiculoView extends javax.swing.JFrame {
         jLabel12.setText("Quilometragem");
 
         jcModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Modelo" }));
+        jcModelo.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jcModeloAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jcModelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcModeloActionPerformed(evt);
@@ -373,7 +385,15 @@ public class VeiculoView extends javax.swing.JFrame {
             new String [] {
                 "Identificador", "Modelo", "Marca"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableVeiculosMouseClicked(evt);
@@ -609,8 +629,8 @@ public class VeiculoView extends javax.swing.JFrame {
         while (conjunto.hasNext()) {
             VeiculoModel veiculoGenerate = (VeiculoModel) conjunto.next();
             linha[0] = veiculoGenerate.getVeiculo_idem() + "";
-            linha[1] = veiculoGenerate.getVeiculo_situacaoVeiculo();
-            linha[2] = veiculoGenerate.getVeiculo_tipoCombustivel();
+            linha[1] = veiculoGenerate.getVeiculo_modelo().getModelo_descricao();
+            linha[2] = veiculoGenerate.getVeiculo_renavam();
         }
         model.addRow(linha);
     }
@@ -631,8 +651,18 @@ public class VeiculoView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void jcModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcModeloActionPerformed
-        // TODO add your handling code here:
+        try {
+            setItemsCombo();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jcModeloActionPerformed
+
+    private void jcModeloAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcModeloAncestorAdded
+        try {
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jcModeloAncestorAdded
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -746,5 +776,15 @@ public class VeiculoView extends javax.swing.JFrame {
         txtAnoModelo.setText("");
         txtRenavam.setText("");
         txtQuilometragem.setText("");
+    }
+
+    private void setItemsCombo() throws Exception {
+//        jcModelo.removeAllItems();
+        MarcaBll marca = new MarcaBll();
+        ArrayList<MarcaModel> marcaLista = (ArrayList<MarcaModel>) marca.getAll();
+        jcModelo.addItem("Selecione");
+        for (MarcaModel marcas : marcaLista) {
+            jcModelo.addItem(marcas.getMarca_descricao().toString());
+        }
     }
 }
