@@ -30,6 +30,7 @@ CREATE TABLE Endereco (
     endereco_rua VARCHAR,
     endereco_numero INTEGER,
     endereco_complemento VARCHAR,
+    endereco_estado VARCHAR,
     endereco_pessoas_idem INTEGER,
     endereco_motorista_idem INTEGER
 );
@@ -178,6 +179,6 @@ ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
     ON DELETE SET NULL;
  
 
-/------ Alterações DB -----/
+------ Alterações DB -----/
 
 alter table administrador add column adm_usuario varchar(50);
