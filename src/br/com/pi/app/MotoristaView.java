@@ -24,7 +24,7 @@ public class MotoristaView extends javax.swing.JFrame {
         novoEnderecoInter = new EnderecoDal();
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 //        camposMotoristaDisable();
-this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -89,6 +89,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Motoristas");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Motorista"));
 
@@ -220,7 +221,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 77, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +259,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jFormattedTextField16))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                                .addComponent(jFormattedTextField1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -337,7 +338,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE))
+                .addComponent(jScrollPane1))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +484,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 983, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -494,7 +495,7 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 221, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -623,17 +624,15 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         //enableButtFields(false); 
-        if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())){
-            JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
-        }
-        if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim())) {
-            JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
-        }
-
-        if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
-            JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
-        }
         try {
+            if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())) {
+                JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
+            } else if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim()) || txtMotoristaNumero.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
+            } else if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
+                JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
+            } else {
+
             EnderecoModel end = new EnderecoModel();
 
             end.setEndereco_cidade(txtMotoristaCidade.getText());
@@ -645,22 +644,26 @@ this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/i
             end.setEndereco_estado(String.valueOf(cboMotoristaUF.getSelectedItem()));
 
             System.out.println(end);
-            if (incluirEndereco) {
-                novoEnderecoInter.adicionarEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
+                if (incluirEndereco) {
+                    novoEnderecoInter.adicionarEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
 
-            } else {
-                end.setEndereco_iden(idDeleteCliente);
-                novoEnderecoInter.updateEndereco(end);
-                JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
-
+                } else {
+                    end.setEndereco_iden(idDeleteCliente);
+                    novoEnderecoInter.updateEndereco(end);
+                    JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
+                    limparEnderecoMotorista();
+                    enableBuEndereco(false);
+                }
             }
+
             consultarEndereco(novoEnderecoInter.getAllEndereco());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            enableBuEndereco(false);
-        }
+        } 
+//        finally {
+//            enableBuEndereco(false);
+//        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

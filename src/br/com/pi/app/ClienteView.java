@@ -91,6 +91,7 @@ public class ClienteView extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cliente");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Clientes"));
 
@@ -454,7 +455,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(cboClientesUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -478,7 +479,7 @@ public class ClienteView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -602,19 +603,15 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
-
         try {
-            
             if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
                 JOptionPane.showMessageDialog(rootPane, "CAMPO: Cep, Com 8 números Inteiros: '0-9'");
-                txtClientesCep.setText("");
-
             } else if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");
-                txtClientesNumero.setText("");
+                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");                
             } else if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
                 JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
             } else {
+                
                 EnderecoModel end = new EnderecoModel();
 
                 end.setEndereco_cidade(txtCidade.getText());
@@ -636,7 +633,7 @@ public class ClienteView extends javax.swing.JFrame {
                     novoEnderecoInter.updateEndereco(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
                     limparEndereco();
-//                enableBuEndereco(false);
+                    enableBuEndereco(false);
 //                System.out.println("Alterado dados de de endereço !!!");
                 }
             }
@@ -644,7 +641,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu Errado no 'Botão Salvar' \n Verifique os dados se estão corretos " + e.getMessage());
-        } 
+        }
 //        finally {
 //            enableBuEndereco(false);
 //        }

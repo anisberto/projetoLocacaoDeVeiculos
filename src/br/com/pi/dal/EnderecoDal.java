@@ -29,7 +29,7 @@ public class EnderecoDal implements EnderecoInterface {
                     + "endereco_cep, endereco_cidade, endereco_bairro, "
                     + "endereco_rua, endereco_numero, endereco_complemento, "
                     + "endereco_estado, endereco_pessoas_idem)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
             // return 
             PreparedStatement ps = conect.prepareStatement(sql);
             ps.setString(1, endereco.getEndereco_cep());
@@ -39,7 +39,7 @@ public class EnderecoDal implements EnderecoInterface {
             ps.setObject(5, endereco.getEndereco_numero());
             ps.setString(6, endereco.getEndereco_complemento());
             ps.setString(7, endereco.getEndereco_estado());
-            ps.setObject(8, endereco.getEndereco_pessoa().getPessoa_idem());            
+            //ps.setObject(8, endereco.getEndereco_pessoa().getPessoa_idem());            
             //ps.setObject(8, endereco.getEndereco_motorista().getMotorista_idem());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -49,7 +49,8 @@ public class EnderecoDal implements EnderecoInterface {
 
     @Override
     public void deleteEndereco(int endereco) {
-        String sql = "DELETE FROM endereco WHERE endereco_ide=?";
+        //String sql = "DELETE FROM endereco WHERE endereco_ide=?";
+        String sql = "DELETE FROM endereco WHERE endereco_idem=?";
         try {
             PreparedStatement preparedStatement = conect.prepareStatement(sql);
 
@@ -74,7 +75,7 @@ public class EnderecoDal implements EnderecoInterface {
                     + "endereco_cep=?, endereco_cidade=?, "
                     + "endereco_bairro=?, endereco_rua=?, endereco_numero=?, "
                     + "endereco_complemento=?, endereco_estado=? "
-                    + "WHERE endereco_ide=?;");
+                    + "WHERE endereco_idem=?;");
 
             prep.setString(1, endereco.getEndereco_cep());
             prep.setString(2, endereco.getEndereco_cidade());
@@ -107,7 +108,7 @@ public class EnderecoDal implements EnderecoInterface {
 
             while (rs.next()) {
                 EnderecoModel novoEndereco = new EnderecoModel();
-                novoEndereco.setEndereco_iden(rs.getInt("endereco_ide"));
+                novoEndereco.setEndereco_iden(rs.getInt("endereco_idem"));
                 novoEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
                 novoEndereco.setEndereco_bairro(rs.getString("endereco_bairro"));
                 novoEndereco.setEndereco_cep(rs.getString("endereco_cep"));
@@ -136,12 +137,12 @@ public class EnderecoDal implements EnderecoInterface {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         EnderecoModel retEndereco = new EnderecoModel();
         try {
-            String sql = "SELECT * FROM endereco WHERE endereco_ide=?";
+            String sql = "SELECT * FROM endereco WHERE endereco_idem=?";
             PreparedStatement preparedStatement = conect.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                retEndereco.setEndereco_iden(rs.getInt("endereco_ide"));
+                retEndereco.setEndereco_iden(rs.getInt("endereco_idem"));
                 retEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
                 retEndereco.setEndereco_bairro(rs.getString("endereco_bairro"));
                 retEndereco.setEndereco_cep(rs.getString("endereco_cep"));

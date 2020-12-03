@@ -115,7 +115,6 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
         } else {
             return false;
         }
-        
 }
 
     @Override

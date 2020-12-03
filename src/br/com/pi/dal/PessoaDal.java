@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.sql.SQLException;
 
 public class PessoaDal implements ICRUD_GENERIC {
 
@@ -28,25 +29,32 @@ public class PessoaDal implements ICRUD_GENERIC {
         String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)"
                 + "VALUES (?,?,?)";
 
-        PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setObject(1, pessoaModel.getPessoa_nome());
-        ps.setObject(2, pessoaModel.getPessoa_telefone());
-        ps.setObject(3, pessoaModel.getPessoa_email());
-        id = ps.executeUpdate();
-
-        if (id == 0) {
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
-            throw new Exception("Falhar ao inserir cliente do banco.");
+            ps.setObject(1, pessoaModel.getPessoa_nome());
+            ps.setObject(2, pessoaModel.getPessoa_telefone());
+            ps.setObject(3, pessoaModel.getPessoa_email());
+
+            id = ps.executeUpdate();
+
+            if (id == 0) {
+                throw new SQLException("Falhar ao inserir cliente do banco.");
+            }
+
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                } else {
+                    //throw new Exception("Falhar ao inserir cliente com ID.");
+                    throw new SQLException("Falhar ao inserir cliente com ID");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw e;
         }
 
-        try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
-            } else {
-                throw new Exception("Falhar ao inserir cliente com ID.");
-    ///throw new SQLException("Creating user failed, no ID obtained.");
-            }
-        }
         return id;
     }
 
