@@ -606,7 +606,7 @@ public class ClienteView extends javax.swing.JFrame {
         try {
             if (!endBll.validarNumerosCEP(txtClientesCep.getText().trim())) {
                 JOptionPane.showMessageDialog(rootPane, "CAMPO: Cep, Com 8 números Inteiros: '0-9'");
-            } else if (!endBll.validarNumeros(txtClientesNumero.getText().trim())) {
+            } else if (!endBll.validarNumeros(txtClientesNumero.getText().trim())|| txtClientesNumero.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número e números positivos!");                
             } else if (cboClientesUF.getSelectedItem().equals("<Selecione UF>")) {
                 JOptionPane.showMessageDialog(null, "CAMPO: UF esta sem estado!");
@@ -628,6 +628,7 @@ public class ClienteView extends javax.swing.JFrame {
                     novoEnderecoInter.adicionarEndereco(end);
                     JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
                     limparEndereco();
+                    enableBuEndereco(false);
                 } else {
                     end.setEndereco_iden(idDeleteCliente);
                     novoEnderecoInter.updateEndereco(end);
