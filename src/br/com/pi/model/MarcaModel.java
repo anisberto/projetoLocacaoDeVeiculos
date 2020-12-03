@@ -19,4 +19,8 @@ public class MarcaModel {
     public void setMarca_descricao(String marca_descricao) {
         this.marca_descricao = marca_descricao;
     }
+    @Override
+    public String toString() {
+        return "marca_idem=" + marca_idem + ", marca_descricao=" + marca_descricao;
+    }
 }

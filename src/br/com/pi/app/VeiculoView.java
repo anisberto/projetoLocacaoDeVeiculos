@@ -228,6 +228,11 @@ public class VeiculoView extends javax.swing.JFrame {
         jLabel12.setText("Quilometragem");
 
         jcModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Modelo" }));
+        jcModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcModeloActionPerformed(evt);
+            }
+        });
 
         jcSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Situação", "Disponivel", "Vendido" }));
 
@@ -400,7 +405,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 819, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -624,6 +629,10 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void jcModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcModeloActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
