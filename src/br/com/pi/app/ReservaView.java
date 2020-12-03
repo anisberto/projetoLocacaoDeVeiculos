@@ -58,6 +58,7 @@ public class ReservaView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Reservas");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Reservas"));
 

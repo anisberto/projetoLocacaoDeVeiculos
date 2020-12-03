@@ -3,6 +3,7 @@ package br.com.pi.app;
 import br.com.pi.bll.AdministradorBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.AdministradorModel;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ public class LoginView extends javax.swing.JFrame {
         userValid = new AdministradorBll();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,12 +68,20 @@ public class LoginView extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        txtSenha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtSenhaPropertyChange(evt);
+            }
+        });
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyTyped(evt);
             }
         });
 
@@ -166,33 +176,7 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        try {
-            if (txtSenha.getPassword().length == 0 || txtUsuario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Todos os Campos precisam ser Informados");
-            } else {
-                AdministradorModel usuAuth = new AdministradorModel();
-                usuAuth.setAdministrador_usuario(txtUsuario.getText());
-                usuAuth.setAdministrador_senha(new String(txtSenha.getPassword()));
-                System.out.println(AdministradorBll.validaLogin(usuAuth));
-
-                if (AdministradorBll.validaLogin(usuAuth)) {
-                    MenuPrincipal menu = new MenuPrincipal();
-                    menu.transferirDados(userValid.getByNome(txtUsuario.getText()).getAdministrador_nome());
-                    menu.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuário ou senha inváĺido!");
-                    txtSenha.setText("");
-                    txtUsuario.setText("");
-                    txtUsuario.setRequestFocusEnabled(true);
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Verifique suas credenciais", "Acesso Negado", JOptionPane.ERROR_MESSAGE);
-            txtSenha.setText("");
-            txtUsuario.setText("");
-            txtUsuario.setRequestFocusEnabled(true);
-        }
+        saveUser();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
@@ -235,6 +219,20 @@ public class LoginView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void txtSenhaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtSenhaPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSenhaPropertyChange
+
+    private void txtSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyTyped
+        try {
+            char pressEnter = evt.getKeyChar();
+            if (pressEnter == KeyEvent.VK_ENTER) {
+                saveUser();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_txtSenhaKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -285,4 +283,33 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void saveUser() {
+        try {
+            if (txtSenha.getPassword().length == 0 || txtUsuario.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos os Campos precisam ser Informados");
+            } else {
+                AdministradorModel usuAuth = new AdministradorModel();
+                usuAuth.setAdministrador_usuario(txtUsuario.getText());
+                usuAuth.setAdministrador_senha(new String(txtSenha.getPassword()));
+
+                if (AdministradorBll.validaLogin(usuAuth)) {
+                    MenuPrincipal menu = new MenuPrincipal();
+                    menu.transferirDados(userValid.getByNome(txtUsuario.getText()).getAdministrador_nome());
+                    menu.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha inváĺido!");
+                    txtSenha.setText("");
+                    txtUsuario.setText("");
+                    txtUsuario.setRequestFocusEnabled(true);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique suas credenciais", "Acesso Negado", JOptionPane.ERROR_MESSAGE);
+            txtSenha.setText("");
+            txtUsuario.setText("");
+            txtUsuario.setRequestFocusEnabled(true);
+        }
+    }
 }

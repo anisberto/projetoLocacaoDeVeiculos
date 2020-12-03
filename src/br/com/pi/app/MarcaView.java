@@ -34,6 +34,7 @@ public class MarcaView extends javax.swing.JFrame {
         btnSalvar11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Marcas");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Marca"));
 
