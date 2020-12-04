@@ -32,8 +32,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        lblDescriptionStatus1 = new javax.swing.JLabel();
+        lblDescriptionStatus2 = new javax.swing.JLabel();
+        lblDescriptionStatus3 = new javax.swing.JLabel();
+        lblDescriptionStatus4 = new javax.swing.JLabel();
+        lblDescriptionStatus5 = new javax.swing.JLabel();
+        lblDescriptionStatus6 = new javax.swing.JLabel();
+        lblDescriptionStatus7 = new javax.swing.JLabel();
+        lblDescriptionStatus8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -165,13 +175,45 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/excluir_small.png"))); // NOI18N
-        jMenu1.setText("Sair");
+        lblDescriptionStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        lblDescriptionStatus8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/pac_gif.gif"))); // NOI18N
+
+        jMenu1.setText("Sobre o Projeto");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
             }
         });
+
+        jMenuItem1.setText("Ler Resumo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("sair");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -180,17 +222,43 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDescriptionStatus1)
+                        .addGap(59, 59, 59)
+                        .addComponent(lblDescriptionStatus4)
+                        .addGap(67, 67, 67)
+                        .addComponent(lblDescriptionStatus5)
+                        .addGap(60, 60, 60)
+                        .addComponent(lblDescriptionStatus6)
+                        .addGap(72, 72, 72)
+                        .addComponent(lblDescriptionStatus8)
+                        .addGap(59, 59, 59)
+                        .addComponent(lblDescriptionStatus7)
+                        .addGap(73, 73, 73)
+                        .addComponent(lblDescriptionStatus2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDescriptionStatus3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDescriptionStatus3)
+                    .addComponent(lblDescriptionStatus4)
+                    .addComponent(lblDescriptionStatus1)
+                    .addComponent(lblDescriptionStatus2)
+                    .addComponent(lblDescriptionStatus6)
+                    .addComponent(lblDescriptionStatus5)
+                    .addComponent(lblDescriptionStatus7)
+                    .addComponent(lblDescriptionStatus8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -255,6 +323,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenu1ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            LoginView login = new LoginView();
+            login.setVisible(true);
+            dispose();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -301,8 +382,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblDescriptionStatus1;
+    private javax.swing.JLabel lblDescriptionStatus2;
+    private javax.swing.JLabel lblDescriptionStatus3;
+    private javax.swing.JLabel lblDescriptionStatus4;
+    private javax.swing.JLabel lblDescriptionStatus5;
+    private javax.swing.JLabel lblDescriptionStatus6;
+    private javax.swing.JLabel lblDescriptionStatus7;
+    private javax.swing.JLabel lblDescriptionStatus8;
     // End of variables declaration//GEN-END:variables
 }

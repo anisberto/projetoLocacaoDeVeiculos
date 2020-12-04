@@ -1,10 +1,22 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.LocacaoBll;
+import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.LocacaoModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class LocacaoView extends javax.swing.JFrame {
 
-    public LocacaoView() {
+    ICRUD_GENERIC<LocacaoBll> incluirLocacao;
+    boolean incluir = true;
+
+    public LocacaoView() throws Exception {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        jcClienteFisica.setVisible(false);
+        jcClienteJuridica.setVisible(false);
+        incluirLocacao = new LocacaoBll();
     }
 
     @SuppressWarnings("unchecked")
@@ -24,27 +36,29 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        txtDataRetirada = new javax.swing.JFormattedTextField();
+        txtCodigo = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        txtDataDevolucao = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        txtKMInicial = new javax.swing.JFormattedTextField();
+        txtValorLocacao = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
+        txtValorCaucao = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
-        jFormattedTextField7 = new javax.swing.JFormattedTextField();
+        txtValorSeguro = new javax.swing.JFormattedTextField();
         jcMotorista = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jcCliente = new javax.swing.JComboBox<>();
+        jcClienteJuridica = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jcVeiculo = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jrFisica = new javax.swing.JRadioButton();
         jrJuridica = new javax.swing.JRadioButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jcClienteFisica = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsuarios = new javax.swing.JTable();
@@ -196,17 +210,32 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jLabel2.setText("Data de Retirada");
 
+        txtDataRetirada.setEnabled(false);
+
+        txtCodigo.setEnabled(false);
+
         jLabel3.setText("Data Prevista de Devolução");
 
+        txtDataDevolucao.setEnabled(false);
+
         jLabel4.setText("KM Inicial");
+
+        txtKMInicial.setEnabled(false);
+
+        txtValorLocacao.setEnabled(false);
 
         jLabel5.setText("Valor da Locação");
 
         jLabel6.setText("Valor Caução");
 
+        txtValorCaucao.setEnabled(false);
+
         jLabel7.setText("Valor do Seguro");
 
+        txtValorSeguro.setEnabled(false);
+
         jcMotorista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Motorista" }));
+        jcMotorista.setEnabled(false);
 
         jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -215,23 +244,24 @@ public class LocacaoView extends javax.swing.JFrame {
             }
         });
 
-        jcCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente" }));
-        jcCliente.addAncestorListener(new javax.swing.event.AncestorListener() {
+        jcClienteJuridica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente Juridico" }));
+        jcClienteJuridica.setEnabled(false);
+        jcClienteJuridica.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jcClienteAncestorAdded(evt);
+                jcClienteJuridicaAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jcCliente.addActionListener(new java.awt.event.ActionListener() {
+        jcClienteJuridica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcClienteActionPerformed(evt);
+                jcClienteJuridicaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("+");
+        jButton2.setText("CADASTRAR NOVO CLIENTE");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -239,6 +269,7 @@ public class LocacaoView extends javax.swing.JFrame {
         });
 
         jcVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Veiculo" }));
+        jcVeiculo.setEnabled(false);
 
         jButton3.setText("+");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +292,25 @@ public class LocacaoView extends javax.swing.JFrame {
             }
         });
 
+        jcClienteFisica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente Fisico" }));
+        jcClienteFisica.setEnabled(false);
+        jcClienteFisica.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jcClienteFisicaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jcClienteFisica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcClienteFisicaActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Tipo de Cliente");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -273,56 +323,58 @@ public class LocacaoView extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtKMInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField2)))
+                                .addComponent(txtCodigo)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtDataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                .addComponent(txtValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(45, 45, 45)
-                                .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtValorCaucao, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jcCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField7)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jcVeiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jcMotorista, 0, 372, Short.MAX_VALUE))
+                            .addComponent(jrJuridica)
+                            .addComponent(jrFisica))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcClienteFisica, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcClienteJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jrFisica)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jrJuridica)
+                        .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jSeparator1)))
+                        .addComponent(txtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jcMotorista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -332,42 +384,45 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKMInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValorCaucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jFormattedTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jcVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addComponent(jcMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
+                        .addGap(24, 24, 24)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jrFisica)
-                            .addComponent(jrJuridica)))
+                            .addComponent(jButton2)
+                            .addComponent(jcClienteFisica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcClienteJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jcCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton3)
-                        .addComponent(jcVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jrFisica)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jrJuridica)
+                        .addContainerGap())))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações"));
@@ -403,7 +458,7 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -426,7 +481,7 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -474,15 +529,27 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jLabel8.setText("Nome Cliente");
 
+        jTextField2.setEnabled(false);
+
         jLabel9.setText("Nome Motorista");
+
+        jTextField3.setEnabled(false);
 
         jLabel10.setText("CPF Cliente");
 
+        jTextField4.setEnabled(false);
+
         jLabel11.setText("CPF Cliente");
+
+        jTextField5.setEnabled(false);
 
         jLabel12.setText("KM Final");
 
+        jTextField6.setEnabled(false);
+
         jLabel13.setText("Data de Devolução");
+
+        jTextField7.setEnabled(false);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/car_Small.png"))); // NOI18N
         jButton4.setText("Devolver");
@@ -562,7 +629,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jComboBox4, 0, 263, Short.MAX_VALUE)
+                        .addComponent(jComboBox4, 0, 288, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -621,7 +688,7 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 879, Short.MAX_VALUE)
+            .addGap(0, 904, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addContainerGap()
@@ -654,7 +721,7 @@ public class LocacaoView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -667,7 +734,9 @@ public class LocacaoView extends javax.swing.JFrame {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         try {
+            incluir = true;
             enableButtFields(true);
+            enableFielsCrud(true);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIncluirActionPerformed
@@ -675,6 +744,7 @@ public class LocacaoView extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
             enableButtFields(false);
+            enableFielsCrud(false);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -689,20 +759,38 @@ public class LocacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
-
-    }//GEN-LAST:event_jTableUsuariosMouseClicked
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
 
         } catch (Exception e) {
         } finally {
+            enableFielsCrud(false);
+        }
+    }//GEN-LAST:event_jTableUsuariosMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (txtCodigo.getText().isEmpty() || txtDataDevolucao.getText().isEmpty() || txtDataRetirada.getText().isEmpty()
+                    || txtKMInicial.getText().isEmpty() || txtValorCaucao.getText().isEmpty() || txtValorLocacao.getText().isEmpty()
+                    || txtValorSeguro.getText().isEmpty() || jcClienteFisica.getSelectedItem().toString().contains("Fisico")
+                    ||jcClienteJuridica.getSelectedItem().toString().contains("Juridico")
+                    || jcMotorista.getSelectedItem().toString().contains("Motorista")) {
+            } else {
+                if (incluir) {
+
+                } else {
+
+                }
+            }
+        } catch (Exception e) {
+        } finally {
             enableButtFields(false);
+            enableFielsCrud(false);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
+            incluir = false;
             enableButtFields(true);
         } catch (Exception e) {
         }
@@ -746,6 +834,8 @@ public class LocacaoView extends javax.swing.JFrame {
     private void jrFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrFisicaActionPerformed
         try {
             if (jrFisica.isSelected()) {
+                jcClienteFisica.setVisible(true);
+                jcClienteJuridica.setVisible(false);
                 jrJuridica.setSelected(false);
             }
         } catch (Exception e) {
@@ -755,19 +845,29 @@ public class LocacaoView extends javax.swing.JFrame {
     private void jrJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrJuridicaActionPerformed
         try {
             if (jrJuridica.isSelected()) {
+                jcClienteFisica.setVisible(false);
+                jcClienteJuridica.setVisible(true);
                 jrFisica.setSelected(false);
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jrJuridicaActionPerformed
 
-    private void jcClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcClienteAncestorAdded
+    private void jcClienteJuridicaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcClienteJuridicaAncestorAdded
 
-    }//GEN-LAST:event_jcClienteAncestorAdded
+    }//GEN-LAST:event_jcClienteJuridicaAncestorAdded
 
-    private void jcClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClienteActionPerformed
-        
-    }//GEN-LAST:event_jcClienteActionPerformed
+    private void jcClienteJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClienteJuridicaActionPerformed
+
+    }//GEN-LAST:event_jcClienteJuridicaActionPerformed
+
+    private void jcClienteFisicaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcClienteFisicaAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcClienteFisicaAncestorAdded
+
+    private void jcClienteFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClienteFisicaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcClienteFisicaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -796,7 +896,11 @@ public class LocacaoView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LocacaoView().setVisible(true);
+                try {
+                    new LocacaoView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(LocacaoView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -814,18 +918,12 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
-    private javax.swing.JFormattedTextField jFormattedTextField7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -858,11 +956,19 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JComboBox<String> jcCliente;
+    private javax.swing.JComboBox<String> jcClienteFisica;
+    private javax.swing.JComboBox<String> jcClienteJuridica;
     private javax.swing.JComboBox<String> jcMotorista;
     private javax.swing.JComboBox<String> jcVeiculo;
     private javax.swing.JRadioButton jrFisica;
     private javax.swing.JRadioButton jrJuridica;
+    private javax.swing.JFormattedTextField txtCodigo;
+    private javax.swing.JFormattedTextField txtDataDevolucao;
+    private javax.swing.JFormattedTextField txtDataRetirada;
+    private javax.swing.JFormattedTextField txtKMInicial;
+    private javax.swing.JFormattedTextField txtValorCaucao;
+    private javax.swing.JFormattedTextField txtValorLocacao;
+    private javax.swing.JFormattedTextField txtValorSeguro;
     // End of variables declaration//GEN-END:variables
 
     public void enableButtFields(boolean yet) {
@@ -890,5 +996,67 @@ public class LocacaoView extends javax.swing.JFrame {
             return 1;
         }
         return 10;
+    }
+
+    public void enableFielsCrud(boolean action) {
+        if (action) {
+            txtCodigo.setEnabled(true);
+            txtDataRetirada.setEnabled(true);
+            txtDataDevolucao.setEnabled(true);
+            txtKMInicial.setEnabled(true);
+            txtValorLocacao.setEnabled(true);
+            txtValorCaucao.setEnabled(true);
+            txtValorSeguro.setEnabled(true);
+            jcMotorista.setEnabled(true);
+            jcVeiculo.setEnabled(true);
+            jcClienteFisica.setEnabled(true);
+            jcClienteJuridica.setEnabled(true);
+
+            txtCodigo.setText("");
+            txtDataRetirada.setText("");
+            txtDataDevolucao.setText("");
+            txtKMInicial.setText("");
+            txtValorLocacao.setText("");
+            txtValorCaucao.setText("");
+            txtValorSeguro.setText("");
+
+            jcMotorista.removeAllItems();
+            jcMotorista.addItem("Motorista");
+            jcVeiculo.removeAllItems();
+            jcVeiculo.addItem("Veiculo");
+            jcClienteFisica.removeAllItems();
+            jcClienteFisica.addItem("Cliente Fisico");
+            jcClienteJuridica.removeAllItems();
+            jcClienteJuridica.addItem("Cliente Juridico");
+        } else {
+            txtCodigo.setEnabled(false);
+            txtDataRetirada.setEnabled(false);
+            txtDataDevolucao.setEnabled(false);
+            txtKMInicial.setEnabled(false);
+            txtValorLocacao.setEnabled(false);
+            txtValorCaucao.setEnabled(false);
+            txtValorSeguro.setEnabled(false);
+            jcMotorista.setEnabled(false);
+            jcVeiculo.setEnabled(false);
+            jcClienteFisica.setEnabled(false);
+            jcClienteJuridica.setEnabled(false);
+
+            txtCodigo.setText("");
+            txtDataRetirada.setText("");
+            txtDataDevolucao.setText("");
+            txtKMInicial.setText("");
+            txtValorLocacao.setText("");
+            txtValorCaucao.setText("");
+            txtValorSeguro.setText("");
+
+            jcMotorista.removeAllItems();
+            jcMotorista.addItem("Motorista");
+            jcVeiculo.removeAllItems();
+            jcVeiculo.addItem("Veiculo");
+            jcClienteFisica.removeAllItems();
+            jcClienteFisica.addItem("Cliente Fisico");
+            jcClienteJuridica.removeAllItems();
+            jcClienteJuridica.addItem("Cliente Juridico");
+        }
     }
 }

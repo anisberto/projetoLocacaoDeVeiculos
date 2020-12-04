@@ -63,7 +63,7 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         String sql = "SELECT * FROM marca";
         List<MarcaModel> pessoaModelList = new ArrayList<>();
 
-        Statement st = conexao.createStatement();;
+        Statement st = conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){
@@ -95,6 +95,7 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
 
     @Override
     public MarcaModel getByNome(String nome) throws Exception {
+        MarcaModel marcaByName = new MarcaModel();
         String sql = "SELECT * FROM marca WHERE marca_descricao = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
@@ -102,12 +103,12 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         ResultSet rs = preparedStatement.executeQuery();
 
         if(rs.next()){
-            marcaModel = new MarcaModel();
-            marcaModel.setMarca_idem(rs.getInt("marca_idem"));
-            marcaModel.setMarca_descricao(rs.getString("marca_descricao"));
+            marcaByName = new MarcaModel();
+            marcaByName.setMarca_idem(rs.getInt("marca_idem"));
+            marcaByName.setMarca_descricao(rs.getString("marca_descricao"));
         }
 
-        return marcaModel;
+        return marcaByName;
     }
 
     @Override

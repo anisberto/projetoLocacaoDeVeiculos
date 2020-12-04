@@ -20,7 +20,7 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
 
     private MarcaDal dal;
 
-    public MarcaBll () throws Exception {
+    public MarcaBll() throws Exception {
         dal = new MarcaDal();
     }
 
@@ -38,7 +38,7 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
     @Override
     public void delete(int n) throws Exception {
         try {
-        dal.delete(n);
+            dal.delete(n);
         } catch (Exception e) {
 
         }
@@ -81,13 +81,13 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {
-        throw e;
+            throw e;
         }
 
     }
-    
+
     //Validações
-    public void validaMarca(MarcaModel objeto)throws Exception{
+    public void validaMarca(MarcaModel objeto) throws Exception {
         String descricao = objeto.getMarca_descricao().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -97,11 +97,11 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
         }
         //Iterator tratando para nao ter duas marcas iguais!!!
         Iterator<MarcaModel> listaDeUsuario = dal.getAll();
-        for (Iterator<MarcaModel> it = listaDeUsuario; it.hasNext(); ) {
+        for (Iterator<MarcaModel> it = listaDeUsuario; it.hasNext();) {
             MarcaModel aux = it.next();
 
             if ((objeto.getMarca_idem() != aux.getMarca_idem()) && (objeto.getMarca_descricao().toUpperCase().
-                    equalsIgnoreCase(aux.getMarca_descricao().toUpperCase()))){
+                    equalsIgnoreCase(aux.getMarca_descricao().toUpperCase()))) {
                 throw new Exception("A descrição --> " + objeto.getMarca_descricao() + "\nJá existe no cadastro de marcas!\n");
             }
         }
@@ -111,6 +111,5 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
     public int addReturn(MarcaModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
 }

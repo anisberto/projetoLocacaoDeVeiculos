@@ -652,14 +652,15 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void jcModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcModeloActionPerformed
         try {
-            setItemsCombo();
+            setItemMarca();
         } catch (Exception e) {
+            System.out.println("Erro" + e.getMessage() + "\nLocale: " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jcModeloActionPerformed
 
     private void jcModeloAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcModeloAncestorAdded
         try {
-            
+            setItemsCombo();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jcModeloAncestorAdded
@@ -779,12 +780,20 @@ public class VeiculoView extends javax.swing.JFrame {
     }
 
     private void setItemsCombo() throws Exception {
-//        jcModelo.removeAllItems();
+        ModeloBll modelo = new ModeloBll();
         MarcaBll marca = new MarcaBll();
-        ArrayList<MarcaModel> marcaLista = (ArrayList<MarcaModel>) marca.getAll();
-        jcModelo.addItem("Selecione");
-        for (MarcaModel marcas : marcaLista) {
-            jcModelo.addItem(marcas.getMarca_descricao().toString());
+        Iterator<ModeloModel> modeloListados = modelo.getAll();
+        while (modeloListados.hasNext()) {
+            jcModelo.addItem(modeloListados.next().getModelo_descricao());
         }
+    }
+
+    public void setItemMarca() throws Exception {
+        ModeloBll modelo = new ModeloBll();
+        MarcaBll marca = new MarcaBll();
+        ModeloModel modeloField = modelo.getByNome(jcModelo.getSelectedItem().toString());
+
+        MarcaModel marc = marca.getByNome(modeloField.getModelo_marca().getMarca_descricao());
+        txtMarcaVeiculo.setText(":)" + marc.getMarca_descricao());
     }
 }

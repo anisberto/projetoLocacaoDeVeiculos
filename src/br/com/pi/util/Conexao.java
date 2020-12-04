@@ -1,5 +1,7 @@
 package br.com.pi.util;
 
+import br.com.pi.interfaces.ConnectionObservable;
+import br.com.pi.interfaces.ConnectionObserver;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,11 +10,14 @@ import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.Stack;
 
-public class Conexao {
+public class Conexao implements ConnectionObservable {
 
     private static Conexao conexao = null;
     private static Connection conect = null;
+    private boolean isConnected;
+    private Stack<ConnectionObserver> connectionObservers = new Stack<>();
 
     private Conexao() {
     }
@@ -30,8 +35,12 @@ public class Conexao {
                 Properties props = loadProperties();
                 String urlDb = props.getProperty("dburl");
                 conect = DriverManager.getConnection(urlDb, props);
+                isConnected = true;
             } catch (Exception errorConectCreate) {
+                isConnected = false;
                 throw new Exception("Erro ao conectar no banco de dados! " + errorConectCreate.getMessage());
+            } finally {
+                notifyObservers();
             }
         }
         return conect;
@@ -75,5 +84,22 @@ public class Conexao {
         } catch (IOException error) {
             throw new IOException("Erro ao Carre");
         }
+    }
+
+    @Override
+    public void addConnectionObserver(ConnectionObserver connectionObserver) {
+        this.connectionObservers.add(connectionObserver);
+    }
+
+    @Override
+    public void removeConnectionObserver(ConnectionObserver connectionObserver) {
+        this.connectionObservers.remove(connectionObserver);
+    }
+
+    @Override
+    public void notifyObservers() {
+        connectionObservers.forEach(connect -> {
+            connect.onConnectionChange(isConnected);
+        });
     }
 }

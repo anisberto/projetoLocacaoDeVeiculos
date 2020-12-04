@@ -69,7 +69,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public ModeloModel getByNome(String nome) throws Exception {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {

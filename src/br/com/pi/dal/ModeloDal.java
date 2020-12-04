@@ -98,7 +98,8 @@ public class ModeloDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public ModeloModel getByNome(String nome) throws Exception {
+        ModeloModel modeloByNome = new ModeloModel();
         String sql = "SELECT * FROM modelo WHERE modelo_descricao = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
@@ -106,12 +107,12 @@ public class ModeloDal implements ICRUD_GENERIC {
         ResultSet rs = preparedStatement.executeQuery();
 
         if(rs.next()){
-            modeloModel = new ModeloModel();
-            modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
-            modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
+            modeloByNome = new ModeloModel();
+            modeloByNome.setModelo_idem(rs.getInt("modelo_idem"));
+            modeloByNome.setModelo_descricao(rs.getString("modelo_descricao"));
         }
 
-        return modeloModel;
+        return modeloByNome;
     }
 
     @Override
