@@ -7,9 +7,11 @@ import br.com.pi.model.ReservaModel;
 import javax.swing.JOptionPane;
 
 public class ReservaView extends javax.swing.JFrame {
-    
-ICRUD_GENERIC<ReservaBll> incluirReserva;
+
+    //ICRUD_GENERIC<ReservaBll> incluirReserva;
+    ICRUD_GENERIC<ReservaBll> novaReserva;
     boolean incluir = true;
+    int IdDeleteReserva;
 
     public ReservaView() {
         initComponents();
@@ -52,7 +54,7 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
         jLabel3 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTableUsuarios5 = new javax.swing.JTable();
+        tableReserva = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox4 = new javax.swing.JComboBox<>();
@@ -238,8 +240,8 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Veiculos"));
 
-        jTableUsuarios5.setAutoCreateRowSorter(true);
-        jTableUsuarios5.setModel(new javax.swing.table.DefaultTableModel(
+        tableReserva.setAutoCreateRowSorter(true);
+        tableReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -247,12 +249,12 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
                 "Identificador", "Modelo", "Marca", "Disponibilidade", "Ano do Modelo"
             }
         ));
-        jTableUsuarios5.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableReserva.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableUsuarios5jTableUsuarios3MouseClicked(evt);
+                tableReservajTableUsuarios3MouseClicked(evt);
             }
         });
-        jScrollPane6.setViewportView(jTableUsuarios5);
+        jScrollPane6.setViewportView(tableReserva);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -541,24 +543,29 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnSalvarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarReservaActionPerformed
+
+        if (txtCpfCnpj.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
+
+        }
         try {
-            if (txtCpfCnpj.getText().equals("")){
-                JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
-                ReservaModel res = new ReservaModel();
-                
-            }
+            ReservaModel novoReserva = new ReservaModel();
+            novoReserva.setReserva_cliente(novaReserva.getAll(jcomboxCliente.getSelectedItem().toString()));
+            
+
+            //novaReserva.setReserva_cliente(incluirReserva.getByNome(jcomboxCliente.getSelectedItem().toString()));
         } catch (Exception e) {
         }
-        
+
     }//GEN-LAST:event_btnSalvarReservaActionPerformed
 
     private void btnAlterarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarReservaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAlterarReservaActionPerformed
 
-    private void jTableUsuarios5jTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios5jTableUsuarios3MouseClicked
+    private void tableReservajTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservajTableUsuarios3MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTableUsuarios5jTableUsuarios3MouseClicked
+    }//GEN-LAST:event_tableReservajTableUsuarios3MouseClicked
 
     private void jTableUsuarios6jTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios6jTableUsuarios3MouseClicked
         // TODO add your handling code here:
@@ -645,13 +652,13 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTable jTableUsuarios5;
     private javax.swing.JTable jTableUsuarios6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JComboBox<String> jcomboxCliente;
+    private javax.swing.JTable tableReserva;
     private javax.swing.JTextField txtCpfCnpj;
     private javax.swing.JTextField txtDataExpiracao;
     private javax.swing.JTextField txtDataReserva;
@@ -683,4 +690,24 @@ ICRUD_GENERIC<ReservaBll> incluirReserva;
         }
     }
 
+    private void transferirDadosReserva() {
+        try {
+            int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
+            ReservaModel deleteReserva = (ReservaModel) novaReserva.getById(codigo);
+            
+            IdDeleteReserva = codigo;
+            txtCpfCnpj.setText(deleteReserva.getReserva_cliente()+"");
+            txtDataReserva.setText(deleteReserva.getReserva_dataReserva()+"");
+            txtDataExpiracao.setText(deleteReserva.getReserva_dataExpiracao()+"");
+            jcomboxCliente.removeAllItems();
+            jcomboxCliente.addItem(deleteReserva.getReserva_cliente().getPessoa_nome());
+//            
+//            txtAnoFilme.setText(deleteFil.getAno() + "");
+//            txtFilmeTitulo.setText(deleteFil.getTitulo());
+//            jcFilmeCategoria.removeAllItems();
+//            jcFilmeCategoria.addItem(deleteFil.getCategoria().getNome().toString());
+//            txtSinopseFilme.setText(deleteFil.getSinopse().toUpperCase());
+        } catch (Exception e) {
+        }
+    }
 }
