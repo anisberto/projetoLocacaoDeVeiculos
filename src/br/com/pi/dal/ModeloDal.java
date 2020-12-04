@@ -35,7 +35,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void add(ModeloModel objeto) throws Exception {
-        String sql = "INSERT INTO modelo(modelo_descricao, modelo_marca)" +
+        String sql = "INSERT INTO modelo(modelo_descricao, modelo_marca_idem)" +
                 "VALUES (?, ?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM modelo WHERE modelo_idem =?";
+        String sql = "DELETE FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,n);
         ps.executeUpdate();
@@ -56,7 +56,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void update(ModeloModel objeto) throws Exception {
-        String sql ="UPDATE modelo SET modelo_descricao = ?" +
+        String sql ="UPDATE modelo SET modelo_descricao = ?, modelo_marca_idem = ?" +
                 " WHERE modelo_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, objeto.getModelo_descricao());
@@ -78,7 +78,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
             modeloModel = new ModeloModel();
             modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
             modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
-            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca")));
+            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
 
             pessoaModelList.add(modeloModel);
         }
@@ -87,7 +87,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public ModeloModel getById(int n) throws Exception {
-        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?, modelo_marca = ?";
+        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,n);
@@ -97,7 +97,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
             modeloModel = new ModeloModel();
             modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
             modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
-            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca")));
+            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
         }
 
         return modeloModel;
@@ -105,7 +105,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public ModeloModel getByNome(String nome) throws Exception {
-        String sql = "SELECT * FROM modelo WHERE modelo_descricao = ?, modelo_marca = ?";
+        String sql = "SELECT * FROM modelo WHERE modelo_descricao = ?, modelo_marca_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,nome);
@@ -115,7 +115,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
             modeloModel = new ModeloModel();
             modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
             modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
-            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca")));
+            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
         }
 
         return modeloModel;
