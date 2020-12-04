@@ -1,6 +1,5 @@
 package br.com.pi.app;
 
-import static br.com.pi.app.Spinner.lblPer;
 import br.com.pi.bll.AdministradorBll;
 import br.com.pi.interfaces.ConnectionObserver;
 import br.com.pi.interfaces.ICRUD_GENERIC;
@@ -8,8 +7,6 @@ import br.com.pi.model.AdministradorModel;
 import br.com.pi.util.Conexao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
