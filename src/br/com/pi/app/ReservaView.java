@@ -1,9 +1,11 @@
 package br.com.pi.app;
 
+import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.ReservaBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 public class ReservaView extends javax.swing.JFrame {
@@ -586,7 +588,15 @@ public class ReservaView extends javax.swing.JFrame {
     private void btnSalvar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvar7ActionPerformed
-
+    private void jcClientes () throws Exception{
+        PessoaBll pess_bll = new PessoaBll();
+        Iterator<PessoaModel> listaMarca = pess_bll.getAll();
+        jcomboxCliente.removeAllItems();
+        for(Iterator<PessoaModel> pm = listaMarca; pm.hasNext(); ){
+            PessoaModel pess = pm.next();
+            jcomboxCliente.addItem(pess.getPessoa_nome());
+        }
+    }
     /**
      * @param args the command line arguments
      */
