@@ -6,17 +6,23 @@ import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ReservaView extends javax.swing.JFrame {
 
-    //ICRUD_GENERIC<ReservaBll> incluirReserva;
-    ICRUD_GENERIC<ReservaBll> novaReserva;
+    ICRUD_GENERIC<ReservaModel> incluirReserva;
+    ICRUD_GENERIC<PessoaModel> cliente;
+    private PessoaBll clienteBll = new PessoaBll();
+    
     boolean incluir = true;
     int IdDeleteReserva;
 
-    public ReservaView() {
+    public ReservaView() throws Exception {
         initComponents();
+        jcClientes();
+        incluirReserva = new ReservaBll();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
@@ -553,7 +559,7 @@ public class ReservaView extends javax.swing.JFrame {
         try {
             ReservaModel novoReserva = new ReservaModel();
             //novoReserva.setReserva_cliente(novaReserva.getAll(jcomboxCliente.getSelectedItem().toString()));
-            modelo.setModelo_marca(marca_bll.getByNome(jcMarca.getSelectedItem().toString()));
+            novoReserva.setReserva_cliente((PessoaModel) clienteBll.getByNome(jcomboxCliente.getSelectedItem().toString()));
 
             //novaReserva.setReserva_cliente(incluirReserva.getByNome(jcomboxCliente.getSelectedItem().toString()));
         } catch (Exception e) {
@@ -627,7 +633,11 @@ public class ReservaView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReservaView().setVisible(true);
+                try {
+                    new ReservaView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ReservaView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -703,7 +713,7 @@ public class ReservaView extends javax.swing.JFrame {
     private void transferirDadosReserva() {
         try {
             int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
-            ReservaModel deleteReserva = (ReservaModel) novaReserva.getById(codigo);
+            ReservaModel deleteReserva = (ReservaModel) incluirReserva.getById(codigo);
             
             IdDeleteReserva = codigo;
             txtCpfCnpj.setText(deleteReserva.getReserva_cliente()+"");
