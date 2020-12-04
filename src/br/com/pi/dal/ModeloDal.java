@@ -118,7 +118,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
             modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
         }
 
-        return modeloByNome;
+        return modeloModel;
     }
 
     @Override
