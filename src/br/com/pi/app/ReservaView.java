@@ -552,8 +552,8 @@ public class ReservaView extends javax.swing.JFrame {
         }
         try {
             ReservaModel novoReserva = new ReservaModel();
-            novoReserva.setReserva_cliente(novaReserva.getAll(jcomboxCliente.getSelectedItem().toString()));
-            //modelo.setModelo_marca(marca_bll.getByNome(jcMarca.getSelectedItem().toString()));
+            //novoReserva.setReserva_cliente(novaReserva.getAll(jcomboxCliente.getSelectedItem().toString()));
+            modelo.setModelo_marca(marca_bll.getByNome(jcMarca.getSelectedItem().toString()));
 
             //novaReserva.setReserva_cliente(incluirReserva.getByNome(jcomboxCliente.getSelectedItem().toString()));
         } catch (Exception e) {
