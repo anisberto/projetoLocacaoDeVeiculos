@@ -1,8 +1,15 @@
 package br.com.pi.app;
 
-public class ReservaView extends javax.swing.JFrame {
+import br.com.pi.bll.ReservaBll;
+import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.PessoaModel;
+import br.com.pi.model.ReservaModel;
+import javax.swing.JOptionPane;
 
-    boolean incluirReserva = true;
+public class ReservaView extends javax.swing.JFrame {
+    
+ICRUD_GENERIC<ReservaBll> incluirReserva;
+    boolean incluir = true;
 
     public ReservaView() {
         initComponents();
@@ -14,6 +21,7 @@ public class ReservaView extends javax.swing.JFrame {
         txtDataReserva.setText("");
         txtDataExpiracao.setText("");
         jcomboxCliente.setSelectedItem("<Selecione o Cliente>");
+        //jcomboxCliente.setVisible(false);
     }
 
     /**
@@ -513,7 +521,8 @@ public class ReservaView extends javax.swing.JFrame {
 
         try {
             limparReserva();
-            incluirReserva = true;
+            incluir = true;
+            reservarEnableButtons(true);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIncluirReservaActionPerformed
@@ -532,7 +541,15 @@ public class ReservaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnSalvarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarReservaActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (txtCpfCnpj.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
+                ReservaModel res = new ReservaModel();
+                
+            }
+        } catch (Exception e) {
+        }
+        
     }//GEN-LAST:event_btnSalvarReservaActionPerformed
 
     private void btnAlterarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarReservaActionPerformed
@@ -640,7 +657,7 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JTextField txtDataReserva;
     // End of variables declaration//GEN-END:variables
 
-    private void enderecoClienteEnableButtons(boolean butt) {
+    private void reservarEnableButtons(boolean butt) {
         if (butt) {
             btnIncluirReserva.setEnabled(false);
             btnAlterarReserva.setEnabled(false);
