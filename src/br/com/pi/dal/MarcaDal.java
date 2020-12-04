@@ -61,9 +61,9 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
     @Override
     public Iterator getAll() throws Exception {
         String sql = "SELECT * FROM marca";
-        List<MarcaModel> pessoaModelList = new ArrayList<>();
+        List<MarcaModel> pessoaModelList = new ArrayList<MarcaModel>();
 
-        Statement st = conexao.createStatement();;
+        Statement st = conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){

@@ -29,4 +29,8 @@ public class ModeloModel {
     public void setModelo_marca(MarcaModel modelo_marca) {
         this.modelo_marca = modelo_marca;
     }
+    @Override
+    public String toString() {
+        return "modelo_idem=" + modelo_idem + ", modelo_descricao=" + modelo_descricao + ", modelo_marca=" + modelo_marca ;
+    }
 }

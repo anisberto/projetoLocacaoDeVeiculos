@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModeloBll implements ICRUD_GENERIC {
+public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
 
     private ModeloDal dal;
 
@@ -17,7 +17,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(ModeloModel objeto) throws Exception {
         try {
             validaModelo((ModeloModel) objeto);
             dal.add(objeto);
@@ -38,7 +38,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(ModeloModel objeto) throws Exception {
         try {
             validaModelo((ModeloModel) objeto);
             dal.update(objeto);
@@ -59,7 +59,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public ModeloModel getById(int n) throws Exception {
         try {
             return dal.getById(n);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public ModeloModel getByNome(String nome) throws Exception {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {
@@ -77,18 +77,7 @@ public class ModeloBll implements ICRUD_GENERIC {
         }
 
     }
-    public static boolean isValidEmailAddressRegex(String email) {
-        boolean isEmailIdValid = false;
-        if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                isEmailIdValid = true;
-            }
-        }
-        return isEmailIdValid;
-    }
+    
     //Validações
     public void validaModelo(ModeloModel objeto)throws Exception{
         String descricao = objeto.getModelo_descricao().trim().toLowerCase();
@@ -111,7 +100,7 @@ public class ModeloBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(ModeloModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

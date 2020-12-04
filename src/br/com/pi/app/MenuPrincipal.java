@@ -248,8 +248,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         try {
-            LocacaoView login = new LocacaoView();
-            login.setVisible(true);
             dispose();
         } catch (Exception e) {
         }
