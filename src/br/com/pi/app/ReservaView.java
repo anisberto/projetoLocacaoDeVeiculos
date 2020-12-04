@@ -5,17 +5,19 @@ import br.com.pi.bll.ReservaBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class ReservaView extends javax.swing.JFrame {
 
     ICRUD_GENERIC<ReservaModel> incluirReserva;
     ICRUD_GENERIC<PessoaModel> cliente;
     private PessoaBll clienteBll = new PessoaBll();
-    
+
     boolean incluir = true;
     int IdDeleteReserva;
 
@@ -199,6 +201,8 @@ public class ReservaView extends javax.swing.JFrame {
 
         jLabel1.setText("CPF/CNPJ: ");
 
+        txtCpfCnpj.setText("Acho que n precisa");
+
         jLabel2.setText("Data da Reserva");
 
         jLabel3.setText("Data de Expiração");
@@ -211,39 +215,39 @@ public class ReservaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jcomboxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 66, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Veiculos"));
@@ -270,7 +274,7 @@ public class ReservaView extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
@@ -551,17 +555,26 @@ public class ReservaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnSalvarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarReservaActionPerformed
+//        Date dataAtual = new Date();
+//        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//        String dataFormatada = dateFormat.format(dataAtual);
+        
+        
+//        if (txtCpfCnpj.getText().equals("")) {
+//            JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
+//        }
 
-        if (txtCpfCnpj.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
-
-        }
         try {
             ReservaModel novoReserva = new ReservaModel();
-            //novoReserva.setReserva_cliente(novaReserva.getAll(jcomboxCliente.getSelectedItem().toString()));
+            
             novoReserva.setReserva_cliente((PessoaModel) clienteBll.getByNome(jcomboxCliente.getSelectedItem().toString()));
+            novoReserva.setReserva_dataReserva(txtDataExpiracao.getText());
+            novoReserva.setReserva_dataExpiracao(txtDataExpiracao.getText());
+            
+            if (incluir){
+                incluirReserva.add(novoReserva);
+            }
 
-            //novaReserva.setReserva_cliente(incluirReserva.getByNome(jcomboxCliente.getSelectedItem().toString()));
         } catch (Exception e) {
         }
 
@@ -594,15 +607,16 @@ public class ReservaView extends javax.swing.JFrame {
     private void btnSalvar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvar7ActionPerformed
-    private void jcClientes () throws Exception{
+    private void jcClientes() throws Exception {
         PessoaBll pess_bll = new PessoaBll();
         Iterator<PessoaModel> listaMarca = pess_bll.getAll();
         jcomboxCliente.removeAllItems();
-        for(Iterator<PessoaModel> pm = listaMarca; pm.hasNext(); ){
-            PessoaModel pess = pm.next();
+        for (Iterator<PessoaModel> pessoamodel = listaMarca; pessoamodel.hasNext();) {
+            PessoaModel pess = pessoamodel.next();
             jcomboxCliente.addItem(pess.getPessoa_nome());
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -714,19 +728,13 @@ public class ReservaView extends javax.swing.JFrame {
         try {
             int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
             ReservaModel deleteReserva = (ReservaModel) incluirReserva.getById(codigo);
-            
+
             IdDeleteReserva = codigo;
-            txtCpfCnpj.setText(deleteReserva.getReserva_cliente()+"");
-            txtDataReserva.setText(deleteReserva.getReserva_dataReserva()+"");
-            txtDataExpiracao.setText(deleteReserva.getReserva_dataExpiracao()+"");
+            txtCpfCnpj.setText(deleteReserva.getReserva_cliente() + "");
+            txtDataReserva.setText(deleteReserva.getReserva_dataReserva() + "");
+            txtDataExpiracao.setText(deleteReserva.getReserva_dataExpiracao() + "");
             jcomboxCliente.removeAllItems();
             jcomboxCliente.addItem(deleteReserva.getReserva_cliente().getPessoa_nome());
-//            
-//            txtAnoFilme.setText(deleteFil.getAno() + "");
-//            txtFilmeTitulo.setText(deleteFil.getTitulo());
-//            jcFilmeCategoria.removeAllItems();
-//            jcFilmeCategoria.addItem(deleteFil.getCategoria().getNome().toString());
-//            txtSinopseFilme.setText(deleteFil.getSinopse().toUpperCase());
         } catch (Exception e) {
         }
     }
