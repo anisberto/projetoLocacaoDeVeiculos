@@ -320,7 +320,7 @@ public class MarcaView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-            MenuPrincipal menu = new MenuPrincipal();
+            VeiculoView menu = new VeiculoView();
             menu.setVisible(true);
             this.dispose();
         } catch (Exception e) {
