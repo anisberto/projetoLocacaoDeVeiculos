@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ReservaDal implements ICRUD_GENERIC {
+
     private Connection conexao;
     ReservaModel reservaModel = new ReservaModel();
 
@@ -25,15 +26,14 @@ public class ReservaDal implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         reservaModel = (ReservaModel) objeto;
-        String sql = "INSERT INTO reserva (reserva_dataFinal, reserva_dataDareserva,reserva_veiculos_idem" +
-                "reserva_pessoas_idem) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO reserva (reserva_dataFinal, reserva_dataDareserva,reserva_veiculos_idem"
+                + "reserva_pessoas_idem) VALUES (?,?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, reservaModel.getReserva_dataExpiracao());
         ps.setObject(2, reservaModel.getReserva_dataExpiracao());
         ps.setObject(3, reservaModel.getReserva_veiculo());
         ps.setObject(4, reservaModel.getReserva_cliente());
         ps.executeUpdate();
-
 
     }
 
@@ -48,8 +48,8 @@ public class ReservaDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        String sql = "UPDATE reserva SET reserva_dataFinal=?, reserva_dataDareserva=?,reserva_veiculos_idem=?" +
-                "reserva_pessoas_idem=? WHERE reserva_idem=?";
+        String sql = "UPDATE reserva SET reserva_dataFinal=?, reserva_dataDareserva=?,reserva_veiculos_idem=?"
+                + "reserva_pessoas_idem=? WHERE reserva_idem=?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, reservaModel.getReserva_dataExpiracao());
         ps.setObject(2, reservaModel.getReserva_dataExpiracao());
@@ -69,11 +69,13 @@ public class ReservaDal implements ICRUD_GENERIC {
 
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             reservaModel = new ReservaModel();
             reservaModel.setReserva_idem(rs.getInt("reserva_idem"));
-            reservaModel.setReserva_dataReserva(rs.getDate("reserva_dataDareserva"));
-            reservaModel.setReserva_dataExpiracao(rs.getDate("reserva_dataFinal"));
+            reservaModel.setReserva_dataReserva(rs.getString("reserva_dataDareserva"));
+            reservaModel.setReserva_dataExpiracao(rs.getString("reserva_dataFinal"));
+//            reservaModel.setReserva_dataReserva(rs.getDate("reserva_dataDareserva"));
+//            reservaModel.setReserva_dataExpiracao(rs.getDate("reserva_dataFinal"));
             reservaModel.setReserva_cliente((PessoaModel) pessoaDal.getById(rs.getInt("reserva_pessoas_idem")));
             reservaModel.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
             list.add(reservaModel);
@@ -89,14 +91,16 @@ public class ReservaDal implements ICRUD_GENERIC {
         VeiculoDal veiculoDal = new VeiculoDal();
         String sql = "SELECT * FROM reserva WHERE reserva_idem=?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,n);
+        preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             reservaModel = new ReservaModel();
             reservaModel.setReserva_idem(rs.getInt("reserva_idem"));
-            reservaModel.setReserva_dataReserva(rs.getDate("reserva_dataDareserva"));
-            reservaModel.setReserva_dataExpiracao(rs.getDate("reserva_dataFinal"));
+            reservaModel.setReserva_dataReserva(rs.getString("reserva_dataDareserva"));
+            reservaModel.setReserva_dataExpiracao(rs.getString("reserva_dataFinal"));
+//            reservaModel.setReserva_dataReserva(rs.getDate("reserva_dataDareserva"));
+//            reservaModel.setReserva_dataExpiracao(rs.getDate("reserva_dataFinal"));
             reservaModel.setReserva_cliente((PessoaModel) pessoaDal.getById(rs.getInt("reserva_pessoas_idem")));
             reservaModel.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
 
@@ -107,7 +111,7 @@ public class ReservaDal implements ICRUD_GENERIC {
 
     @Override
     public Object getByNome(String nome) throws Exception {
-return null;
+        return null;
     }
 
     @Override
