@@ -76,18 +76,18 @@ public class ReservaBll implements ICRUD_GENERIC {
     public void validaReserva(ReservaModel objeto) throws Exception {
 
 
-        if (objeto.getReserva_dataExpiracao().equals("")) {
-            throw new Exception("Informe a data da reserva de expiração");
-        }
-        if (objeto.getReserva_dataReserva().equals("")) {
-            throw new Exception("Informe a data da reserva");
-        }
-        if (objeto.getReserva_veiculo() == null) {
-            throw new Exception("Informe um veiculo");
-        }
-        if (objeto.getReserva_cliente() == null) {
-            throw new Exception("Informe um Cliente");
-        }
+//        if (objeto.getReserva_dataExpiracao().equals("")) {
+//            throw new Exception("Informe a data da reserva de expiração");
+//        }
+//        if (objeto.getReserva_dataReserva().equals("")) {
+//            throw new Exception("Informe a data da reserva");
+//        }
+//        if (objeto.getReserva_veiculo() == null) {
+//            throw new Exception("Informe um veiculo");
+//        }
+//        if (objeto.getReserva_cliente() == null) {
+//            throw new Exception("Informe um Cliente");
+//        }
 
     }
 
