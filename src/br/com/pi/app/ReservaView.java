@@ -3,12 +3,8 @@ package br.com.pi.app;
 import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.ReservaBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
-import br.com.pi.model.AdministradorModel;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -638,7 +634,10 @@ public class ReservaView extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString());
             transferirDadosReserva(id);
+            System.out.println(id);
+            
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_tableReservajTableUsuarios3MouseClicked
 
@@ -778,21 +777,7 @@ public class ReservaView extends javax.swing.JFrame {
         }
     }
 
-    private void transferirDadosReserva(int codigo) {
-        try {
-//            int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
-//            ReservaModel deleteReserva = (ReservaModel) incluirReserva.getById(codigo);
-            ReservaModel res = incluirReserva.getById(codigo);
-
-            txtCpfCnpj.setText(res.getReserva_cliente() + "");
-            txtDataReserva.setText(res.getReserva_dataReserva() + "");
-            txtDataExpiracao.setText(res.getReserva_dataExpiracao() + "");
-            jcomboxCliente.removeAllItems();
-            jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
-            IdDeleteReserva = codigo;
-        } catch (Exception e) {
-        }
-    }
+    
 
     private void enableBuReserva(boolean butt) {
         if (butt) {
@@ -858,13 +843,28 @@ public class ReservaView extends javax.swing.JFrame {
             String[] linha = new String[4];
             ReservaModel objetoReserva = (ReservaModel) conjunto.next();
 
-            linha[0] = objetoReserva.getReserva_idem() + "";
-            linha[1] = objetoReserva.getReserva_cliente().getPessoa_idem()+"";
-            linha[2] = objetoReserva.getReserva_dataExpiracao();
-            linha[3] = objetoReserva.getReserva_dataReserva();
-            
+            linha[0] = objetoReserva.getReserva_dataExpiracao();
+            linha[1] = objetoReserva.getReserva_dataReserva();
+            linha[2] = objetoReserva.getReserva_cliente().getPessoa_idem()+"";
+            linha[3] = objetoReserva.getReserva_idem() + "";            
 
             model.addRow(linha);
+        }
+    }
+    private void transferirDadosReserva(int codigo) {
+        try {
+//            int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
+//            ReservaModel deleteReserva = (ReservaModel) incluirReserva.getById(codigo);
+            ReservaModel res = incluirReserva.getById(codigo);
+
+            //txtCpfCnpj.setText(res.getReserva_cliente() + "");
+            txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome()+"");
+            txtDataReserva.setText(res.getReserva_dataReserva() + "");
+            txtDataExpiracao.setText(res.getReserva_dataExpiracao() + "");
+            jcomboxCliente.removeAllItems();
+            jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
+            IdDeleteReserva = codigo;
+        } catch (Exception e) {
         }
     }
 }
