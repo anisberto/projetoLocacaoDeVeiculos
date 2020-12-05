@@ -166,6 +166,31 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         }
         return null;
     }
+    public VeiculoModel getByIdModelo(int nome) throws Exception {
+        try {
+            VeiculoModel veiculo = new VeiculoModel();
+            PreparedStatement prep = conec.prepareStatement("SELECT * FROM veiculos WHERE veiculo_modelo_idem=?");
+            prep.setInt(1, nome);
+            ResultSet result = prep.executeQuery();
+            while (result.next()) {
+                veiculo.setVeiculo_idem(result.getInt("veiculo_idem"));
+                veiculo.setVeiculo_renavam(result.getString("veiculo_renavam"));
+                veiculo.setVeiculo_precoCompra(result.getFloat("veiculo_precodecompra"));
+                veiculo.setVeiculo_precoVenda(result.getFloat("veiculo_precodevenda"));
+                veiculo.setVeiculo_numeroDePassageiro(result.getInt("veiculo_numerodepassageiros"));
+                veiculo.setVeiculo_anoFabrica(result.getString("veiculo_anodefabricacao"));
+                veiculo.setVeiculo_anoModelo(result.getString("veiculo_anodomodelo"));
+                veiculo.setVeiculo_quilometragem(result.getFloat("veiculo_quilometragem"));
+                veiculo.setVeiculo_tipoCombustivel(result.getString("veiculo_tipodecombustivel"));
+                veiculo.setVeiculo_tipoVeiculo(result.getString("veiculo_tipodeveiculo"));
+                veiculo.setVeiculo_situacaoVeiculo(result.getString("veiculo_situacaodoveiculo"));
+                veiculo.setVeiculo_modelo((ModeloModel) modeloBll.getById(result.getInt("veiculo_modelo_idem")));
+            }
+            return veiculo;
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
     @Override
     public int addReturn(VeiculoModel objeto) throws Exception {
