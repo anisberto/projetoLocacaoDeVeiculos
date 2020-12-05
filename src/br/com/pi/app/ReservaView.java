@@ -22,19 +22,11 @@ public class ReservaView extends javax.swing.JFrame {
 
     public ReservaView() throws Exception {
         initComponents();
-        
-        jcClientes();
+
+//        jcClientes();
         incluirReserva = new ReservaBll();
         imprimirDadosNaGrid(incluirReserva.getAll());
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
-    }
-
-    public void limparReserva() {
-        txtCpfCnpj.setText("");
-        txtDataReserva.setText("");
-        txtDataExpiracao.setText("");
-        jcomboxCliente.setSelectedItem("<Selecione o Cliente>");
-        //jcomboxCliente.setVisible(false);
     }
 
     /**
@@ -198,7 +190,7 @@ public class ReservaView extends javax.swing.JFrame {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Reserva"));
 
-        jcomboxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente" }));
+        jcomboxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecionar Cliente>" }));
 
         jLabel1.setText("CPF/CNPJ: ");
 
@@ -568,6 +560,7 @@ public class ReservaView extends javax.swing.JFrame {
             clearFields();
             enableButt(true);
             incluir = true;
+            jcClientes();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnReservaIncluirActionPerformed
@@ -604,7 +597,7 @@ public class ReservaView extends javax.swing.JFrame {
                 } else {
                     res.setReserva_idem(Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString()));
                     incluirReserva.update(res);
-                    JOptionPane.showMessageDialog(null, "Reserva Alteradocom Sucesso!", "Reserva", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Reserva Alterado com Sucesso!#", "Reserva", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
@@ -635,7 +628,7 @@ public class ReservaView extends javax.swing.JFrame {
             int id = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString());
             transferirDadosReserva(id);
             System.out.println(id);
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
@@ -660,15 +653,6 @@ public class ReservaView extends javax.swing.JFrame {
     private void btnSalvar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvar7ActionPerformed
-    private void jcClientes() throws Exception {
-        PessoaBll pess_bll = new PessoaBll();
-        Iterator<PessoaModel> listaMarca = pess_bll.getAll();
-        jcomboxCliente.removeAllItems();
-        for (Iterator<PessoaModel> pessoamodel = listaMarca; pessoamodel.hasNext();) {
-            PessoaModel pess = pessoamodel.next();
-            jcomboxCliente.addItem(pess.getPessoa_nome());
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -777,8 +761,6 @@ public class ReservaView extends javax.swing.JFrame {
         }
     }
 
-    
-
     private void enableBuReserva(boolean butt) {
         if (butt) {
             btnReservaIncluir.setEnabled(false);
@@ -845,26 +827,36 @@ public class ReservaView extends javax.swing.JFrame {
 
             linha[0] = objetoReserva.getReserva_dataExpiracao();
             linha[1] = objetoReserva.getReserva_dataReserva();
-            linha[2] = objetoReserva.getReserva_cliente().getPessoa_idem()+"";
-            linha[3] = objetoReserva.getReserva_idem() + "";            
+            linha[2] = objetoReserva.getReserva_cliente().getPessoa_idem() + "";
+            linha[3] = objetoReserva.getReserva_idem() + "";
 
             model.addRow(linha);
         }
     }
+
     private void transferirDadosReserva(int codigo) {
         try {
-//            int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 0).toString());
-//            ReservaModel deleteReserva = (ReservaModel) incluirReserva.getById(codigo);
             ReservaModel res = incluirReserva.getById(codigo);
 
             //txtCpfCnpj.setText(res.getReserva_cliente() + "");
-            txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome()+"");
+            txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome() + "");
             txtDataReserva.setText(res.getReserva_dataReserva() + "");
             txtDataExpiracao.setText(res.getReserva_dataExpiracao() + "");
             jcomboxCliente.removeAllItems();
             jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
             IdDeleteReserva = codigo;
         } catch (Exception e) {
+        }
+    }
+
+    private void jcClientes() throws Exception {
+        PessoaBll pess_bll = new PessoaBll();
+        Iterator<PessoaModel> listaCliente = pess_bll.getAll();
+        jcomboxCliente.removeAllItems();
+        for (Iterator<PessoaModel> pessoamodel = listaCliente; pessoamodel.hasNext();) {
+            PessoaModel pess = pessoamodel.next();
+            jcomboxCliente.addItem(pess.getPessoa_nome());
+            
         }
     }
 }
