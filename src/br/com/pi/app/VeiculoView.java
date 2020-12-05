@@ -1,6 +1,5 @@
 package br.com.pi.app;
 
-import br.com.pi.bll.MarcaBll;
 import br.com.pi.bll.ModeloBll;
 import br.com.pi.bll.VeiculoBll;
 import br.com.pi.dal.ModeloDal;
@@ -16,6 +15,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
     VeiculoBll veiculoInclud;
     ModeloBll modeloBll;
+    int idDelete;
     boolean incluir = true;
 
     public VeiculoView() throws Exception {
@@ -575,7 +575,24 @@ public class VeiculoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-
+        try {
+             if (!txtMarcaVeiculo.getText().isEmpty()) {
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Veiculo RENAVAM Nº: " + veiculoInclud.getById(idDelete).getVeiculo_renavam(), "Deleção",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+                if (conf == 0) {
+                    veiculoInclud.delete(idDelete);
+                    JOptionPane.showMessageDialog(null, "Veiculo deletado com sucesso");
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
+                }
+                imprimirDadosNaGrid(veiculoInclud.getAll());
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione o Veiculo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
@@ -623,7 +640,8 @@ public class VeiculoView extends javax.swing.JFrame {
                 veiculoInclud.add(newVeiculo);
                 JOptionPane.showMessageDialog(null, "Processo Finalizado");
             } else {
-
+                newVeiculo.setVeiculo_idem(Integer.parseInt(tableVeiculos.getValueAt(tableVeiculos.getSelectedRow(), 0).toString()));
+                veiculoInclud.update(newVeiculo);
             }
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -649,7 +667,11 @@ public class VeiculoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tableVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVeiculosMouseClicked
-
+        try {
+            setItens();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_tableVeiculosMouseClicked
 
     private void jTableUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios2MouseClicked
@@ -896,5 +918,35 @@ public class VeiculoView extends javax.swing.JFrame {
         ModeloDal modelo = new ModeloDal();
         ModeloModel modeloField = modelo.getByNome(jcModelo.getSelectedItem().toString());
         txtMarcaVeiculo.setText(modeloField.getModelo_marca().getMarca_descricao());
+    }
+
+    private void setItens() {
+        try {
+            int id = Integer.parseInt(tableVeiculos.getValueAt(tableVeiculos.getSelectedRow(), 0).toString());
+            idDelete = id;
+            VeiculoModel veiculo = veiculoInclud.getById(id);
+
+            txtMarcaVeiculo.setText(veiculo.getVeiculo_modelo().getModelo_marca().getMarca_descricao());
+            txtPrecoVenda.setText(veiculo.getVeiculo_precoVenda() + "");
+            txtPrecoCompra.setText(veiculo.getVeiculo_precoCompra() + "");
+            txtNumeroPessoas.setText(veiculo.getVeiculo_numeroDePassageiro() + "");
+            txtAnoFabricacao.setText(veiculo.getVeiculo_anoFabrica());
+            txtAnoModelo.setText(veiculo.getVeiculo_anoModelo());
+            txtRenavam.setText(veiculo.getVeiculo_renavam());
+            txtQuilometragem.setText(veiculo.getVeiculo_quilometragem() + "");
+            
+            jcModelo.removeAllItems();
+            jcModelo.addItem(veiculo.getVeiculo_modelo().getModelo_descricao());
+            
+            jcTipoCombustivel.removeAllItems();
+            jcTipoCombustivel.addItem(veiculo.getVeiculo_tipoCombustivel());
+            
+            jcTipoVeiculo.removeAllItems();
+            jcTipoVeiculo.addItem(veiculo.getVeiculo_tipoVeiculo());
+            
+            jcSituacao.removeAllItems();
+            jcSituacao.addItem(veiculo.getVeiculo_situacaoVeiculo());
+        } catch (Exception e) {
+        }
     }
 }
