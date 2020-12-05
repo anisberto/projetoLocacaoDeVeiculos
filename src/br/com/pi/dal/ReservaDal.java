@@ -3,7 +3,6 @@ package br.com.pi.dal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
-import br.com.pi.model.VeiculoModel;
 import br.com.pi.util.Conexao;
 
 import java.sql.Connection;
@@ -22,6 +21,8 @@ public class ReservaDal implements ICRUD_GENERIC {
     public ReservaDal() throws Exception {
         conexao = Conexao.getInstance().getConnection();
     }
+
+   
 
     @Override
     public void add(Object objeto) throws Exception {
