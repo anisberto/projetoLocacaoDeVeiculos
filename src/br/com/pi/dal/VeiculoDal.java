@@ -11,24 +11,26 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
-    
+
     Connection conec;
     ModeloBll modeloBll = new ModeloBll();
-    
+
     public VeiculoDal() throws Exception {
         conec = Conexao.getInstance().getConnection();
     }
-    
+
     @Override
     public void add(VeiculoModel objeto) throws Exception {
         try {
-            PreparedStatement prep = conec.prepareStatement("INSERT INTO public.veiculos(\n"
-                    + "veiculo_renavam, veiculo_precodecompra, veiculo_precodevenda, "
-                    + "veiculo_numerodepassageiros, veiculo_anodefabricacao, veiculo_anodomodelo, veiculo_quilometragem, "
-                    + "veiculo_tipodecombustivel, veiculo_tipodeveiculo, veiculo_situacaodoveiculo, veiculo_modelo_idem)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null);");
+            PreparedStatement prep = conec.prepareStatement("INSERT INTO veiculos(\n"
+                    + "	veiculo_renavam, veiculo_precodecompra, \n"
+                    + "	veiculo_precodevenda, veiculo_numerodepassageiros, veiculo_anodefabricacao, \n"
+                    + "	veiculo_anodomodelo, veiculo_quilometragem, veiculo_tipodecombustivel, \n"
+                    + "	veiculo_tipodeveiculo, veiculo_situacaodoveiculo, veiculo_modelo_idem)\n"
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             prep.setString(1, objeto.getVeiculo_renavam());
             prep.setDouble(2, objeto.getVeiculo_precoCompra());
             prep.setDouble(3, objeto.getVeiculo_precoVenda());
@@ -44,7 +46,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     public void delete(int n) throws Exception {
         try {
@@ -55,7 +57,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     public void update(VeiculoModel objeto) throws Exception {
         try {
@@ -81,10 +83,10 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     public Iterator getAll() throws Exception {
-        ArrayList<VeiculoModel> listaDeVeiculos = new ArrayList<>();
+        List<VeiculoModel> listaDeVeiculos = new ArrayList<>();
         try {
             Statement stat = conec.createStatement();
             ResultSet result = stat.executeQuery("SELECT * FROM veiculos");
@@ -109,7 +111,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         }
         return null;
     }
-    
+
     @Override
     public VeiculoModel getById(int n) throws Exception {
         try {
@@ -117,7 +119,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             PreparedStatement prep = conec.prepareStatement("SELECT * FROM veiculos WHERE veiculo_idem=?");
             prep.setInt(1, n);
             ResultSet result = prep.executeQuery();
-            
+
             while (result.next()) {
                 veiculo.setVeiculo_idem(result.getInt("veiculo_idem"));
                 veiculo.setVeiculo_renavam(result.getString("veiculo_renavam"));
@@ -137,7 +139,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
         }
         return null;
     }
-    
+
     @Override
     public VeiculoModel getByNome(String nome) throws Exception {
         try {

@@ -70,42 +70,42 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
     public Iterator getAll() throws Exception {
         String sql = "SELECT * FROM modelo";
         List<ModeloModel> pessoaModelList = new ArrayList<>();
-
+        ModeloModel modelos = new ModeloModel();
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){
-            modeloModel = new ModeloModel();
-            modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
-            modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
-            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
+            modelos = new ModeloModel();
+            modelos.setModelo_idem(rs.getInt("modelo_idem"));
+            modelos.setModelo_descricao(rs.getString("modelo_descricao"));
+            modelos.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
 
-            pessoaModelList.add(modeloModel);
+            pessoaModelList.add(modelos);
         }
         return pessoaModelList.iterator();
     }
 
     @Override
     public ModeloModel getById(int n) throws Exception {
-        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
-
+        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?";
+        ModeloModel modeloByID = new ModeloModel();
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,n);
         ResultSet rs = preparedStatement.executeQuery();
 
         if(rs.next()){
-            modeloModel = new ModeloModel();
-            modeloModel.setModelo_idem(rs.getInt("modelo_idem"));
-            modeloModel.setModelo_descricao(rs.getString("modelo_descricao"));
-            modeloModel.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
+            modeloByID = new ModeloModel();
+            modeloByID.setModelo_idem(rs.getInt("modelo_idem"));
+            modeloByID.setModelo_descricao(rs.getString("modelo_descricao"));
+            modeloByID.setModelo_marca((MarcaModel) marcaBll.getById(rs.getInt("modelo_marca_idem")));
         }
 
-        return modeloModel;
+        return modeloByID;
     }
 
     @Override
     public ModeloModel getByNome(String nome) throws Exception {
-        String sql = "SELECT * FROM modelo WHERE modelo_descricao = ?, modelo_marca_idem = ?";
+        String sql = "SELECT * FROM modelo WHERE modelo_descricao = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,nome);

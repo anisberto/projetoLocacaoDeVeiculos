@@ -3,10 +3,8 @@ package br.com.pi.bll;
 import br.com.pi.dal.VeiculoDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.VeiculoModel;
+import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
 
@@ -22,6 +20,7 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
             validade(objeto);
             veiculoDal.add(objeto);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -73,16 +72,13 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void validade(VeiculoModel veiculo) {
-        try {
-            List<VeiculoModel> veiculos = (List<VeiculoModel>) getAll();
-            for (VeiculoModel veiculosNalista : veiculos) {
-                if (veiculo.getVeiculo_renavam().equalsIgnoreCase(veiculosNalista.getVeiculo_renavam())) {
-                    throw new IllegalArgumentException("Veiculo já cadastrado com este RENAVAM");
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(VeiculoBll.class.getName()).log(Level.SEVERE, null, ex);
+    public void validade(VeiculoModel veiculo) throws IllegalAccessException {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+
+        if (Integer.parseInt(veiculo.getVeiculo_anoFabrica()) > year) {
+            throw new IllegalArgumentException("Ano de Fabricação posterior ao atual!");
         }
+
     }
 }

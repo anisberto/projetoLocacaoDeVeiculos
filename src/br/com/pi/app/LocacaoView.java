@@ -1,8 +1,14 @@
 package br.com.pi.app;
 
 import br.com.pi.bll.LocacaoBll;
+import br.com.pi.bll.MarcaBll;
+import br.com.pi.bll.ModeloBll;
+import br.com.pi.bll.VeiculoBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.LocacaoModel;
+import br.com.pi.model.ModeloModel;
+import br.com.pi.model.VeiculoModel;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -270,6 +276,20 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jcVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Veiculo" }));
         jcVeiculo.setEnabled(false);
+        jcVeiculo.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jcVeiculoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jcVeiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcVeiculoActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("+");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -772,7 +792,7 @@ public class LocacaoView extends javax.swing.JFrame {
             if (txtCodigo.getText().isEmpty() || txtDataDevolucao.getText().isEmpty() || txtDataRetirada.getText().isEmpty()
                     || txtKMInicial.getText().isEmpty() || txtValorCaucao.getText().isEmpty() || txtValorLocacao.getText().isEmpty()
                     || txtValorSeguro.getText().isEmpty() || jcClienteFisica.getSelectedItem().toString().contains("Fisico")
-                    ||jcClienteJuridica.getSelectedItem().toString().contains("Juridico")
+                    || jcClienteJuridica.getSelectedItem().toString().contains("Juridico")
                     || jcMotorista.getSelectedItem().toString().contains("Motorista")) {
             } else {
                 if (incluir) {
@@ -868,6 +888,21 @@ public class LocacaoView extends javax.swing.JFrame {
     private void jcClienteFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClienteFisicaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcClienteFisicaActionPerformed
+
+    private void jcVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcVeiculoActionPerformed
+
+    }//GEN-LAST:event_jcVeiculoActionPerformed
+
+    private void jcVeiculoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcVeiculoAncestorAdded
+        try {
+            VeiculoBll modelo = new VeiculoBll();
+            Iterator<VeiculoModel> veiculoListado = modelo.getAll();
+            while (veiculoListado.hasNext()) {
+                jcVeiculo.addItem(veiculoListado.next().getVeiculo_renavam());
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jcVeiculoAncestorAdded
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

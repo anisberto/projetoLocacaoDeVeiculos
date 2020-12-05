@@ -110,5 +110,12 @@ public class VeiculoModel {
     public void setVeiculo_situacaoVeiculo(String veiculo_situacaoVeiculo) {
         this.veiculo_situacaoVeiculo = veiculo_situacaoVeiculo;
     }
+
+    @Override
+    public String toString() {
+        return "VeiculoModel{" + "veiculo_idem=" + veiculo_idem + ",\nveiculo_renavam=" + 
+                veiculo_renavam + ", veiculo_precoCompra=" + veiculo_precoCompra + ",\nveiculo_precoVenda=" + veiculo_precoVenda + 
+                ",\nveiculo_numeroDePassageiro=" + veiculo_numeroDePassageiro + ", veiculo_anoFabrica=" + veiculo_anoFabrica + ",\nveiculo_anoModelo=" + veiculo_anoModelo + ", veiculo_quilometragem=" + veiculo_quilometragem + ", veiculo_tipoCombustivel=" + veiculo_tipoCombustivel + ", veiculo_tipoVeiculo=" + veiculo_tipoVeiculo + ", veiculo_situacaoVeiculo=" + veiculo_situacaoVeiculo + ", veiculo_modelo=" + veiculo_modelo + '}';
+    }
     
 }
