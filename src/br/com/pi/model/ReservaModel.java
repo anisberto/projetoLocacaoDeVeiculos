@@ -12,6 +12,9 @@ public class ReservaModel {
     //private Date reserva_dataReserva;
     //private Date reserva_dataExpiracao;
 
+    public ReservaModel() {
+    }
+
     public int getReserva_idem() {
         return reserva_idem;
     }
@@ -50,7 +53,5 @@ public class ReservaModel {
 
     public void setReserva_dataExpiracao(String reserva_dataExpiracao) {
         this.reserva_dataExpiracao = reserva_dataExpiracao;
-    }
-
-    
+    }    
 }
