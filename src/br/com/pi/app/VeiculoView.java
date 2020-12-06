@@ -22,6 +22,7 @@ public class VeiculoView extends javax.swing.JFrame {
         initComponents();
         veiculoInclud = new VeiculoBll();
         modeloBll = new ModeloBll();
+        jpDelecao.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
@@ -75,6 +76,11 @@ public class VeiculoView extends javax.swing.JFrame {
         jcBuscapor = new javax.swing.JComboBox<>();
         btnDeletarTable = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jpDelecao = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblRenavam = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Veiculos");
@@ -435,7 +441,7 @@ public class VeiculoView extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -503,7 +509,7 @@ public class VeiculoView extends javax.swing.JFrame {
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -511,6 +517,11 @@ public class VeiculoView extends javax.swing.JFrame {
 
         btnDeletarTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/excluir_small.png"))); // NOI18N
         btnDeletarTable.setText("Deletar");
+        btnDeletarTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarTableActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Listar dados");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -518,6 +529,46 @@ public class VeiculoView extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jpDelecao.setBorder(javax.swing.BorderFactory.createTitledBorder("Deleção"));
+
+        jLabel4.setText("Modelo: ");
+
+        lblModelo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblModelo.setForeground(new java.awt.Color(204, 0, 0));
+        lblModelo.setText("Modelo ");
+
+        jLabel8.setText("RENAVAM: ");
+
+        lblRenavam.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblRenavam.setForeground(new java.awt.Color(204, 0, 0));
+        lblRenavam.setText("RENAVAM");
+
+        javax.swing.GroupLayout jpDelecaoLayout = new javax.swing.GroupLayout(jpDelecao);
+        jpDelecao.setLayout(jpDelecaoLayout);
+        jpDelecaoLayout.setHorizontalGroup(
+            jpDelecaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDelecaoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblModelo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblRenavam)
+                .addContainerGap())
+        );
+        jpDelecaoLayout.setVerticalGroup(
+            jpDelecaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDelecaoLayout.createSequentialGroup()
+                .addGroup(jpDelecaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblModelo)
+                    .addComponent(jLabel8)
+                    .addComponent(lblRenavam))
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -530,11 +581,12 @@ public class VeiculoView extends javax.swing.JFrame {
                         .addComponent(jcBuscapor, 0, 194, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtElementoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeletarTable, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(btnDeletarTable, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpDelecao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -546,8 +598,10 @@ public class VeiculoView extends javax.swing.JFrame {
                     .addComponent(txtElementoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeletarTable)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpDelecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -576,7 +630,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-             if (!txtMarcaVeiculo.getText().isEmpty()) {
+            if (!txtMarcaVeiculo.getText().isEmpty()) {
                 int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Veiculo RENAVAM Nº: " + veiculoInclud.getById(idDelete).getVeiculo_renavam(), "Deleção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
@@ -590,7 +644,7 @@ public class VeiculoView extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione o Veiculo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
             }
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
@@ -668,14 +722,18 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void tableVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVeiculosMouseClicked
         try {
-            setItens();
+            setItensFirst();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_tableVeiculosMouseClicked
 
     private void jTableUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios2MouseClicked
-        // TODO add your handling code here:
+        try {
+            setItensSecund();
+            jpDelecao.setVisible(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jTableUsuarios2MouseClicked
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
@@ -758,6 +816,34 @@ public class VeiculoView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnDeletarTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarTableActionPerformed
+        try {
+            if (jpDelecao.isVisible()) {
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Veiculo RENAVAM Nº: " + veiculoInclud.getById(idDelete).getVeiculo_renavam(), "Deleção",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+                if (conf == 0) {
+                    veiculoInclud.delete(idDelete);
+                    JOptionPane.showMessageDialog(null, "Veiculo deletado com sucesso");
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
+                }
+                imprimirDadosNaGrid(veiculoInclud.getAll());
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione o Veiculo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (Exception e) {
+        } finally {
+            try {
+            jpDelecao.setVisible(false);
+                      imprimirDadosNaGridCompleta(veiculoInclud.getAll());
+            } catch (Exception ex) {
+                Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+  }
+    }//GEN-LAST:event_btnDeletarTableActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -813,8 +899,10 @@ public class VeiculoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -831,6 +919,9 @@ public class VeiculoView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcSituacao;
     private javax.swing.JComboBox<String> jcTipoCombustivel;
     private javax.swing.JComboBox<String> jcTipoVeiculo;
+    private javax.swing.JPanel jpDelecao;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblRenavam;
     private javax.swing.JTable tableVeiculos;
     private javax.swing.JFormattedTextField txtAnoFabricacao;
     private javax.swing.JFormattedTextField txtAnoModelo;
@@ -920,7 +1011,7 @@ public class VeiculoView extends javax.swing.JFrame {
         txtMarcaVeiculo.setText(modeloField.getModelo_marca().getMarca_descricao());
     }
 
-    private void setItens() {
+    private void setItensFirst() {
         try {
             int id = Integer.parseInt(tableVeiculos.getValueAt(tableVeiculos.getSelectedRow(), 0).toString());
             idDelete = id;
@@ -934,19 +1025,28 @@ public class VeiculoView extends javax.swing.JFrame {
             txtAnoModelo.setText(veiculo.getVeiculo_anoModelo());
             txtRenavam.setText(veiculo.getVeiculo_renavam());
             txtQuilometragem.setText(veiculo.getVeiculo_quilometragem() + "");
-            
+
             jcModelo.removeAllItems();
             jcModelo.addItem(veiculo.getVeiculo_modelo().getModelo_descricao());
-            
+
             jcTipoCombustivel.removeAllItems();
             jcTipoCombustivel.addItem(veiculo.getVeiculo_tipoCombustivel());
-            
+
             jcTipoVeiculo.removeAllItems();
             jcTipoVeiculo.addItem(veiculo.getVeiculo_tipoVeiculo());
-            
+
             jcSituacao.removeAllItems();
             jcSituacao.addItem(veiculo.getVeiculo_situacaoVeiculo());
         } catch (Exception e) {
         }
+    }
+
+    private void setItensSecund() throws Exception {
+        int id = Integer.parseInt(jTableUsuarios2.getValueAt(jTableUsuarios2.getSelectedRow(), 0).toString());
+        idDelete = id;
+        VeiculoModel veiculo = veiculoInclud.getById(id);
+
+        lblModelo.setText(veiculo.getVeiculo_modelo().getModelo_descricao());
+        lblRenavam.setText(veiculo.getVeiculo_renavam());
     }
 }
