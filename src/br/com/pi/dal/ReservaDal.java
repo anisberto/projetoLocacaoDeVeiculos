@@ -80,14 +80,14 @@ public class ReservaDal implements ICRUD_GENERIC {
             reservaModel.setReserva_cliente((PessoaModel) pessoaDal.getById(rs.getInt("reserva_pessoas_idem")));
             reservaModel.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
             list.add(reservaModel);
-
         }
-
-        return list.listIterator();
+        //return list.listIterator();
+        return list.iterator();
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+//    public Object getById(int n) throws Exception {
+    public ReservaModel getById(int n) throws Exception {
         PessoaDal pessoaDal = new PessoaDal();
         VeiculoDal veiculoDal = new VeiculoDal();
         String sql = "SELECT * FROM reserva WHERE reserva_idem=?";
@@ -106,13 +106,22 @@ public class ReservaDal implements ICRUD_GENERIC {
             reservaModel.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
 
         }
-
         return reservaModel;
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
-        return null;
+    //public Object getByNome(String nome) throws Exception {
+    public ReservaModel getByNome(String nome) throws Exception {
+        ReservaModel res = new ReservaModel();
+         String sql = "SELECT * FROM administrador WHERE reserva_datafinal=?";
+        PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+        preparedStatement.setString(1, nome);
+        ResultSet rs = preparedStatement.executeQuery();
+        if(rs.next()){
+            res = new ReservaModel();
+            res.setReserva_dataExpiracao(rs.getString("reserva_datafinal"));
+        }
+        return res;
     }
 
     @Override
