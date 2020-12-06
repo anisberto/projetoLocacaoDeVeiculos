@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.pi.dal;
 
 import br.com.pi.bll.MarcaBll;
 import br.com.pi.model.ModeloModel;
-import br.com.pi.util.Conexao;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.MarcaModel;
+import br.com.pi.util.AdpterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +24,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
     MarcaBll marcaBll = new MarcaBll();
     
     public ModeloDal() throws Exception {
-        this.conexao = Conexao.getInstance().getConnection();
+        this.conexao = new AdpterConexao().getConnectionAdapter();
     }
 
 

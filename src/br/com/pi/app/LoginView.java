@@ -4,7 +4,7 @@ import br.com.pi.bll.AdministradorBll;
 import br.com.pi.interfaces.ConnectionObserver;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.AdministradorModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.ConexaoPostRead;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class LoginView extends javax.swing.JFrame implements ConnectionObserver {
 
     ICRUD_GENERIC<AdministradorModel> userValid;
-    Conexao conection = Conexao.getInstance();
+   private ConexaoPostRead conection = ConexaoPostRead.getInstance();
     boolean isConnected;
 
     public LoginView() throws Exception {
@@ -271,7 +271,6 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         try {
-            Conexao.getInstance().getConnection();
             isConnected = true;
         } catch (Exception e) {
             isConnected = false;

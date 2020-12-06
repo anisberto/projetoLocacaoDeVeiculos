@@ -4,7 +4,7 @@ import br.com.pi.bll.ModeloBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.ModeloModel;
 import br.com.pi.model.VeiculoModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
     ModeloBll modeloBll = new ModeloBll();
 
     public VeiculoDal() throws Exception {
-        conec = Conexao.getInstance().getConnection();
+        conec = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

@@ -2,7 +2,7 @@ package br.com.pi.dal;
 
 import lixo.EnderecoDaltest;
 import br.com.pi.model.EnderecoModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class EnderecoDal implements EnderecoInterface {
     private Connection conect;
 
     public EnderecoDal() throws Exception {
-        this.conect = Conexao.getInstance().getConnection();
+        this.conect = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override
@@ -124,8 +124,6 @@ public class EnderecoDal implements EnderecoInterface {
                 throw new Exception("Ocorreu um erro ao consultar os registros de endereços\n"
                         + erro.getMessage());
             } catch (Exception ex) {
-                Conexao conec = Conexao.getInstance();
-                conec.notify();
                 Logger.getLogger(EnderecoDaltest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

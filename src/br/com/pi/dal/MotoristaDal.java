@@ -2,7 +2,7 @@ package br.com.pi.dal;
 
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.MotoristaModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
     Connection conec;
 
     public MotoristaDal() throws Exception {
-        conec = Conexao.getInstance().getConnection();
+        conec = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

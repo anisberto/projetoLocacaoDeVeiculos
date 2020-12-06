@@ -117,7 +117,7 @@ public class ConexaoPostRead implements ConnectionObservable, AdapterConexaoInte
 
     @Override
     public Properties loadProperties() {
-        try (FileInputStream fs = new FileInputStream("./src/br/com/torrent/util/db.properties")) {
+        try (FileInputStream fs = new FileInputStream("./src/br/com/pi/util/db.properties")) {
             Properties fileProperties = new Properties();
             fileProperties.load(fs);
             return fileProperties;

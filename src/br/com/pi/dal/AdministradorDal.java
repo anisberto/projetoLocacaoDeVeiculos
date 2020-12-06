@@ -1,8 +1,8 @@
 package br.com.pi.dal;
 
 import br.com.pi.model.AdministradorModel;
-import br.com.pi.util.Conexao;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
     AdministradorModel administradorModel;
 
     public AdministradorDal() throws Exception {
-        conexao = Conexao.getInstance().getConnection();
+        conexao = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

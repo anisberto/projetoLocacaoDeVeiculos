@@ -2,8 +2,8 @@ package br.com.pi.dal;
 
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
-import br.com.pi.util.Conexao;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     PessoaPFModel pessoa = new PessoaPFModel();
 
     public PessoaPFDal() throws Exception {
-        conexao = Conexao.getInstance().getConnection();
+        conexao = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

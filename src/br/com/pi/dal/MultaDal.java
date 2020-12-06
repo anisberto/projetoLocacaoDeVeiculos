@@ -4,7 +4,7 @@ import br.com.pi.bll.VeiculoBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.MultaModel;
 import br.com.pi.model.VeiculoModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class MultaDal implements ICRUD_GENERIC<MultaModel> {
     ICRUD_GENERIC<VeiculoModel> veiculoConsulta = new VeiculoBll();
 
     public MultaDal() throws Exception {
-        conect = Conexao.getInstance().getConnection();
+        conect = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

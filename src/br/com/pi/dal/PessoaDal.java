@@ -1,8 +1,8 @@
 package br.com.pi.dal;
 
 import br.com.pi.model.PessoaModel;
-import br.com.pi.util.Conexao;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class PessoaDal implements ICRUD_GENERIC {
     PessoaModel pessoaModel = new PessoaModel();
 
     public PessoaDal() throws Exception {
-        this.conexao = Conexao.getInstance().getConnection();
+        this.conexao = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

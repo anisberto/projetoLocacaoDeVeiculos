@@ -2,8 +2,6 @@ package br.com.pi.util;
 
 import br.com.pi.interfaces.ConnectionObservable;
 import br.com.pi.interfaces.ConnectionObserver;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -11,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,21 +86,6 @@ public class ConexaoMySQLConfigInterne implements ConnectionObservable {
                 }
             }
         }
-    }
-
-    public Properties loadProperties() {
-        try (FileInputStream fs = new FileInputStream("./src/br/com/torrent/util/db.properties")) {
-            Properties fileProperties = new Properties();
-            fileProperties.load(fs);
-            return fileProperties;
-        } catch (IOException error) {
-            try {
-                throw new IOException("Erro ao Carre");
-            } catch (IOException ex) {
-                Logger.getLogger(ConexaoMySQLConfigInterne.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return null;
     }
 
     @Override

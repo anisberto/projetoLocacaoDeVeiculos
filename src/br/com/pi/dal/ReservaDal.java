@@ -4,7 +4,7 @@ import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
 import br.com.pi.model.VeiculoModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class ReservaDal implements ICRUD_GENERIC {
     ReservaModel reservaModel = new ReservaModel();
 
     public ReservaDal() throws Exception {
-        conexao = Conexao.getInstance().getConnection();
+        conexao = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

@@ -3,7 +3,7 @@ package lixo;
 import br.com.pi.dal.EnderecoDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
-import br.com.pi.util.Conexao;
+import br.com.pi.util.AdpterConexao;
 import br.com.pi.util.EnderecoIterator;
 
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class EnderecoDaltest implements ICRUD_GENERIC<EnderecoModel> {
     private EnderecoModel end;
 
     public EnderecoDaltest() throws Exception {
-        this.conect = Conexao.getInstance().getConnection();
+        this.conect = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override

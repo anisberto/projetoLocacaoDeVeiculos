@@ -9,14 +9,14 @@ import java.util.Properties;
 public class AdpterConexao implements AdapterConexaoInterface {
 
     
-//ConexaoPostRead conexaoPost =  ConexaoPostRead.getInstance();
-    ConexaoPostConfigInterne conexaoPost =  ConexaoPostConfigInterne.getInstance();
+ConexaoPostRead conexaoPost =  ConexaoPostRead.getInstance();
+//    ConexaoPostConfigInterne conexaoPost =  ConexaoPostConfigInterne.getInstance();
 
     @Override
     public Connection getConnectionAdapter() {
         try {
-            return conexaoPost.getConnectionConfigDateIntern();
-//            return conexaoPost.getConnectionAdapter();
+//            return conexaoPost.getConnectionConfigDateIntern();
+            return conexaoPost.getConnectionAdapter();
         } catch (Exception e) {
         }
         return null;
