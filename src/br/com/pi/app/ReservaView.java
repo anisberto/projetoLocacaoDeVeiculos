@@ -48,8 +48,6 @@ public class ReservaView extends javax.swing.JFrame {
         btnReservaAlterar = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jcomboxCliente = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        txtCpfCnpj = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtDataReserva = new javax.swing.JTextField();
         txtDataExpiracao = new javax.swing.JTextField();
@@ -191,10 +189,6 @@ public class ReservaView extends javax.swing.JFrame {
 
         jcomboxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecionar Cliente>" }));
 
-        jLabel1.setText("CPF/CNPJ: ");
-
-        txtCpfCnpj.setText("Acho que n precisa");
-
         jLabel2.setText("Data da Reserva");
 
         jLabel3.setText("Data de Expiração");
@@ -217,11 +211,7 @@ public class ReservaView extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,9 +224,6 @@ public class ReservaView extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -537,7 +524,7 @@ public class ReservaView extends javax.swing.JFrame {
 
     private void btnReservaDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaDeletarActionPerformed
         try {
-            if (!txtCpfCnpj.getText().isEmpty() && !txtDataExpiracao.getText().isEmpty() && !txtDataReserva.getText().isEmpty()) {
+            if (!txtDataExpiracao.getText().isEmpty() && !txtDataReserva.getText().isEmpty()) {
                 int conf = JOptionPane.showConfirmDialog(null, "Confirma a exclusão da reserva: " + incluirReserva.getById(IdDeleteReserva).getReserva_idem(), "Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
                     incluirReserva.delete(IdDeleteReserva);
@@ -582,26 +569,22 @@ public class ReservaView extends javax.swing.JFrame {
 
     private void btnReservaSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaSalvarActionPerformed
         try {
-            //if (txtCpfCnpj.getText().isEmpty()) {
-            if (txtCpfCnpj.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "O campo CPF ou CNPJ não pode estar em Branco");
-                ReservaModel res = new ReservaModel();
+
+            ReservaModel res = new ReservaModel();
 
 //                res.setReserva_cliente((PessoaModel) clienteBll.getByNome(jcomboxCliente.getSelectedItem().toString()));
-                res.setReserva_dataReserva(txtDataExpiracao.getText());
-                res.setReserva_dataExpiracao(txtDataExpiracao.getText());
+            res.setReserva_dataReserva(txtDataExpiracao.getText());
+            res.setReserva_dataExpiracao(txtDataExpiracao.getText());
 
-                if (incluir) {
-                    incluirReserva.add(res);
-                    JOptionPane.showMessageDialog(null, "Reserva realizada com Sucesso!", "Reserva", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    res.setReserva_idem(Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString()));
-                    incluirReserva.update(res);
-                    JOptionPane.showMessageDialog(null, "Reserva Alterado com Sucesso!#", "Reserva", JOptionPane.INFORMATION_MESSAGE);
-                }
+            if (incluir) {
+                incluirReserva.add(res);
+                JOptionPane.showMessageDialog(null, "Reserva realizada com Sucesso!", "Reserva", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
+                res.setReserva_idem(Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString()));
+                incluirReserva.update(res);
+                JOptionPane.showMessageDialog(null, "Reserva Alterado com Sucesso!#", "Reserva", JOptionPane.INFORMATION_MESSAGE);
             }
+
         } catch (Exception e) {
         } finally {
             enableButt(false);
@@ -705,7 +688,6 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -729,7 +711,6 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JComboBox<String> jcomboxCliente;
     private javax.swing.JTable tableReserva;
-    private javax.swing.JTextField txtCpfCnpj;
     private javax.swing.JTextField txtDataExpiracao;
     private javax.swing.JTextField txtDataReserva;
     // End of variables declaration//GEN-END:variables
@@ -742,7 +723,7 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(false);
             btnReservaSalvar.setEnabled(true);
 
-            txtCpfCnpj.setEnabled(true);
+            
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
 
@@ -753,7 +734,7 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaCancelar.setEnabled(true);
             btnReservaDeletar.setEnabled(true);
 
-            txtCpfCnpj.setEnabled(false);
+          
             txtDataReserva.setEnabled(false);
             txtDataExpiracao.setEnabled(false);
 
@@ -768,7 +749,7 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(false);
             btnReservaSalvar.setEnabled(true);
 
-            txtCpfCnpj.setEnabled(true);
+          
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
         } else {
@@ -778,7 +759,7 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(true);
             btnReservaSalvar.setEnabled(false);
 
-            txtCpfCnpj.setEnabled(false);
+            
             txtDataReserva.setEnabled(false);
             txtDataExpiracao.setEnabled(false);
         }
@@ -793,7 +774,7 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaSalvar.setEnabled(true);
             btnVoltar.setEnabled(false);
 
-            txtCpfCnpj.setEnabled(true);
+          
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
 
@@ -809,11 +790,11 @@ public class ReservaView extends javax.swing.JFrame {
     }
 
     public void clearFields() {
-        txtCpfCnpj.setText("");
+      
         txtDataExpiracao.setText("");
         txtDataReserva.setText("");
 
-        txtCpfCnpj.setEnabled(false);
+     
         txtDataExpiracao.setEnabled(false);
         txtDataReserva.setEnabled(false);
     }
