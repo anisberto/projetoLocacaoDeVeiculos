@@ -820,6 +820,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     || jcClienteJuridica.getSelectedItem().toString().contains("Juridico")
                     || jcMotorista.getSelectedItem().toString().contains("Motorista")) {
             } else {
+                
                 if (incluir) {
 
                 } else {
@@ -922,7 +923,7 @@ public class LocacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jcVeiculoActionPerformed
     public void setRenavam() throws Exception {
         VeiculoDal veiculosBusca = new VeiculoDal();
-        VeiculoModel veiculo = veiculosBusca.getByNome(jcVeiculo.getSelectedItem().toString());
+        VeiculoModel veiculo = (VeiculoModel) jcVeiculo.getSelectedItem();
         txtRenavamVeiculo.setText(veiculo.getVeiculo_renavam());
     }
     private void jcVeiculoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcVeiculoAncestorAdded
@@ -1028,7 +1029,7 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcClienteFisica;
     private javax.swing.JComboBox<String> jcClienteJuridica;
     private javax.swing.JComboBox<String> jcMotorista;
-    private javax.swing.JComboBox<String> jcVeiculo;
+    private javax.swing.JComboBox<Object> jcVeiculo;
     private javax.swing.JRadioButton jrFisica;
     private javax.swing.JRadioButton jrJuridica;
     private javax.swing.JFormattedTextField txtCodigo;
@@ -1056,6 +1057,12 @@ public class LocacaoView extends javax.swing.JFrame {
             btnDeletar.setEnabled(true);
             btnVoltar.setEnabled(true);
             btnSalvar.setEnabled(false);
+            
+            jrFisica.setSelected(false);
+            jrJuridica.setSelected(false);
+            
+            jcClienteFisica.setVisible(false);
+            jcClienteJuridica.setVisible(false);
         }
     }
 
@@ -1144,7 +1151,7 @@ public class LocacaoView extends javax.swing.JFrame {
             VeiculoBll modelo = new VeiculoBll();
             Iterator<VeiculoModel> veiculoListado = modelo.getAll();
             while (veiculoListado.hasNext()) {
-                jcVeiculo.addItem(veiculoListado.next().getVeiculo_modelo().getModelo_descricao());
+                jcVeiculo.addItem(veiculoListado.next());
             }
         } catch (Exception e) {
         }
