@@ -9,10 +9,16 @@ public class ReservaModel {
     private VeiculoModel reserva_veiculo;
     private String reserva_dataReserva;
     private String reserva_dataExpiracao;
-    //private Date reserva_dataReserva;
-    //private Date reserva_dataExpiracao;
 
     public ReservaModel() {
+    }
+
+    public ReservaModel(int reserva_idem, PessoaModel reserva_cliente, VeiculoModel reserva_veiculo, String reserva_dataReserva, String reserva_dataExpiracao) {
+        this.reserva_idem = reserva_idem;
+        this.reserva_cliente = reserva_cliente;
+        this.reserva_veiculo = reserva_veiculo;
+        this.reserva_dataReserva = reserva_dataReserva;
+        this.reserva_dataExpiracao = reserva_dataExpiracao;
     }
 
     public int getReserva_idem() {
@@ -53,5 +59,8 @@ public class ReservaModel {
 
     public void setReserva_dataExpiracao(String reserva_dataExpiracao) {
         this.reserva_dataExpiracao = reserva_dataExpiracao;
-    }    
+    }
+
+    
+
 }
