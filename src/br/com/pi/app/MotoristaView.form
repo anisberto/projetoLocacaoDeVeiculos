@@ -144,9 +144,6 @@
                     <Property name="verticalAlignment" type="int" value="1"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeletarActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnIncluir">
                   <Properties>
@@ -212,9 +209,6 @@
                     <Property name="verticalAlignment" type="int" value="1"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarMotoristaActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterar">
                   <Properties>
@@ -528,9 +522,6 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableUsuariosMouseClicked"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -793,9 +784,6 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableEndMotoristaMouseClicked"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

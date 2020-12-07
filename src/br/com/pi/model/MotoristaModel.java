@@ -14,6 +14,7 @@ public class MotoristaModel {
     private Date cnh_dataValidade;
     private byte[] cnh_imagem;
     private int cnh_numeroRegistro;
+    private EnderecoModel motorista_endereco;
 
     public String getCnh_categoria() {
         return cnh_categoria;
@@ -93,5 +94,13 @@ public class MotoristaModel {
 
     public void setMotorista_email(String motorista_email) {
         this.motorista_email = motorista_email;
+    }
+
+    public EnderecoModel getMotorista_endereco() {
+        return motorista_endereco;
+    }
+
+    public void setMotorista_endereco(EnderecoModel motorista_endereco) {
+        this.motorista_endereco = motorista_endereco;
     }
 }

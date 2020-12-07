@@ -5,6 +5,7 @@ public class PessoaModel {
     private String pessoa_nome;
     private String pessoa_telefone;
     private String pessoa_email;
+    private EnderecoModel pessoa_endereco;
 
     public int getPessoa_idem() {
         return pessoa_idem;
@@ -36,6 +37,14 @@ public class PessoaModel {
 
     public void setPessoa_email(String pessoa_email) {
         this.pessoa_email = pessoa_email;
+    }
+
+    public EnderecoModel getPessoa_endereco() {
+        return pessoa_endereco;
+    }
+
+    public void setPessoa_endereco(EnderecoModel pessoa_endereco) {
+        this.pessoa_endereco = pessoa_endereco;
     }
 
     @Override

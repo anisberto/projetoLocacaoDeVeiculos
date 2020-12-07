@@ -1,8 +1,7 @@
 package br.com.pi.app;
 
 import br.com.pi.bll.EnderecoBll;
-import lixo.EnderecoBllTeste;
-import br.com.pi.dal.EnderecoDal;
+
 import br.com.pi.model.EnderecoModel;
 import interfaces.EnderecoInterface;
 import java.util.List;
@@ -21,7 +20,7 @@ public class MotoristaView extends javax.swing.JFrame {
 
     public MotoristaView() throws Exception {
         initComponents();
-        novoEnderecoInter = new EnderecoDal();
+      
         consultarEndereco(novoEnderecoInter.getAllEndereco());
 //        camposMotoristaDisable();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
@@ -99,11 +98,6 @@ public class MotoristaView extends javax.swing.JFrame {
         btnDeletar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDeletar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnDeletar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeletarActionPerformed(evt);
-            }
-        });
 
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
         btnIncluir.setText("Incluir");
@@ -148,11 +142,6 @@ public class MotoristaView extends javax.swing.JFrame {
         btnSalvarMotorista.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalvarMotorista.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSalvarMotorista.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalvarMotorista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarMotoristaActionPerformed(evt);
-            }
-        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -325,11 +314,6 @@ public class MotoristaView extends javax.swing.JFrame {
                 "Identificador", "Nome", "CPF", "Nº CNH", "CATEGORIA"
             }
         ));
-        jTableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableUsuariosMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTableUsuarios);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -381,11 +365,6 @@ public class MotoristaView extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-        });
-        tableEndMotorista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEndMotoristaMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(tableEndMotorista);
@@ -610,10 +589,6 @@ public class MotoristaView extends javax.swing.JFrame {
         txtIdEndMotorista.setText("");
     }
 
-    private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
-
-    }//GEN-LAST:event_jTableUsuariosMouseClicked
-
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
             incluirEndereco = false;
@@ -621,50 +596,6 @@ public class MotoristaView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
-
-    private void btnSalvarMotoristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMotoristaActionPerformed
-             try {
-            if (!endBll.validarNumerosCEP(txtMotoristaCep.getText().trim())) {
-                JOptionPane.showMessageDialog(rootPane, "Campo: Cep, apenas numeros e com 8 numeros!");
-            } else if (!endBll.validarNumeros(txtMotoristaNumero.getText().trim()) || txtMotoristaNumero.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "CAMPO: NUMERO, apenas número !");
-            } else if (cboMotoristaUF.getSelectedItem().equals("<Selecione UF>")) {
-                JOptionPane.showMessageDialog(null, "Escolhar um estado !!!");
-            } else {
-
-            EnderecoModel end = new EnderecoModel();
-
-            end.setEndereco_cidade(txtMotoristaCidade.getText());
-            end.setEndereco_bairro(txtMotoristaBairro.getText());
-            end.setEndereco_cep(txtMotoristaCep.getText());
-            end.setEndereco_rua(txtMotoristaRua.getText());
-            end.setEndereco_complemento(txtMotoristaComplemento.getText());
-            end.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
-            end.setEndereco_estado(String.valueOf(cboMotoristaUF.getSelectedItem()));
-
-            System.out.println(end);
-                if (incluirEndereco) {
-                    novoEnderecoInter.adicionarEndereco(end);
-                    JOptionPane.showMessageDialog(null, "Dados de endereços inserido com sucesso !!!!");
-limparEnderecoMotorista();
-                    enableBuEndereco(false);
-                } else {
-                    end.setEndereco_iden(idDeleteCliente);
-                    novoEnderecoInter.updateEndereco(end);
-                    JOptionPane.showMessageDialog(null, "Dados de endereços alterados com sucesso !!!!");
-                    limparEnderecoMotorista();
-                    enableBuEndereco(false);
-                }
-            }
-
-            consultarEndereco(novoEnderecoInter.getAllEndereco());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } 
-//        finally {
-//            enableBuEndereco(false);
-//        }
-    }//GEN-LAST:event_btnSalvarMotoristaActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
@@ -699,38 +630,9 @@ limparEnderecoMotorista();
         }
     }//GEN-LAST:event_btnIncluirActionPerformed
 
-    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        try {
-            if (txtIdEndMotorista.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Selecione um ID na Tabela", "Selecione:", JOptionPane.ERROR_MESSAGE);
-            } else {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a exclusão do endereço: " + txtMotoristaCidade.getText(), "EXCLUSÃO",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
-                if (conf == 0) {
-                    novoEnderecoInter.deleteEndereco(idDeleteCliente);
-                    limparEnderecoMotorista();
-                    JOptionPane.showMessageDialog(null, "Endereço deletado(o) com sucesso");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Exclusão Cancelada!");
-                }
-            }
-            // edivan
-            consultarEndereco(novoEnderecoInter.getAllEndereco());
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnDeletarActionPerformed
-
     private void jTableUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableUsuarios1MouseClicked
-
-    private void tableEndMotoristaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEndMotoristaMouseClicked
-        try {
-            Integer codigo = Integer.parseInt(tableEndMotorista.getValueAt(tableEndMotorista.getSelectedRow(), 0).toString());
-            transferirDadosEndereco();
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_tableEndMotoristaMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

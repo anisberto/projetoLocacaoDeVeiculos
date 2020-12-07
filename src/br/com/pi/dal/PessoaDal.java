@@ -2,6 +2,7 @@ package br.com.pi.dal;
 
 import br.com.pi.model.PessoaModel;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
@@ -26,16 +27,16 @@ public class PessoaDal implements ICRUD_GENERIC {
     public int addReturn(Object objeto) throws Exception {
         pessoaModel = (PessoaModel) objeto;
         int id = 0;
-        String sql = "INSERT INTO pessoas(pessoa_nome, pessoa_telefone, pessoa_email)"
-                + "VALUES (?,?,?)";
+        String sql = "INSERT INTO Pessoas(pessoa_nome, pessoa_telefone, pessoa_email,pessoa_endereco)"
+                + "VALUES (?,?,?,?)";
 
         try {
             PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             ps.setObject(1, pessoaModel.getPessoa_nome());
             ps.setObject(2, pessoaModel.getPessoa_telefone());
             ps.setObject(3, pessoaModel.getPessoa_email());
-
+            ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
             id = ps.executeUpdate();
 
             if (id == 0) {
@@ -60,7 +61,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM pessoas WHERE pessoa_idem =?";
+        String sql = "DELETE FROM Pessoas WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, n);
         ps.executeUpdate();
@@ -69,26 +70,31 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        String sql = "UPDATE pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?"
+        String sql = "UPDATE Pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?,pessoa_endereco=?"
                 + " WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoaModel.getPessoa_nome());
         ps.setObject(2, pessoaModel.getPessoa_telefone());
         ps.setObject(3, pessoaModel.getPessoa_email());
-        ps.setObject(4, pessoaModel.getPessoa_idem());
+        ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
+        ps.setObject(5, pessoaModel.getPessoa_idem());
         ps.executeUpdate();
 
     }
 
     @Override
     public Iterator getAll() throws Exception {
-        String sql = "SELECT * FROM pessoas";
+        String sql = "SELECT * FROM Pessoas";
+        EnderecoDal enderecoDal = new EnderecoDal();
+        EnderecoModel enderecoModel;
+
         List<PessoaModel> pessoaModelList = new ArrayList<>();
 
-        Statement st = conexao.createStatement();;
+        Statement st = conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
+            enderecoModel = new EnderecoModel();
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
@@ -102,7 +108,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public Object getById(int n) throws Exception {
-        String sql = "SELECT * FROM pessoas WHERE pessoa_idem = ?";
+        String sql = "SELECT * FROM Pessoas WHERE pessoa_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, n);
@@ -121,7 +127,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public Object getByNome(String nome) throws Exception {
-        String sql = "SELECT * FROM pessoas WHERE pessoa_nome = ?";
+        String sql = "SELECT * FROM Pessoas WHERE pessoa_email =?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, nome);
@@ -140,6 +146,17 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public void add(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pessoaModel = (PessoaModel) objeto;
+        String sql = "INSERT INTO Pessoas(pessoa_nome, pessoa_telefone, pessoa_email,pessoa_endereco)"
+                + "VALUES (?,?,?,?)";
+
+        PreparedStatement ps = conexao.prepareStatement(sql);
+
+        ps.setObject(1, pessoaModel.getPessoa_nome());
+        ps.setObject(2, pessoaModel.getPessoa_telefone());
+        ps.setObject(3, pessoaModel.getPessoa_email());
+        ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
+        ps.executeUpdate();
+
     }
 }

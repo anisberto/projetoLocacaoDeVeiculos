@@ -4,7 +4,8 @@ CREATE TABLE Pessoas (
     pessoa_idem SERIAL PRIMARY KEY,
     pessoa_nome VARCHAR,
     pessoa_telefone VARCHAR,
-    pessoa_email VARCHAR
+    pessoa_email VARCHAR,
+    pessoa_endereco INTEGER,
 );
 
 CREATE TABLE pessoas_pf (
@@ -23,16 +24,15 @@ CREATE TABLE pessoas_pj (
 );
 
 CREATE TABLE Endereco (
-    endereco_idem SERIAL PRIMARY KEY,
+    endereco_idem SERIAL PRIMARY KEY, 
     endereco_cep VARCHAR,
     endereco_cidade VARCHAR,
     endereco_bairro VARCHAR,
     endereco_rua VARCHAR,
     endereco_numero INTEGER,
-    endereco_complemento VARCHAR,
     endereco_estado VARCHAR,
-    endereco_pessoas_idem INTEGER,
-    endereco_motorista_idem INTEGER
+    endereco_complemento VARCHAR
+    
 );
 
 CREATE TABLE modelo (
@@ -71,7 +71,8 @@ CREATE TABLE motorista (
     motorista_nome VARCHAR,
     motorista_rg VARCHAR,
     motorista_telefone VARCHAR,
-    motorista_email VARCHAR
+    motorista_email VARCHAR,
+    motorista_endereco INTEGER
 );
 
 CREATE TABLE Locacao (
@@ -112,8 +113,17 @@ CREATE TABLE reserva (
     reserva_veiculos_idem INTEGER,
     reserva_pessoas_idem INTEGER
 );
+ ALTER TABLE motorista ADD CONSTRAINT FK_morotista_endereco
+    FOREIGN KEY (motorista_endereco)
+    REFERENCES Endereco (endereco_idem)
+    ON DELETE CASCADE;
 
- 
+
+ ALTER TABLE Pessoas ADD CONSTRAINT FK_pessoas_endereco
+    FOREIGN KEY (pessoa_endereco)
+    REFERENCES Endereco (endereco_idem)
+    ON DELETE CASCADE;
+
 ALTER TABLE pessoas_pf ADD CONSTRAINT FK_pessoas_pf_2
     FOREIGN KEY (pf_pessoas_idem)
     REFERENCES Pessoas (pessoa_idem)
@@ -123,15 +133,6 @@ ALTER TABLE pessoas_pj ADD CONSTRAINT FK_pessoas_pj_2
     FOREIGN KEY (pj_pessoas_idem)
     REFERENCES Pessoas (pessoa_idem)
     ON DELETE CASCADE;
- 
-ALTER TABLE Endereco ADD CONSTRAINT FK_Endereco_2
-    FOREIGN KEY (endereco_pessoas_idem)
-    REFERENCES Pessoas (pessoa_idem)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Endereco ADD CONSTRAINT FK_Endereco_3
-    FOREIGN KEY (endereco_motorista_idem)
-    REFERENCES motorista (motorista_idem);
  
 ALTER TABLE modelo ADD CONSTRAINT FK_modelo_2
     FOREIGN KEY (modelo_marca_idem)

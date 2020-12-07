@@ -129,7 +129,7 @@ public class PessoaBll implements ICRUD_GENERIC {
             PessoaModel aux = it.next();
 
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_email().toUpperCase().
-                    equalsIgnoreCase(aux.getPessoa_email().toUpperCase()))){
+                    equals(aux.getPessoa_email().toUpperCase()))){
                 throw new Exception("O Email --> " + objeto.getPessoa_email() + "\nJá existe no cadastro de usuarios!\n");
             }
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_telefone().toUpperCase().
@@ -142,7 +142,12 @@ public class PessoaBll implements ICRUD_GENERIC {
 
     @Override
     public int addReturn(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return dal.addReturn(objeto);
+        } catch (Exception e) {
+            throw e;
+        }
+       
     }
 
 

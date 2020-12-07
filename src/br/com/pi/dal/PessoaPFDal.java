@@ -25,12 +25,12 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         pessoa =(PessoaPFModel) objeto;
-        String sql = "INSERT INT pessoas_pf(pessoa_pf_cpf, pessoa_pf_rg)" +
-                "VALUES (?,?)";
+        String sql = "INSERT INTO pessoas_pf(pf_cpf, pf_rg, pf_pessoas_idem)" +
+                "VALUES (?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoa.getPessoa_pf_cpf());
         ps.setObject(2,pessoa.getPessoa_pf_rg());
-        ps.setObject(3, pessoa.getPessoa().getPessoa_idem());
+        ps.setInt(3, pessoa.getPessoa().getPessoa_idem());
         ps.executeUpdate();
 
     }

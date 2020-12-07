@@ -10,8 +10,6 @@ public class EnderecoModel {
     private int endereco_numero;
     private String endereco_complemento;
     private String endereco_estado;
-    private PessoaModel endereco_pessoa;
-    private MotoristaModel endereco_motorista;
 
     public String getEndereco_estado() {
         return endereco_estado;
@@ -77,20 +75,5 @@ public class EnderecoModel {
         this.endereco_complemento = endereco_complemento;
     }
 
-    public PessoaModel getEndereco_pessoa() {
-        return endereco_pessoa;
-    }
-
-    public void setEndereco_pessoa(PessoaModel endereco_pessoa) {
-        this.endereco_pessoa = endereco_pessoa;
-    }
-
-    public MotoristaModel getEndereco_motorista() {
-        return endereco_motorista;
-    }
-
-    public void setEndereco_motorista(MotoristaModel endereco_motorista) {
-        this.endereco_motorista = endereco_motorista;
-    }
 
 }

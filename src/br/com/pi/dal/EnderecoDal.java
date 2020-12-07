@@ -1,37 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.pi.dal;
 
-import lixo.EnderecoDaltest;
+import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.AdpterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import interfaces.EnderecoInterface;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class EnderecoDal implements EnderecoInterface {
+/**
+ *
+ * @author watlas
+ */
+public class EnderecoDal implements ICRUD_GENERIC {
 
-    private Connection conect;
+    private Connection conexao;
+    EnderecoModel endereco = new EnderecoModel();
 
-    public EnderecoDal() throws Exception {
-        this.conect = new AdpterConexao().getConnectionAdapter();
+    public EnderecoDal() {
+        this.conexao = new AdpterConexao().getConnectionAdapter();
     }
 
     @Override
-    public void adicionarEndereco(EnderecoModel endereco) {
+    public int addReturn(Object objeto) throws Exception {
+        int id = 0;
+
         try {
+            endereco = (EnderecoModel) objeto;
             String sql = "INSERT INTO endereco ("
                     + "endereco_cep, endereco_cidade, endereco_bairro, "
                     + "endereco_rua, endereco_numero, endereco_complemento, "
-                    + "endereco_estado, endereco_pessoas_idem)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+                    + "endereco_estado)\n"
+                    + "	VALUES (?, ?, ?, ?, ?, ?, ?)";
             // return 
-            PreparedStatement ps = conect.prepareStatement(sql);
+            PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, endereco.getEndereco_cep());
             ps.setString(2, endereco.getEndereco_cidade());
             ps.setString(3, endereco.getEndereco_bairro());
@@ -39,131 +50,133 @@ public class EnderecoDal implements EnderecoInterface {
             ps.setObject(5, endereco.getEndereco_numero());
             ps.setString(6, endereco.getEndereco_complemento());
             ps.setString(7, endereco.getEndereco_estado());
-            //ps.setObject(8, endereco.getEndereco_pessoa().getPessoa_idem());            
-            //ps.setObject(8, endereco.getEndereco_motorista().getMotorista_idem());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+
+            id = ps.executeUpdate();
+            
+            if (id == 0) {
+                throw new SQLException("Falhar ao inserir cliente do banco.");
+            }
+
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                } else {
+                    //throw new Exception("Falhar ao inserir cliente com ID.");
+                    throw new SQLException("Falhar ao inserir cliente com ID");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw e;
         }
+
+        return id;
+
     }
 
     @Override
-    public void deleteEndereco(int endereco) {
-        //String sql = "DELETE FROM endereco WHERE endereco_ide=?";
-        String sql = "DELETE FROM endereco WHERE endereco_idem=?";
-        try {
-            PreparedStatement preparedStatement = conect.prepareStatement(sql);
+    public void add(Object objeto) throws Exception {
+        endereco = (EnderecoModel) objeto;
+        String sql = "INSERT INTO endereco ("
+                + "endereco_cep, endereco_cidade, endereco_bairro, "
+                + "endereco_rua, endereco_numero, endereco_complemento, "
+                + "endereco_estado)\n"
+                + "	VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // return 
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setString(1, endereco.getEndereco_cep());
+        ps.setString(2, endereco.getEndereco_cidade());
+        ps.setString(3, endereco.getEndereco_bairro());
+        ps.setString(4, endereco.getEndereco_rua());
+        ps.setObject(5, endereco.getEndereco_numero());
+        ps.setString(6, endereco.getEndereco_complemento());
+        ps.setString(7, endereco.getEndereco_estado());
 
-            preparedStatement.setInt(1, endereco);
-            preparedStatement.executeUpdate();
+        ps.executeUpdate();
 
-        } catch (SQLException erro) {
-            try {
-                throw new Exception("Ocorreu um erro ao deletar este registro!\n"
-                        + erro.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     @Override
-    public void updateEndereco(EnderecoModel endereco) {
-
-        try {
-            PreparedStatement prep = conect.prepareStatement("UPDATE endereco SET "
-                    + "endereco_cep=?, endereco_cidade=?, "
-                    + "endereco_bairro=?, endereco_rua=?, endereco_numero=?, "
-                    + "endereco_complemento=?, endereco_estado=? "
-                    + "WHERE endereco_idem=?;");
-
-            prep.setString(1, endereco.getEndereco_cep());
-            prep.setString(2, endereco.getEndereco_cidade());
-            prep.setString(3, endereco.getEndereco_bairro());
-            prep.setString(4, endereco.getEndereco_rua());
-            prep.setInt(5, endereco.getEndereco_numero());
-            prep.setString(6, endereco.getEndereco_complemento());
-            prep.setString(7, endereco.getEndereco_estado());
-            prep.setInt(8, endereco.getEndereco_iden());
-            prep.executeUpdate();
-
-        } catch (Exception erro) {
-            try {
-                throw new Exception("Ocorreu um erro ao alterar este registro\n"
-                        + erro.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public void delete(int n) throws Exception {
+        String sql = "DELETE FROM Endereco  WHERE endereco_idem =?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setObject(1, n);
+        ps.executeUpdate();
     }
 
     @Override
-    public ArrayList<EnderecoModel> getAllEndereco() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        ArrayList<EnderecoModel> endereco = new ArrayList<EnderecoModel>();
-        String sql = "SELECT * FROM endereco";
-        try {
-            Statement statement = conect.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+    public void update(Object objeto) throws Exception {
+        PreparedStatement prep = conexao.prepareStatement("UPDATE endereco SET "
+                + "endereco_cep=?, endereco_cidade=?, "
+                + "endereco_bairro=?, endereco_rua=?, endereco_numero=?, "
+                + "endereco_complemento=?, endereco_estado=? "
+                + "WHERE endereco_idem=?;");
 
-            while (rs.next()) {
-                EnderecoModel novoEndereco = new EnderecoModel();
-                novoEndereco.setEndereco_iden(rs.getInt("endereco_idem"));
-                novoEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
-                novoEndereco.setEndereco_bairro(rs.getString("endereco_bairro"));
-                novoEndereco.setEndereco_cep(rs.getString("endereco_cep"));
-                novoEndereco.setEndereco_rua(rs.getString("endereco_rua"));
-                novoEndereco.setEndereco_numero(rs.getInt("endereco_numero"));
-                novoEndereco.setEndereco_complemento(rs.getString("endereco_complemento"));
-                novoEndereco.setEndereco_estado(rs.getString("endereco_estado"));
-                endereco.add(novoEndereco);
-            }
-            return endereco;
-        } catch (Exception erro) {
-            try {
-                throw new Exception("Ocorreu um erro ao consultar os registros de endereços\n"
-                        + erro.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoDaltest.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        prep.setString(1, endereco.getEndereco_cep());
+        prep.setString(2, endereco.getEndereco_cidade());
+        prep.setString(3, endereco.getEndereco_bairro());
+        prep.setString(4, endereco.getEndereco_rua());
+        prep.setInt(5, endereco.getEndereco_numero());
+        prep.setString(6, endereco.getEndereco_complemento());
+        prep.setString(7, endereco.getEndereco_estado());
+        prep.setInt(8, endereco.getEndereco_iden());
+        prep.executeUpdate();
+
+    }
+
+    @Override
+    public Iterator getAll() throws Exception {
+        String sql = "SELECT * FROM Endereco";
+        List<EnderecoModel> list = new ArrayList<>();
+        Statement st = conexao.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            endereco = new EnderecoModel();
+
+            endereco.setEndereco_iden(rs.getInt("endereco_idem"));
+            endereco.setEndereco_cep(rs.getString("endereco_cep"));
+            endereco.setEndereco_cidade(rs.getString("endereco_cidade"));
+            endereco.setEndereco_bairro(rs.getString("endereco_bairro"));
+            endereco.setEndereco_rua(rs.getString("endereco_rua"));
+            endereco.setEndereco_numero(rs.getInt("endereco_numero"));
+            endereco.setEndereco_estado(rs.getString("endereco_estado"));
+            endereco.setEndereco_complemento(rs.getString("endereco_complemento"));
+
+            list.add(endereco);
+
         }
+
+        return list.iterator();
+
+    }
+
+    @Override
+    public Object getById(int n) throws Exception {
+        String sql = "SELECT * FROM Endereco WHERE endereco_idem =?";
+
+        PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+        preparedStatement.setObject(1, n);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            endereco = new EnderecoModel();
+
+            endereco.setEndereco_iden(rs.getInt("endereco_idem"));
+            endereco.setEndereco_cep(rs.getString("endereco_cep"));
+            endereco.setEndereco_cidade(rs.getString("endereco_cidade"));
+            endereco.setEndereco_bairro(rs.getString("endereco_bairro"));
+            endereco.setEndereco_rua(rs.getString("endereco_rua"));
+            endereco.setEndereco_numero(rs.getInt("endereco_numero"));
+            endereco.setEndereco_estado(rs.getString("endereco_estado"));
+            endereco.setEndereco_complemento(rs.getString("endereco_complemento"));
+
+        }
+        return endereco;
+    }
+
+    @Override
+    public Object getByNome(String nome) throws Exception {
         return null;
-    }
 
-    @Override
-    public EnderecoModel getEnderecoById(int id) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        EnderecoModel retEndereco = new EnderecoModel();
-        try {
-            String sql = "SELECT * FROM endereco WHERE endereco_idem=?";
-            PreparedStatement preparedStatement = conect.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                retEndereco.setEndereco_iden(rs.getInt("endereco_idem"));
-                retEndereco.setEndereco_cidade(rs.getString("endereco_cidade"));
-                retEndereco.setEndereco_bairro(rs.getString("endereco_bairro"));
-                retEndereco.setEndereco_cep(rs.getString("endereco_cep"));
-                retEndereco.setEndereco_rua(rs.getString("endereco_rua"));
-                retEndereco.setEndereco_numero(rs.getInt("endereco_numero"));
-                retEndereco.setEndereco_complemento(rs.getString("endereco_complemento"));
-                retEndereco.setEndereco_estado(rs.getString("endereco_estado"));
-                System.out.println(sql);
-            }
-
-        } catch (Exception erro) {
-            try {
-                throw new Exception("Erro ao buscar no banco de dados: !!\n" + erro.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(EnderecoDal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return retEndereco;
-    }
-
-    @Override
-    public EnderecoModel findEnderecoName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
