@@ -223,30 +223,54 @@ public class VeiculoView extends javax.swing.JFrame {
 
         jLabel1.setText("RENAVAM");
 
+        try {
+            txtRenavam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtRenavam.setEnabled(false);
+        txtRenavam.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRenavamKeyReleased(evt);
+            }
+        });
 
+        txtPrecoCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtPrecoCompra.setEnabled(false);
 
         jLabel5.setText("Preço de Compra");
 
         jLabel9.setText("Nº de Pessoas");
 
+        txtNumeroPessoas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtNumeroPessoas.setEnabled(false);
 
+        try {
+            txtAnoFabricacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtAnoFabricacao.setEnabled(false);
 
         jLabel10.setText("Ano de Fabricação");
 
         jLabel7.setText("Preço de Venda");
 
+        txtPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         txtPrecoVenda.setEnabled(false);
 
         jLabel11.setText("Ano do Modelo");
 
+        try {
+            txtAnoModelo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtAnoModelo.setEnabled(false);
 
         jLabel12.setText("Quilometragem");
 
+        txtQuilometragem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtQuilometragem.setEnabled(false);
 
         jcModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
@@ -700,14 +724,14 @@ public class VeiculoView extends javax.swing.JFrame {
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (Exception ilegal) {
-            JOptionPane.showMessageDialog(null, ilegal.getMessage());
+            JOptionPane.showMessageDialog(this, ilegal.getMessage());
         } finally {
             enableButtFields(false);
             clearFields();
             try {
                 imprimirDadosNaGrid(veiculoInclud.getAll());
             } catch (Exception ex) {
-                Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -843,6 +867,10 @@ public class VeiculoView extends javax.swing.JFrame {
             }
   }
     }//GEN-LAST:event_btnDeletarTableActionPerformed
+
+    private void txtRenavamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRenavamKeyReleased
+
+    }//GEN-LAST:event_txtRenavamKeyReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
