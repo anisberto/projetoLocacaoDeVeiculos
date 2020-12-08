@@ -98,8 +98,6 @@ public class ClienteView extends javax.swing.JFrame {
         jComboxEstado = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtClientesNumero = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableEndereco = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
@@ -343,7 +341,7 @@ public class ClienteView extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -365,36 +363,6 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel8.setForeground(java.awt.Color.red);
         jLabel8.setText("Número *");
 
-        tableEndereco.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cidade", "Bairro", "CEP", "Rua", "Número", "Complemento", "UF"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tableEndereco);
-        if (tableEndereco.getColumnModel().getColumnCount() > 0) {
-            tableEndereco.getColumnModel().getColumn(0).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(0).setPreferredWidth(25);
-            tableEndereco.getColumnModel().getColumn(1).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(2).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(3).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(4).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(5).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(6).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(7).setResizable(false);
-            tableEndereco.getColumnModel().getColumn(7).setPreferredWidth(20);
-        }
-
         jLabel9.setText("ID");
 
         txtId.setEnabled(false);
@@ -406,12 +374,11 @@ public class ClienteView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(jLabel16)
                         .addGap(17, 17, 17)
                         .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,9 +429,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(jLabel19)
                     .addComponent(txtClientesComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -489,7 +454,7 @@ public class ClienteView extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -680,7 +645,7 @@ public class ClienteView extends javax.swing.JFrame {
             }
             
 
-        } catch (Exception e) {
+        } catch (Exception e) {           
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
 
@@ -708,8 +673,20 @@ public class ClienteView extends javax.swing.JFrame {
         idg = Integer.parseInt(tabViewClientes.getValueAt(tabViewClientes.getSelectedRow(), 0).toString());
         
         try {
+            //Setando pessoa
             pessoamodel = (PessoaModel) pessoaBll.getById(idg);
             txtNomePessoa.setText(pessoamodel.getPessoa_nome());
+            txtEmail.setText(pessoamodel.getPessoa_email());
+            txtTelefone.setText(pessoamodel.getPessoa_telefone());
+            //Sentando Endereço
+            txtClientesBairro.setText(pessoamodel.getPessoa_endereco().getEndereco_bairro());
+            txtClientesCep.setText(pessoamodel.getPessoa_endereco().getEndereco_cep());
+            txtCidade.setText(pessoamodel.getPessoa_endereco().getEndereco_cidade());
+            txtClientesNumero.setText(pessoamodel.getPessoa_endereco().getEndereco_numero()+"");
+            txtClientesRua.setText(pessoamodel.getPessoa_endereco().getEndereco_rua());
+            txtId.setText(pessoamodel.getPessoa_endereco().getEndereco_iden()+"");
+            txtClientesComplemento.setText(pessoamodel.getPessoa_endereco().getEndereco_complemento());
+            
             
         } catch (Exception ex) {
           
@@ -804,13 +781,11 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableUsuarios2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabViewClientes;
-    private javax.swing.JTable tableEndereco;
     private javax.swing.JFormattedTextField txtCidade;
     private javax.swing.JFormattedTextField txtClientesBairro;
     private javax.swing.JFormattedTextField txtClientesCep;
@@ -856,25 +831,6 @@ public class ClienteView extends javax.swing.JFrame {
             txtClientesNumero.setEnabled(false);
             txtClientesComplemento.setEnabled(false);
 
-        }
-    }
-
-    private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
-        DefaultTableModel modelo = (DefaultTableModel) tableEndereco.getModel();
-        modelo.setNumRows(0);
-
-        for (int pos = 0; pos < lista.size(); pos++) {
-            String[] linha = new String[8];
-            EnderecoModel aux = lista.get(pos);
-            linha[0] = aux.getEndereco_iden() + "";
-            linha[1] = aux.getEndereco_cidade() + "";
-            linha[2] = aux.getEndereco_bairro() + "";
-            linha[3] = aux.getEndereco_cep() + "";
-            linha[4] = aux.getEndereco_rua() + "";
-            linha[5] = aux.getEndereco_numero() + "";
-            linha[6] = aux.getEndereco_complemento() + "";
-            linha[7] = aux.getEndereco_estado() + "";
-            modelo.addRow(linha);
         }
     }
 

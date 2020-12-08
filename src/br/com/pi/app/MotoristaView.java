@@ -3,6 +3,7 @@ package br.com.pi.app;
 import br.com.pi.bll.EnderecoBll;
 
 import br.com.pi.model.EnderecoModel;
+import br.com.pi.model.MotoristaModel;
 import br.com.pi.util.Imagem_util;
 import interfaces.EnderecoInterface;
 import java.awt.image.BufferedImage;
@@ -634,15 +635,14 @@ public class MotoristaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-//        try {
-//            enableButtFields(true);
-//            incluir = true;
-//        } catch (Exception e) {
-//        }
+
         try {
             limparEnderecoMotorista();
             incluirEndereco = true;
             enderecoMotoristaEnableButtons(true);
+            MotoristaModel m = new MotoristaModel();
+            m.setCnh_imagem(Imagem_util.getImgBytes(imagem));
+            
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIncluirActionPerformed

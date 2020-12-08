@@ -94,7 +94,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
             pessoa.setPessoa_pf_cpf(rs.getString("pf_cpf"));
             pessoa.setPessoa_pf_rg(rs.getString("pf_rg"));
 
-            pessoa.setPessoa(pessoaModel = (PessoaModel) pessoaDal.getById(rs.getInt("pf_pessoas_idem")));
+            pessoa.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pf_pessoas_idem")));
 
         }
 
