@@ -644,6 +644,7 @@ public class ReservaView1 extends javax.swing.JFrame {
             int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 1).toString());
             transFerirDadosGridReserva(codigo);
             System.out.println(codigo);
+            System.out.println("Teste de edivan");
 
         } catch (Exception e) {
             try {
@@ -844,7 +845,8 @@ public class ReservaView1 extends javax.swing.JFrame {
             ReservaModel objetoReserva = (ReservaModel) conjunto.next();
 
             linha[0] = objetoReserva.getReserva_idem() + "";
-            linha[1] = objetoReserva.getReserva_cliente().getPessoa_idem() + " - " + objetoReserva.getReserva_cliente().getPessoa_nome() + "";
+            linha[1] = objetoReserva.getReserva_cliente().getPessoa_idem() + "";
+            //+ objetoReserva.getReserva_cliente().getPessoa_nome() + "";
             linha[2] = objetoReserva.getReserva_dataReserva();
             linha[3] = objetoReserva.getReserva_dataExpiracao();
 
@@ -859,12 +861,12 @@ public class ReservaView1 extends javax.swing.JFrame {
             //txtCpfCnpj.setText(res.getReserva_cliente() + "");
             //txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome() + "");
             txtIdRegistro.setText(res.getReserva_cliente().getPessoa_idem()+ "");
-            txtIdCliente.setText(res.getReserva_cliente().getPessoa_nome()+ "");
-//            txtDataReserva.setText(formatDateStruct(res.getReserva_dataReserva().toString()));
-//            txtDataReserva.setText(formatDateStruct(res.getReserva_dataExpiracao().toString()));
+           //txtIdCliente.setText(res.getReserva_cliente().getPessoa_nome()+ "");
+            txtDataReserva.setText(formatDateStruct(res.getReserva_dataReserva().toString()));
+            //txtDataReserva.setText(formatDateStruct(res.getReserva_dataExpiracao().toString()));
 
-//            jcomboxCliente.removeAllItems();
-//            jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
+           jcomboxCliente.removeAllItems();
+           jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
             //IdDeleteReserva = codigo;
         } catch (Exception e) {
             throw new Exception("Erro ao Listar dados 'tela 870': " + e.getMessage());
