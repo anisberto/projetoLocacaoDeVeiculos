@@ -5,26 +5,30 @@ import br.com.pi.bll.ReservaBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ReservaView extends javax.swing.JFrame {
+public class ReservaView1 extends javax.swing.JFrame {
 
     boolean incluir = true;
     ICRUD_GENERIC<ReservaModel> incluirReserva;
     int IdDeleteReserva;
 
-//    ICRUD_GENERIC<PessoaModel> cliente;
-//    private PessoaBll clienteBll = new PessoaBll();
-    public ReservaView() throws Exception {
+    ICRUD_GENERIC<PessoaModel> cliente;
+    private PessoaBll clienteBll = new PessoaBll();
+
+    public ReservaView1() throws Exception {
         initComponents();
 
 //        jcClientes();
         incluirReserva = new ReservaBll();
         imprimirDadosNaGrid(incluirReserva.getAll());
+
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
@@ -52,6 +56,10 @@ public class ReservaView extends javax.swing.JFrame {
         txtDataReserva = new javax.swing.JTextField();
         txtDataExpiracao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtIdRegistro = new javax.swing.JTextField();
+        txtIdCliente = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tableReserva = new javax.swing.JTable();
@@ -193,31 +201,49 @@ public class ReservaView extends javax.swing.JFrame {
 
         jLabel3.setText("Data de Expiração");
 
+        jLabel1.setText("ID Registro");
+
+        jLabel7.setText("ID Cliente");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtIdRegistro))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtIdRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -337,7 +363,7 @@ public class ReservaView extends javax.swing.JFrame {
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -521,19 +547,25 @@ public class ReservaView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    public void limparCampo() {
+        txtDataExpiracao.setText("");
+        txtDataReserva.setText("");
+    }
     private void btnReservaDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaDeletarActionPerformed
         try {
             if (!txtDataExpiracao.getText().isEmpty() && !txtDataReserva.getText().isEmpty()) {
                 int conf = JOptionPane.showConfirmDialog(null, "Confirma a exclusão da reserva: " + incluirReserva.getById(IdDeleteReserva).getReserva_idem(), "Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
                     incluirReserva.delete(IdDeleteReserva);
-                    JOptionPane.showMessageDialog(null, "Reserva cancelada com sucesso");
                     clearFields();
+                    JOptionPane.showMessageDialog(null, "Reserva cancelada com sucesso");
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
                 }
+
                 imprimirDadosNaGrid(incluirReserva.getAll());
+
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione o Usuario na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
             }
@@ -568,8 +600,8 @@ public class ReservaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnReservaSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaSalvarActionPerformed
+        System.out.println("teste");
         try {
-
             ReservaModel res = new ReservaModel();
 
 //                res.setReserva_cliente((PessoaModel) clienteBll.getByNome(jcomboxCliente.getSelectedItem().toString()));
@@ -579,6 +611,7 @@ public class ReservaView extends javax.swing.JFrame {
             if (incluir) {
                 incluirReserva.add(res);
                 JOptionPane.showMessageDialog(null, "Reserva realizada com Sucesso!", "Reserva", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("teste");
             } else {
                 res.setReserva_idem(Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString()));
                 incluirReserva.update(res);
@@ -590,6 +623,7 @@ public class ReservaView extends javax.swing.JFrame {
             enableButt(false);
             try {
                 imprimirDadosNaGrid(incluirReserva.getAll());
+
             } catch (Exception ex) {
                 Logger.getLogger(LoginViewCrud.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -607,12 +641,17 @@ public class ReservaView extends javax.swing.JFrame {
 
     private void tableReservajTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservajTableUsuarios3MouseClicked
         try {
-            int id = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString());
-            transFerirDados(id);
-            System.out.println(id);
+            int codigo = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 1).toString());
+            transFerirDadosGridReserva(codigo);
+            System.out.println(codigo);
+            System.out.println("Teste de edivan");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            try {
+                throw new Exception("Erro ao Listar Dados : " + e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(ReservaView1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_tableReservajTableUsuarios3MouseClicked
 
@@ -653,23 +692,24 @@ public class ReservaView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReservaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReservaView1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReservaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReservaView1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReservaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReservaView1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReservaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReservaView1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new ReservaView().setVisible(true);
+                    new ReservaView1().setVisible(true);
                 } catch (Exception ex) {
-                    Logger.getLogger(ReservaView.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ReservaView1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -688,11 +728,13 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -713,6 +755,8 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JTable tableReserva;
     private javax.swing.JTextField txtDataExpiracao;
     private javax.swing.JTextField txtDataReserva;
+    private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdRegistro;
     // End of variables declaration//GEN-END:variables
 
     private void reservarEnableButtons(boolean butt) {
@@ -723,7 +767,6 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(false);
             btnReservaSalvar.setEnabled(true);
 
-            
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
 
@@ -734,7 +777,6 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaCancelar.setEnabled(true);
             btnReservaDeletar.setEnabled(true);
 
-          
             txtDataReserva.setEnabled(false);
             txtDataExpiracao.setEnabled(false);
 
@@ -749,7 +791,6 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(false);
             btnReservaSalvar.setEnabled(true);
 
-          
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
         } else {
@@ -759,7 +800,6 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaDeletar.setEnabled(true);
             btnReservaSalvar.setEnabled(false);
 
-            
             txtDataReserva.setEnabled(false);
             txtDataExpiracao.setEnabled(false);
         }
@@ -774,7 +814,6 @@ public class ReservaView extends javax.swing.JFrame {
             btnReservaSalvar.setEnabled(true);
             btnVoltar.setEnabled(false);
 
-          
             txtDataReserva.setEnabled(true);
             txtDataExpiracao.setEnabled(true);
 
@@ -790,11 +829,10 @@ public class ReservaView extends javax.swing.JFrame {
     }
 
     public void clearFields() {
-      
+
         txtDataExpiracao.setText("");
         txtDataReserva.setText("");
 
-     
         txtDataExpiracao.setEnabled(false);
         txtDataReserva.setEnabled(false);
     }
@@ -806,27 +844,32 @@ public class ReservaView extends javax.swing.JFrame {
             String[] linha = new String[4];
             ReservaModel objetoReserva = (ReservaModel) conjunto.next();
 
-            linha[0] = objetoReserva.getReserva_dataReserva();
-            linha[1] = objetoReserva.getReserva_dataExpiracao();
-            linha[2] = objetoReserva.getReserva_cliente().getPessoa_idem() + "";
-            linha[3] = objetoReserva.getReserva_idem() + "";
+            linha[0] = objetoReserva.getReserva_idem() + "";
+            linha[1] = objetoReserva.getReserva_cliente().getPessoa_idem() + "";
+            //+ objetoReserva.getReserva_cliente().getPessoa_nome() + "";
+            linha[2] = objetoReserva.getReserva_dataReserva();
+            linha[3] = objetoReserva.getReserva_dataExpiracao();
 
             model.addRow(linha);
         }
     }
 
-    private void transFerirDados(int codigo) {
+    private void transFerirDadosGridReserva(int codigo) throws Exception {
         try {
-            ReservaModel res = (ReservaModel) incluirReserva.getById(codigo);
+            ReservaModel res = incluirReserva.getById(codigo);
 
             //txtCpfCnpj.setText(res.getReserva_cliente() + "");
             //txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome() + "");
-            txtDataReserva.setText(res.getReserva_dataReserva() + "");
-            txtDataExpiracao.setText(res.getReserva_dataExpiracao() + "");
-            //jcomboxCliente.removeAllItems();
-            jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
-            IdDeleteReserva = codigo;
+            txtIdRegistro.setText(res.getReserva_cliente().getPessoa_idem()+ "");
+           //txtIdCliente.setText(res.getReserva_cliente().getPessoa_nome()+ "");
+            txtDataReserva.setText(formatDateStruct(res.getReserva_dataReserva().toString()));
+            //txtDataReserva.setText(formatDateStruct(res.getReserva_dataExpiracao().toString()));
+
+           jcomboxCliente.removeAllItems();
+           jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
+            //IdDeleteReserva = codigo;
         } catch (Exception e) {
+            throw new Exception("Erro ao Listar dados 'tela 870': " + e.getMessage());
         }
     }
 
@@ -839,5 +882,13 @@ public class ReservaView extends javax.swing.JFrame {
             jcomboxCliente.addItem(pess.getPessoa_nome());
 
         }
+    }
+
+    private String formatDateStruct(String reserva_dataReserva) {
+        String[] newForm = reserva_dataReserva.split("-");
+        return newForm[2] + "/" + newForm[1] + "/" + newForm[0];
+//    private String formatDateStruct(String reserva_dataReserva) {
+//        String[] newForm = reserva_dataReserva.split("-");
+//        return newForm[2] + "/" + newForm[1] + "/" + newForm[0];
     }
 }

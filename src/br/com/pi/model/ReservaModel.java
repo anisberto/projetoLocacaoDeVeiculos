@@ -7,8 +7,19 @@ public class ReservaModel {
     private int reserva_idem;
     private PessoaModel reserva_cliente;
     private VeiculoModel reserva_veiculo;
-    private Date reserva_dataReserva;
-    private Date reserva_dataExpiracao;
+    private String reserva_dataReserva;
+    private String reserva_dataExpiracao;
+
+    public ReservaModel() {
+    }
+
+    public ReservaModel(int reserva_idem, PessoaModel reserva_cliente, VeiculoModel reserva_veiculo, String reserva_dataReserva, String reserva_dataExpiracao) {
+        this.reserva_idem = reserva_idem;
+        this.reserva_cliente = reserva_cliente;
+        this.reserva_veiculo = reserva_veiculo;
+        this.reserva_dataReserva = reserva_dataReserva;
+        this.reserva_dataExpiracao = reserva_dataExpiracao;
+    }
 
     public int getReserva_idem() {
         return reserva_idem;
@@ -34,19 +45,22 @@ public class ReservaModel {
         this.reserva_veiculo = reserva_veiculo;
     }
 
-    public Date getReserva_dataReserva() {
+    public String getReserva_dataReserva() {
         return reserva_dataReserva;
     }
 
-    public void setReserva_dataReserva(Date reserva_dataReserva) {
+    public void setReserva_dataReserva(String reserva_dataReserva) {
         this.reserva_dataReserva = reserva_dataReserva;
     }
 
-    public Date getReserva_dataExpiracao() {
+    public String getReserva_dataExpiracao() {
         return reserva_dataExpiracao;
     }
 
-    public void setReserva_dataExpiracao(Date reserva_dataExpiracao) {
+    public void setReserva_dataExpiracao(String reserva_dataExpiracao) {
         this.reserva_dataExpiracao = reserva_dataExpiracao;
     }
+
+    
+
 }
