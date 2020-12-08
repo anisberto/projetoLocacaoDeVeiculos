@@ -43,7 +43,7 @@ public class PessoaDal implements ICRUD_GENERIC {
                 throw new SQLException("Falhar ao inserir cliente do banco.");
             }
 
-            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getInt(1);
                 } else {
@@ -109,20 +109,17 @@ public class PessoaDal implements ICRUD_GENERIC {
     @Override
     public Object getById(int n) throws Exception {
         String sql = "SELECT * FROM Pessoas WHERE pessoa_idem = ?";
-
+        PessoaModel pessoaFisicaModel = new PessoaModel();
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
-
         if (rs.next()) {
-            pessoaModel = new PessoaModel();
-            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
-            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
+            pessoaFisicaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
+            pessoaFisicaModel.setPessoa_nome(rs.getString("pessoa_nome"));
+            pessoaFisicaModel.setPessoa_email(rs.getString("pessoa_email"));
+            pessoaFisicaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
         }
-
-        return pessoaModel;
+        return pessoaFisicaModel;
     }
 
     @Override

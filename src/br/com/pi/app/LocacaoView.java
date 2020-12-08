@@ -1,14 +1,15 @@
 package br.com.pi.app;
 
 import br.com.pi.bll.LocacaoBll;
-import br.com.pi.bll.MarcaBll;
-import br.com.pi.bll.ModeloBll;
+import br.com.pi.bll.MotoristaBll;
+import br.com.pi.bll.PessoaPFBll;
+import br.com.pi.bll.PessoaPJBll;
 import br.com.pi.bll.VeiculoBll;
-import br.com.pi.dal.ModeloDal;
 import br.com.pi.dal.VeiculoDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
-import br.com.pi.model.LocacaoModel;
-import br.com.pi.model.ModeloModel;
+import br.com.pi.model.MotoristaModel;
+import br.com.pi.model.PessoaPFModel;
+import br.com.pi.model.PessoaPJModel;
 import br.com.pi.model.VeiculoModel;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -17,6 +18,9 @@ import java.util.logging.Logger;
 public class LocacaoView extends javax.swing.JFrame {
 
     ICRUD_GENERIC<LocacaoBll> incluirLocacao;
+    MotoristaBll motoristas;
+    PessoaPFBll pf;
+    PessoaPJBll pj;
     boolean incluir = true;
 
     public LocacaoView() throws Exception {
@@ -25,6 +29,9 @@ public class LocacaoView extends javax.swing.JFrame {
         jcClienteFisica.setVisible(false);
         jcClienteJuridica.setVisible(false);
         incluirLocacao = new LocacaoBll();
+        motoristas = new MotoristaBll();
+        pf = new PessoaPFBll();
+        pj = new PessoaPJBll();
     }
 
     @SuppressWarnings("unchecked")
@@ -246,6 +253,29 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jcMotorista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Motorista" }));
         jcMotorista.setEnabled(false);
+        jcMotorista.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jcMotoristaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jcMotorista.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jcMotoristaPopupMenuWillBecomeVisible(evt);
+            }
+        });
+        jcMotorista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcMotoristaActionPerformed(evt);
+            }
+        });
 
         btnNovoMotorista.setText("+");
         btnNovoMotorista.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +348,15 @@ public class LocacaoView extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        jcClienteFisica.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jcClienteFisicaPopupMenuWillBecomeVisible(evt);
+            }
+        });
         jcClienteFisica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcClienteFisicaActionPerformed(evt);
@@ -340,6 +379,15 @@ public class LocacaoView extends javax.swing.JFrame {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jcClienteJuridica.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jcClienteJuridicaPopupMenuWillBecomeVisible(evt);
             }
         });
         jcClienteJuridica.addActionListener(new java.awt.event.ActionListener() {
@@ -820,7 +868,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     || jcClienteJuridica.getSelectedItem().toString().contains("Juridico")
                     || jcMotorista.getSelectedItem().toString().contains("Motorista")) {
             } else {
-                
+
                 if (incluir) {
 
                 } else {
@@ -838,6 +886,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             incluir = false;
             enableButtFields(true);
+            enableFielsCrud(true);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -937,6 +986,26 @@ public class LocacaoView extends javax.swing.JFrame {
             Logger.getLogger(LocacaoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jcVeiculoPopupMenuWillBecomeVisible
+
+    private void jcMotoristaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcMotoristaAncestorAdded
+    }//GEN-LAST:event_jcMotoristaAncestorAdded
+
+    private void jcMotoristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcMotoristaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcMotoristaActionPerformed
+
+    private void jcMotoristaPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcMotoristaPopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+        SetJCMoto();
+    }//GEN-LAST:event_jcMotoristaPopupMenuWillBecomeVisible
+
+    private void jcClienteFisicaPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcClienteFisicaPopupMenuWillBecomeVisible
+        selecteElementPF();
+    }//GEN-LAST:event_jcClienteFisicaPopupMenuWillBecomeVisible
+
+    private void jcClienteJuridicaPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcClienteJuridicaPopupMenuWillBecomeVisible
+        selecteElementPJ();
+    }//GEN-LAST:event_jcClienteJuridicaPopupMenuWillBecomeVisible
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1057,22 +1126,36 @@ public class LocacaoView extends javax.swing.JFrame {
             btnDeletar.setEnabled(true);
             btnVoltar.setEnabled(true);
             btnSalvar.setEnabled(false);
-            
+
             jrFisica.setSelected(false);
             jrJuridica.setSelected(false);
-            
+
             jcClienteFisica.setVisible(false);
             jcClienteJuridica.setVisible(false);
         }
     }
 
-    private int selecteElement() {
-        if (jrFisica.isSelected()) {
-            return 0;
-        } else if (jrJuridica.isSelected()) {
-            return 1;
+    private void selecteElementPF() {
+        try {
+            jcClienteFisica.removeAllItems();
+            Iterator<PessoaPFModel> pfisica = pf.getAll();
+            while (pfisica.hasNext()) {
+                jcClienteFisica.addItem(pfisica.next().getPessoa().getPessoa_nome());
+            }
+
+        } catch (Exception e) {
         }
-        return 10;
+    }
+
+    private void selecteElementPJ() {
+        try {
+            jcClienteJuridica.removeAllItems();
+            Iterator<PessoaPJModel> pJuridica = pj.getAll();
+            while (pJuridica.hasNext()) {
+                jcClienteJuridica.addItem(pJuridica.next().getPessoa_pj_nomeFantasia());
+            }
+        } catch (Exception e) {
+        }
     }
 
     public void enableFielsCrud(boolean action) {
@@ -1109,7 +1192,9 @@ public class LocacaoView extends javax.swing.JFrame {
             jcClienteFisica.addItem("Cliente Fisico");
             jcClienteJuridica.removeAllItems();
             jcClienteJuridica.addItem("Cliente Juridico");
+            txtRenavamVeiculo.setText("");
         } else {
+            txtRenavamVeiculo.setText("");
             txtCodigo.setEnabled(false);
             txtDataRetirada.setEnabled(false);
             txtDataDevolucao.setEnabled(false);
@@ -1152,6 +1237,17 @@ public class LocacaoView extends javax.swing.JFrame {
             Iterator<VeiculoModel> veiculoListado = modelo.getAll();
             while (veiculoListado.hasNext()) {
                 jcVeiculo.addItem(veiculoListado.next());
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void SetJCMoto() {
+        try {
+            Iterator<MotoristaModel> motLista = motoristas.getAll();
+            jcMotorista.removeAllItems();
+            while (motLista.hasNext()) {
+                jcMotorista.addItem(motLista.next().getMotorista_nome());
             }
         } catch (Exception e) {
         }

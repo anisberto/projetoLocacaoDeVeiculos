@@ -72,17 +72,15 @@ public class PessoaPJDal implements ICRUD_GENERIC {
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){
-            pessoaPJModel = new PessoaPJModel();
-            pessoaPJModel.setPessoa_pj_idem(rs.getInt("pj_idem"));
-            pessoaPJModel.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
-            pessoaPJModel.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
-            pessoaPJModel.setPessoa_pj_razaoSocial("pj_razao_social");
-            pessoaPJModel.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
+            PessoaPJModel pessoaPj = new PessoaPJModel();
+            pessoaPj.setPessoa_pj_idem(rs.getInt("pj_idem"));
+            pessoaPj.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
+            pessoaPj.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
+            pessoaPj.setPessoa_pj_razaoSocial("pj_razao_social");
+            pessoaPj.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 
-            list.add(pessoaPJModel);
-
+            list.add(pessoaPj);
         }
-
         return list.iterator();
     }
 

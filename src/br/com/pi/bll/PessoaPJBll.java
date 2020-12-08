@@ -54,7 +54,6 @@ public class PessoaPJBll implements ICRUD_GENERIC {
         } catch (Exception e) {
             throw e;
         }
-
     }
 
     @Override

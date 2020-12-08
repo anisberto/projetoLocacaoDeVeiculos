@@ -24,12 +24,12 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
     @Override
     public void add(Object objeto) throws Exception {
-        pessoa =(PessoaPFModel) objeto;
-        String sql = "INSERT INTO pessoas_pf(pf_cpf, pf_rg, pf_pessoas_idem)" +
-                "VALUES (?,?,?)";
+        pessoa = (PessoaPFModel) objeto;
+        String sql = "INSERT INTO pessoas_pf(pf_cpf, pf_rg, pf_pessoas_idem)"
+                + "VALUES (?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoa.getPessoa_pf_cpf());
-        ps.setObject(2,pessoa.getPessoa_pf_rg());
+        ps.setObject(2, pessoa.getPessoa_pf_rg());
         ps.setInt(3, pessoa.getPessoa().getPessoa_idem());
         ps.executeUpdate();
 
@@ -39,21 +39,21 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     public void delete(int n) throws Exception {
         String sql = "DELETE FROM pessoas_pf WHERE pf_idem=?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1,n);
+        ps.setObject(1, n);
         ps.executeUpdate();
 
     }
 
     @Override
     public void update(Object objeto) throws Exception {
-        pessoa =(PessoaPFModel) objeto;
-        String sql ="UPDATE pessoas_pf SET pf_cpf=?, pf_rg=?, pf_pessoas_idem=?" +
-                "WHERE pf_idem=?";
+        pessoa = (PessoaPFModel) objeto;
+        String sql = "UPDATE pessoas_pf SET pf_cpf=?, pf_rg=?, pf_pessoas_idem=?"
+                + "WHERE pf_idem=?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoa.getPessoa_pf_cpf());
-        ps.setObject(2,pessoa.getPessoa_pf_rg());
+        ps.setObject(2, pessoa.getPessoa_pf_rg());
         ps.setObject(3, pessoa.getPessoa().getPessoa_idem());
-        ps.setObject(4,pessoa.getPessoa_pf_idem());
+        ps.setObject(4, pessoa.getPessoa_pf_idem());
         ps.executeUpdate();
 
     }
@@ -61,25 +61,20 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     @Override
     public Iterator getAll() throws Exception {
         PessoaDal pessoaDal = new PessoaDal();
-        PessoaModel pessoaModel;
         String sql = "SELECT * FROM pessoas_pf";
-        List<PessoaPFModel> list = new ArrayList<>();
+        List<PessoaPFModel> list = new ArrayList();
 
-        Statement st = conexao.createStatement();;
+        Statement st = conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-            pessoaModel = new PessoaModel();
-            pessoa = new PessoaPFModel();
-            pessoa.setPessoa_pf_idem(rs.getInt("pf_idem"));
-            pessoa.setPessoa_pf_cpf(rs.getString("pf_cpf"));
-            pessoa.setPessoa_pf_rg(rs.getString("pf_rg"));
-
-            pessoa.setPessoa(pessoaModel = (PessoaModel) pessoaDal.getById(rs.getInt("pf_pessoas_idem")));
-            list.add(pessoa);
+        while (rs.next()) {
+            PessoaPFModel pessoaFisica = new PessoaPFModel();
+            pessoaFisica.setPessoa_pf_idem(rs.getInt("pf_idem"));
+            pessoaFisica.setPessoa_pf_cpf(rs.getString("pf_cpf"));
+            pessoaFisica.setPessoa_pf_rg(rs.getString("pf_rg"));
+            pessoaFisica.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pf_pessoas_idem")));
+            list.add(pessoaFisica);
         }
-
-
-        return list.listIterator();
+        return list.iterator();
     }
 
     @Override
@@ -89,10 +84,10 @@ public class PessoaPFDal implements ICRUD_GENERIC {
         String sql = "SELECT * FROM pessoas_pf WHERE pf_idem=?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,n);
+        preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             pessoaModel = new PessoaModel();
             pessoa = new PessoaPFModel();
             pessoa.setPessoa_pf_idem(rs.getInt("pf_idem"));
@@ -113,10 +108,10 @@ public class PessoaPFDal implements ICRUD_GENERIC {
         String sql = "SELECT * FROM pessoas_pf WHERE pf_cpf=?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setObject(1,nome);
+        preparedStatement.setObject(1, nome);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
 
             pessoa = new PessoaPFModel();
             pessoa.setPessoa_pf_idem(rs.getInt("pf_idem"));
