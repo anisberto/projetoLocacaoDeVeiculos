@@ -3,6 +3,7 @@ package br.com.pi.dal;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.AdpterConexao;
 
 import java.sql.Connection;
@@ -20,6 +21,26 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
     public PessoaPFDal() throws Exception {
         conexao = new AdpterConexao().getConnectionAdapter();
+    }
+    
+    public void addAll(EnderecoModel endereco,PessoaPFModel pessoa) throws Exception{
+        EnderecoDal enderecoDal = new EnderecoDal();
+        PessoaDal pessoaDal = new PessoaDal();
+        try {
+            conexao.setAutoCommit(false);
+            int idendereco = enderecoDal.addReturn(endereco);
+            endereco.setEndereco_iden(idendereco);
+            int idPessoa = pessoaDal.addReturn(pessoa);
+            pessoa.setPessoa_idem(idPessoa);
+            add(pessoa);
+            conexao.commit();
+            
+            
+        } catch (Exception e) {
+            conexao.rollback();
+            System.out.println(e.getMessage());
+        }
+        
     }
 
     @Override
@@ -80,15 +101,14 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     @Override
     public Object getById(int n) throws Exception {
         PessoaDal pessoaDal = new PessoaDal();
-        PessoaModel pessoaModel;
-        String sql = "SELECT * FROM pessoas_pf WHERE pf_idem=?";
+        pessoa = new PessoaPFModel();
+        String sql = "SELECT * FROM pessoas_pf WHERE pf_pessoas_idem=?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if (rs.next()) {
-            pessoaModel = new PessoaModel();
+        if (rs.next()) {    
             pessoa = new PessoaPFModel();
             pessoa.setPessoa_pf_idem(rs.getInt("pf_idem"));
             pessoa.setPessoa_pf_cpf(rs.getString("pf_cpf"));

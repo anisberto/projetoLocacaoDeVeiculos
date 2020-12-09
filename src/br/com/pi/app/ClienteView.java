@@ -4,6 +4,7 @@ import br.com.pi.bll.EnderecoBll;
 import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.PessoaPFBll;
 import br.com.pi.bll.PessoaPJBll;
+import br.com.pi.dal.PessoaPFDal;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
@@ -323,8 +324,8 @@ public class ClienteView extends javax.swing.JFrame {
             }
         ));
         tabViewClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tabViewClientesMouseReleased(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabViewClientesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabViewClientes);
@@ -591,61 +592,53 @@ public class ClienteView extends javax.swing.JFrame {
             pessoaPJModel = new PessoaPJModel();
             endereco = new EnderecoModel();
             if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
-                    
-                    endereco.setEndereco_cep(txtClientesCep.getText());
-                    endereco.setEndereco_cidade(txtCidade.getText());
-                    endereco.setEndereco_bairro(txtClientesBairro.getText());
-                    endereco.setEndereco_rua(txtClientesRua.getText());
-                    endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
-                    endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
-                    endereco.setEndereco_complemento(txtClientesComplemento.getText());
-                    
-                    //Subindo endereco para banco de dados e pegando ID do mesmo
-                    int idEndereco = enderecoBll.addReturn(endereco);
-                    endereco.setEndereco_iden(idEndereco);
-                    
-                    //Pessoa
-                    pessoaPFModel.setPessoa_nome(txtNomePessoa.getText());
-                    pessoaPFModel.setPessoa_email(txtEmail.getText());
-                    pessoaPFModel.setPessoa_telefone(txtTelefone.getText());
-                    pessoaPFModel.setPessoa_endereco(endereco);
-                    
-                    //Subindo pessoa e pegando ID do mesmo
-                    int idPessoa = pessoaBll.addReturn(pessoaPFModel);
-                    //Subindo para table pessoaPF
-                    pessoaPFModel.setPessoa_idem(idPessoa);
-                    pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText());
-                    pessoaPFModel.setPessoa_pf_rg(txtRgPessoa.getText());
-                    pessoaPFModel.setPessoa(pessoaPFModel);
-                    pessoaPFBll.add(pessoaPFModel);
-            }else{
-                    endereco.setEndereco_cep(txtClientesCep.getText());
-                    endereco.setEndereco_cidade(txtCidade.getText());
-                    endereco.setEndereco_bairro(txtClientesBairro.getText());
-                    endereco.setEndereco_rua(txtClientesRua.getText());
-                    endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
-                    endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
-                    endereco.setEndereco_complemento(txtClientesComplemento.getText());
-                    
-                    int idEndereco = enderecoBll.addReturn(endereco);
-                    endereco.setEndereco_iden(idEndereco);
-                   
-                         
-                    pessoaPJModel.setPessoa_nome(txtNomePessoa.getText());
-                    pessoaPJModel.setPessoa_email(txtEmail.getText());
-                    pessoaPJModel.setPessoa_telefone(txtTelefone.getText());
-                    pessoaPJModel.setPessoa_endereco(endereco);
-                    int idPessoa = pessoaBll.addReturn(pessoaPJModel);
-                    pessoaPJModel.setPessoa_idem(idPessoa);
-                    pessoaPJModel.setPessoa_pj_nomeFantasia(txtNomeFantasia.getText());
-                    pessoaPJModel.setPessoa_pj_razaoSocial(txtRazaoSocial.getText());
-                    pessoaPJModel.setPessoa_pj_cnpj(txtCnpj.getText());
-                    pessoaPJModel.setPessoaModel(pessoaPJModel);
-                    pessoaPJBll.add(pessoaPJModel);
-            }
-            
+                //Pegando dados de endereço
+                endereco.setEndereco_cep(txtClientesCep.getText());
+                endereco.setEndereco_cidade(txtCidade.getText());
+                endereco.setEndereco_bairro(txtClientesBairro.getText());
+                endereco.setEndereco_rua(txtClientesRua.getText());
+                endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
+                endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
+                endereco.setEndereco_complemento(txtClientesComplemento.getText());
+                //Pegando dados de Pessoa
+                pessoaPFModel.setPessoa_nome(txtNomePessoa.getText());
+                pessoaPFModel.setPessoa_email(txtEmail.getText());
+                pessoaPFModel.setPessoa_telefone(txtTelefone.getText());
+                pessoaPFModel.setPessoa_endereco(endereco);
+                //Pegando dados de pessoaPF
+                pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText());
+                pessoaPFModel.setPessoa_pf_rg(txtRgPessoa.getText());
+                pessoaPFModel.setPessoa(pessoaPFModel);
+                pessoaPFBll.addAll(endereco, pessoaPFModel);
 
-        } catch (Exception e) {           
+                limparCampos();
+                atualizarGrid();
+            } else {
+                //Pegando dados de endereço
+                endereco.setEndereco_cep(txtClientesCep.getText());
+                endereco.setEndereco_cidade(txtCidade.getText());
+                endereco.setEndereco_bairro(txtClientesBairro.getText());
+                endereco.setEndereco_rua(txtClientesRua.getText());
+                endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
+                endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
+                endereco.setEndereco_complemento(txtClientesComplemento.getText());
+                //Pegando dados de Pessoa
+                pessoaPJModel.setPessoa_nome(txtNomePessoa.getText());
+                pessoaPJModel.setPessoa_email(txtEmail.getText());
+                pessoaPJModel.setPessoa_telefone(txtTelefone.getText());
+                pessoaPJModel.setPessoa_endereco(endereco);
+                //Pegando dados de pessoaPJ
+                pessoaPJModel.setPessoa_pj_nomeFantasia(txtNomeFantasia.getText());
+                pessoaPJModel.setPessoa_pj_razaoSocial(txtRazaoSocial.getText());
+                pessoaPJModel.setPessoa_pj_cnpj(txtCnpj.getText());
+                pessoaPJModel.setPessoaModel(pessoaPJModel);
+                pessoaPJBll.addAll(endereco, pessoaPJModel);
+
+                limparCampos();
+                atualizarGrid();
+            }
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
 
@@ -669,10 +662,33 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBoxTipoPessoaActionPerformed
 
-    private void tabViewClientesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabViewClientesMouseReleased
+    private void limparCampos() {
+        txtNomePessoa.setText("");
+        txtEmail.setText("");
+        txtClientesBairro.setText("");
+        txtClientesCep.setText("");
+        txtCidade.setText("");
+        txtClientesNumero.setText("");
+        txtClientesRua.setText("");
+        txtId.setText("");
+        txtClientesComplemento.setText("");
+        txtRgPessoa.setText("");
+        txtCpfPessoa.setText("");
+        txtCnpj.setText("");
+        txtNomeFantasia.setText("");
+        txtRazaoSocial.setText("");
+    }
+
+    private void tabViewClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabViewClientesMouseClicked
         idg = Integer.parseInt(tabViewClientes.getValueAt(tabViewClientes.getSelectedRow(), 0).toString());
-        
+
+        pessoaPFModel = new PessoaPFModel();
+        pessoaPJModel = new PessoaPJModel();
+
+        limparCampos();
+
         try {
+
             //Setando pessoa
             pessoamodel = (PessoaModel) pessoaBll.getById(idg);
             txtNomePessoa.setText(pessoamodel.getPessoa_nome());
@@ -682,36 +698,54 @@ public class ClienteView extends javax.swing.JFrame {
             txtClientesBairro.setText(pessoamodel.getPessoa_endereco().getEndereco_bairro());
             txtClientesCep.setText(pessoamodel.getPessoa_endereco().getEndereco_cep());
             txtCidade.setText(pessoamodel.getPessoa_endereco().getEndereco_cidade());
-            txtClientesNumero.setText(pessoamodel.getPessoa_endereco().getEndereco_numero()+"");
+            txtClientesNumero.setText(pessoamodel.getPessoa_endereco().getEndereco_numero() + "");
             txtClientesRua.setText(pessoamodel.getPessoa_endereco().getEndereco_rua());
-            txtId.setText(pessoamodel.getPessoa_endereco().getEndereco_iden()+"");
+            txtId.setText(pessoamodel.getPessoa_endereco().getEndereco_iden() + "");
             txtClientesComplemento.setText(pessoamodel.getPessoa_endereco().getEndereco_complemento());
-            
-            
-        } catch (Exception ex) {
-          
-        }
-    }//GEN-LAST:event_tabViewClientesMouseReleased
 
-    private void atualizarGrid() throws Exception{
+            pessoaPFModel.setPessoa_pf_cpf(null);
+            pessoaPJModel.setPessoa_pj_cnpj(null);
+           
+
+            pessoaPFModel = (PessoaPFModel) pessoaPFBll.getById(idg);
+
+            if (pessoaPFModel.getPessoa_pf_cpf() != null) {
+                txtRgPessoa.setText(pessoaPFModel.getPessoa_pf_rg());
+                txtCpfPessoa.setText(pessoaPFModel.getPessoa_pf_cpf());
+                jComboBoxTipoPessoa.setSelectedItem("Pessoa Fisica");
+
+            } else {
+                pessoaPJModel = (PessoaPJModel) pessoaPJBll.getById(idg);
+                txtCnpj.setText(pessoaPJModel.getPessoa_pj_cnpj());
+                txtNomeFantasia.setText(pessoaPJModel.getPessoa_pj_nomeFantasia());
+                txtRazaoSocial.setText(pessoaPJModel.getPessoa_pj_razaoSocial());
+                jComboBoxTipoPessoa.setSelectedItem("Pessoa Juridica");
+
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+
+        }
+    }//GEN-LAST:event_tabViewClientesMouseClicked
+
+    private void atualizarGrid() throws Exception {
         DefaultTableModel model = (DefaultTableModel) tabViewClientes.getModel();
         model.setRowCount(0);
         Object[] linha;
         pessoaBll = new PessoaBll();
-         Iterator<PessoaModel> listaDeUsuario = pessoaBll.getAll();
-        for (Iterator<PessoaModel> it = listaDeUsuario; it.hasNext(); ) {
+        Iterator<PessoaModel> listaDeUsuario = pessoaBll.getAll();
+        for (Iterator<PessoaModel> it = listaDeUsuario; it.hasNext();) {
             PessoaModel aux = it.next();
             linha = new Object[]{
                 aux.getPessoa_idem(),
                 aux.getPessoa_nome(),
-                aux.getPessoa_email(),
-            };
+                aux.getPessoa_email(),};
             model.addRow(linha);
-            
-            
+
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

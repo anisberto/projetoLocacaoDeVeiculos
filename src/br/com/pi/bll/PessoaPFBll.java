@@ -2,6 +2,7 @@ package br.com.pi.bll;
 
 import br.com.pi.dal.PessoaPFDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.PessoaPFModel;
 
 import java.util.InputMismatchException;
@@ -16,7 +17,15 @@ public class PessoaPFBll implements ICRUD_GENERIC {
     public PessoaPFBll() throws Exception {
         dal = new PessoaPFDal();
     }
-
+    
+       public void addAll(EnderecoModel endereco,PessoaPFModel pessoa) throws Exception{
+           try {
+               
+               dal.addAll(endereco, pessoa);
+           } catch (Exception e) {
+               throw e;
+           }
+       }
     @Override
     public void add(Object objeto) throws Exception {
         try {
@@ -116,20 +125,20 @@ public class PessoaPFBll implements ICRUD_GENERIC {
                     + "\nO CPF informado não é válido");
         }
 
-        Iterator<PessoaPFModel> listaDeUsuario = dal.getAll();
-        for (Iterator<PessoaPFModel> it = listaDeUsuario; it.hasNext(); ) {
-            PessoaPFModel aux = it.next();
-
-            if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pf_rg().toUpperCase().
-                    equalsIgnoreCase(aux.getPessoa_pf_rg().toUpperCase()))) {
-                throw new Exception("O RG --> " + objeto.getPessoa_pf_rg() + "\nJá existe no cadastro de usuarios!\n");
-            }
-            if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pf_cpf().toUpperCase().
-                    equalsIgnoreCase(aux.getPessoa_pf_cpf().toUpperCase()))) {
-                throw new Exception("O CPF --> " + objeto.getPessoa_pf_cpf() + "\nJá existe no cadastro de usuarios!\n");
-            }
-
-        }
+//        Iterator<PessoaPFModel> listaDeUsuario = dal.getAll();
+//        for (Iterator<PessoaPFModel> it = listaDeUsuario; it.hasNext(); ) {
+//            PessoaPFModel aux = it.next();
+//
+//            if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pf_rg().toUpperCase().
+//                    equalsIgnoreCase(aux.getPessoa_pf_rg().toUpperCase()))) {
+//                throw new Exception("O RG --> " + objeto.getPessoa_pf_rg() + "\nJá existe no cadastro de usuarios!\n");
+//            }
+//            if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pf_cpf().toUpperCase().
+//                    equalsIgnoreCase(aux.getPessoa_pf_cpf().toUpperCase()))) {
+//                throw new Exception("O CPF --> " + objeto.getPessoa_pf_cpf() + "\nJá existe no cadastro de usuarios!\n");
+//            }
+//
+//        }
     }
 
     public static boolean isValidCPF(String CPF) {

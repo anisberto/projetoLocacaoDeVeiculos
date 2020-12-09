@@ -4,22 +4,22 @@ CREATE TABLE Pessoas (
     pessoa_idem SERIAL PRIMARY KEY,
     pessoa_nome VARCHAR,
     pessoa_telefone VARCHAR,
-    pessoa_email VARCHAR,
-    pessoa_endereco INTEGER,
+    pessoa_email VARCHAR UNIQUE,
+    pessoa_endereco INTEGER
 );
 
 CREATE TABLE pessoas_pf (
 	pf_idem SERIAL PRIMARY KEY,
-    pf_cpf VARCHAR,
-    pf_rg VARCHAR,
+    pf_cpf VARCHAR UNIQUE,
+    pf_rg VARCHAR UNIQUE,
     pf_pessoas_idem INTEGER
 );
 
 CREATE TABLE pessoas_pj (
 	pj_idem SERIAL PRIMARY KEY,
-    pj_cnpj VARCHAR,
+    pj_cnpj VARCHAR UNIQUE,
     pj_nome_fantasia VARCHAR,
-    pj_razao_social VARCHAR,
+    pj_razao_social VARCHAR UNIQUE,
     pj_pessoas_idem INTEGER
 );
 

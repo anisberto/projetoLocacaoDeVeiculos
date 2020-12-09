@@ -32,7 +32,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
         try {
             PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             ps.setObject(1, pessoaModel.getPessoa_nome());
             ps.setObject(2, pessoaModel.getPessoa_telefone());
             ps.setObject(3, pessoaModel.getPessoa_email());
@@ -43,7 +43,7 @@ public class PessoaDal implements ICRUD_GENERIC {
                 throw new SQLException("Falhar ao inserir cliente do banco.");
             }
 
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getInt(1);
                 } else {
@@ -86,7 +86,6 @@ public class PessoaDal implements ICRUD_GENERIC {
     public Iterator getAll() throws Exception {
         String sql = "SELECT * FROM Pessoas";
         EnderecoDal enderecoDal = new EnderecoDal();
-        EnderecoModel enderecoModel;
 
         List<PessoaModel> pessoaModelList = new ArrayList<>();
 
@@ -94,15 +93,15 @@ public class PessoaDal implements ICRUD_GENERIC {
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
-            enderecoModel = new EnderecoModel();
+      
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
             pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
             pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
-            
-            pessoaModel.setPessoa_endereco(enderecoModel = (EnderecoModel) enderecoDal.getById(rs.getInt("pessoa_endereco")));
-                
+
+            pessoaModel.setPessoa_endereco((EnderecoModel) enderecoDal.getById(rs.getInt("pessoa_endereco")));
+
             pessoaModelList.add(pessoaModel);
         }
         return pessoaModelList.iterator();
@@ -110,7 +109,7 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public Object getById(int n) throws Exception {
-            EnderecoDal enderecoDal = new EnderecoDal();
+        EnderecoDal enderecoDal = new EnderecoDal();
         EnderecoModel enderecoModel;
         String sql = "SELECT * FROM Pessoas WHERE pessoa_idem = ?";
         PessoaModel pessoaFisicaModel = new PessoaModel();
@@ -118,20 +117,13 @@ public class PessoaDal implements ICRUD_GENERIC {
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {
-
+            pessoaFisicaModel = new PessoaModel();
             pessoaFisicaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaFisicaModel.setPessoa_nome(rs.getString("pessoa_nome"));
             pessoaFisicaModel.setPessoa_email(rs.getString("pessoa_email"));
             pessoaFisicaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
 
-             enderecoModel = new EnderecoModel();
-            pessoaModel = new PessoaModel();
-            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
-            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
-            
-            pessoaModel.setPessoa_endereco(enderecoModel = (EnderecoModel) enderecoDal.getById(rs.getInt("pessoa_endereco")));
+            pessoaFisicaModel.setPessoa_endereco((EnderecoModel) enderecoDal.getById(rs.getInt("pessoa_endereco")));
 
         }
         return pessoaFisicaModel;
