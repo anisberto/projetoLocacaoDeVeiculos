@@ -103,4 +103,10 @@ public class MotoristaModel {
     public void setMotorista_endereco(EnderecoModel motorista_endereco) {
         this.motorista_endereco = motorista_endereco;
     }
+
+    @Override
+    public String toString() {
+        return motorista_nome ;
+    }
+    
 }

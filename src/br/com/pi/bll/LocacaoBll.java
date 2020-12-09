@@ -6,7 +6,7 @@ import br.com.pi.model.LocacaoModel;
 
 import java.util.Iterator;
 
-public class LocacaoBll implements ICRUD_GENERIC {
+public class LocacaoBll implements ICRUD_GENERIC<LocacaoModel> {
     LocacaoDal dal;
 
     public LocacaoBll() throws Exception {
@@ -14,7 +14,7 @@ public class LocacaoBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(LocacaoModel objeto) throws Exception {
         try {
             dal.add(objeto);
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class LocacaoBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(LocacaoModel objeto) throws Exception {
         try {
         dal.update(objeto);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class LocacaoBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public LocacaoModel getById(int n) throws Exception {
         try {
         return dal.getById(n);
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class LocacaoBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public LocacaoModel getByNome(String nome) throws Exception {
         try {
         return dal.getByNome(nome);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class LocacaoBll implements ICRUD_GENERIC {
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(LocacaoModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

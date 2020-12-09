@@ -148,4 +148,17 @@ public class LocacaoModel {
     public void setLocacao_pessoa(PessoaModel locacao_pessoa) {
         this.locacao_pessoa = locacao_pessoa;
     }
+
+    @Override
+    public String toString() {
+        return "LocacaoModel{" + "locacao_idem=" + locacao_idem + ",\nlocacao_codigoDelocacao=" + locacao_codigoDelocacao
+                + ",\nlocacao_dataRetirada=" + locacao_dataRetirada + ", locacao_dataDevolucao=" + locacao_dataDevolucao
+                + ",\nlocacao_dataDeAlugamento=" + locacao_dataDeAlugamento + ", locacao_quilometragemInicial=" + locacao_quilometragemInicial
+                + ",\nlocacao_quilometragemFinal=" + locacao_quilometragemFinal + ", locacao_valorLocacao=" + locacao_valorLocacao
+                + ",\nlocacao_valorCalcao=" + locacao_valorCalcao + ", locacao_valorSeguro=" + locacao_valorSeguro + ", locacao_multaAtraso="
+                + locacao_multaAtraso + ",\nlocacao_tanqueCheio=" + locacao_tanqueCheio + ", locacao_motorista=" + locacao_motorista
+                + ",\nlocacao_veiculo=" + locacao_veiculo + ", locacao_pessoa=" + locacao_pessoa + ", locacao_administrador="
+                + locacao_administrador + '}';
+    }
+
 }
