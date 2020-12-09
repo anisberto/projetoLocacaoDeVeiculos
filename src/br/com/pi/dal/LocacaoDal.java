@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LocacaoDal implements ICRUD_GENERIC {
+public class LocacaoDal implements ICRUD_GENERIC<LocacaoModel> {
 
     private Connection conexao;
     LocacaoModel locacaoModel = new LocacaoModel();
@@ -24,7 +24,7 @@ public class LocacaoDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public void add(Object objeto) throws Exception {
+    public void add(LocacaoModel objeto) throws Exception {
         locacaoModel = (LocacaoModel) objeto;
         String sql = "INSERT INTO Locacao(locacao_dataDeRetirada,locacao_dataDeDevolucao,locacao_quilometragemInicial," +
                 "locacao_quilometragemFinal,locacao_valorDaLocacao,locacao_valorCalcao,locacao_valorDoSeguro," +
@@ -60,7 +60,7 @@ public class LocacaoDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public void update(Object objeto) throws Exception {
+    public void update(LocacaoModel objeto) throws Exception {
         locacaoModel = (LocacaoModel) objeto;
         String sql = "UPDATE Locacao SET locacao_dataDeRetirada=?,locacao_dataDeDevolucao=?,locacao_quilometragemInicial=?," +
                 "locacao_quilometragemFinal=?,locacao_valorDaLocacao=?,locacao_valorCalcao=?,locacao_valorDoSeguro=?," +
@@ -122,7 +122,7 @@ public class LocacaoDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getById(int n) throws Exception {
+    public LocacaoModel getById(int n) throws Exception {
         String sql = "SELECT * FROM Locacao WHERE locacao_idem=?";
         VeiculoDal veiculoDal = new VeiculoDal();
         PessoaDal pessoaDal = new PessoaDal();
@@ -155,12 +155,12 @@ public class LocacaoDal implements ICRUD_GENERIC {
     }
 
     @Override
-    public Object getByNome(String nome) throws Exception {
+    public LocacaoModel getByNome(String nome) throws Exception {
         return null;
     }
 
     @Override
-    public int addReturn(Object objeto) throws Exception {
+    public int addReturn(LocacaoModel objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
