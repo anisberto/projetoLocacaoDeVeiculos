@@ -1,9 +1,11 @@
 package br.com.pi.dal;
 
+
+import br.com.pi.bll.PessoaPJBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.PessoaModel;
-import br.com.pi.model.PessoaPFModel;
+
 import br.com.pi.model.PessoaPJModel;
 import br.com.pi.util.AdpterConexao;
 
@@ -40,9 +42,25 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             
         } catch (Exception e) {
             conexao.rollback();
-            System.out.println(e.getMessage());
+
         }
     }
+    public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
+        EnderecoDal enderecoBll = new EnderecoDal();
+        PessoaDal pessoaBll = new PessoaDal();
+        PessoaPJBll pessoaPJBll = new PessoaPJBll();
+        try {
+            conexao.setAutoCommit(false);
+            enderecoBll.update(endereco);
+            pessoaBll.update(pessoaModel);
+            pessoaPJBll.update(pessoa);
+            conexao.commit();
+
+        } catch (Exception e) {
+            conexao.rollback();
+        }
+    }
+
 
     @Override
     public void add(Object objeto) throws Exception {

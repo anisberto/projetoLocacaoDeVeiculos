@@ -27,6 +27,7 @@ public class ClienteView extends javax.swing.JFrame {
     PessoaPJModel pessoaPJModel;
     PessoaModel pessoamodel;
     int idg;
+    int idPessoa;
 
     boolean incluirEndereco = true;
     int idDeleteCliente;
@@ -175,6 +176,11 @@ public class ClienteView extends javax.swing.JFrame {
         btnClienteAlterar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnClienteAlterar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnClienteAlterar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClienteAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -358,10 +364,8 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel19.setText("Complemento");
 
-        jComboxEstado.setForeground(java.awt.Color.red);
         jComboxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
-        jLabel8.setForeground(java.awt.Color.red);
         jLabel8.setText("Número *");
 
         jLabel9.setText("ID");
@@ -580,6 +584,7 @@ public class ClienteView extends javax.swing.JFrame {
             limparEndereco();
             incluirEndereco = true;
             enderecoClienteEnableButtons(true);
+            btnClienteAlterar.setEnabled(true);
         } catch (Exception e) {
         }
 
@@ -587,6 +592,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
         try {
+            validaCampo();
             pessoamodel = new PessoaModel();
             pessoaPFModel = new PessoaPFModel();
             pessoaPJModel = new PessoaPJModel();
@@ -679,6 +685,12 @@ public class ClienteView extends javax.swing.JFrame {
         txtRazaoSocial.setText("");
     }
 
+    private void validaCampo() throws Exception {
+        if (txtClientesNumero.getText().isEmpty() == true) {
+            throw new Exception("Preencha o campo de numero");
+        }
+    }
+
     private void tabViewClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabViewClientesMouseClicked
         idg = Integer.parseInt(tabViewClientes.getValueAt(tabViewClientes.getSelectedRow(), 0).toString());
 
@@ -705,17 +717,18 @@ public class ClienteView extends javax.swing.JFrame {
 
             pessoaPFModel.setPessoa_pf_cpf(null);
             pessoaPJModel.setPessoa_pj_cnpj(null);
-           
 
             pessoaPFModel = (PessoaPFModel) pessoaPFBll.getById(idg);
 
             if (pessoaPFModel.getPessoa_pf_cpf() != null) {
+                idPessoa = pessoaPFModel.getPessoa_idem();
                 txtRgPessoa.setText(pessoaPFModel.getPessoa_pf_rg());
                 txtCpfPessoa.setText(pessoaPFModel.getPessoa_pf_cpf());
                 jComboBoxTipoPessoa.setSelectedItem("Pessoa Fisica");
 
             } else {
                 pessoaPJModel = (PessoaPJModel) pessoaPJBll.getById(idg);
+                idPessoa = pessoaPJModel.getPessoa_idem();
                 txtCnpj.setText(pessoaPJModel.getPessoa_pj_cnpj());
                 txtNomeFantasia.setText(pessoaPJModel.getPessoa_pj_nomeFantasia());
                 txtRazaoSocial.setText(pessoaPJModel.getPessoa_pj_razaoSocial());
@@ -728,6 +741,71 @@ public class ClienteView extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_tabViewClientesMouseClicked
+
+    private void btnClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteAlterarActionPerformed
+        try {
+            validaCampo();
+            pessoamodel = new PessoaModel();
+            pessoaPFModel = new PessoaPFModel();
+            pessoaPJModel = new PessoaPJModel();
+            endereco = new EnderecoModel();
+            if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
+                //Pegando dados de endereço
+                endereco.setEndereco_cep(txtClientesCep.getText());
+                endereco.setEndereco_cidade(txtCidade.getText());
+                endereco.setEndereco_bairro(txtClientesBairro.getText());
+                endereco.setEndereco_rua(txtClientesRua.getText());
+                endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
+                endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
+                endereco.setEndereco_complemento(txtClientesComplemento.getText());
+                endereco.setEndereco_iden(Integer.parseInt(txtId.getText()));
+                //Pegando dados de Pessoa
+                pessoamodel.setPessoa_idem(idg);
+                pessoamodel.setPessoa_nome(txtNomePessoa.getText());
+                pessoamodel.setPessoa_email(txtEmail.getText());
+                pessoamodel.setPessoa_telefone(txtTelefone.getText());
+                pessoamodel.setPessoa_endereco(endereco);
+
+                //Pegando dados de pessoaPF
+                pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText());
+                pessoaPFModel.setPessoa_pf_rg(txtRgPessoa.getText());
+                pessoaPFModel.setPessoa_pf_idem(idPessoa);               
+                pessoaPFModel.setPessoa(pessoamodel);
+                pessoaPFBll.updateAll(endereco,pessoamodel, pessoaPFModel);
+
+                limparCampos();
+                atualizarGrid();
+            } else {
+                endereco.setEndereco_cep(txtClientesCep.getText());
+                endereco.setEndereco_cidade(txtCidade.getText());
+                endereco.setEndereco_bairro(txtClientesBairro.getText());
+                endereco.setEndereco_rua(txtClientesRua.getText());
+                endereco.setEndereco_numero(Integer.parseInt(txtClientesNumero.getText()));
+                endereco.setEndereco_estado(jComboxEstado.getSelectedItem().toString());
+                endereco.setEndereco_complemento(txtClientesComplemento.getText());
+                endereco.setEndereco_iden(Integer.parseInt(txtId.getText()));
+                //Pegando dados de Pessoa
+                pessoamodel.setPessoa_idem(idg);
+                pessoamodel.setPessoa_nome(txtNomePessoa.getText());
+                pessoamodel.setPessoa_email(txtEmail.getText());
+                pessoamodel.setPessoa_telefone(txtTelefone.getText());
+                pessoamodel.setPessoa_endereco(endereco);
+                //Pegando dados de pessoaPJ
+                pessoaPJModel.setPessoa_pj_nomeFantasia(txtNomeFantasia.getText());
+                pessoaPJModel.setPessoa_pj_razaoSocial(txtRazaoSocial.getText());
+                pessoaPJModel.setPessoa_pj_cnpj(txtCnpj.getText());
+                pessoaPJModel.setPessoaModel(pessoaPJModel);
+                pessoaPJModel.setPessoa_pj_idem(idPessoa);
+                pessoaPJBll.update(endereco, pessoaPJModel);
+
+                limparCampos();
+                atualizarGrid();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnClienteAlterarActionPerformed
 
     private void atualizarGrid() throws Exception {
         DefaultTableModel model = (DefaultTableModel) tabViewClientes.getModel();

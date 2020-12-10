@@ -37,7 +37,7 @@ CREATE TABLE Endereco (
 
 CREATE TABLE modelo (
     modelo_idem SERIAL PRIMARY KEY,
-    modelo_descricao VARCHAR,
+    modelo_descricao VARCHAR UNIQUE,
     modelo_marca_idem INTEGER
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE veiculos (
 
 CREATE TABLE marca (
     marca_idem SERIAL PRIMARY KEY,
-    marca_descricao VARCHAR
+    marca_descricao VARCHAR UNIQUE
 );
 
 CREATE TABLE motorista (
@@ -67,11 +67,11 @@ CREATE TABLE motorista (
     motorista_dataDeValidade DATE,
     motorista_imagem bytea,
     motorista_numeroDoRegistro INTEGER,
-    motorista_cpf VARCHAR,
+    motorista_cpf VARCHAR UNIQUE,
     motorista_nome VARCHAR,
-    motorista_rg VARCHAR,
+    motorista_rg VARCHAR UNIQUE,
     motorista_telefone VARCHAR,
-    motorista_email VARCHAR,
+    motorista_email VARCHAR UNIQUE,
     motorista_endereco INTEGER
 );
 
@@ -102,6 +102,7 @@ CREATE TABLE multas (
 
 CREATE TABLE administrador (
     adm_idem SERIAL PRIMARY KEY,
+   adm_usuario VARCHAR UNIQUE,
     adm_nome VARCHAR,
     adm_senha VARCHAR
 );
@@ -178,8 +179,3 @@ ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
     FOREIGN KEY (reserva_veiculos_idem)
     REFERENCES veiculos (veiculo_idem)
     ON DELETE SET NULL;
- 
-
------- Alterações DB -----/
-
-alter table administrador add column adm_usuario varchar(50);

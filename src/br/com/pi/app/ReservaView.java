@@ -236,11 +236,11 @@ public class ReservaView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id Registro", "ID Cliente", "DT Reserva", "DT Expiração", "Disponibilidade", "Ano do Modelo"
+                "Id Registro", "DT Reserva", "DT Expiração", "Disponibilidade", "Ano do Modelo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -260,7 +260,6 @@ public class ReservaView extends javax.swing.JFrame {
             tableReserva.getColumnModel().getColumn(2).setResizable(false);
             tableReserva.getColumnModel().getColumn(3).setResizable(false);
             tableReserva.getColumnModel().getColumn(4).setResizable(false);
-            tableReserva.getColumnModel().getColumn(5).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);

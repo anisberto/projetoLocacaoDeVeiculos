@@ -106,7 +106,8 @@ public class EnderecoDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        PreparedStatement prep = conexao.prepareStatement("UPDATE endereco SET "
+        endereco = (EnderecoModel) objeto;
+        PreparedStatement prep = conexao.prepareStatement("UPDATE Endereco SET "
                 + "endereco_cep=?, endereco_cidade=?, "
                 + "endereco_bairro=?, endereco_rua=?, endereco_numero=?, "
                 + "endereco_complemento=?, endereco_estado=? "

@@ -3,6 +3,7 @@ package br.com.pi.bll;
 import br.com.pi.dal.PessoaPJDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
+import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPJModel;
 
 import java.util.InputMismatchException;
@@ -20,6 +21,13 @@ public class PessoaPJBll implements ICRUD_GENERIC {
         try {
             dal.addAll(endereco, pessoa);
         } catch (Exception e) {
+            throw e;
+        }
+    }
+    public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
+        try {
+            dal.updateAll(endereco, pessoaModel, pessoa);
+        }catch (Exception e){
             throw e;
         }
     }
@@ -191,6 +199,10 @@ public class PessoaPJBll implements ICRUD_GENERIC {
 
     @Override
     public int addReturn(Object objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void update(EnderecoModel endereco, PessoaPJModel pessoaPJModel) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

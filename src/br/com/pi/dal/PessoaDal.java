@@ -70,7 +70,9 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        String sql = "UPDATE Pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?,pessoa_endereco=?"
+        pessoaModel = (PessoaModel) objeto;
+        try {
+             String sql = "UPDATE Pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?, pessoa_endereco =?"
                 + " WHERE pessoa_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, pessoaModel.getPessoa_nome());
@@ -79,6 +81,9 @@ public class PessoaDal implements ICRUD_GENERIC {
         ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
         ps.setObject(5, pessoaModel.getPessoa_idem());
         ps.executeUpdate();
+        } catch (SQLException e) {
+           throw e;
+        }
 
     }
 
