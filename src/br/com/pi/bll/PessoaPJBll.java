@@ -31,6 +31,13 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             throw e;
         }
     }
+       public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
+              try {
+            dal.deleteAll(endereco, pessoapj, pessoa);
+        }catch (Exception e){
+            throw e;
+        }
+       }
 
     @Override
     public void add(Object objeto) throws Exception {
@@ -55,7 +62,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
-            validaPessoa((PessoaPJModel) objeto);
+           // validaPessoa((PessoaPJModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
             throw e;

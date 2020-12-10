@@ -19,11 +19,11 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         dal = new PessoaPFDal();
     }
 
-    public void updateAll(EnderecoModel endereco,PessoaModel pessoaModel, PessoaPFModel pessoa) throws Exception {
+    public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPFModel pessoa) throws Exception {
         try {
-            dal.updateAll(endereco,pessoaModel, pessoa);
+            dal.updateAll(endereco, pessoaModel, pessoa);
         } catch (Exception e) {
-             throw e;
+            throw e;
         }
     }
 
@@ -33,6 +33,13 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             dal.addAll(endereco, pessoa);
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    public void deleteAll(int endereco, int pessoapf, int pessoa) throws Exception {
+        try {
+            dal.deleteAll(endereco, pessoapf, pessoa);
+        } catch (Exception e) {
         }
     }
 
@@ -59,7 +66,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
-         //   validaPessoa((PessoaPFModel) objeto);
+            //   validaPessoa((PessoaPFModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
             System.out.println(e.getMessage());

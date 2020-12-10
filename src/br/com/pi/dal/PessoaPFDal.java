@@ -7,10 +7,7 @@ import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.util.AdpterConexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,6 +57,21 @@ public class PessoaPFDal implements ICRUD_GENERIC {
             conexao.rollback();
         }
     }
+    public void deleteAll(int endereco, int pessoapf, int pessoa) throws Exception {
+        EnderecoDal enderecoBll = new EnderecoDal();
+        PessoaDal pessoaBll = new PessoaDal();
+        PessoaPFBll pessoaPFBll = new PessoaPFBll();
+        try {
+            conexao.setAutoCommit(false);
+            enderecoBll.delete(endereco);
+            pessoaBll.delete(pessoa);
+            pessoaPFBll.delete(pessoapf);
+            conexao.commit();
+
+        } catch (Exception e) {
+            conexao.rollback();
+        }
+    }
 
     @Override
     public void add(Object objeto) throws Exception {
@@ -76,7 +88,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM pessoas_pf WHERE pf_idem=?";
+        String sql = "DELETE FROM pessoas_pf WHERE pf_pessoas_idem=?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, n);
         ps.executeUpdate();

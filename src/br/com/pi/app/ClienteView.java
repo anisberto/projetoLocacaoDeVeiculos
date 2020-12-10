@@ -37,7 +37,8 @@ public class ClienteView extends javax.swing.JFrame {
         initComponents();
         atualizarGrid();
         jComboBoxTipoPessoaActionPerformed(null);
-        enderecoEnableButtons(false);
+        btnClientesSalvar.setEnabled(true);
+   
 
         enderecoBll = new EnderecoBll();
         pessoaPFBll = new PessoaPFBll();
@@ -120,6 +121,11 @@ public class ClienteView extends javax.swing.JFrame {
         btnClienteDeletar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnClienteDeletar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnClienteDeletar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClienteDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteDeletarActionPerformed(evt);
+            }
+        });
 
         btnClienteIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
         btnClienteIncluir.setText("Incluir");
@@ -570,7 +576,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnClienteCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteCancelarActionPerformed
         try {
-            enderecoEnableButtons(false);
+        
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnClienteCancelarActionPerformed
@@ -580,13 +586,7 @@ public class ClienteView extends javax.swing.JFrame {
      * @param evt
      */
     private void btnClienteIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteIncluirActionPerformed
-        try {
-            limparEndereco();
-            incluirEndereco = true;
-            enderecoClienteEnableButtons(true);
-            btnClienteAlterar.setEnabled(true);
-        } catch (Exception e) {
-        }
+ 
 
     }//GEN-LAST:event_btnClienteIncluirActionPerformed
 
@@ -683,6 +683,8 @@ public class ClienteView extends javax.swing.JFrame {
         txtCnpj.setText("");
         txtNomeFantasia.setText("");
         txtRazaoSocial.setText("");
+        txtTelefone.setText("");
+        
     }
 
     private void validaCampo() throws Exception {
@@ -769,9 +771,9 @@ public class ClienteView extends javax.swing.JFrame {
                 //Pegando dados de pessoaPF
                 pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText());
                 pessoaPFModel.setPessoa_pf_rg(txtRgPessoa.getText());
-                pessoaPFModel.setPessoa_pf_idem(idPessoa);               
+                pessoaPFModel.setPessoa_pf_idem(idPessoa);
                 pessoaPFModel.setPessoa(pessoamodel);
-                pessoaPFBll.updateAll(endereco,pessoamodel, pessoaPFModel);
+                pessoaPFBll.updateAll(endereco, pessoamodel, pessoaPFModel);
 
                 limparCampos();
                 atualizarGrid();
@@ -794,9 +796,9 @@ public class ClienteView extends javax.swing.JFrame {
                 pessoaPJModel.setPessoa_pj_nomeFantasia(txtNomeFantasia.getText());
                 pessoaPJModel.setPessoa_pj_razaoSocial(txtRazaoSocial.getText());
                 pessoaPJModel.setPessoa_pj_cnpj(txtCnpj.getText());
-                pessoaPJModel.setPessoaModel(pessoaPJModel);
+                pessoaPJModel.setPessoaModel(pessoamodel);
                 pessoaPJModel.setPessoa_pj_idem(idPessoa);
-                pessoaPJBll.update(endereco, pessoaPJModel);
+                pessoaPJBll.updateAll(endereco, pessoamodel, pessoaPJModel);
 
                 limparCampos();
                 atualizarGrid();
@@ -806,6 +808,23 @@ public class ClienteView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
+
+    private void btnClienteDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteDeletarActionPerformed
+        try {
+            if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
+                pessoaPFBll.deleteAll(Integer.parseInt(txtId.getText()), idg, idg);
+                limparCampos();
+                atualizarGrid();
+            } else {
+                pessoaPJBll.deleteAll(Integer.parseInt(txtId.getText()), idg, idg);
+                limparCampos();
+                atualizarGrid();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnClienteDeletarActionPerformed
 
     private void atualizarGrid() throws Exception {
         DefaultTableModel model = (DefaultTableModel) tabViewClientes.getModel();
@@ -915,104 +934,5 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
-    private void enderecoClienteEnableButtons(boolean butt) {
-        if (butt) {
-            btnClienteIncluir.setEnabled(false);
-            btnClienteAlterar.setEnabled(false);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(false);
-            btnClientesSalvar.setEnabled(true);
 
-            txtCidade.setEnabled(true);
-            txtClientesBairro.setEnabled(true);
-            txtClientesCep.setEnabled(true);
-            txtClientesRua.setEnabled(true);
-            txtClientesNumero.setEnabled(true);
-            txtClientesComplemento.setEnabled(true);
-
-        } else {
-            btnClienteIncluir.setEnabled(true);
-            btnClienteAlterar.setEnabled(true);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(true);
-
-            txtCidade.setEnabled(false);
-            txtClientesBairro.setEnabled(false);
-            txtClientesCep.setEnabled(false);
-            txtClientesRua.setEnabled(false);
-            txtClientesNumero.setEnabled(false);
-            txtClientesComplemento.setEnabled(false);
-
-        }
-    }
-
-    private void enableBuEndereco(boolean butt) {
-        if (butt) {
-            btnClienteIncluir.setEnabled(false);
-            btnClienteAlterar.setEnabled(false);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(false);
-            btnClientesSalvar.setEnabled(true);
-
-            txtCidade.setEnabled(true);
-            txtClientesBairro.setEnabled(true);
-            txtClientesCep.setEnabled(true);
-            txtClientesRua.setEnabled(true);
-            txtClientesComplemento.setEnabled(true);
-            txtClientesNumero.setEnabled(true);
-            //txt.setEnabled(true);
-
-        } else {
-
-            btnClienteIncluir.setEnabled(true);
-            btnClienteAlterar.setEnabled(true);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(true);
-            btnClientesSalvar.setEnabled(false);
-
-            txtCidade.setEnabled(false);
-            txtClientesBairro.setEnabled(false);
-            txtClientesCep.setEnabled(false);
-            txtClientesRua.setEnabled(false);
-            txtClientesComplemento.setEnabled(false);
-            txtClientesNumero.setEnabled(false);
-            //txt.setEnabled(true);
-
-            //limparEndereco();
-        }
-    }
-
-    private void enderecoEnableButtons(boolean butt) {
-        if (butt) {
-            btnClienteIncluir.setEnabled(false);
-            btnClienteAlterar.setEnabled(false);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(false);
-            btnClientesSalvar.setEnabled(true);
-
-            txtCidade.setEnabled(true);
-            txtClientesBairro.setEnabled(true);
-            txtClientesCep.setEnabled(true);
-            txtClientesRua.setEnabled(true);
-            txtClientesComplemento.setEnabled(true);
-            txtClientesNumero.setEnabled(true);
-            //txt.setEnabled(true);
-
-        } else {
-            btnClienteIncluir.setEnabled(true);
-            btnClienteAlterar.setEnabled(true);
-            btnClienteCancelar.setEnabled(true);
-            btnClienteDeletar.setEnabled(true);
-
-            txtCidade.setEnabled(false);
-            txtClientesBairro.setEnabled(false);
-            txtClientesCep.setEnabled(false);
-            txtClientesRua.setEnabled(false);
-            txtClientesComplemento.setEnabled(false);
-            txtClientesNumero.setEnabled(false);
-            //txt.setEnabled(true);
-
-            limparEndereco();
-        }
-    }
 }
