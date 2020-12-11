@@ -69,14 +69,14 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
 
     @Override
     public int addReturn(VeiculoModel objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     public void validade(VeiculoModel veiculo) throws IllegalAccessException, Exception {
         Calendar cal = Calendar.getInstance();
         VeiculoModel veiculoTeste = veiculoDal.getByNome(veiculo.getVeiculo_renavam());
         int year = cal.get(Calendar.YEAR);
-        if(veiculoTeste != null){
+        if(veiculoTeste.getVeiculo_modelo() != null){
             throw new IllegalArgumentException("RENAVAM já cadastrado!");
         }
         if (Integer.parseInt(veiculo.getVeiculo_anoFabrica()) > year) {

@@ -703,13 +703,13 @@ public class VeiculoView extends javax.swing.JFrame {
             VeiculoModel newVeiculo = new VeiculoModel();
 
             newVeiculo.setVeiculo_modelo(modeloBll.getByNome(jcModelo.getSelectedItem().toString()));
-            newVeiculo.setVeiculo_precoVenda(Float.parseFloat(txtPrecoVenda.getText()));
-            newVeiculo.setVeiculo_precoCompra(Float.parseFloat(txtPrecoCompra.getText()));
+            newVeiculo.setVeiculo_precoVenda(Float.parseFloat(txtPrecoVenda.getText().replace(".", "").replace(",", "")));
+            newVeiculo.setVeiculo_precoCompra(Float.parseFloat(txtPrecoCompra.getText().replace(".", "").replace(",", "")));
             newVeiculo.setVeiculo_numeroDePassageiro(Integer.parseInt(txtNumeroPessoas.getText()));
             newVeiculo.setVeiculo_anoFabrica(txtAnoFabricacao.getText());
             newVeiculo.setVeiculo_anoModelo(txtAnoModelo.getText());
             newVeiculo.setVeiculo_renavam(txtRenavam.getText());
-            newVeiculo.setVeiculo_quilometragem(Float.parseFloat(txtQuilometragem.getText()));
+            newVeiculo.setVeiculo_quilometragem(Float.parseFloat(txtQuilometragem.getText().replace(".", "").replace(",", "")));
             newVeiculo.setVeiculo_tipoCombustivel(jcTipoCombustivel.getSelectedItem().toString());
             newVeiculo.setVeiculo_tipoVeiculo(jcTipoVeiculo.getSelectedItem().toString());
             newVeiculo.setVeiculo_situacaoVeiculo(jcSituacao.getSelectedItem().toString());
