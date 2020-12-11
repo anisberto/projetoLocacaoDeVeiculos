@@ -23,7 +23,17 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         try {
             dal.updateAll(endereco, pessoaModel, pessoa);
         } catch (Exception e) {
-            throw e;
+            String erro = e.getMessage();
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
+                erro = "Esse email ja existe no nosso cadastro de usuários!";
+            }
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_cpf_key\"")){
+                erro = "Esse CPF ja existe no nosso cadastro de usuários!";
+            }
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_rg_key\"")){
+                erro = "Esse RG ja existe no nosso cadastro de usuários!";
+            }
+           throw new Exception(erro);
         }
     }
 
@@ -32,7 +42,17 @@ public class PessoaPFBll implements ICRUD_GENERIC {
 
             dal.addAll(endereco, pessoa);
         } catch (Exception e) {
-            throw e;
+            String erro = e.getMessage();
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
+                erro = "Esse email ja existe no nosso cadastro de usuários!";
+            }
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_cpf_key\"")){
+                erro = "Esse CPF ja existe no nosso cadastro de usuários!";
+            }
+            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_rg_key\"")){
+                erro = "Esse RG ja existe no nosso cadastro de usuários!";
+            }
+            throw new Exception(erro);
         }
     }
 
@@ -40,6 +60,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         try {
             dal.deleteAll(endereco, pessoapf, pessoa);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -49,6 +70,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             validaPessoa((PessoaPFModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
+
             throw e;
         }
 
@@ -66,10 +88,10 @@ public class PessoaPFBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
-            //   validaPessoa((PessoaPFModel) objeto);
+            validaPessoa((PessoaPFModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw e;
         }
     }
 
@@ -116,7 +138,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
     }
 
     public void validaPessoa(PessoaPFModel objeto) throws Exception {
-        String nome = objeto.getPessoa_nome().trim().toLowerCase();
+        String nome = objeto.getPessoa().getPessoa_nome().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
             if (nome.contains("" + invalidos.charAt(i))) {
@@ -125,7 +147,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         }
 
         // Verifica se EMAIL é válido
-        if (isValidEmailAddressRegex(objeto.getPessoa_email()) == false) {
+        if (isValidEmailAddressRegex(objeto.getPessoa().getPessoa_email()) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
                     + "\nO EMAIL informado não é válido");
         }

@@ -229,9 +229,27 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel2.setText("CPF");
 
+        try {
+            txtCpfPessoa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel3.setText("CNPJ");
 
+        try {
+            txtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel4.setText("RG");
+
+        try {
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel5.setText("Telefone");
 
@@ -743,7 +761,6 @@ public class ClienteView extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_tabViewClientesMouseClicked
-
     private void btnClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteAlterarActionPerformed
         try {
             validaCampo();
@@ -798,6 +815,7 @@ public class ClienteView extends javax.swing.JFrame {
                 pessoaPJModel.setPessoa_pj_cnpj(txtCnpj.getText());
                 pessoaPJModel.setPessoaModel(pessoamodel);
                 pessoaPJModel.setPessoa_pj_idem(idPessoa);
+
                 pessoaPJBll.updateAll(endereco, pessoamodel, pessoaPJModel);
 
                 limparCampos();
@@ -806,6 +824,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
+
         }
     }//GEN-LAST:event_btnClienteAlterarActionPerformed
 

@@ -42,6 +42,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
         } catch (Exception e) {
             conexao.rollback();
+            throw e;
 
         }
     }
@@ -59,6 +60,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
         } catch (Exception e) {
             conexao.rollback();
+            throw e;
         }
     }
     
@@ -76,6 +78,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
         } catch (Exception e) {
             conexao.rollback();
+            throw e;
         }
     }
 
@@ -117,6 +120,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             ps.executeUpdate();
 
         } catch (Exception e) {
+            throw e;
 
         }
 
@@ -149,17 +153,17 @@ public class PessoaPJDal implements ICRUD_GENERIC {
     public Object getById(int n) throws Exception {
         pessoaPJModel = new PessoaPJModel();
         PessoaDal pessoaDal = new PessoaDal();
-        String sql = "SELECT * FROM pessoas_pj WHERE pj_pessoas_idem =" + n;
+        String sql = "SELECT * FROM pessoas_pj WHERE pj_pessoas_idem =?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        // preparedStatement.setObject(1, n);
+        preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {
             pessoaPJModel = new PessoaPJModel();
             pessoaPJModel.setPessoa_pj_idem(rs.getInt("pj_idem"));
             pessoaPJModel.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
             pessoaPJModel.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
-            pessoaPJModel.setPessoa_pj_razaoSocial("pj_razao_social");
+            pessoaPJModel.setPessoa_pj_razaoSocial(rs.getString("pj_razao_social"));
 
             pessoaPJModel.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 

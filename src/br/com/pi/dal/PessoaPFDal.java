@@ -1,5 +1,7 @@
 package br.com.pi.dal;
 
+import br.com.pi.bll.EnderecoBll;
+import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.PessoaPFBll;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
@@ -22,8 +24,8 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     }
 
     public void addAll(EnderecoModel endereco, PessoaPFModel pessoa) throws Exception {
-        EnderecoDal enderecoDal = new EnderecoDal();
-        PessoaDal pessoaDal = new PessoaDal();
+        EnderecoBll enderecoDal = new EnderecoBll();
+        PessoaBll pessoaDal = new PessoaBll();
         PessoaPFBll pessoaPFBll = new PessoaPFBll();
         try {
             conexao.setAutoCommit(false);
@@ -43,8 +45,8 @@ public class PessoaPFDal implements ICRUD_GENERIC {
     }
 
     public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPFModel pessoa) throws Exception {
-        EnderecoDal enderecoBll = new EnderecoDal();
-        PessoaDal pessoaBll = new PessoaDal();
+        EnderecoBll enderecoBll = new EnderecoBll();
+        PessoaBll pessoaBll = new PessoaBll();
         PessoaPFBll pessoaPFBll = new PessoaPFBll();
         try {
             conexao.setAutoCommit(false);
@@ -55,8 +57,10 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
         } catch (Exception e) {
             conexao.rollback();
+            throw e;
         }
     }
+
     public void deleteAll(int endereco, int pessoapf, int pessoa) throws Exception {
         EnderecoDal enderecoBll = new EnderecoDal();
         PessoaDal pessoaBll = new PessoaDal();
@@ -70,6 +74,7 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
         } catch (Exception e) {
             conexao.rollback();
+            throw e;
         }
     }
 
@@ -97,14 +102,18 @@ public class PessoaPFDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        pessoa = (PessoaPFModel) objeto;
-        String sql = "UPDATE pessoas_pf SET pf_cpf=?, pf_rg=? "
-                + "WHERE pf_pessoas_idem = ?";
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, pessoa.getPessoa_pf_cpf());
-        ps.setObject(2, pessoa.getPessoa_pf_rg());
-        ps.setObject(3, pessoa.getPessoa().getPessoa_idem());
-        ps.executeUpdate();
+        try {
+            pessoa = (PessoaPFModel) objeto;
+            String sql = "UPDATE pessoas_pf SET pf_cpf=?, pf_rg=? "
+                    + "WHERE pf_pessoas_idem = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setObject(1, pessoa.getPessoa_pf_cpf());
+            ps.setObject(2, pessoa.getPessoa_pf_rg());
+            ps.setObject(3, pessoa.getPessoa().getPessoa_idem());
+            ps.executeUpdate();
+        }catch (Exception e){
+            throw e;
+        }
 
     }
 

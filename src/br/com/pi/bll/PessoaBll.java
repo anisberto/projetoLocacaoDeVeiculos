@@ -51,6 +51,7 @@ public class PessoaBll implements ICRUD_GENERIC {
             validaPessoa((PessoaModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
+            throw e;
 
         }
 
