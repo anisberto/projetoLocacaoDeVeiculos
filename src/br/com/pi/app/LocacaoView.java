@@ -1341,10 +1341,10 @@ public class LocacaoView extends javax.swing.JFrame {
                 LocacaoModel locaVeiculo = new LocacaoModel();
 //                locaVeiculo.setLocacao_dataRetirada(new Date(txtDataRetirada.getText()));
 //                locaVeiculo.setLocacao_dataDevolucao(new Date(txtDataDevolucao.getText()));
-                locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguro.getText()));
-                locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicial.getText()));
-                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorLocacao.getText()));
-                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorCaucao.getText()));
+                locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguro.getText().replace(".", "").replace(",", "")));
+                locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicial.getText().replace(".", "").replace(",", "")));
+                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorLocacao.getText().replace(".", "").replace(",", "")));
+                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorCaucao.getText().replace(".", "").replace(",", "")));
 //                locaVeiculo.setLocacao_motorista((MotoristaModel) jcMotorista.getSelectedItem());
 //                locaVeiculo.setLocacao_veiculo((VeiculoModel) jcVeiculo.getSelectedItem());
 //                locaVeiculo.setLocacao_pessoa((PessoaModel) jcClienteFisica.getSelectedItem());
