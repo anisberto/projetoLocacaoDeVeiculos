@@ -1216,9 +1216,17 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Cliente", "Veiculo"
+                "Identificador", "Cliente", "Veiculo", "Data de Reserva", "Experação Reserva"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableReservas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableReservasMouseClicked(evt);
@@ -1362,7 +1370,7 @@ public class LocacaoView extends javax.swing.JFrame {
             try {
                 imprimirDadosNaGrid(incluirLocacao.getAll());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage(),"Worning",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -1555,7 +1563,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             transFerirReservas(reservabll.getAll());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage(),"Worning",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage() + "\nLocale: " + ex.getClass().getName(), "Worning", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCancelar2ActionPerformed
 
@@ -1848,12 +1856,15 @@ public class LocacaoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableReservas.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
-            String[] linha = new String[3];
+            String[] linha = new String[5];
             ReservaModel objVeiculo = (ReservaModel) conjunto.next();
             linha[0] = objVeiculo.getReserva_idem() + "";
             linha[1] = objVeiculo.getReserva_cliente().getPessoa_nome() + "";
-            linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
-            
+//            linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
+            linha[2] = "Fusquinha";
+            linha[3] = formatDateStruct(objVeiculo.getReserva_dataReserva());
+            linha[4] = formatDateStruct(objVeiculo.getReserva_dataExpiracao());
+
             model.addRow(linha);
         }
     }
@@ -1873,4 +1884,8 @@ public class LocacaoView extends javax.swing.JFrame {
         }
     }
 
+    public String formatDateStruct(String oldDate) {
+        String[] newForm = oldDate.split("-");
+        return newForm[2] + "/" + newForm[1] + "/" + newForm[0];
+    }
 }
