@@ -26,8 +26,8 @@ public class PessoaPJDal implements ICRUD_GENERIC {
     public PessoaPJDal() throws Exception {
         conexao = new AdpterConexao().getConnectionAdapter();
     }
-    
-    public void addAll(EnderecoModel endereco, PessoaPJModel pessoa) throws Exception{
+
+    public void addAll(EnderecoModel endereco, PessoaPJModel pessoa) throws Exception {
         EnderecoDal enderecoDal = new EnderecoDal();
         PessoaDal pessoaDal = new PessoaDal();
         try {
@@ -38,13 +38,14 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             pessoa.setPessoa_idem(idPessoa);
             add(pessoa);
             conexao.commit();
-            
-            
+
+
         } catch (Exception e) {
             conexao.rollback();
 
         }
     }
+
     public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
         EnderecoDal enderecoBll = new EnderecoDal();
         PessoaDal pessoaBll = new PessoaDal();
@@ -54,6 +55,23 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             enderecoBll.update(endereco);
             pessoaBll.update(pessoaModel);
             pessoaPJBll.update(pessoa);
+            conexao.commit();
+
+        } catch (Exception e) {
+            conexao.rollback();
+        }
+    }
+    
+        public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
+        EnderecoDal enderecoBll = new EnderecoDal();
+        PessoaDal pessoaBll = new PessoaDal();
+        PessoaPJBll pessoaPJBll = new PessoaPJBll();
+        try {
+            conexao.setAutoCommit(false);
+            enderecoBll.delete(endereco);
+            pessoaBll.delete(pessoa);
+            pessoaPJBll.delete(pessoapj);
+           
             conexao.commit();
 
         } catch (Exception e) {
@@ -78,7 +96,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM pessoas_pj WHERE pj_idem =?";
+        String sql = "DELETE FROM pessoas_pj WHERE pj_pessoas_idem=?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1, n);
         ps.executeUpdate();
@@ -87,16 +105,20 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
     @Override
     public void update(Object objeto) throws Exception {
-        pessoaPJModel = (PessoaPJModel) objeto;
-        String sql = "UPDATE pessoas_pj SET pj_cnpj=?,pj_nome_fantasia=?,pj_razao_social=?,pj_pessoas_idem=?"
-                + "WHERE  pj_idem =?";
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, pessoaPJModel.getPessoa_pj_cnpj());
-        ps.setObject(2, pessoaPJModel.getPessoa_pj_nomeFantasia());
-        ps.setObject(3, pessoaPJModel.getPessoa_pj_razaoSocial());
-        ps.setObject(4, pessoaPJModel.getPessoa().getPessoa_idem());
-        ps.setObject(5, pessoaPJModel.getPessoa_pj_idem());
-        ps.executeUpdate();
+        try {
+            pessoaPJModel = (PessoaPJModel) objeto;
+            String sql = "UPDATE pessoas_pj SET pj_cnpj=?,pj_nome_fantasia=?,pj_razao_social=?"
+                    + " WHERE  pj_pessoas_idem=?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setObject(1, pessoaPJModel.getPessoa_pj_cnpj());
+            ps.setObject(2, pessoaPJModel.getPessoa_pj_nomeFantasia());
+            ps.setObject(3, pessoaPJModel.getPessoa_pj_razaoSocial());
+            ps.setObject(4, pessoaPJModel.getPessoa().getPessoa_idem());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
 
     }
 
@@ -106,7 +128,8 @@ public class PessoaPJDal implements ICRUD_GENERIC {
         PessoaDal pessoaDal = new PessoaDal();
         List<PessoaPJModel> list = new ArrayList<>();
 
-        Statement st = conexao.createStatement();;
+        Statement st = conexao.createStatement();
+        ;
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
@@ -124,12 +147,12 @@ public class PessoaPJDal implements ICRUD_GENERIC {
 
     @Override
     public Object getById(int n) throws Exception {
-          pessoaPJModel = new PessoaPJModel();
-         PessoaDal pessoaDal = new PessoaDal();
-        String sql = "SELECT * FROM pessoas_pj WHERE pj_pessoas_idem ="+n;
-       
+        pessoaPJModel = new PessoaPJModel();
+        PessoaDal pessoaDal = new PessoaDal();
+        String sql = "SELECT * FROM pessoas_pj WHERE pj_pessoas_idem =" + n;
+
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-       // preparedStatement.setObject(1, n);
+        // preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {
             pessoaPJModel = new PessoaPJModel();
@@ -137,7 +160,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             pessoaPJModel.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
             pessoaPJModel.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
             pessoaPJModel.setPessoa_pj_razaoSocial("pj_razao_social");
-            
+
             pessoaPJModel.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 
         }
@@ -180,7 +203,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
                 throw new SQLException("Falhar ao inserir cliente do banco.");
             }
 
-            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getInt(1);
                 } else {
