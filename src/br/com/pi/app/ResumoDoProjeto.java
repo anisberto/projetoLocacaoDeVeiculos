@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.pi.app;
 
-/**
- *
- * @author Anisb
- */
+
 public class ResumoDoProjeto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ResumoDoProjeto
-     */
+   String nomeUsuarioLogado;
     public ResumoDoProjeto() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
@@ -95,7 +86,8 @@ public class ResumoDoProjeto extends javax.swing.JFrame {
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
-            dispose();
+            menu.transferirDados(nomeUsuarioLogado);
+            this.dispose();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
