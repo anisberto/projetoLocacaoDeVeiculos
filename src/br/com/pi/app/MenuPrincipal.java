@@ -280,6 +280,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             ResumoDoProjeto resumo = new ResumoDoProjeto();
             resumo.setVisible(true);
+            resumo.nomeUsuarioLogado = blzNome.getText();
             dispose();
         } catch (Exception e) {
         }
