@@ -16,6 +16,7 @@ public class VeiculoView extends javax.swing.JFrame {
     VeiculoBll veiculoInclud;
     ModeloBll modeloBll;
     int idDelete;
+    String nomeUsuarioLogado;
     boolean incluir = true;
 
     public VeiculoView() throws Exception {
@@ -691,8 +692,9 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-            MenuPrincipal menuPrincipal = new MenuPrincipal();
-            menuPrincipal.setVisible(true);
+           MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
+            menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
         } catch (Exception e) {
         }
@@ -768,6 +770,7 @@ public class VeiculoView extends javax.swing.JFrame {
         try {
             ModeloView modeloNew = new ModeloView();
             modeloNew.setVisible(true);
+            modeloNew.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }
@@ -807,6 +810,7 @@ public class VeiculoView extends javax.swing.JFrame {
         try {
             MarcaView marcaNew = new MarcaView();
             marcaNew.setVisible(true);
+            marcaNew.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }

@@ -29,6 +29,7 @@ public class LocacaoView extends javax.swing.JFrame {
     MotoristaBll motoristas;
     PessoaPFBll pf;
     PessoaPJBll pj;
+    String nomeUsuarioLogado;
     boolean incluir = true;
 
     public LocacaoView() throws Exception {
@@ -139,8 +140,6 @@ public class LocacaoView extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txtValorSeguroReserva = new javax.swing.JFormattedTextField();
         jcMotoristaReserva = new javax.swing.JComboBox<>();
-        btnNovoMotoristaReserva = new javax.swing.JButton();
-        btnNovoVeiculoReserva = new javax.swing.JButton();
         txtRenavamReserva = new javax.swing.JFormattedTextField();
         jLabel25 = new javax.swing.JLabel();
         txtVeiculoReserva = new javax.swing.JFormattedTextField();
@@ -1066,20 +1065,6 @@ public class LocacaoView extends javax.swing.JFrame {
             }
         });
 
-        btnNovoMotoristaReserva.setText("+");
-        btnNovoMotoristaReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoMotoristaReservaActionPerformed(evt);
-            }
-        });
-
-        btnNovoVeiculoReserva.setText("+");
-        btnNovoVeiculoReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoVeiculoReservaActionPerformed(evt);
-            }
-        });
-
         txtRenavamReserva.setEnabled(false);
 
         jLabel25.setText("Valor Caução");
@@ -1133,13 +1118,11 @@ public class LocacaoView extends javax.swing.JFrame {
                                 .addComponent(txtValorCaucaoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jcMotoristaReserva, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNovoMotoristaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
+                .addGap(84, 84, 84)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel28)
@@ -1150,8 +1133,6 @@ public class LocacaoView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtValorSeguroReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addComponent(btnNovoVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel23)
                         .addGap(18, 18, 18)
                         .addComponent(txtRenavamReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1182,14 +1163,12 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addComponent(jLabel28))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovoMotoristaReserva)
                     .addComponent(jcMotoristaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovoVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtRenavamReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23)
                     .addComponent(txtVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
@@ -1230,7 +1209,7 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1286,6 +1265,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
 
+
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
@@ -1309,6 +1289,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
+            menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
         } catch (Exception e) {
         }
@@ -1394,6 +1375,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             ClienteView cliente = new ClienteView();
             cliente.setVisible(true);
+            cliente.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }
@@ -1403,6 +1385,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             MotoristaView motorista = new MotoristaView();
             motorista.setVisible(true);
+            motorista.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }
@@ -1412,6 +1395,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             VeiculoView veiculo = new VeiculoView();
             veiculo.setVisible(true);
+            veiculo.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }
@@ -1556,14 +1540,6 @@ public class LocacaoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcMotoristaReservaActionPerformed
 
-    private void btnNovoMotoristaReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoMotoristaReservaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNovoMotoristaReservaActionPerformed
-
-    private void btnNovoVeiculoReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoVeiculoReservaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNovoVeiculoReservaActionPerformed
-
     private void jTableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableReservasMouseClicked
         try {
             transFerirDadosReserva();
@@ -1583,6 +1559,7 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             ReservaView reservaTela = new ReservaView();
             reservaTela.setVisible(true);
+            reservaTela.nomeUsuarioLogado = this.nomeUsuarioLogado;
             dispose();
         } catch (Exception e) {
         }
@@ -1636,9 +1613,7 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JButton btnIncluirReserva;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JButton btnNovoMotorista;
-    private javax.swing.JButton btnNovoMotoristaReserva;
     private javax.swing.JButton btnNovoVeiculo;
-    private javax.swing.JButton btnNovoVeiculoReserva;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvarReserva;
     private javax.swing.JButton btnVoltar;
@@ -1873,9 +1848,6 @@ public class LocacaoView extends javax.swing.JFrame {
             txtKMInicialReserva.setEnabled(true);
             jcMotoristaReserva.setEnabled(true);
 
-            btnNovoMotoristaReserva.setEnabled(false);
-            btnNovoVeiculoReserva.setEnabled(false);
-
             txtCodigoReserva.setText("");
             txtDataRetiradaReserva.setText("");
             txtDataDevolucaoReserva.setText("");
@@ -1899,8 +1871,6 @@ public class LocacaoView extends javax.swing.JFrame {
             txtValorCaucaoReserva.setEnabled(false);
             txtValorSeguroReserva.setEnabled(false);
             jcMotoristaReserva.setEnabled(false);
-            btnNovoMotoristaReserva.setEnabled(true);
-            btnNovoVeiculoReserva.setEnabled(true);
 
             txtCodigoReserva.setText("");
             txtDataRetiradaReserva.setText("");

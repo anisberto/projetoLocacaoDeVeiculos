@@ -15,6 +15,7 @@ public class MarcaView extends javax.swing.JFrame {
     
     boolean incluir = true;
     ICRUD_GENERIC<MarcaModel> incluirMarca;
+    String nomeUsuarioLogado;
     int idDelete;
     
     public MarcaView() throws Exception {
@@ -322,6 +323,7 @@ public class MarcaView extends javax.swing.JFrame {
         try {
             VeiculoView menu = new VeiculoView();
             menu.setVisible(true);
+            menu.nomeUsuarioLogado = this.nomeUsuarioLogado;
             this.dispose();
         } catch (Exception e) {
         }

@@ -18,6 +18,7 @@ public class ModeloView extends javax.swing.JFrame {
     
     boolean incluir = true;
     ICRUD_GENERIC<ModeloModel> incluirModelo;
+    String nomeUsuarioLogado;
     int idDelete;
     private MarcaBll marca_bll = new MarcaBll();
     ICRUD_GENERIC<MarcaModel> marca;
@@ -335,6 +336,7 @@ public class ModeloView extends javax.swing.JFrame {
         try {
             VeiculoView menu = new VeiculoView();
             menu.setVisible(true);
+            menu.nomeUsuarioLogado = this.nomeUsuarioLogado;
             this.dispose();
         } catch (Exception e) {
         }
