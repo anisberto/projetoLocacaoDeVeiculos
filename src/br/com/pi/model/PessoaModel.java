@@ -49,11 +49,6 @@ public class PessoaModel {
 
     @Override
     public String toString() {
-        return "PessoaModel{" +
-                "pessoa_idem=" + pessoa_idem +
-                ", pessoa_nome='" + pessoa_nome + '\'' +
-                ", pessoa_telefone='" + pessoa_telefone + '\'' +
-                ", pessoa_email='" + pessoa_email + '\'' +
-                '}';
+        return pessoa_nome;
     }
 }
