@@ -14,6 +14,7 @@ import br.com.pi.model.PessoaPFModel;
 import br.com.pi.model.PessoaPJModel;
 import br.com.pi.model.ReservaModel;
 import br.com.pi.model.VeiculoModel;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -1332,26 +1333,40 @@ public class LocacaoView extends javax.swing.JFrame {
                 LocacaoModel locaVeiculo = new LocacaoModel();
 //                locaVeiculo.setLocacao_dataRetirada(new Date(txtDataRetirada.getText()));
 //                locaVeiculo.setLocacao_dataDevolucao(new Date(txtDataDevolucao.getText()));
-                locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguro.getText().replace(".", "").replace(",", "")));
-                locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicial.getText().replace(".", "").replace(",", "")));
-                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorLocacao.getText().replace(".", "").replace(",", "")));
-                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorCaucao.getText().replace(".", "").replace(",", "")));
+//                locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguro.getText().replace(".", "").replace(",", "")));
+//                locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicial.getText().replace(".", "").replace(",", "")));
+//                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorLocacao.getText().replace(".", "").replace(",", "")));
+//                locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorCaucao.getText().replace(".", "").replace(",", "")));
 //                locaVeiculo.setLocacao_motorista((MotoristaModel) jcMotorista.getSelectedItem());
 //                locaVeiculo.setLocacao_veiculo((VeiculoModel) jcVeiculo.getSelectedItem());
-//                locaVeiculo.setLocacao_pessoa((PessoaModel) jcClienteFisica.getSelectedItem());
-                System.out.println(locaVeiculo);
+                if (jrFisica.isSelected()) {
+                    locaVeiculo.setLocacao_pessoa((PessoaModel) jcClienteFisica.getSelectedItem());
+                    System.out.println("Fisica");
+                    System.out.println(locaVeiculo);
+                } else if (jrJuridica.isSelected()) {
+                    locaVeiculo.setLocacao_pessoa((PessoaModel) jcClienteJuridica.getSelectedItem());
+                    System.out.println("Juridica");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Defina o Cliente!", "Cliente", JOptionPane.ERROR_MESSAGE);
+                }
+//                System.out.println(locaVeiculo);
                 if (incluir) {
                     incluirLocacao.add(locaVeiculo);
                 } else {
 
                 }
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Preencha as datas corretamente: " + e.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Element Error: " + ex.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
         } finally {
             enableButtFields(false);
             enableFielsCrud(false);
             try {
-                imprimirDadosNaGrid(incluirLocacao.getAll());
+//                imprimirDadosNaGrid(incluirLocacao.getAll());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
             }
@@ -1757,7 +1772,7 @@ public class LocacaoView extends javax.swing.JFrame {
             jcClienteFisica.removeAllItems();
             Iterator<PessoaPFModel> pfisica = pf.getAll();
             while (pfisica.hasNext()) {
-                jcClienteFisica.addItem(pfisica.next().getPessoa().getPessoa_nome());
+                jcClienteFisica.addItem(pfisica.next().getPessoa());
             }
 
         } catch (Exception e) {
@@ -1930,17 +1945,23 @@ public class LocacaoView extends javax.swing.JFrame {
     private void transFerirReservas(Iterator conjunto) throws Exception {
         DefaultTableModel model = (DefaultTableModel) jTableReservas.getModel();
         model.setNumRows(0);
+        boolean verif = false;
         while (conjunto.hasNext()) {
             String[] linha = new String[5];
             ReservaModel objVeiculo = (ReservaModel) conjunto.next();
-            linha[0] = objVeiculo.getReserva_idem() + "";
-            linha[1] = objVeiculo.getReserva_cliente().getPessoa_nome() + "";
-//            linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
-            linha[2] = "Fusquinha";
-            linha[3] = formatDateStruct(objVeiculo.getReserva_dataReserva());
-            linha[4] = formatDateStruct(objVeiculo.getReserva_dataExpiracao());
 
-            model.addRow(linha);
+            String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(new Date().getTime());
+            String datVerificar = formatDateStruct(objVeiculo.getReserva_dataExpiracao());
+            verif = verificarValidade(dataAtual, datVerificar);
+
+            if (!verif) {
+                linha[0] = objVeiculo.getReserva_idem() + "";
+                linha[1] = objVeiculo.getReserva_cliente().getPessoa_nome() + "";
+//                linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
+                linha[3] = formatDateStruct(objVeiculo.getReserva_dataReserva());
+                linha[4] = formatDateStruct(objVeiculo.getReserva_dataExpiracao());
+                model.addRow(linha);
+            }
         }
     }
 
@@ -1970,5 +1991,33 @@ public class LocacaoView extends javax.swing.JFrame {
         txtClienteReserva.setText(reserv.getReserva_cliente().getPessoa_nome());
         txtVeiculoReserva.setText(reserv.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao());
         txtRenavamReserva.setText(reserv.getReserva_veiculo().getVeiculo_renavam());
+    }
+
+    public boolean verificarValidade(String dataAtual, String dataVerificar) {
+        String AtualVerificar[] = dataAtual.split("/");
+        String DataVerificar[] = dataVerificar.split("/");
+
+        int diaAtual = Integer.parseInt(AtualVerificar[0]);
+        int diaVerificar = Integer.parseInt(DataVerificar[0]);
+
+        int mesAtual = Integer.parseInt(AtualVerificar[1]);
+        int mesVerificar = Integer.parseInt(DataVerificar[1]);
+
+        int anoAtual = Integer.parseInt(AtualVerificar[2]);
+        int anoAVerificar = Integer.parseInt(DataVerificar[2]);
+
+        if (mesVerificar <= mesAtual) {
+            if (anoAVerificar <= anoAtual) {
+                if (diaVerificar <= diaAtual) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
