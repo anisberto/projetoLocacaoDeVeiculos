@@ -60,11 +60,7 @@ public class ConexaoPostRead implements ConnectionObservable, AdapterConexaoInte
             } catch (Exception errorConectCreate) {
                 isConnected = false;
                 notifyObservers();
-                try {
-                    throw new Exception("Erro ao conectar no banco de dados! 22655" + errorConectCreate.getMessage());
-                } catch (Exception ex) {
-                    Logger.getLogger(ConexaoPostRead.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                throw new IllegalArgumentException("Erro ao conectar-se ao banco de dados");
             }
         }
         return conect;

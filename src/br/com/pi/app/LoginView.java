@@ -13,13 +13,20 @@ import javax.swing.JOptionPane;
 public class LoginView extends javax.swing.JFrame implements ConnectionObserver {
 
     ICRUD_GENERIC<AdministradorModel> userValid;
-   private ConexaoPostRead conection = ConexaoPostRead.getInstance();
-    boolean isConnected;
+    private ConexaoPostRead conection = ConexaoPostRead.getInstance();
+    boolean isConnected = true;
 
-    public LoginView() throws Exception {
+    public LoginView() {
         initComponents();
-        conection.addConnectionObserver(this);
-        userValid = new AdministradorBll();
+        try {
+            conection.addConnectionObserver(this);
+            userValid = new AdministradorBll();
+            onConnectionChange(isConnected);
+        } catch (Exception ex) {
+            isConnected = false;
+            onConnectionChange(isConnected);
+            JOptionPane.showMessageDialog(null, "Erro na Conexão!", "Erro ao conectar no Banco", JOptionPane.ERROR_MESSAGE);
+        }
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
     }
 
@@ -39,7 +46,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
         lblDescriptionStatusImg = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jmCadastro = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -133,9 +140,8 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
                                 .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
-                                .addComponent(jLabel1)
-                                .addGap(39, 39, 39)))))
-                .addContainerGap(55, Short.MAX_VALUE))
+                                .addComponent(jLabel1)))))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,13 +169,13 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
 
         jMenu1.setText("Gerir Usuarios");
 
-        jMenuItem1.setText("Cadastrar Novo Usuario");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmCadastro.setText("Cadastrar Novo Usuario");
+        jmCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmCadastroActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jmCadastro);
 
         jMenuBar1.add(jMenu1);
 
@@ -241,7 +247,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCadastroActionPerformed
         try {
             String user = JOptionPane.showInputDialog(null, "Login Master", "Acesso Restrito", JOptionPane.INFORMATION_MESSAGE);
             if (user.equalsIgnoreCase("Master")) {
@@ -253,7 +259,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmCadastroActionPerformed
 
     private void txtSenhaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtSenhaPropertyChange
         // TODO add your handling code here:
@@ -306,7 +312,9 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
             public void run() {
                 try {
                     new LoginView().setVisible(true);
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(null, "Erro na Conexão!", "Erro ao conectar no Banco", JOptionPane.ERROR_MESSAGE);
+                }catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro na Conexão!", "Erro ao conectar no Banco", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -321,8 +329,8 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem jmCadastro;
     private javax.swing.JLabel lblDescriptionStatus;
     private javax.swing.JLabel lblDescriptionStatusImg;
     private javax.swing.JPasswordField txtSenha;
@@ -366,6 +374,10 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
         } else {
             lblDescriptionStatus.setForeground(Color.RED);
             lblDescriptionStatusImg.setIcon(new ImageIcon("src/br/com/pi/icons/Bd_Off.png"));
+            jmCadastro.setEnabled(false);
+            txtSenha.setEnabled(false);
+            txtUsuario.setEnabled(false);
+            btnEntrar.setEnabled(false);
         }
     }
 }
