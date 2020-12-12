@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class ReservaView extends javax.swing.JFrame {
 
     boolean incluir = true;
+    String nomeUsuarioLogado;
     ICRUD_GENERIC<ReservaModel> incluirReserva;
     int IdDeleteReserva;
 
@@ -561,6 +562,7 @@ public class ReservaView extends javax.swing.JFrame {
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
+            menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
         } catch (Exception e) {
         }

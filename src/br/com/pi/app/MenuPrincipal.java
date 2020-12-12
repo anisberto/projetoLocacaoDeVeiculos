@@ -219,6 +219,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             LocacaoView locacao = new LocacaoView();
             locacao.setVisible(true);
+            locacao.nomeUsuarioLogado = blzNome.getText();
             dispose();
         } catch (Exception e) {
         }
@@ -228,6 +229,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             VeiculoView veiculo = new VeiculoView();
             veiculo.setVisible(true);
+            veiculo.nomeUsuarioLogado = blzNome.getText();
             dispose();
         } catch (Exception e) {
         }
@@ -237,6 +239,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             ClienteView cliente = new ClienteView();
             cliente.setVisible(true);
+            cliente.nomeUsuarioLogado = blzNome.getText();
             dispose();
         } catch (Exception e) {
         }
@@ -246,6 +249,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             MotoristaView motorista = new MotoristaView();
             motorista.setVisible(true);
+            motorista.nomeUsuarioLogado = blzNome.getText();
             dispose();
         } catch (Exception e) {
         }
@@ -255,6 +259,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
            ReservaView reserva = new ReservaView();
            reserva.setVisible(true);
+           reserva.nomeUsuarioLogado = blzNome.getText();
            dispose();
         } catch (Exception e) {
         }

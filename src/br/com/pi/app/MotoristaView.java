@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class MotoristaView extends javax.swing.JFrame {
     
     BufferedImage imagem;
+    String nomeUsuarioLogado;
     EnderecoBll endBll = new EnderecoBll();
     EnderecoModel endereco = new EnderecoModel();
     EnderecoInterface novoEnderecoInter = null;
@@ -619,6 +620,7 @@ public class MotoristaView extends javax.swing.JFrame {
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
+            menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
         } catch (Exception e) {
 

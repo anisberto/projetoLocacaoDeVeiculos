@@ -26,6 +26,7 @@ public class ClienteView extends javax.swing.JFrame {
     PessoaPFModel pessoaPFModel;
     PessoaPJModel pessoaPJModel;
     PessoaModel pessoamodel;
+    String nomeUsuarioLogado;
     int idg;
     int idPessoa;
 
@@ -587,6 +588,7 @@ public class ClienteView extends javax.swing.JFrame {
         try {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
+            menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
         } catch (Exception e) {
         }
