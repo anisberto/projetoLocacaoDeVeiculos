@@ -158,6 +158,8 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         if (objeto.getPessoa_pf_rg().equals("")) {
             throw new Exception("Informe o RG do usuario");
         }
+   
+        
         //valida CPF
         if (isValidCPF(objeto.getPessoa_pf_cpf().replace(".", "").replace("-", "")) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"

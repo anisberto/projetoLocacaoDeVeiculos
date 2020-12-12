@@ -5,10 +5,16 @@ import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.PessoaPFBll;
 import br.com.pi.bll.PessoaPJBll;
 import br.com.pi.dal.PessoaPFDal;
+import br.com.pi.design_patterns.template.OrdenaNome;
+import br.com.pi.design_patterns.template.OrdenaEmail;
+import br.com.pi.design_patterns.template.OrdenaTelefone;
+import br.com.pi.design_patterns.template.PessoaOrdena;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
 import br.com.pi.model.PessoaPJModel;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -39,7 +45,6 @@ public class ClienteView extends javax.swing.JFrame {
         atualizarGrid();
         jComboBoxTipoPessoaActionPerformed(null);
         btnClientesSalvar.setEnabled(true);
-   
 
         enderecoBll = new EnderecoBll();
         pessoaPFBll = new PessoaPFBll();
@@ -108,8 +113,8 @@ public class ClienteView extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableUsuarios2 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jTextFieldPesquisa = new javax.swing.JTextField();
+        jComboBoxPesquisa = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cliente");
@@ -235,6 +240,11 @@ public class ClienteView extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCpfPessoa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpfPessoaKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("CNPJ");
 
@@ -243,14 +253,30 @@ public class ClienteView extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCnpj.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCnpjKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("RG");
+
+        txtRgPessoa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRgPessoaKeyTyped(evt);
+            }
+        });
 
         try {
             txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefoneKeyTyped(evt);
+            }
+        });
 
         jLabel5.setText("Telefone");
 
@@ -387,11 +413,28 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel18.setText("CEP");
 
+        try {
+            txtClientesCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtClientesCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClientesCepKeyTyped(evt);
+            }
+        });
+
         jLabel19.setText("Complemento");
 
         jComboxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel8.setText("Número *");
+
+        txtClientesNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClientesNumeroKeyTyped(evt);
+            }
+        });
 
         jLabel9.setText("ID");
 
@@ -498,7 +541,7 @@ public class ClienteView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Nome", "CPF/CNPJ", "Telefone", "E-mail"
+                "Identificador", "Nome", "Telefone", "E-mail"
             }
         ));
         jScrollPane3.setViewportView(jTableUsuarios2);
@@ -519,7 +562,12 @@ public class ClienteView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome Cliente", "Nome Motorista", "CPF Cliente", "CPF Motorista" }));
+        jComboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome", "Telefone", "Email" }));
+        jComboBoxPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPesquisaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -527,9 +575,9 @@ public class ClienteView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox4, 0, 378, Short.MAX_VALUE)
+                .addComponent(jComboBoxPesquisa, 0, 378, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
@@ -542,8 +590,8 @@ public class ClienteView extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(629, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
@@ -593,20 +641,13 @@ public class ClienteView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnClienteVoltarActionPerformed
-
-    private void btnClienteCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteCancelarActionPerformed
-        try {
-        
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnClienteCancelarActionPerformed
     /**
      * Botão incluir um novo dado no banco de dados e ativa o botão SALVAR
      *
      * @param evt
      */
     private void btnClienteIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteIncluirActionPerformed
- 
+
 
     }//GEN-LAST:event_btnClienteIncluirActionPerformed
 
@@ -704,7 +745,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtNomeFantasia.setText("");
         txtRazaoSocial.setText("");
         txtTelefone.setText("");
-        
+
     }
 
     private void validaCampo() throws Exception {
@@ -847,6 +888,92 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnClienteDeletarActionPerformed
 
+    private void txtCpfPessoaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfPessoaKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCpfPessoaKeyTyped
+
+    private void txtRgPessoaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRgPessoaKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRgPessoaKeyTyped
+
+    private void txtTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefoneKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }    }//GEN-LAST:event_txtTelefoneKeyTyped
+
+    private void txtCnpjKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCnpjKeyTyped
+        String caracteres = "0987654321.";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }    }//GEN-LAST:event_txtCnpjKeyTyped
+
+    private void txtClientesNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClientesNumeroKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtClientesNumeroKeyTyped
+
+    private void txtClientesCepKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClientesCepKeyTyped
+        String caracteres = "0987654321.";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }    }//GEN-LAST:event_txtClientesCepKeyTyped
+
+    private void btnClienteCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteCancelarActionPerformed
+        try {
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnClienteCancelarActionPerformed
+
+    private void jComboBoxPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPesquisaActionPerformed
+        OrdenaNome nome;
+        OrdenaEmail email;
+        OrdenaTelefone telefone;
+
+        try {
+            if (jComboBoxPesquisa.getSelectedItem().toString().contains("Nome")) {
+                nome = new OrdenaNome();
+                imprimirNaGrid(nome.getAllPesquisa());
+
+            }
+            if (jComboBoxPesquisa.getSelectedItem().toString().contains("Email")) {
+                email = new OrdenaEmail();
+                imprimirNaGrid(email.getAllPesquisa());
+
+            }
+            if (jComboBoxPesquisa.getSelectedItem().toString().contains("Telefone")) {
+                telefone = new OrdenaTelefone();
+                imprimirNaGrid(telefone.getAllPesquisa());
+
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }//GEN-LAST:event_jComboBoxPesquisaActionPerformed
+
     private void atualizarGrid() throws Exception {
         DefaultTableModel model = (DefaultTableModel) tabViewClientes.getModel();
         model.setRowCount(0);
@@ -861,6 +988,26 @@ public class ClienteView extends javax.swing.JFrame {
                 aux.getPessoa_email(),};
             model.addRow(linha);
 
+        }
+    }
+
+    private void imprimirNaGrid(ArrayList<PessoaModel> dados) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTableUsuarios2.getModel();
+            model.setNumRows(0);
+            int pos = 1;
+            while (pos < dados.size()) {
+                String[] linha = new String[4];
+                PessoaModel obj = dados.get(pos);
+                linha[0] = obj.getPessoa_idem() + "";
+                linha[1] = obj.getPessoa_nome();
+                linha[2] = obj.getPessoa_telefone();
+                linha[3] = obj.getPessoa_email();
+                model.addRow(linha);
+                pos++;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro);
         }
     }
 
@@ -907,7 +1054,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JButton btnClienteIncluir;
     private javax.swing.JButton btnClienteVoltar;
     private javax.swing.JButton btnClientesSalvar;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBoxPesquisa;
     private javax.swing.JComboBox<String> jComboBoxTipoPessoa;
     private javax.swing.JComboBox<String> jComboxEstado;
     private javax.swing.JLabel jLabel1;
@@ -936,7 +1083,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableUsuarios2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldPesquisa;
     private javax.swing.JTable tabViewClientes;
     private javax.swing.JFormattedTextField txtCidade;
     private javax.swing.JFormattedTextField txtClientesBairro;
@@ -954,6 +1101,5 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtRgPessoa;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
-
 
 }

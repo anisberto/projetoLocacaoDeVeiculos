@@ -356,6 +356,9 @@
                       <Format format="###.###.###-##" subtype="-1" type="5"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCpfPessoaKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtNomePessoa">
                 </Component>
@@ -370,6 +373,9 @@
                       <Format format="##.###.###/####-##" subtype="-1" type="5"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCnpjKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
@@ -377,6 +383,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtRgPessoa">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRgPessoaKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtTelefone">
                   <Properties>
@@ -384,6 +393,9 @@
                       <Format format="(##) #####-####" subtype="-1" type="5"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTelefoneKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
@@ -616,6 +628,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtClientesCep">
+                  <Properties>
+                    <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+                      <Format format="#####-###" subtype="-1" type="5"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtClientesCepKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
@@ -669,6 +689,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtClientesNumero">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtClientesNumeroKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
@@ -698,9 +721,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBox4" pref="378" max="32767" attributes="0"/>
+                      <Component id="jComboBoxPesquisa" pref="378" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="598" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPesquisa" min="-2" pref="598" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -717,8 +740,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jComboBox4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="629" max="32767" attributes="0"/>
                   </Group>
@@ -773,21 +796,15 @@
                       <Properties>
                         <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="0">
+                          <Table columnCount="4" rowCount="0">
                             <Column editable="true" title="Identificador" type="java.lang.Object"/>
                             <Column editable="true" title="Nome" type="java.lang.Object"/>
-                            <Column editable="true" title="CPF/CNPJ" type="java.lang.Object"/>
                             <Column editable="true" title="Telefone" type="java.lang.Object"/>
                             <Column editable="true" title="E-mail" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
@@ -819,20 +836,22 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="jTextFieldPesquisa">
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox4">
+            <Component class="javax.swing.JComboBox" name="jComboBoxPesquisa">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="4">
                     <StringItem index="0" value="Buscar Por"/>
-                    <StringItem index="1" value="Nome Cliente"/>
-                    <StringItem index="2" value="Nome Motorista"/>
-                    <StringItem index="3" value="CPF Cliente"/>
-                    <StringItem index="4" value="CPF Motorista"/>
+                    <StringItem index="1" value="Nome"/>
+                    <StringItem index="2" value="Telefone"/>
+                    <StringItem index="3" value="Email"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxPesquisaActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>

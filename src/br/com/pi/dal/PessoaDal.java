@@ -72,17 +72,17 @@ public class PessoaDal implements ICRUD_GENERIC {
     public void update(Object objeto) throws Exception {
         pessoaModel = (PessoaModel) objeto;
         try {
-             String sql = "UPDATE Pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?, pessoa_endereco =?"
-                + " WHERE pessoa_idem =?";
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, pessoaModel.getPessoa_nome());
-        ps.setObject(2, pessoaModel.getPessoa_telefone());
-        ps.setObject(3, pessoaModel.getPessoa_email());
-        ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
-        ps.setObject(5, pessoaModel.getPessoa_idem());
-        ps.executeUpdate();
+            String sql = "UPDATE Pessoas SET pessoa_nome =?, pessoa_telefone=?, pessoa_email =?, pessoa_endereco =?"
+                    + " WHERE pessoa_idem =?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setObject(1, pessoaModel.getPessoa_nome());
+            ps.setObject(2, pessoaModel.getPessoa_telefone());
+            ps.setObject(3, pessoaModel.getPessoa_email());
+            ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
+            ps.setObject(5, pessoaModel.getPessoa_idem());
+            ps.executeUpdate();
         } catch (SQLException e) {
-           throw e;
+            throw e;
         }
 
     }
@@ -98,7 +98,7 @@ public class PessoaDal implements ICRUD_GENERIC {
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
-      
+
             pessoaModel = new PessoaModel();
             pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
             pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
@@ -168,4 +168,6 @@ public class PessoaDal implements ICRUD_GENERIC {
         ps.executeUpdate();
 
     }
+    
+
 }
