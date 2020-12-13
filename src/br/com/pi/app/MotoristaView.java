@@ -1,6 +1,8 @@
 package br.com.pi.app;
 
 import br.com.pi.bll.EnderecoBll;
+import br.com.pi.bll.MotoristaBll;
+import br.com.pi.design_patterns.template.motorista.*;
 
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.MotoristaModel;
@@ -8,6 +10,8 @@ import br.com.pi.util.Imagem_util;
 import interfaces.EnderecoInterface;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class MotoristaView extends javax.swing.JFrame {
-    
+
     BufferedImage imagem;
     String nomeUsuarioLogado;
     EnderecoBll endBll = new EnderecoBll();
@@ -26,10 +30,16 @@ public class MotoristaView extends javax.swing.JFrame {
     EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
     int idDeleteCliente;
+    
+    //Watlas
+    MotoristaModel motoristaModel;
+    MotoristaBll motoristaBll;
+    
 
     public MotoristaView() throws Exception {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        motoristaBll = new MotoristaBll();
     }
 
     @SuppressWarnings("unchecked")
@@ -48,18 +58,18 @@ public class MotoristaView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        txtCpf = new javax.swing.JFormattedTextField();
+        txtNome = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        txtRg = new javax.swing.JFormattedTextField();
+        txtTelefone = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        txtEmail = new javax.swing.JFormattedTextField();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField15 = new javax.swing.JFormattedTextField();
-        jFormattedTextField16 = new javax.swing.JFormattedTextField();
+        txtValidade = new javax.swing.JFormattedTextField();
+        txtNregistro = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         lblImagem = new javax.swing.JLabel();
@@ -84,14 +94,12 @@ public class MotoristaView extends javax.swing.JFrame {
         txtMotoristaNumero = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtIdEndMotorista = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableEndMotorista = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableUsuarios1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jTableMotoristaControl = new javax.swing.JTable();
+        jTextFieldpesquisa = new javax.swing.JTextField();
+        jComboBoxpesquisa = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,6 +157,11 @@ public class MotoristaView extends javax.swing.JFrame {
         btnSalvarMotorista.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalvarMotorista.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSalvarMotorista.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalvarMotorista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarMotoristaActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -205,7 +218,7 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jLabel6.setText("E-mail");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria CNH", "A", "B", "AB", "AC", "C", "AD", "D", "E" }));
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria CNH", "A", "B", "AB", "AC", "C", "AD", "D", "E" }));
 
         jLabel9.setText("Validade");
 
@@ -247,15 +260,15 @@ public class MotoristaView extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)))
                         .addGap(18, 18, 18)
@@ -263,21 +276,21 @@ public class MotoristaView extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField16))
+                                .addComponent(txtNregistro))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1)
+                                .addComponent(txtCpf)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField5)
+                        .addComponent(txtTelefone)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField6))
+                        .addComponent(txtEmail))
                     .addComponent(jSeparator1))
                 .addGap(18, 18, 18)
                 .addComponent(btnImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,28 +310,28 @@ public class MotoristaView extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel2)
-                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel6)
-                                        .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel5)
-                                        .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel9)
-                                    .addComponent(jFormattedTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10)
-                                    .addComponent(jFormattedTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txtNregistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
 
@@ -345,9 +358,7 @@ public class MotoristaView extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
         );
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -370,35 +381,6 @@ public class MotoristaView extends javax.swing.JFrame {
 
         txtIdEndMotorista.setEnabled(false);
 
-        tableEndMotorista.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "CIDADE", "BAIRRO", "CEP", "RUA", "NUMERO", "COMPLEMENTO", "UF"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tableEndMotorista);
-        if (tableEndMotorista.getColumnModel().getColumnCount() > 0) {
-            tableEndMotorista.getColumnModel().getColumn(0).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(1).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(2).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(3).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(4).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(5).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(6).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(7).setResizable(false);
-            tableEndMotorista.getColumnModel().getColumn(7).setPreferredWidth(20);
-        }
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -407,40 +389,35 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIdEndMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMotoristaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMotoristaBairro)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMotoristaNumero)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMotoristaComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMotoristaCep)
-                            .addComponent(cboMotoristaUF, 0, 140, Short.MAX_VALUE)))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtIdEndMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMotoristaCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMotoristaBairro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMotoristaNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMotoristaComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMotoristaCep)
+                    .addComponent(cboMotoristaUF, 0, 140, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -467,9 +444,7 @@ public class MotoristaView extends javax.swing.JFrame {
                         .addComponent(txtMotoristaRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
                         .addComponent(txtMotoristaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -493,9 +468,9 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -503,8 +478,8 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Motoristas"));
 
-        jTableUsuarios1.setAutoCreateRowSorter(true);
-        jTableUsuarios1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMotoristaControl.setAutoCreateRowSorter(true);
+        jTableMotoristaControl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -512,12 +487,12 @@ public class MotoristaView extends javax.swing.JFrame {
                 "Identificador", "Nome", "CPF", "Nº CNH", "CATEGORIA"
             }
         ));
-        jTableUsuarios1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableMotoristaControl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableUsuarios1MouseClicked(evt);
+                jTableMotoristaControlMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTableUsuarios1);
+        jScrollPane2.setViewportView(jTableMotoristaControl);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -535,7 +510,12 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome Cliente", "Nome Motorista", "CPF Cliente", "CPF Motorista" }));
+        jComboBoxpesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome", "CPF", "Email", "RG" }));
+        jComboBoxpesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxpesquisaActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/excluir_small.png"))); // NOI18N
         jButton1.setText("Deletar");
@@ -546,9 +526,9 @@ public class MotoristaView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox4, 0, 303, Short.MAX_VALUE)
+                .addComponent(jComboBoxpesquisa, 0, 303, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -563,8 +543,8 @@ public class MotoristaView extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap(108, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addContainerGap(547, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -644,14 +624,14 @@ public class MotoristaView extends javax.swing.JFrame {
             enderecoMotoristaEnableButtons(true);
             MotoristaModel m = new MotoristaModel();
             m.setCnh_imagem(Imagem_util.getImgBytes(imagem));
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnIncluirActionPerformed
 
-    private void jTableUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios1MouseClicked
+    private void jTableMotoristaControlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMotoristaControlMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTableUsuarios1MouseClicked
+    }//GEN-LAST:event_jTableMotoristaControlMouseClicked
 
     private void btnImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagemActionPerformed
         try {
@@ -671,6 +651,76 @@ public class MotoristaView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImagemActionPerformed
 
+    private void jComboBoxpesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxpesquisaActionPerformed
+        OrdenaNome nome;
+        OrdenaCpf cpf;
+        OrdenaEmail email;
+        OrdenaRg rg;
+        try {
+            if(jComboBoxpesquisa.getSelectedItem().toString().contains("Nome")){
+                nome = new OrdenaNome();
+                imprimirNaGrid(nome.getAll());     
+            }
+            if(jComboBoxpesquisa.getSelectedItem().toString().contains("CPF")){
+                cpf = new OrdenaCpf();
+                imprimirNaGrid(cpf.getAll());     
+            }
+            if(jComboBoxpesquisa.getSelectedItem().toString().contains("Email")){
+                email = new OrdenaEmail();
+                imprimirNaGrid(email.getAll());     
+            }
+            if(jComboBoxpesquisa.getSelectedItem().toString().contains("RG")){
+                rg = new OrdenaRg();
+                imprimirNaGrid(rg.getAll());     
+            }
+
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jComboBoxpesquisaActionPerformed
+
+    private void btnSalvarMotoristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMotoristaActionPerformed
+        try {
+            motoristaModel = new MotoristaModel();
+            endereco = new EnderecoModel();
+            
+            motoristaModel.setMotorista_nome(txtNome.getText());
+            motoristaModel.setMotorista_email(txtEmail.getText());
+            motoristaModel.setMotorista_cpf(txtCpf.getText());
+            motoristaModel.setMotorista_rg(txtRg.getText());
+            motoristaModel.setMotorista_telefone(txtTelefone.getText());
+            //CNH
+            motoristaModel.setCnh_categoria(jComboBoxCategoria.getSelectedItem().toString());
+            motoristaModel.setCnh_dataValidade(new java.sql.Date(new java.util.Date(txtValidade.getText()).getTime()));
+            motoristaModel.setCnh_numeroRegistro(Integer.parseInt(txtNregistro.getText()));
+            motoristaModel.setCnh_imagem(Imagem_util.getImgBytes(imagem));
+            //Endereco
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnSalvarMotoristaActionPerformed
+    
+    
+    private void imprimirNaGrid(ArrayList<MotoristaModel> dados) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTableMotoristaControl.getModel();
+            model.setNumRows(0);
+            int pos = 1;
+            while (pos < dados.size()) {
+                String[] linha = new String[5];
+                MotoristaModel obj = dados.get(pos);
+                linha[0] = obj.getMotorista_idem()+ "";
+                linha[1] = obj.getMotorista_nome();
+                linha[2] = obj.getMotorista_cpf();
+                linha[3] = obj.getCnh_numeroRegistro()+"";
+                linha[4] = obj.getCnh_categoria()+"";
+                model.addRow(linha);
+                pos++;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -718,15 +768,8 @@ public class MotoristaView extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cboMotoristaUF;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField15;
-    private javax.swing.JFormattedTextField jFormattedTextField16;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
+    private javax.swing.JComboBox<String> jComboBoxCategoria;
+    private javax.swing.JComboBox<String> jComboBoxpesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -751,14 +794,14 @@ public class MotoristaView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableMotoristaControl;
     private javax.swing.JTable jTableUsuarios;
-    private javax.swing.JTable jTableUsuarios1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldpesquisa;
     private javax.swing.JLabel lblImagem;
-    private javax.swing.JTable tableEndMotorista;
+    private javax.swing.JFormattedTextField txtCpf;
+    private javax.swing.JFormattedTextField txtEmail;
     private javax.swing.JTextField txtIdEndMotorista;
     private javax.swing.JFormattedTextField txtMotoristaBairro;
     private javax.swing.JFormattedTextField txtMotoristaCep;
@@ -766,6 +809,11 @@ public class MotoristaView extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtMotoristaComplemento;
     private javax.swing.JTextField txtMotoristaNumero;
     private javax.swing.JFormattedTextField txtMotoristaRua;
+    private javax.swing.JFormattedTextField txtNome;
+    private javax.swing.JFormattedTextField txtNregistro;
+    private javax.swing.JFormattedTextField txtRg;
+    private javax.swing.JFormattedTextField txtTelefone;
+    private javax.swing.JFormattedTextField txtValidade;
     // End of variables declaration//GEN-END:variables
     public void enableButtFields(boolean yet) {
         if (yet) {
@@ -819,7 +867,7 @@ public class MotoristaView extends javax.swing.JFrame {
     }
 
     private void consultarEndereco(List<EnderecoModel> lista) throws Exception {
-        DefaultTableModel modelo = (DefaultTableModel) tableEndMotorista.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTableMotoristaControl.getModel();
         modelo.setNumRows(0);
 
         for (int pos = 0; pos < lista.size(); pos++) {
@@ -916,23 +964,4 @@ public class MotoristaView extends javax.swing.JFrame {
         }
     }
 
-    private void transferirDadosEndereco() {
-        try {
-            int codigo = Integer.parseInt(tableEndMotorista.getValueAt(tableEndMotorista.getSelectedRow(), 0).toString());
-            EnderecoModel deleteEnd = novoEnderecoInter.getEnderecoById(codigo);
-            idDeleteCliente = codigo;
-
-            txtMotoristaCidade.setText(deleteEnd.getEndereco_cidade());
-            txtMotoristaBairro.setText(deleteEnd.getEndereco_bairro());
-            txtMotoristaCep.setText(deleteEnd.getEndereco_cep());
-            txtMotoristaRua.setText(deleteEnd.getEndereco_rua());
-            txtMotoristaNumero.setText(deleteEnd.getEndereco_numero() + "");
-            txtMotoristaComplemento.setText(deleteEnd.getEndereco_complemento());
-            cboMotoristaUF.setSelectedItem(deleteEnd.getEndereco_estado());
-            txtIdEndMotorista.setText(deleteEnd.getEndereco_iden() + "");
-
-        } catch (Exception e) {
-        }
-
-    }
 }

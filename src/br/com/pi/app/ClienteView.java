@@ -5,10 +5,12 @@ import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.PessoaPFBll;
 import br.com.pi.bll.PessoaPJBll;
 import br.com.pi.dal.PessoaPFDal;
-import br.com.pi.design_patterns.template.OrdenaNome;
-import br.com.pi.design_patterns.template.OrdenaEmail;
-import br.com.pi.design_patterns.template.OrdenaTelefone;
-import br.com.pi.design_patterns.template.PessoaOrdena;
+import br.com.pi.design_patterns.factory.EnumClasses;
+import br.com.pi.design_patterns.factory.FabricaModel;
+import br.com.pi.design_patterns.template.pessoa.OrdenaNome;
+import br.com.pi.design_patterns.template.pessoa.OrdenaEmail;
+import br.com.pi.design_patterns.template.pessoa.OrdenaTelefone;
+import br.com.pi.design_patterns.template.pessoa.PessoaOrdena;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.PessoaPFModel;
@@ -33,6 +35,7 @@ public class ClienteView extends javax.swing.JFrame {
     PessoaPJModel pessoaPJModel;
     PessoaModel pessoamodel;
     String nomeUsuarioLogado;
+
     int idg;
     int idPessoa;
 
@@ -653,12 +656,12 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
         try {
+
             validaCampo();
-            pessoamodel = new PessoaModel();
-            pessoaPFModel = new PessoaPFModel();
-            pessoaPJModel = new PessoaPJModel();
+            pessoamodel = FabricaModel.getTipoDeFuncionario(EnumClasses.getPessoa());
             endereco = new EnderecoModel();
             if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
+                pessoaPFModel = (PessoaPFModel) FabricaModel.getTipoDeFuncionario(EnumClasses.getPessoapf());
                 //Pegando dados de endereço
                 endereco.setEndereco_cep(txtClientesCep.getText());
                 endereco.setEndereco_cidade(txtCidade.getText());
@@ -681,6 +684,7 @@ public class ClienteView extends javax.swing.JFrame {
                 limparCampos();
                 atualizarGrid();
             } else {
+                pessoaPJModel = (PessoaPJModel) FabricaModel.getTipoDeFuncionario(EnumClasses.getPessoapj());
                 //Pegando dados de endereço
                 endereco.setEndereco_cep(txtClientesCep.getText());
                 endereco.setEndereco_cidade(txtCidade.getText());

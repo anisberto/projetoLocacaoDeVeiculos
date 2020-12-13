@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pi.design_patterns.template;
+package br.com.pi.design_patterns.template.pessoa;
 
 import br.com.pi.dal.EnderecoDal;
 import br.com.pi.model.EnderecoModel;
@@ -30,7 +30,7 @@ public abstract class PessoaOrdena {
     }
 
     public abstract boolean ePrimeiro(PessoaModel pessoa1, PessoaModel pessoa2);
-    
+
    // public abstract String teste(String aesquisa);
 
     public ArrayList getAllPesquisa() throws Exception {
@@ -38,6 +38,7 @@ public abstract class PessoaOrdena {
         EnderecoDal enderecoDal = new EnderecoDal();
 
         ArrayList<PessoaModel> pessoaModelList = new ArrayList<>();
+
 
         Statement st = conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
@@ -50,12 +51,10 @@ public abstract class PessoaOrdena {
             pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
             pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
 
-            pessoaModel.setPessoa_endereco((EnderecoModel) enderecoDal.getById(rs.getInt("pessoa_endereco")));
-
             pessoaModelList.add(pessoaModel);
-        }
 
-        for (int i = 1; i < pessoaModelList.size(); i++) {
+        }
+        for (int i = 0; i < pessoaModelList.size(); i++) {
             for (int j = i; j < pessoaModelList.size(); j++) {
 
                 if (!ePrimeiro(pessoaModelList.get(i), pessoaModelList.get(j))) {

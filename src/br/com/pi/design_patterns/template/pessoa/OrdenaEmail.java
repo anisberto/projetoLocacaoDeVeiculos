@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pi.design_patterns.template;
+package br.com.pi.design_patterns.template.pessoa;
 
 import br.com.pi.model.PessoaModel;
 
