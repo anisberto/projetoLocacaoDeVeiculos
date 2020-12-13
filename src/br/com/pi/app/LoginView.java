@@ -109,7 +109,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
 
         jLabel2.setText("Senha ");
 
-        jLabel3.setText("Usuario");
+        jLabel3.setText("Usuário");
 
         lblDescriptionStatus.setText("Conexão: ");
 
@@ -167,7 +167,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
                 .addGap(25, 25, 25))
         );
 
-        jMenu1.setText("Gerir Usuarios");
+        jMenu1.setText("Gerir Usuários");
 
         jmCadastro.setText("Cadastrar Novo Usuario");
         jmCadastro.addActionListener(new java.awt.event.ActionListener() {

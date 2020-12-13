@@ -183,7 +183,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Usuario: "/>
+                <Property name="text" type="java.lang.String" value="Usu&#xe1;rio: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
