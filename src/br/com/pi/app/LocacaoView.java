@@ -68,7 +68,6 @@ public class LocacaoView extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -238,19 +237,6 @@ public class LocacaoView extends javax.swing.JFrame {
             }
         });
 
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
-        btnAlterar.setText("Alterar");
-        btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAlterar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAlterar.setPreferredSize(new java.awt.Dimension(50, 70));
-        btnAlterar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnAlterar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -260,9 +246,7 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,8 +263,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnIncluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1432,15 +1415,6 @@ public class LocacaoView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        try {
-            incluir = false;
-            enableButtFields(true);
-            enableFielsCrud(true);
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
     private void JtLocaGerirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtLocaGerirMouseClicked
         try {
             setarCamposDevolucao();
@@ -1752,7 +1726,6 @@ public class LocacaoView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtLocaGerir;
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCancelar2;
     private javax.swing.JButton btnCancelarReserva;
@@ -1858,14 +1831,14 @@ public class LocacaoView extends javax.swing.JFrame {
     public void enableButtFields(boolean yet) {
         if (yet) {
             btnIncluir.setEnabled(false);
-            btnAlterar.setEnabled(false);
+//            btnAlterar.setEnabled(false);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(false);
             btnSalvar.setEnabled(true);
             btnVoltar.setEnabled(false);
         } else {
             btnIncluir.setEnabled(true);
-            btnAlterar.setEnabled(true);
+//            btnAlterar.setEnabled(true);
             btnCancelar.setEnabled(true);
             btnDeletar.setEnabled(true);
             btnVoltar.setEnabled(true);
