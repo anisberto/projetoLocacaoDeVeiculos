@@ -18,7 +18,7 @@ public class OrdenaCpf extends MotoristaOrdena {
 
     @Override
     public boolean ePrimeiro(MotoristaModel pessoa1, MotoristaModel pessoa2) {
-          return pessoa1.getMotorista_nome().compareToIgnoreCase(pessoa1.getMotorista_nome()) <= 0;
+          return pessoa1.getMotorista_nome().compareToIgnoreCase(pessoa2.getMotorista_nome()) <= 0;
     }
 
 }

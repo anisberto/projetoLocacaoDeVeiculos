@@ -3,9 +3,16 @@ package br.com.pi.app;
 import br.com.pi.bll.ModeloBll;
 import br.com.pi.bll.VeiculoBll;
 import br.com.pi.dal.ModeloDal;
+import br.com.pi.design_patterns.template.veiculo.OrdenaAnoFabricacao;
+import br.com.pi.design_patterns.template.veiculo.OrdenaAnoModelo;
+import br.com.pi.design_patterns.template.veiculo.OrdenaMarca;
+import br.com.pi.design_patterns.template.veiculo.OrdenaModelo;
 import br.com.pi.model.ModeloModel;
+import br.com.pi.model.MotoristaModel;
 import br.com.pi.model.VeiculoModel;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -487,7 +494,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -548,6 +555,11 @@ public class VeiculoView extends javax.swing.JFrame {
         );
 
         jcBuscapor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Marca", "Modelo", "Ano de Fabricacao", "Ano do Modelo" }));
+        jcBuscapor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcBuscaporActionPerformed(evt);
+            }
+        });
 
         btnDeletarTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/excluir_small.png"))); // NOI18N
         btnDeletarTable.setText("Deletar");
@@ -872,7 +884,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não é Possivel Deletar este Veiculo!", "Veiculo vinculado a uma locação", JOptionPane.ERROR_MESSAGE);
-            int conf = JOptionPane.showConfirmDialog(null, "Ir para locações" , "Locações",
+            int conf = JOptionPane.showConfirmDialog(null, "Ir para locações", "Locações",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
             if (conf == 0) {
                 LocacaoView locacao;
@@ -902,6 +914,56 @@ public class VeiculoView extends javax.swing.JFrame {
     private void jcTipoCombustivelPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcTipoCombustivelPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jcTipoCombustivelPopupMenuWillBecomeInvisible
+
+    private void jcBuscaporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcBuscaporActionPerformed
+        OrdenaAnoFabricacao anofabricacao;
+        OrdenaAnoModelo anomodelo;
+        OrdenaMarca marca;
+        OrdenaModelo modelo;
+        try {
+
+            if (jcBuscapor.getSelectedItem().toString().contains("Marca")) {
+                marca = new OrdenaMarca();
+                imprimir(marca.getAll());
+            }
+            if(jcBuscapor.getSelectedItem().toString().contains("Modelo")){
+                modelo = new OrdenaModelo();
+                imprimir(modelo.getAll());
+            }
+            if(jcBuscapor.getSelectedItem().toString().contains("Ano de Fabricacao")){
+                anofabricacao = new OrdenaAnoFabricacao();
+                imprimir(anofabricacao.getAll());
+            }
+            if(jcBuscapor.getSelectedItem().toString().contains("Ano de Modelo")){
+                modelo = new OrdenaModelo();
+                imprimir(modelo.getAll());
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jcBuscaporActionPerformed
+
+        private void imprimir(ArrayList<VeiculoModel> dados) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTableUsuarios2.getModel();
+            model.setNumRows(0);
+            int pos = 0;
+            while (pos < dados.size()) {
+                String[] linha = new String[7];
+                VeiculoModel obj = dados.get(pos);
+                linha[0] = obj.getVeiculo_idem()+ "";
+                linha[1] = obj.getVeiculo_modelo().getModelo_descricao();
+                linha[2] = obj.getVeiculo_modelo().getModelo_marca().getMarca_descricao();
+                linha[3] = obj.getVeiculo_anoModelo()+ "";
+                linha[4] = obj.getVeiculo_anoFabrica()+ "";
+                linha[5] = obj.getVeiculo_renavam()+ "";
+                linha[6] = obj.getVeiculo_situacaoVeiculo()+ "";
+                model.addRow(linha);
+                pos++;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

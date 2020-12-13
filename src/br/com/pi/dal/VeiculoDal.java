@@ -17,6 +17,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
 
     Connection conec;
     ModeloBll modeloBll = new ModeloBll();
+    VeiculoModel veiculo;
 
     public VeiculoDal() throws Exception {
         conec = new AdpterConexao().getConnectionAdapter();
@@ -116,12 +117,13 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
     @Override
     public VeiculoModel getById(int n) throws Exception {
         try {
-            VeiculoModel veiculo = new VeiculoModel();
+
             PreparedStatement prep = conec.prepareStatement("SELECT * FROM veiculos WHERE veiculo_idem=?");
             prep.setInt(1, n);
             ResultSet result = prep.executeQuery();
 
             while (result.next()) {
+                veiculo = new VeiculoModel();
                 veiculo.setVeiculo_idem(result.getInt("veiculo_idem"));
                 veiculo.setVeiculo_renavam(result.getString("veiculo_renavam"));
                 veiculo.setVeiculo_precoCompra(result.getFloat("veiculo_precodecompra"));

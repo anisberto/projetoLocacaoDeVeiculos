@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -27,21 +28,21 @@ public class ReservaDal implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
 
+
         try {
             reserva = (ReservaModel) objeto;
-            String sql = "INSERT INTO reserva (reserva_datafinal, reserva_datadareserva, reserva_pessoas_idem) VALUES (?, ?, 2)";
+
+            String sql = "INSERT INTO reserva (reserva_datafinal,reserva_dataDareserva ,reserva_veiculos_idem, reserva_pessoas_idem) VALUES (?, ?, ?,?)";
 
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setDate(1, new java.sql.Date(new Date(reserva.getReserva_dataReserva()).getTime()));
-            ps.setDate(2, new java.sql.Date(new Date(reserva.getReserva_dataExpiracao()).getTime()));
-//ps.setObject(1, reserva.getReserva_dataExpiracao());
-            //ps.setObject(2, reserva.getReserva_dataExpiracao());
-            //ps.setObject(3, reserva.getReserva_veiculo());
-            // ps.setObject(4, reserva.getReserva_cliente());
+            ps.setDate(1,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataExpiracao()).getTime())));
+            ps.setDate(2,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataReserva()).getTime())));
+            ps.setObject(3, reserva.getReserva_veiculo().getVeiculo_idem());
+            ps.setObject(4, reserva.getReserva_cliente().getPessoa_idem());
             ps.executeUpdate();
 
         } catch (Exception e) {
-            throw new Exception("Erro ao incluir: 'Reserva dal' " + e.getMessage());
+            throw e;
         }
 
     }
@@ -94,15 +95,14 @@ public class ReservaDal implements ICRUD_GENERIC {
             while (rs.next()) {
                 reserva = new ReservaModel();
                 reserva.setReserva_idem(rs.getInt("reserva_idem"));
-                reserva.setReserva_dataReserva(rs.getString("reserva_datadareserva"));
-                reserva.setReserva_dataExpiracao(rs.getString("reserva_datafinal"));
-//            reserva.setReserva_dataReserva(rs.getDate("reserva_dataDareserva"));
-//            reserva.setReserva_dataExpiracao(rs.getDate("reserva_dataFinal"));
+                reserva.setReserva_dataReserva(rs.getString("reserva_dataDareserva"));
+                reserva.setReserva_dataExpiracao(rs.getString("reserva_dataFinal"));
                 reserva.setReserva_cliente((PessoaModel) pessoaDal.getById(rs.getInt("reserva_pessoas_idem")));
-                //reserva.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
+                reserva.setReserva_veiculo(veiculoDal.getById(rs.getInt( "reserva_veiculos_idem")));
+
                 list.add(reserva);
             }
-            //return list.listIterator();
+
             return list.iterator();
             
         } catch (Exception e) {

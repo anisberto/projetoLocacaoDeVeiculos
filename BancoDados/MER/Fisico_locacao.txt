@@ -173,9 +173,9 @@ ALTER TABLE multas ADD CONSTRAINT FK_multas_2
 ALTER TABLE reserva ADD CONSTRAINT FK_reserva_1
     FOREIGN KEY (reserva_pessoas_idem)
     REFERENCES Pessoas (pessoa_idem)
-    ON DELETE SET NULL;
+    ON DELETE CASCADE;
  
 ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
     FOREIGN KEY (reserva_veiculos_idem)
     REFERENCES veiculos (veiculo_idem)
-    ON DELETE SET NULL;
+    ON DELETE CASCADE;

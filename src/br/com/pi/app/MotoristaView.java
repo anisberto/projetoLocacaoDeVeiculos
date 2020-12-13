@@ -701,7 +701,11 @@ public class MotoristaView extends javax.swing.JFrame {
             endereco.setEndereco_cidade(txtMotoristaCidade.getText());
             endereco.setEndereco_complemento(txtMotoristaComplemento.getText());
             endereco.setEndereco_estado(cboMotoristaUF.getSelectedItem().toString());
-            endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+               if (txtMotoristaNumero.getText().isEmpty()) {
+                endereco.setEndereco_numero(0);
+            } else {
+                endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+            }
             endereco.setEndereco_rua(txtMotoristaRua.getText());
             endereco.setEndereco_iden(Integer.parseInt(txtIdEndMotorista.getText()));
             //MotoristaComEndereco
@@ -709,7 +713,6 @@ public class MotoristaView extends javax.swing.JFrame {
 
             motoristaBll.updateAll(motoristaModel, endereco);
             atualizarGrid();
-
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
@@ -822,7 +825,12 @@ public class MotoristaView extends javax.swing.JFrame {
             endereco.setEndereco_cidade(txtMotoristaCidade.getText());
             endereco.setEndereco_complemento(txtMotoristaComplemento.getText());
             endereco.setEndereco_estado(cboMotoristaUF.getSelectedItem().toString());
-            endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+            if (txtMotoristaNumero.getText().isEmpty()) {
+                endereco.setEndereco_numero(0);
+            } else {
+                endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+            }
+
             endereco.setEndereco_rua(txtMotoristaRua.getText());
             //MotoristaComEndereco
             motoristaModel.setMotorista_endereco(endereco);
@@ -993,8 +1001,8 @@ public class MotoristaView extends javax.swing.JFrame {
         }
     }
 
-    private void limparCampos(){
-        String nada ="";
+    private void limparCampos() {
+        String nada = "";
         txtNome.setText("");
         txtEmail.setText("");
         txtCpf.setText(nada);

@@ -18,7 +18,7 @@ public class OrdenaRg extends MotoristaOrdena {
 
     @Override
     public boolean ePrimeiro(MotoristaModel pessoa1, MotoristaModel pessoa2) {
-        return pessoa1.getMotorista_rg().compareToIgnoreCase(pessoa1.getMotorista_rg()) <= 0;
+        return pessoa1.getMotorista_rg().compareToIgnoreCase(pessoa2.getMotorista_rg()) <= 0;
     }
 
 }

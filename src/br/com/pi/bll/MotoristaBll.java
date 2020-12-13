@@ -74,7 +74,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         try {
             motoristaDal.delete(n);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Não foi possivel deletar\n" + e.getMessage());
+          throw e;
         }
     }
 

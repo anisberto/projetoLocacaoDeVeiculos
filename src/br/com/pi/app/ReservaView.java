@@ -2,9 +2,11 @@ package br.com.pi.app;
 
 import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.ReservaBll;
+import br.com.pi.bll.VeiculoBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
+import br.com.pi.model.VeiculoModel;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,15 +20,21 @@ public class ReservaView extends javax.swing.JFrame {
     ICRUD_GENERIC<ReservaModel> incluirReserva;
     int IdDeleteReserva;
 
-//    ICRUD_GENERIC<PessoaModel> cliente;
-//    private PessoaBll clienteBll = new PessoaBll();
+    int idCliente;
+    int idVeiculo;
+    int IdReserva;
+
     public ReservaView() throws Exception {
         initComponents();
 
-//        jcClientes();
         incluirReserva = new ReservaBll();
-        imprimirDadosNaGrid(incluirReserva.getAll());
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        incluirReserva = new ReservaBll();
+        atualizarGridVeiculos();
+        atualizarGridpessoas();
+        atualizarGridControl();
+        jTextFieldcontrolNome.setEnabled(false);
+        jTextFieldControlemail.setEnabled(false);
     }
 
     /**
@@ -41,57 +49,43 @@ public class ReservaView extends javax.swing.JFrame {
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        btnReservaDeletar = new javax.swing.JButton();
         btnReservaIncluir = new javax.swing.JButton();
         btnReservaCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnReservaSalvar = new javax.swing.JButton();
-        btnReservaAlterar = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        jcomboxCliente = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        txtDataReserva = new javax.swing.JTextField();
-        txtDataExpiracao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtDateReserva = new javax.swing.JFormattedTextField();
+        txtDataExpiracao = new javax.swing.JFormattedTextField();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tableReserva = new javax.swing.JTable();
+        tablePessoas = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableVeiculos = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTableUsuarios6 = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
-        btnSalvar5 = new javax.swing.JButton();
+        btnSalvarcontrol = new javax.swing.JButton();
         btnCancelar1 = new javax.swing.JButton();
         btnVoltar1 = new javax.swing.JButton();
-        btnSalvar7 = new javax.swing.JButton();
+        btnalterarControl = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldControlemail = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        jTextFieldControlReserva = new javax.swing.JTextField();
+        jTextFieldControlExpiracao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jTextFieldcontrolNome = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Reservas");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Reservas"));
-
-        btnReservaDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/lixo-24.png"))); // NOI18N
-        btnReservaDeletar.setText("Deletar");
-        btnReservaDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnReservaDeletar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReservaDeletar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnReservaDeletar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnReservaDeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReservaDeletarActionPerformed(evt);
-            }
-        });
 
         btnReservaIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
         btnReservaIncluir.setText("Incluir");
@@ -141,18 +135,6 @@ public class ReservaView extends javax.swing.JFrame {
             }
         });
 
-        btnReservaAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
-        btnReservaAlterar.setText("Alterar");
-        btnReservaAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnReservaAlterar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReservaAlterar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnReservaAlterar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnReservaAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReservaAlterarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -162,10 +144,6 @@ public class ReservaView extends javax.swing.JFrame {
                 .addComponent(btnReservaIncluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReservaSalvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReservaAlterar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReservaDeletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReservaCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,20 +157,28 @@ public class ReservaView extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnReservaIncluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReservaSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReservaAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReservaCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReservaDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Reserva"));
 
-        jcomboxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecionar Cliente>" }));
-
         jLabel2.setText("Data da Reserva");
 
         jLabel3.setText("Data de Expiração");
+
+        try {
+            txtDateReserva.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtDataExpiracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -202,66 +188,75 @@ public class ReservaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDateReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jcomboxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtDataReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDateReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(txtDataExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Veiculos"));
 
-        tableReserva.setAutoCreateRowSorter(true);
-        tableReserva.setModel(new javax.swing.table.DefaultTableModel(
+        tablePessoas.setAutoCreateRowSorter(true);
+        tablePessoas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id Registro", "DT Reserva", "DT Expiração", "Disponibilidade", "Ano do Modelo"
+                "ID", "Nome", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tableReserva.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablePessoas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableReservajTableUsuarios3MouseClicked(evt);
+                tablePessoasMouseClicked(evt);
             }
         });
-        jScrollPane6.setViewportView(tableReserva);
-        if (tableReserva.getColumnModel().getColumnCount() > 0) {
-            tableReserva.getColumnModel().getColumn(0).setResizable(false);
-            tableReserva.getColumnModel().getColumn(0).setPreferredWidth(25);
-            tableReserva.getColumnModel().getColumn(1).setResizable(false);
-            tableReserva.getColumnModel().getColumn(2).setResizable(false);
-            tableReserva.getColumnModel().getColumn(3).setResizable(false);
-            tableReserva.getColumnModel().getColumn(4).setResizable(false);
+        jScrollPane6.setViewportView(tablePessoas);
+        if (tablePessoas.getColumnModel().getColumnCount() > 0) {
+            tablePessoas.getColumnModel().getColumn(0).setResizable(false);
+            tablePessoas.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tablePessoas.getColumnModel().getColumn(1).setResizable(false);
+            tablePessoas.getColumnModel().getColumn(2).setResizable(false);
         }
+
+        jTableVeiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Marca", "Modelo", "Ano Fabrica"
+            }
+        ));
+        jTableVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableVeiculosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableVeiculos);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -269,14 +264,15 @@ public class ReservaView extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -298,14 +294,12 @@ public class ReservaView extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Veiculos", jPanel7);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "CPF", "CNPJ", "CLIENTE", "MARCA", "MODELO" }));
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
 
@@ -315,7 +309,7 @@ public class ReservaView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Cliente", "Marca", "Modelo", "Data da Reserva", "Data de Expiração"
+                "Identificador", "Cliente", "Marca", "Modelo", "Data da Reserva", "Data de Expiração", "Email"
             }
         ));
         jTableUsuarios6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -337,21 +331,21 @@ public class ReservaView extends javax.swing.JFrame {
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Reservas"));
 
-        btnSalvar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/lixo-24.png"))); // NOI18N
-        btnSalvar5.setText("Deletar");
-        btnSalvar5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnSalvar5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalvar5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnSalvar5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalvar5.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvarcontrol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/lixo-24.png"))); // NOI18N
+        btnSalvarcontrol.setText("Deletar");
+        btnSalvarcontrol.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSalvarcontrol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalvarcontrol.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnSalvarcontrol.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalvarcontrol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvar5ActionPerformed(evt);
+                btnSalvarcontrolActionPerformed(evt);
             }
         });
 
@@ -378,15 +372,15 @@ public class ReservaView extends javax.swing.JFrame {
             }
         });
 
-        btnSalvar7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
-        btnSalvar7.setText("Alterar");
-        btnSalvar7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnSalvar7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalvar7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnSalvar7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalvar7.addActionListener(new java.awt.event.ActionListener() {
+        btnalterarControl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
+        btnalterarControl.setText("Alterar");
+        btnalterarControl.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnalterarControl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnalterarControl.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnalterarControl.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnalterarControl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvar7ActionPerformed(evt);
+                btnalterarControlActionPerformed(evt);
             }
         });
 
@@ -396,9 +390,9 @@ public class ReservaView extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSalvar7)
+                .addComponent(btnalterarControl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalvar5)
+                .addComponent(btnSalvarcontrol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -410,22 +404,22 @@ public class ReservaView extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSalvar7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnalterarControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalvar5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalvarcontrol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Reserva"));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente" }));
-
-        jLabel4.setText("CPF/CNPJ: ");
+        jLabel4.setText("EMAIL");
 
         jLabel5.setText("Data da Reserva");
 
         jLabel6.setText("Data de Expiração");
+
+        jLabel1.setText("Nome");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -434,20 +428,22 @@ public class ReservaView extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldcontrolNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldControlemail, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldControlReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField7)))
+                        .addComponent(jTextFieldControlExpiracao, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -455,15 +451,16 @@ public class ReservaView extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldControlemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldcontrolNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldControlReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldControlExpiracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -475,10 +472,6 @@ public class ReservaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jComboBox4, 0, 202, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -491,10 +484,6 @@ public class ReservaView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -522,38 +511,18 @@ public class ReservaView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnReservaDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaDeletarActionPerformed
-        try {
-            if (!txtDataExpiracao.getText().isEmpty() && !txtDataReserva.getText().isEmpty()) {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirma a exclusão da reserva: " + incluirReserva.getById(IdDeleteReserva).getReserva_idem(), "Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
-                if (conf == 0) {
-                    incluirReserva.delete(IdDeleteReserva);
-                    JOptionPane.showMessageDialog(null, "Reserva cancelada com sucesso");
-                    clearFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
-                }
-                imprimirDadosNaGrid(incluirReserva.getAll());
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Usuario na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnReservaDeletarActionPerformed
-
     private void btnReservaIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaIncluirActionPerformed
         try {
-            clearFields();
-            enableButt(true);
+
             incluir = true;
-            //jcClientes();
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnReservaIncluirActionPerformed
 
     private void btnReservaCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaCancelarActionPerformed
         try {
-            enableButt(false);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnReservaCancelarActionPerformed
@@ -570,60 +539,47 @@ public class ReservaView extends javax.swing.JFrame {
 
     private void btnReservaSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaSalvarActionPerformed
         try {
+            ReservaModel reserva = new ReservaModel();
+            PessoaBll pessoabll = new PessoaBll();
+            VeiculoBll veiculobll = new VeiculoBll();
+            ReservaBll reservaBll = new ReservaBll();
 
-            ReservaModel res = new ReservaModel();
+            reserva.setReserva_cliente((PessoaModel) pessoabll.getById(idCliente));
+            reserva.setReserva_veiculo(veiculobll.getById(idVeiculo));
+            reserva.setReserva_dataExpiracao(txtDataExpiracao.getText());
+            reserva.setReserva_dataReserva(txtDateReserva.getText());
 
-//                res.setReserva_cliente((PessoaModel) clienteBll.getByNome(jcomboxCliente.getSelectedItem().toString()));
-            res.setReserva_dataReserva(txtDataExpiracao.getText());
-            res.setReserva_dataExpiracao(txtDataExpiracao.getText());
-
-            if (incluir) {
-                incluirReserva.add(res);
-                JOptionPane.showMessageDialog(null, "Reserva realizada com Sucesso!", "Reserva", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                res.setReserva_idem(Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString()));
-                incluirReserva.update(res);
-                JOptionPane.showMessageDialog(null, "Reserva Alterado com Sucesso!#", "Reserva", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } catch (Exception e) {
-        } finally {
-            enableButt(false);
-            try {
-                imprimirDadosNaGrid(incluirReserva.getAll());
-            } catch (Exception ex) {
-                Logger.getLogger(LoginViewCrud.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }//GEN-LAST:event_btnReservaSalvarActionPerformed
-
-    private void btnReservaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaAlterarActionPerformed
-        try {
-            enableButt(true);
-            incluir = false;
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnReservaAlterarActionPerformed
-
-    private void tableReservajTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservajTableUsuarios3MouseClicked
-        try {
-            int id = Integer.parseInt(tableReserva.getValueAt(tableReserva.getSelectedRow(), 2).toString());
-            transFerirDados(id);
-            System.out.println(id);
+            reservaBll.add(reserva);
+            limparCampos();
+            atualizarGridControl();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
-    }//GEN-LAST:event_tableReservajTableUsuarios3MouseClicked
+
+    }//GEN-LAST:event_btnReservaSalvarActionPerformed
 
     private void jTableUsuarios6jTableUsuarios3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios6jTableUsuarios3MouseClicked
-        // TODO add your handling code here:
+        IdReserva = Integer.parseInt(jTableUsuarios6.getValueAt(jTableUsuarios6.getSelectedRow(), 0).toString());
+
+        jTextFieldcontrolNome.setText(jTableUsuarios6.getValueAt(jTableUsuarios6.getSelectedRow(), 1).toString());
+        jTextFieldControlemail.setText(jTableUsuarios6.getValueAt(jTableUsuarios6.getSelectedRow(), 6).toString());
+        jTextFieldControlReserva.setText(jTableUsuarios6.getValueAt(jTableUsuarios6.getSelectedRow(), 4).toString());
+        jTextFieldControlExpiracao.setText(jTableUsuarios6.getValueAt(jTableUsuarios6.getSelectedRow(), 5).toString());
+
+
     }//GEN-LAST:event_jTableUsuarios6jTableUsuarios3MouseClicked
 
-    private void btnSalvar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvar5ActionPerformed
+    private void btnSalvarcontrolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarcontrolActionPerformed
+        try {
+            ReservaBll reservaBll = new ReservaBll();
+            reservaBll.delete(IdReserva);
+               limparCampos();
+            atualizarGridControl();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnSalvarcontrolActionPerformed
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         // TODO add your handling code here:
@@ -633,9 +589,102 @@ public class ReservaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
-    private void btnSalvar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvar7ActionPerformed
+    private void btnalterarControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalterarControlActionPerformed
+        try {
+            ReservaModel reserva = new ReservaModel();
+            PessoaBll pessoabll = new PessoaBll();
+            VeiculoBll veiculobll = new VeiculoBll();
+            ReservaBll reservaBll = new ReservaBll();
+
+            reserva.setReserva_cliente((PessoaModel) pessoabll.getById(idCliente));
+            reserva.setReserva_veiculo(veiculobll.getById(idVeiculo));
+            reserva.setReserva_dataExpiracao(txtDataExpiracao.getText());
+            reserva.setReserva_dataReserva(txtDateReserva.getText());
+            reserva.setReserva_idem(IdReserva);
+
+            reservaBll.update(reserva);
+            limparCampos();
+            atualizarGridControl();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnalterarControlActionPerformed
+
+    private void jTableVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVeiculosMouseClicked
+        idVeiculo = Integer.parseInt(jTableVeiculos.getValueAt(jTableVeiculos.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_jTableVeiculosMouseClicked
+
+    private void tablePessoasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePessoasMouseClicked
+        idCliente = Integer.parseInt(tablePessoas.getValueAt(tablePessoas.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_tablePessoasMouseClicked
+
+    private void atualizarGridpessoas() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) tablePessoas.getModel();
+        model.setRowCount(0);
+        Object[] linha;
+        PessoaBll pessoaBll = new PessoaBll();
+        Iterator<PessoaModel> listaDeUsuario = pessoaBll.getAll();
+        for (Iterator<PessoaModel> it = listaDeUsuario; it.hasNext();) {
+            PessoaModel aux = it.next();
+            linha = new Object[]{
+                aux.getPessoa_idem(),
+                aux.getPessoa_nome(),
+                aux.getPessoa_email(),};
+            model.addRow(linha);
+
+        }
+
+    }
+
+    private void atualizarGridVeiculos() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) jTableVeiculos.getModel();
+        model.setRowCount(0);
+        Object[] linha;
+        VeiculoBll pessoaBll = new VeiculoBll();
+        Iterator<VeiculoModel> listaDeUsuario = pessoaBll.getAll();
+        for (Iterator<VeiculoModel> it = listaDeUsuario; it.hasNext();) {
+            VeiculoModel aux = it.next();
+            linha = new Object[]{
+                aux.getVeiculo_idem(),
+                aux.getVeiculo_modelo().getModelo_marca().getMarca_descricao(),
+                aux.getVeiculo_modelo().getModelo_descricao(),
+                aux.getVeiculo_anoFabrica()};
+            model.addRow(linha);
+
+        }
+
+    }
+
+    private void atualizarGridControl() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) jTableUsuarios6.getModel();
+        model.setRowCount(0);
+        Object[] linha;
+        ReservaBll pessoaBll = new ReservaBll();
+        Iterator<ReservaModel> listaDeUsuario = pessoaBll.getAll();
+        for (Iterator<ReservaModel> it = listaDeUsuario; it.hasNext();) {
+            ReservaModel aux = it.next();
+            linha = new Object[]{
+                aux.getReserva_idem(),
+                aux.getReserva_cliente().getPessoa_nome(),
+                aux.getReserva_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao(),
+                aux.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao(),
+                aux.getReserva_dataReserva(),
+                aux.getReserva_dataExpiracao(),
+                aux.getReserva_cliente().getPessoa_email(),};
+
+            model.addRow(linha);
+
+        }
+    }
+
+    private void limparCampos() {
+        txtDataExpiracao.setText("");
+        txtDateReserva.setText("");
+        jTextFieldControlExpiracao.setText("");
+        jTextFieldControlReserva.setText("");
+        jTextFieldControlemail.setText("");
+        jTextFieldcontrolNome.setText("");
+    }
 
     /**
      * @param args the command line arguments
@@ -678,17 +727,14 @@ public class ReservaView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar1;
-    private javax.swing.JButton btnReservaAlterar;
     private javax.swing.JButton btnReservaCancelar;
-    private javax.swing.JButton btnReservaDeletar;
     private javax.swing.JButton btnReservaIncluir;
     private javax.swing.JButton btnReservaSalvar;
-    private javax.swing.JButton btnSalvar5;
-    private javax.swing.JButton btnSalvar7;
+    private javax.swing.JButton btnSalvarcontrol;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JButton btnVoltar1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JButton btnalterarControl;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -702,106 +748,23 @@ public class ReservaView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTableUsuarios6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JComboBox<String> jcomboxCliente;
-    private javax.swing.JTable tableReserva;
-    private javax.swing.JTextField txtDataExpiracao;
-    private javax.swing.JTextField txtDataReserva;
+    private javax.swing.JTable jTableVeiculos;
+    private javax.swing.JTextField jTextFieldControlExpiracao;
+    private javax.swing.JTextField jTextFieldControlReserva;
+    private javax.swing.JTextField jTextFieldControlemail;
+    private javax.swing.JTextField jTextFieldcontrolNome;
+    private javax.swing.JTable tablePessoas;
+    private javax.swing.JFormattedTextField txtDataExpiracao;
+    private javax.swing.JFormattedTextField txtDateReserva;
     // End of variables declaration//GEN-END:variables
 
-    private void reservarEnableButtons(boolean butt) {
-        if (butt) {
-            btnReservaIncluir.setEnabled(false);
-            btnReservaAlterar.setEnabled(false);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(false);
-            btnReservaSalvar.setEnabled(true);
-
-            
-            txtDataReserva.setEnabled(true);
-            txtDataExpiracao.setEnabled(true);
-
-        } else {
-
-            btnReservaIncluir.setEnabled(true);
-            btnReservaAlterar.setEnabled(true);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(true);
-
-          
-            txtDataReserva.setEnabled(false);
-            txtDataExpiracao.setEnabled(false);
-
-        }
-    }
-
-    private void enableBuReserva(boolean butt) {
-        if (butt) {
-            btnReservaIncluir.setEnabled(false);
-            btnReservaAlterar.setEnabled(false);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(false);
-            btnReservaSalvar.setEnabled(true);
-
-          
-            txtDataReserva.setEnabled(true);
-            txtDataExpiracao.setEnabled(true);
-        } else {
-            btnReservaIncluir.setEnabled(true);
-            btnReservaAlterar.setEnabled(true);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(true);
-            btnReservaSalvar.setEnabled(false);
-
-            
-            txtDataReserva.setEnabled(false);
-            txtDataExpiracao.setEnabled(false);
-        }
-    }
-
-    private void enableButt(boolean butt) {
-        if (butt) {
-            btnReservaIncluir.setEnabled(false);
-            btnReservaAlterar.setEnabled(false);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(false);
-            btnReservaSalvar.setEnabled(true);
-            btnVoltar.setEnabled(false);
-
-          
-            txtDataReserva.setEnabled(true);
-            txtDataExpiracao.setEnabled(true);
-
-        } else {
-            btnReservaIncluir.setEnabled(true);
-            btnReservaAlterar.setEnabled(true);
-            btnReservaCancelar.setEnabled(true);
-            btnReservaDeletar.setEnabled(true);
-            btnVoltar.setEnabled(true);
-            btnReservaSalvar.setEnabled(false);
-            clearFields();
-        }
-    }
-
-    public void clearFields() {
-      
-        txtDataExpiracao.setText("");
-        txtDataReserva.setText("");
-
-     
-        txtDataExpiracao.setEnabled(false);
-        txtDataReserva.setEnabled(false);
-    }
-
     private void imprimirDadosNaGrid(Iterator conjunto) {
-        DefaultTableModel model = (DefaultTableModel) tableReserva.getModel();
+        DefaultTableModel model = (DefaultTableModel) tablePessoas.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
             String[] linha = new String[4];
@@ -816,29 +779,4 @@ public class ReservaView extends javax.swing.JFrame {
         }
     }
 
-    private void transFerirDados(int codigo) {
-        try {
-            ReservaModel res = (ReservaModel) incluirReserva.getById(codigo);
-
-            //txtCpfCnpj.setText(res.getReserva_cliente() + "");
-            //txtCpfCnpj.setText(res.getReserva_cliente().getPessoa_nome() + "");
-            txtDataReserva.setText(res.getReserva_dataReserva() + "");
-            txtDataExpiracao.setText(res.getReserva_dataExpiracao() + "");
-            //jcomboxCliente.removeAllItems();
-            jcomboxCliente.addItem(res.getReserva_cliente().getPessoa_nome());
-            IdDeleteReserva = codigo;
-        } catch (Exception e) {
-        }
-    }
-
-    private void jcClientes() throws Exception {
-        PessoaBll pess_bll = new PessoaBll();
-        Iterator<PessoaModel> listaCliente = pess_bll.getAll();
-        jcomboxCliente.removeAllItems();
-        for (Iterator<PessoaModel> pessoamodel = listaCliente; pessoamodel.hasNext();) {
-            PessoaModel pess = pessoamodel.next();
-            jcomboxCliente.addItem(pess.getPessoa_nome());
-
-        }
-    }
 }
