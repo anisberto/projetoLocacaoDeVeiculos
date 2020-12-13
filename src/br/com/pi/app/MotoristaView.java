@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class MotoristaView extends javax.swing.JFrame {
 
     BufferedImage imagem;
+    byte[] imagemUpdate;
     String nomeUsuarioLogado;
     EnderecoBll endBll = new EnderecoBll();
     EnderecoModel endereco = new EnderecoModel();
@@ -693,7 +694,7 @@ public class MotoristaView extends javax.swing.JFrame {
             motoristaModel.setCnh_categoria(jComboBoxCategoria.getSelectedItem().toString());
             motoristaModel.setCnh_dataValidade(new java.sql.Date(new java.util.Date(txtValidade.getText()).getTime()));
             motoristaModel.setCnh_numeroRegistro(Integer.parseInt(txtNregistro.getText()));
-            motoristaModel.setCnh_imagem(Imagem_util.getImgBytes(imagem));
+            motoristaModel.setCnh_imagem(imagemUpdate);
             //Endereco
             endereco.setEndereco_bairro(txtMotoristaBairro.getText());
             endereco.setEndereco_cep(txtMotoristaCep.getText());
@@ -764,6 +765,7 @@ public class MotoristaView extends javax.swing.JFrame {
                 File file = path.getSelectedFile();
                 imagem = Imagem_util.setImagemDimensao(file.getAbsolutePath(), 300, 83);
                 lblImagem.setIcon(new ImageIcon(imagem));
+                imagemUpdate = Imagem_util.getImgBytes(imagem);
             } else {
                 JOptionPane.showMessageDialog(null, "Você não Selecionou uma Imagem!");
             }
@@ -859,6 +861,7 @@ public class MotoristaView extends javax.swing.JFrame {
             txtNregistro.setText(motoristaModel.getCnh_numeroRegistro() + "");
             jComboBoxCategoria.setSelectedItem(motoristaModel.getCnh_categoria().toString());
             lblImagem.setIcon(new ImageIcon(motoristaModel.getCnh_imagem()));
+            imagemUpdate = motoristaModel.getCnh_imagem();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
