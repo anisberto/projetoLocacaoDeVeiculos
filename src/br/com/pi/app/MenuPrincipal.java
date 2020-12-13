@@ -49,7 +49,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Sessão"));
 
-        jLabel1.setText("Usuario: ");
+        jLabel1.setText("Usuário: ");
 
         jLabel2.setText("Data: ");
 
