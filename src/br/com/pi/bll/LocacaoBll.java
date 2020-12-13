@@ -20,7 +20,7 @@ public class LocacaoBll implements ICRUD_GENERIC<LocacaoModel> {
     @Override
     public void add(LocacaoModel objeto) throws Exception {
         try {
-//            validate(objeto);
+            validate(objeto);
             dal.add(objeto);
         } catch (Exception e) {
             throw e;
@@ -75,15 +75,21 @@ public class LocacaoBll implements ICRUD_GENERIC<LocacaoModel> {
         }
     }
 
-    private void validate(LocacaoModel objeto) {
-        String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date(objeto.getLocacao_dataDeAlugamento().getTime()));
-        String dates[] = date.split("/");
-        int dia = Integer.parseInt(dates[0]);
-        int mes = Integer.parseInt(dates[1]);
-        int ano = Integer.parseInt(dates[2]);
-
-        if (dia < 0 || mes < 0 || ano < 0 || mes > 12) {
-            throw new IllegalArgumentException("Data Invalida! Defina uma data para Locação");
+    private void validate(LocacaoModel objetoTeste) {
+//        String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date(objetoTeste.getLocacao_dataDeAlugamento().getTime()));
+//        String dates[] = date.split("/");
+//        int dia = Integer.parseInt(dates[0]);
+//        int mes = Integer.parseInt(dates[1]);
+//        int ano = Integer.parseInt(dates[2]);
+//
+//        if (dia < 0 || mes < 0 || ano < 0 || mes > 12) {
+//            throw new IllegalArgumentException("Data Invalida! Defina uma data para Locação");
+//        }
+        if(objetoTeste.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("locado")){
+            throw new IllegalArgumentException("Veiculo já locado");
+        }
+        if(objetoTeste.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("vendido")){
+            throw new IllegalArgumentException("Veiculo vendido");
         }
     }
 

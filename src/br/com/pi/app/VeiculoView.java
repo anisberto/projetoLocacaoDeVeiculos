@@ -701,7 +701,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
-           MenuPrincipal menu = new MenuPrincipal();
+            MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
             menu.transferirDados(nomeUsuarioLogado);
             this.dispose();
@@ -742,7 +742,7 @@ public class VeiculoView extends javax.swing.JFrame {
             try {
                 imprimirDadosNaGrid(veiculoInclud.getAll());
             } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -871,14 +871,28 @@ public class VeiculoView extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não é Possivel Deletar este Veiculo!", "Veiculo vinculado a uma locação", JOptionPane.ERROR_MESSAGE);
+            int conf = JOptionPane.showConfirmDialog(null, "Ir para locações" , "Locações",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+            if (conf == 0) {
+                LocacaoView locacao;
+                try {
+                    locacao = new LocacaoView();
+                    locacao.setVisible(true);
+                    locacao.nomeUsuarioLogado = nomeUsuarioLogado;
+                    dispose();
+                } catch (Exception ex) {
+                    Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } finally {
             try {
-            jpDelecao.setVisible(false);
-                      imprimirDadosNaGridCompleta(veiculoInclud.getAll());
+                jpDelecao.setVisible(false);
+                imprimirDadosNaGridCompleta(veiculoInclud.getAll());
             } catch (Exception ex) {
                 Logger.getLogger(VeiculoView.class.getName()).log(Level.SEVERE, null, ex);
             }
-  }
+        }
     }//GEN-LAST:event_btnDeletarTableActionPerformed
 
     private void txtRenavamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRenavamKeyReleased

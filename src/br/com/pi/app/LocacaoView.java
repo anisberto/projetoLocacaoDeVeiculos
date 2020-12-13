@@ -653,11 +653,11 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Codigo", "Cliente", "Motorista", "Veiculo"
+                "Identificador", "Codigo", "Cliente", "Motorista", "Veiculo", "Situação Veiculo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1368,7 +1368,8 @@ public class LocacaoView extends javax.swing.JFrame {
                 locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorLocacao.getText().replace(".", "").replace(",", "")));
                 locaVeiculo.setLocacao_valorCalcao(Integer.parseInt(txtValorCaucao.getText().replace(".", "").replace(",", "")));
                 locaVeiculo.setLocacao_motorista((MotoristaModel) motoristas.getByNome(jcMotorista.getSelectedItem().toString()));
-                locaVeiculo.setLocacao_veiculo((VeiculoModel) jcVeiculo.getSelectedItem());
+                VeiculoModel veiculoIncluindo = (VeiculoModel) jcVeiculo.getSelectedItem();
+                locaVeiculo.setLocacao_veiculo(veiculoIncluindo);
                 locaVeiculo.setLocacao_administrador(admInclud);
 
                 if (jrFisica.isSelected()) {
@@ -1382,27 +1383,27 @@ public class LocacaoView extends javax.swing.JFrame {
                 }
                 if (incluir) {
                     incluirLocacao.add(locaVeiculo);
-                    
-                                                       JOptionPane.showMessageDialog(null, "VEICULO LOCADO");
-                                    JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
-                                            + "--------------------------------------------------------------------------------------------------------------------\n"
-                                            + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
-                                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
-                                            + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
-                                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
-                                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
-                                            + "--------------------------------------------------------------------------------------------------------------------\n"
-                                            + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
+                    veiculoIncluindo.setVeiculo_situacaoVeiculo("Locado");
+                    veiculobll.update(veiculoIncluindo);
+
+                    JOptionPane.showMessageDialog(null, "VEICULO LOCADO");
+                    JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
+                            + "--------------------------------------------------------------------------------------------------------------------\n"
+                            + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
+                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
+                            + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
+                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
+                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
+                            + "--------------------------------------------------------------------------------------------------------------------\n"
+                            + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
                 } else {
 
                 }
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Preencha as datas corretamente: " + e.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Element Error: " + ex.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
         } finally {
             enableButtFields(false);
@@ -1596,19 +1597,19 @@ public class LocacaoView extends javax.swing.JFrame {
 
                 if (incluir) {
                     incluirLocacao.add(locaVeiculo);
-                    
+
                     JOptionPane.showMessageDialog(null, "RESERVA ATENDIDA - VEICULO LOCADO");
-                                    JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
-                                            + "--------------------------------------------------------------------------------------------------------------------\n"
-                                            + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
-                                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
-                                            + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
-                                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
-                                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
-                                            + "--------------------------------------------------------------------------------------------------------------------\n"
-                                            + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
-                
+                    JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
+                            + "--------------------------------------------------------------------------------------------------------------------\n"
+                            + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
+                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
+                            + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
+                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
+                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
+                            + "--------------------------------------------------------------------------------------------------------------------\n"
+                            + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
+
                 } else {
 
                 }
@@ -1685,9 +1686,27 @@ public class LocacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDevolverKeyReleased
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
-        // TODO add your handling code here:
+        try {
+            int id = Integer.parseInt(JtLocaGerir.getValueAt(JtLocaGerir.getSelectedRow(), 0).toString());
+            LocacaoModel locDevolucao = incluirLocacao.getById(id);
+            locDevolucao.getLocacao_veiculo().setVeiculo_situacaoVeiculo("Disponivel");
+            veiculobll.update(locDevolucao.getLocacao_veiculo());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Atenção: " + e.getMessage());
+        }finally{
+            clearDevoFields();
+        }
     }//GEN-LAST:event_btnDevolverActionPerformed
-
+    public void clearDevoFields(){
+         txtNomeDevo.setText("");
+        txtcpfDevo.setText("");
+        txtnomeMotDevo.setText("");
+        txtCnhDevo.setText("");
+        txtDataDevo.setText("");
+        txtKmDevo.setText("");
+        txtVeiculoDevo.setText("");
+        txtRenavamDevo.setText("");
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2088,13 +2107,21 @@ public class LocacaoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JtLocaGerir.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
-            String[] linha = new String[5];
+            String[] linha = new String[6]; 
             LocacaoModel locaTable = (LocacaoModel) conjunto.next();
             linha[0] = locaTable.getLocacao_idem() + "";
             linha[1] = locaTable.getLocacao_codigoDelocacao() + "";
             linha[2] = locaTable.getLocacao_pessoa().getPessoa_nome();
             linha[3] = locaTable.getLocacao_motorista().getMotorista_nome();
             linha[4] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
+            String situ = "";
+            if(locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("Disponivel")){
+                situ = "Veiculo Devolvido";
+            }else{
+                situ = "Veiculo Devolvido";
+            }
+            linha[5] = situ;
+            
             model.addRow(linha);
         }
     }

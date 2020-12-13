@@ -22,12 +22,11 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
 
     @Override
     public void add(MarcaModel objeto) throws Exception {
-        marcaModel = (MarcaModel) objeto;
         String sql = "INSERT INTO marca(marca_descricao)"
                 + "VALUES (?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, marcaModel.getMarca_descricao());
+        ps.setObject(1, objeto.getMarca_descricao());
         ps.executeUpdate();
 
     }
@@ -61,11 +60,11 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
-            marcaModel = new MarcaModel();
-            marcaModel.setMarca_idem(rs.getInt("marca_idem"));
-            marcaModel.setMarca_descricao(rs.getString("marca_descricao"));
+           MarcaModel marcaLista = new MarcaModel();
+            marcaLista.setMarca_idem(rs.getInt("marca_idem"));
+            marcaLista.setMarca_descricao(rs.getString("marca_descricao"));
 
-            pessoaModelList.add(marcaModel);
+            pessoaModelList.add(marcaLista);
         }
         return pessoaModelList.iterator();
     }
@@ -78,13 +77,13 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
+            MarcaModel marcaById = new MarcaModel();
         if (rs.next()) {
-            marcaModel = new MarcaModel();
-            marcaModel.setMarca_idem(rs.getInt("marca_idem"));
-            marcaModel.setMarca_descricao(rs.getString("marca_descricao"));
+            marcaById.setMarca_idem(rs.getInt("marca_idem"));
+            marcaById.setMarca_descricao(rs.getString("marca_descricao"));
         }
 
-        return marcaModel;
+        return marcaById;
     }
 
     @Override

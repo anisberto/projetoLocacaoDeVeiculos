@@ -29,6 +29,7 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         try {
             veiculoDal.delete(n);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -37,6 +38,7 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         try {
             veiculoDal.update(objeto);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -45,6 +47,7 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         try {
             return veiculoDal.getAll();
         } catch (Exception e) {
+            
         }
         throw new IllegalArgumentException("Erro Bll");
     }
@@ -54,8 +57,8 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         try {
             return veiculoDal.getById(n);
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     @Override
@@ -63,8 +66,8 @@ public class VeiculoBll implements ICRUD_GENERIC<VeiculoModel> {
         try {
             return veiculoDal.getByNome(nome);
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     @Override

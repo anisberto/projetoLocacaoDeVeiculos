@@ -118,6 +118,7 @@ public class ModeloView extends javax.swing.JFrame {
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/salve-24.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSalvar.setEnabled(false);
         btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalvar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -228,7 +229,15 @@ public class ModeloView extends javax.swing.JFrame {
             new String [] {
                 "Identificador", "Modelo", "Marca"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableModelos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableModelosMouseClicked(evt);
@@ -289,9 +298,9 @@ public class ModeloView extends javax.swing.JFrame {
         while (conjunto.hasNext()) {
             String[] linha = new String[3];
             ModeloModel objetoModelo = (ModeloModel) conjunto.next();
-            linha[0] = objetoModelo.getModelo_descricao();
-            linha[1] = objetoModelo.getModelo_marca().getMarca_descricao();
-            linha[2] = objetoModelo.getModelo_idem()+ "";
+            linha[0] = objetoModelo.getModelo_idem()+ "";
+            linha[1] = objetoModelo.getModelo_descricao();
+            linha[2] = objetoModelo.getModelo_marca().getMarca_descricao();
 
             model.addRow(linha);
         }
@@ -302,7 +311,7 @@ public class ModeloView extends javax.swing.JFrame {
                 int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção da Modelo: " + incluirModelo.getById(idDelete).getModelo_descricao(), "Deleção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
-                    incluirModelo.delete(idDelete);
+                    incluirModelo.delete(Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString()));
                     JOptionPane.showMessageDialog(null, "Modelo deletada com sucesso");
                     clearFields();
                 } else {
@@ -381,7 +390,7 @@ public class ModeloView extends javax.swing.JFrame {
     private void jTableModelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableModelosMouseClicked
         
         try {
-            int id = Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
+            int id = Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString());
             transFerirDados(id);
         } catch (Exception e) {
         }
@@ -498,7 +507,6 @@ public class ModeloView extends javax.swing.JFrame {
         try {
             ModeloModel modelo = (ModeloModel)incluirModelo.getById(codigo);
             txtDescricao.setText(modelo.getModelo_descricao());
-            //FALTA PARTE
             idDelete = codigo;
         } catch (Exception e) {
         }

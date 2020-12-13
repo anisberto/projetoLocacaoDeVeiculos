@@ -55,6 +55,7 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             prep.setInt(1, n);
             prep.executeUpdate();
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -108,8 +109,8 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             }
             return listaDeVeiculos.iterator();
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     @Override
@@ -136,8 +137,8 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             }
             return veiculo;
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     @Override
@@ -163,8 +164,8 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             }
             return veiculo;
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
     public VeiculoModel getByIdModelo(int nome) throws Exception {
         try {
@@ -188,8 +189,8 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             }
             return veiculo;
         } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     @Override

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- * @author Anthonny Max
- */
 public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     private Connection conexao;
@@ -34,7 +30,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
                 "VALUES (?, ?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, objeto.getModelo_descricao());
+        ps.setString(1, objeto.getModelo_descricao());
         ps.setInt(2, objeto.getModelo_marca().getMarca_idem());
         ps.executeUpdate();
 
@@ -42,7 +38,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
+        String sql = "DELETE FROM modelo WHERE modelo_idem = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,n);
         ps.executeUpdate();
