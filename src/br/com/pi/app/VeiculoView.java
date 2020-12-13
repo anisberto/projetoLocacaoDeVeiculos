@@ -236,7 +236,7 @@ public class VeiculoView extends javax.swing.JFrame {
             }
         });
 
-        txtPrecoCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtPrecoCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         txtPrecoCompra.setEnabled(false);
 
         jLabel5.setText("Preço de Compra");
@@ -257,7 +257,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
         jLabel7.setText("Preço de Venda");
 
-        txtPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        txtPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####.00"))));
         txtPrecoVenda.setEnabled(false);
 
         jLabel11.setText("Ano do Modelo");
@@ -271,7 +271,7 @@ public class VeiculoView extends javax.swing.JFrame {
 
         jLabel12.setText("Quilometragem");
 
-        txtQuilometragem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtQuilometragem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtQuilometragem.setEnabled(false);
 
         jcModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
@@ -297,8 +297,17 @@ public class VeiculoView extends javax.swing.JFrame {
         jcTipoVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Veiculo", "Sedan", "Hatch", "SUV", "Pickup" }));
         jcTipoVeiculo.setEnabled(false);
 
-        jcTipoCombustivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Combustivel", "Gasolina", "Etanol", "Gás" }));
+        jcTipoCombustivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Combustivel", "Flex", "Gasolina", "Etanol", "Gás" }));
         jcTipoCombustivel.setEnabled(false);
+        jcTipoCombustivel.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jcTipoCombustivelPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         btnNovaMarca.setText("+");
         btnNovaMarca.addActionListener(new java.awt.event.ActionListener() {
@@ -876,6 +885,10 @@ public class VeiculoView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtRenavamKeyReleased
 
+    private void jcTipoCombustivelPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcTipoCombustivelPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcTipoCombustivelPopupMenuWillBecomeInvisible
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1069,6 +1082,8 @@ public class VeiculoView extends javax.swing.JFrame {
 
             jcSituacao.removeAllItems();
             jcSituacao.addItem(veiculo.getVeiculo_situacaoVeiculo());
+            jcSituacao.addItem("Vendido");
+            jcSituacao.addItem("Disponivel");
         } catch (Exception e) {
         }
     }

@@ -108,5 +108,4 @@ public class MotoristaModel {
     public String toString() {
         return motorista_nome ;
     }
-    
 }

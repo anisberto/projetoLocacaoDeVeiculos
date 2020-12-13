@@ -60,7 +60,7 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
         Statement st = conexao.createStatement();;
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
-            administradorModel = new AdministradorModel();
+            AdministradorModel administradorModel = new AdministradorModel();
             administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
             administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
             administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
@@ -76,22 +76,23 @@ public class AdministradorDal implements ICRUD_GENERIC<AdministradorModel> {
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
+        AdministradorModel administradorModelId = new AdministradorModel();
         if (rs.next()) {
-            administradorModel = new AdministradorModel();
-            administradorModel.setAdministrador_idem(rs.getInt("adm_idem"));
-            administradorModel.setAdministrador_nome(rs.getString("adm_nome"));
-            administradorModel.setAdministrador_senha(rs.getString("adm_senha"));
-            administradorModel.setAdministrador_usuario(rs.getString("adm_usuario"));
+            administradorModelId.setAdministrador_idem(rs.getInt("adm_idem"));
+            administradorModelId.setAdministrador_nome(rs.getString("adm_nome"));
+            administradorModelId.setAdministrador_senha(rs.getString("adm_senha"));
+            administradorModelId.setAdministrador_usuario(rs.getString("adm_usuario"));
         }
-        return administradorModel;
+        return administradorModelId;
     }
 
     @Override
     public AdministradorModel getByNome(String nome) throws Exception {
         AdministradorModel adm = new AdministradorModel();
-        String sql = "SELECT * FROM administrador WHERE adm_usuario=?";
+        String sql = "SELECT * FROM administrador WHERE adm_usuario=? or adm_nome=?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, nome);
+        preparedStatement.setString(2, nome);
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {
             adm = new AdministradorModel();
