@@ -1390,11 +1390,11 @@ public class LocacaoView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
-                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ "+locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
+                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() +"\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
-                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
-                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
+                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
+                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
                 } else {
@@ -1602,7 +1602,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + "\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ "+locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
                             + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
                             + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
@@ -2118,7 +2118,7 @@ public class LocacaoView extends javax.swing.JFrame {
             if(locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("Disponivel")){
                 situ = "Veiculo Devolvido";
             }else{
-                situ = "Veiculo Devolvido";
+                situ = locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo();
             }
             linha[5] = situ;
             
