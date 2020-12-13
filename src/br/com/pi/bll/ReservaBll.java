@@ -4,6 +4,7 @@ import br.com.pi.dal.ReservaDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.ReservaModel;
 
+import java.util.Date;
 import java.util.Iterator;
 
 public class ReservaBll implements ICRUD_GENERIC {
@@ -17,7 +18,7 @@ public class ReservaBll implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
         try {
-        //    validaReserva((ReservaModel) objeto);
+            validaReserva((ReservaModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
             throw e;
@@ -74,17 +75,27 @@ public class ReservaBll implements ICRUD_GENERIC {
     }
 
     public void validaReserva(ReservaModel objeto) throws Exception {
+        Date dataAtual = new Date();
+        if(new java.util.Date(objeto.getReserva_dataReserva()).getTime() < dataAtual.getTime()){
+            throw new Exception("Data invalida, coloque uma data superior a hoje");
+        }
+        if(new java.util.Date(objeto.getReserva_dataExpiracao()).getTime() < dataAtual.getTime()){
+            throw new Exception("Data invalida, coloque uma data superior a hoje");
+        }
+        if(new java.util.Date(objeto.getReserva_dataExpiracao()).getTime() < new java.util.Date(objeto.getReserva_dataReserva()).getTime()){
+            throw new Exception("A data de expiração deve ser maior que a data de reserva");
+        }
 
-        if (objeto.getReserva_dataExpiracao().toString().equals("")) {
+        if (objeto.getReserva_dataExpiracao().isEmpty()) {
             throw new Exception("Informe a data da reserva de expiração");
         }
-        if (objeto.getReserva_dataReserva().toString().equals("")) {
+        if (objeto.getReserva_dataReserva().isEmpty()) {
             throw new Exception("Informe a data da reserva");
         }
-        if (objeto.getReserva_veiculo() == null) {
+        if (objeto.getReserva_veiculo().getVeiculo_anoFabrica().isEmpty()) {
             throw new Exception("Informe um veiculo");
         }
-        if (objeto.getReserva_cliente() == null) {
+        if (objeto.getReserva_cliente().getPessoa_nome().isEmpty()) {
             throw new Exception("Informe um Cliente");
         }
 

@@ -586,7 +586,10 @@ public class ReservaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
     private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltar1ActionPerformed
-        // TODO add your handling code here:
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+        menu.transferirDados(nomeUsuarioLogado);
+        this.dispose();
     }//GEN-LAST:event_btnVoltar1ActionPerformed
 
     private void btnalterarControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalterarControlActionPerformed
