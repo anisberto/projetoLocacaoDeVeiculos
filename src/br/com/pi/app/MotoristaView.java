@@ -710,6 +710,7 @@ public class MotoristaView extends javax.swing.JFrame {
             motoristaBll.updateAll(motoristaModel, endereco);
             atualizarGrid();
 
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
@@ -952,6 +953,7 @@ public class MotoristaView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     private void atualizarGrid() throws Exception {
+        limparCampos();
         DefaultTableModel model = (DefaultTableModel) jTableMotorista.getModel();
         model.setRowCount(0);
         Object[] linha;
@@ -989,6 +991,30 @@ public class MotoristaView extends javax.swing.JFrame {
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }
+    }
+
+    private void limparCampos(){
+        String nada ="";
+        txtNome.setText("");
+        txtEmail.setText("");
+        txtCpf.setText(nada);
+        txtTelefone.setText(nada);
+        txtRg.setText(nada);
+        //endereco
+        txtIdEndMotorista.setText(nada);
+        txtMotoristaBairro.setText(nada);
+        txtMotoristaCep.setText(nada);
+        txtMotoristaCidade.setText(nada);
+        txtMotoristaComplemento.setText(nada);
+        txtMotoristaNumero.setText(nada);
+        txtMotoristaRua.setText(nada);
+        //cnh
+
+        txtValidade.setText(nada);
+        txtNregistro.setText(nada);
+        jComboBoxCategoria.setSelectedItem("Categoria CNH");
+        lblImagem.setIcon(null);
+
     }
 
     public static void main(String args[]) {

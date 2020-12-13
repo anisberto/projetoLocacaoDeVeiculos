@@ -124,18 +124,6 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         }
     }
 
-    public static boolean isValidEmailAddressRegex(String email) {
-        boolean isEmailIdValid = false;
-        if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                isEmailIdValid = true;
-            }
-        }
-        return isEmailIdValid;
-    }
 
     public void validaPessoa(PessoaPFModel objeto) throws Exception {
         String nome = objeto.getPessoa().getPessoa_nome().trim().toLowerCase();
@@ -146,11 +134,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             }
         }
 
-        // Verifica se EMAIL é válido
-        if (isValidEmailAddressRegex(objeto.getPessoa().getPessoa_email()) == false) {
-            throw new Exception("Não foi possível concluir sua solicitação"
-                    + "\nO EMAIL informado não é válido");
-        }
+
 
         if (objeto.getPessoa_pf_cpf().equals("")) {
             throw new Exception("Informe o CPF do usuario");
@@ -160,11 +144,7 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         }
    
         
-        //valida CPF
-        if (isValidCPF(objeto.getPessoa_pf_cpf().replace(".", "").replace("-", "")) == false) {
-            throw new Exception("Não foi possível concluir sua solicitação"
-                    + "\nO CPF informado não é válido");
-        }
+
 
     }
 
@@ -229,6 +209,20 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             return (false);
         }
     }
+
+    public static boolean isValidEmailAddressRegex(String email) {
+        boolean isEmailIdValid = false;
+        if (email != null && email.length() > 0) {
+            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+                isEmailIdValid = true;
+            }
+        }
+        return isEmailIdValid;
+    }
+
 
     @Override
     public int addReturn(Object objeto) throws Exception {
