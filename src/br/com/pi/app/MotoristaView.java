@@ -858,8 +858,7 @@ public class MotoristaView extends javax.swing.JFrame {
             txtValidade.setText(stringDate);
             txtNregistro.setText(motoristaModel.getCnh_numeroRegistro() + "");
             jComboBoxCategoria.setSelectedItem(motoristaModel.getCnh_categoria().toString());
-//            imagem = Imagem_util.setImagemDimensao(motoristaModel.getCnh_imagem());
-//            lblImagem.setIcon(new ImageIcon(imagem));
+            lblImagem.setIcon(new ImageIcon(motoristaModel.getCnh_imagem()));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
