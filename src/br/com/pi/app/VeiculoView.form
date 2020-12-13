@@ -429,7 +429,7 @@
                 <Component class="javax.swing.JFormattedTextField" name="txtPrecoCompra">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                      <Format format="#,##0.00" subtype="-1" type="0"/>
+                      <Format format="###0.00" subtype="-1" type="0"/>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
@@ -473,7 +473,7 @@
                 <Component class="javax.swing.JFormattedTextField" name="txtPrecoVenda">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                      <Format format="#,###.00" subtype="-1" type="0"/>
+                      <Format format="####.00" subtype="-1" type="0"/>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
@@ -499,7 +499,7 @@
                 <Component class="javax.swing.JFormattedTextField" name="txtQuilometragem">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                      <Format format="#,##0.00" subtype="-1" type="0"/>
+                      <Format format="#0" subtype="-1" type="0"/>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
@@ -558,15 +558,19 @@
                 <Component class="javax.swing.JComboBox" name="jcTipoCombustivel">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="5">
                         <StringItem index="0" value="Tipo de Combustivel"/>
-                        <StringItem index="1" value="Gasolina"/>
-                        <StringItem index="2" value="Etanol"/>
-                        <StringItem index="3" value="G&#xe1;s"/>
+                        <StringItem index="1" value="Flex"/>
+                        <StringItem index="2" value="Gasolina"/>
+                        <StringItem index="3" value="Etanol"/>
+                        <StringItem index="4" value="G&#xe1;s"/>
                       </StringArray>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcTipoCombustivelPopupMenuWillBecomeInvisible"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>

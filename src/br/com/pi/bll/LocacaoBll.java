@@ -20,7 +20,7 @@ public class LocacaoBll implements ICRUD_GENERIC<LocacaoModel> {
     @Override
     public void add(LocacaoModel objeto) throws Exception {
         try {
-            validate(objeto);
+//            validate(objeto);
             dal.add(objeto);
         } catch (Exception e) {
             throw e;

@@ -136,38 +136,34 @@ public class PessoaDal implements ICRUD_GENERIC {
 
     @Override
     public Object getByNome(String nome) throws Exception {
-        String sql = "SELECT * FROM Pessoas WHERE pessoa_email =?";
+        String sql = "SELECT * FROM Pessoas WHERE pessoa_nome =?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, nome);
         ResultSet rs = preparedStatement.executeQuery();
 
+           PessoaModel pessoaName = new PessoaModel();
         if (rs.next()) {
-            pessoaModel = new PessoaModel();
-            pessoaModel.setPessoa_idem(rs.getInt("pessoa_idem"));
-            pessoaModel.setPessoa_nome(rs.getString("pessoa_nome"));
-            pessoaModel.setPessoa_email(rs.getString("pessoa_email"));
-            pessoaModel.setPessoa_telefone(rs.getString("pessoa_telefone"));
+            pessoaName.setPessoa_idem(rs.getInt("pessoa_idem"));
+            pessoaName.setPessoa_nome(rs.getString("pessoa_nome"));
+            pessoaName.setPessoa_email(rs.getString("pessoa_email"));
+            pessoaName.setPessoa_telefone(rs.getString("pessoa_telefone"));
         }
 
-        return pessoaModel;
+        return pessoaName;
     }
 
     @Override
     public void add(Object objeto) throws Exception {
-        pessoaModel = (PessoaModel) objeto;
+        PessoaModel pessoaInclud = (PessoaModel) objeto;
         String sql = "INSERT INTO Pessoas(pessoa_nome, pessoa_telefone, pessoa_email,pessoa_endereco)"
                 + "VALUES (?,?,?,?)";
 
         PreparedStatement ps = conexao.prepareStatement(sql);
-
-        ps.setObject(1, pessoaModel.getPessoa_nome());
-        ps.setObject(2, pessoaModel.getPessoa_telefone());
-        ps.setObject(3, pessoaModel.getPessoa_email());
-        ps.setObject(4, pessoaModel.getPessoa_endereco().getEndereco_iden());
+        ps.setObject(1, pessoaInclud.getPessoa_nome());
+        ps.setObject(2, pessoaInclud.getPessoa_telefone());
+        ps.setObject(3, pessoaInclud.getPessoa_email());
+        ps.setObject(4, pessoaInclud.getPessoa_endereco().getEndereco_iden());
         ps.executeUpdate();
-
     }
-    
-
 }
