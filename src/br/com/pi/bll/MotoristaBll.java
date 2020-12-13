@@ -2,6 +2,7 @@ package br.com.pi.bll;
 
 import br.com.pi.dal.MotoristaDal;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.MotoristaModel;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,12 +18,38 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         }
     }
 
+    public void addAll(MotoristaModel motoristaModel, EnderecoModel endereco) throws Exception {
+        try {
+            motoristaDal.addAll(motoristaModel, endereco);
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
+    public void updateAll(MotoristaModel motoristaModel, EnderecoModel endereco) throws Exception {
+        try {
+            motoristaDal.updateAll(motoristaModel, endereco);
+        } catch (Exception e) {
+              throw e;
+        }
+    }
+
+    public void deleteAll(int MotoristaId, int Idendereco) throws Exception {
+        try {
+            motoristaDal.deleteAll(MotoristaId, Idendereco);
+        } catch (Exception e) {
+              throw e;
+        }
+    }
+
     @Override
     public void add(MotoristaModel objeto) throws Exception {
         try {
-            validate(objeto);
+     //       validate(objeto);
             motoristaDal.add(objeto);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -40,6 +67,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         try {
             motoristaDal.update(objeto);
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -76,21 +104,9 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
     }
 
     public void validate(MotoristaModel obj) {
-        try {
-            ArrayList<MotoristaModel> listaMote = (ArrayList<MotoristaModel>) getAll();
-            for (MotoristaModel lista : listaMote) {
-                if (obj.getCnh_numeroRegistro() == lista.getCnh_numeroRegistro()) {
-                    throw new IllegalArgumentException("Numero de CNH já cadastrada");
-                }
-                if (obj.getMotorista_cpf().equalsIgnoreCase(lista.getMotorista_cpf())) {
-                    throw new IllegalArgumentException("Numero de CPF já cadastrada");
-                }
-                if (obj.getMotorista_rg().equalsIgnoreCase(lista.getMotorista_rg())) {
-                    throw new IllegalArgumentException("Numero de RG já cadastrada");
-                }
-            }
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("ERRO NA VALIDAÇÃO!");
+        if(obj.getMotorista_nome().isEmpty()){
+
         }
+
     }
 }

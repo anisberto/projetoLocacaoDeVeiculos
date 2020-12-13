@@ -7,12 +7,16 @@ import br.com.pi.design_patterns.template.motorista.*;
 import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.MotoristaModel;
 import br.com.pi.util.Imagem_util;
-import interfaces.EnderecoInterface;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,19 +31,22 @@ public class MotoristaView extends javax.swing.JFrame {
     String nomeUsuarioLogado;
     EnderecoBll endBll = new EnderecoBll();
     EnderecoModel endereco = new EnderecoModel();
-    EnderecoInterface novoEnderecoInter = null;
     boolean incluirEndereco = true;
     int idDeleteCliente;
-    
+
     //Watlas
+    int idMotorista;
+    int idControl;
     MotoristaModel motoristaModel;
     MotoristaBll motoristaBll;
-    
+    DateFormat df2 = DateFormat.getDateInstance(DateFormat.MEDIUM, new Locale("pt", "BR"));
 
     public MotoristaView() throws Exception {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
         motoristaBll = new MotoristaBll();
+        atualizarGrid();
+        btnSalvarMotorista.setEnabled(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +84,7 @@ public class MotoristaView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUsuarios = new javax.swing.JTable();
+        jTableMotorista = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtMotoristaRua = new javax.swing.JFormattedTextField();
@@ -113,6 +120,11 @@ public class MotoristaView extends javax.swing.JFrame {
         btnDeletar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDeletar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnDeletar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
         btnIncluir.setText("Incluir");
@@ -212,7 +224,35 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jLabel2.setText("CPF");
 
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpfKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("RG");
+
+        txtRg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRgKeyTyped(evt);
+            }
+        });
+
+        try {
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefoneKeyTyped(evt);
+            }
+        });
 
         jLabel5.setText("Telefone");
 
@@ -221,6 +261,23 @@ public class MotoristaView extends javax.swing.JFrame {
         jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria CNH", "A", "B", "AB", "AC", "C", "AD", "D", "E" }));
 
         jLabel9.setText("Validade");
+
+        try {
+            txtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtValidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValidadeKeyTyped(evt);
+            }
+        });
+
+        txtNregistro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNregistroKeyTyped(evt);
+            }
+        });
 
         jLabel10.setText("Nº Registro");
 
@@ -337,8 +394,8 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Motorista"));
 
-        jTableUsuarios.setAutoCreateRowSorter(true);
-        jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMotorista.setAutoCreateRowSorter(true);
+        jTableMotorista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -346,7 +403,12 @@ public class MotoristaView extends javax.swing.JFrame {
                 "Identificador", "Nome", "CPF", "Nº CNH", "CATEGORIA"
             }
         ));
-        jScrollPane1.setViewportView(jTableUsuarios);
+        jTableMotorista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableMotoristaMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableMotorista);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -354,11 +416,15 @@ public class MotoristaView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1)
+                .addGap(28, 28, 28))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -371,11 +437,28 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jLabel18.setText("CEP");
 
+        try {
+            txtMotoristaCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtMotoristaCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMotoristaCepKeyTyped(evt);
+            }
+        });
+
         jLabel19.setText("Complemento");
 
         cboMotoristaUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel3.setText("Número");
+
+        txtMotoristaNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMotoristaNumeroKeyTyped(evt);
+            }
+        });
 
         jLabel8.setText("ID");
 
@@ -519,6 +602,11 @@ public class MotoristaView extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/excluir_small.png"))); // NOI18N
         jButton1.setText("Deletar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -590,9 +678,39 @@ public class MotoristaView extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
-            incluirEndereco = false;
-            enableBuEndereco(true);
+//            incluirEndereco = false;
+//            enableBuEndereco(true);
+            motoristaModel = new MotoristaModel();
+            endereco = new EnderecoModel();
+
+            motoristaModel.setMotorista_nome(txtNome.getText());
+            motoristaModel.setMotorista_email(txtEmail.getText());
+            motoristaModel.setMotorista_cpf(txtCpf.getText());
+            motoristaModel.setMotorista_rg(txtRg.getText());
+            motoristaModel.setMotorista_telefone(txtTelefone.getText());
+            motoristaModel.setMotorista_idem(idMotorista);
+            //CNH
+            motoristaModel.setCnh_categoria(jComboBoxCategoria.getSelectedItem().toString());
+            motoristaModel.setCnh_dataValidade(new java.sql.Date(new java.util.Date(txtValidade.getText()).getTime()));
+            motoristaModel.setCnh_numeroRegistro(Integer.parseInt(txtNregistro.getText()));
+            motoristaModel.setCnh_imagem(Imagem_util.getImgBytes(imagem));
+            //Endereco
+            endereco.setEndereco_bairro(txtMotoristaBairro.getText());
+            endereco.setEndereco_cep(txtMotoristaCep.getText());
+            endereco.setEndereco_cidade(txtMotoristaCidade.getText());
+            endereco.setEndereco_complemento(txtMotoristaComplemento.getText());
+            endereco.setEndereco_estado(cboMotoristaUF.getSelectedItem().toString());
+            endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+            endereco.setEndereco_rua(txtMotoristaRua.getText());
+            endereco.setEndereco_iden(Integer.parseInt(txtIdEndMotorista.getText()));
+            //MotoristaComEndereco
+            motoristaModel.setMotorista_endereco(endereco);
+
+            motoristaBll.updateAll(motoristaModel, endereco);
+            atualizarGrid();
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -621,7 +739,7 @@ public class MotoristaView extends javax.swing.JFrame {
         try {
             limparEnderecoMotorista();
             incluirEndereco = true;
-            enderecoMotoristaEnableButtons(true);
+            //    enderecoMotoristaEnableButtons(true);
             MotoristaModel m = new MotoristaModel();
             m.setCnh_imagem(Imagem_util.getImgBytes(imagem));
 
@@ -630,7 +748,9 @@ public class MotoristaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void jTableMotoristaControlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMotoristaControlMouseClicked
-        // TODO add your handling code here:
+        //idMotorista = Integer.parseInt(jTableMotorista.getValueAt(jTableMotorista.getSelectedRow(), 0).toString());
+        idControl = Integer.parseInt(jTableMotoristaControl.getValueAt(jTableMotoristaControl.getSelectedRow(), 0).toString());
+        jTextFieldpesquisa.setText(jTableMotoristaControl.getValueAt(jTableMotoristaControl.getSelectedRow(), 1).toString());
     }//GEN-LAST:event_jTableMotoristaControlMouseClicked
 
     private void btnImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagemActionPerformed
@@ -657,23 +777,22 @@ public class MotoristaView extends javax.swing.JFrame {
         OrdenaEmail email;
         OrdenaRg rg;
         try {
-            if(jComboBoxpesquisa.getSelectedItem().toString().contains("Nome")){
+            if (jComboBoxpesquisa.getSelectedItem().toString().contains("Nome")) {
                 nome = new OrdenaNome();
-                imprimirNaGrid(nome.getAll());     
+                imprimirNaGrid(nome.getAll());
             }
-            if(jComboBoxpesquisa.getSelectedItem().toString().contains("CPF")){
+            if (jComboBoxpesquisa.getSelectedItem().toString().contains("CPF")) {
                 cpf = new OrdenaCpf();
-                imprimirNaGrid(cpf.getAll());     
+                imprimirNaGrid(cpf.getAll());
             }
-            if(jComboBoxpesquisa.getSelectedItem().toString().contains("Email")){
+            if (jComboBoxpesquisa.getSelectedItem().toString().contains("Email")) {
                 email = new OrdenaEmail();
-                imprimirNaGrid(email.getAll());     
+                imprimirNaGrid(email.getAll());
             }
-            if(jComboBoxpesquisa.getSelectedItem().toString().contains("RG")){
+            if (jComboBoxpesquisa.getSelectedItem().toString().contains("RG")) {
                 rg = new OrdenaRg();
-                imprimirNaGrid(rg.getAll());     
+                imprimirNaGrid(rg.getAll());
             }
-
 
         } catch (Exception e) {
         }
@@ -683,7 +802,7 @@ public class MotoristaView extends javax.swing.JFrame {
         try {
             motoristaModel = new MotoristaModel();
             endereco = new EnderecoModel();
-            
+
             motoristaModel.setMotorista_nome(txtNome.getText());
             motoristaModel.setMotorista_email(txtEmail.getText());
             motoristaModel.setMotorista_cpf(txtCpf.getText());
@@ -695,25 +814,173 @@ public class MotoristaView extends javax.swing.JFrame {
             motoristaModel.setCnh_numeroRegistro(Integer.parseInt(txtNregistro.getText()));
             motoristaModel.setCnh_imagem(Imagem_util.getImgBytes(imagem));
             //Endereco
-            
+            endereco.setEndereco_bairro(txtMotoristaBairro.getText());
+            endereco.setEndereco_cep(txtMotoristaCep.getText());
+            endereco.setEndereco_cidade(txtMotoristaCidade.getText());
+            endereco.setEndereco_complemento(txtMotoristaComplemento.getText());
+            endereco.setEndereco_estado(cboMotoristaUF.getSelectedItem().toString());
+            endereco.setEndereco_numero(Integer.parseInt(txtMotoristaNumero.getText()));
+            endereco.setEndereco_rua(txtMotoristaRua.getText());
+            //MotoristaComEndereco
+            motoristaModel.setMotorista_endereco(endereco);
+
+            motoristaBll.addAll(motoristaModel, endereco);
+            atualizarGrid();
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarMotoristaActionPerformed
-    
-    
-    private void imprimirNaGrid(ArrayList<MotoristaModel> dados) {
+
+    private void jTableMotoristaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMotoristaMouseReleased
+        idMotorista = Integer.parseInt(jTableMotorista.getValueAt(jTableMotorista.getSelectedRow(), 0).toString());
+
+        try {
+            motoristaModel = motoristaBll.getById(idMotorista);
+            txtNome.setText(motoristaModel.getMotorista_nome());
+            txtEmail.setText(motoristaModel.getMotorista_email());
+            txtCpf.setText(motoristaModel.getMotorista_cpf());
+            txtTelefone.setText(motoristaModel.getMotorista_telefone());
+            txtRg.setText(motoristaModel.getMotorista_rg());
+            //endereco
+            txtIdEndMotorista.setText(motoristaModel.getMotorista_endereco().getEndereco_iden() + "");
+            txtMotoristaBairro.setText(motoristaModel.getMotorista_endereco().getEndereco_bairro());
+            txtMotoristaCep.setText(motoristaModel.getMotorista_endereco().getEndereco_cep());
+            txtMotoristaCidade.setText(motoristaModel.getMotorista_endereco().getEndereco_cidade());
+            txtMotoristaComplemento.setText(motoristaModel.getMotorista_endereco().getEndereco_complemento());
+            txtMotoristaNumero.setText(motoristaModel.getMotorista_endereco().getEndereco_numero() + "");
+            txtMotoristaRua.setText(motoristaModel.getMotorista_endereco().getEndereco_rua());
+            //cnh
+
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+            String stringDate = DateFor.format(motoristaModel.getCnh_dataValidade());
+            txtValidade.setText(stringDate);
+            txtNregistro.setText(motoristaModel.getCnh_numeroRegistro() + "");
+            jComboBoxCategoria.setSelectedItem(motoristaModel.getCnh_categoria().toString());
+//            imagem = Imagem_util.setImagemDimensao(motoristaModel.getCnh_imagem());
+//            lblImagem.setIcon(new ImageIcon(imagem));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_jTableMotoristaMouseReleased
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            motoristaBll.deleteAll(idMotorista, Integer.parseInt(txtIdEndMotorista.getText()));
+
+            atualizarGrid();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void txtCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCpfKeyTyped
+
+    private void txtRgKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRgKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRgKeyTyped
+
+    private void txtTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefoneKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefoneKeyTyped
+
+    private void txtValidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValidadeKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtValidadeKeyTyped
+
+    private void txtNregistroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNregistroKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNregistroKeyTyped
+
+    private void txtMotoristaNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMotoristaNumeroKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMotoristaNumeroKeyTyped
+
+    private void txtMotoristaCepKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMotoristaCepKeyTyped
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")
+                && (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMotoristaCepKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            motoristaBll.delete(idControl);
+            jComboBoxpesquisaActionPerformed(null);
+            atualizarGrid();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void atualizarGrid() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) jTableMotorista.getModel();
+        model.setRowCount(0);
+        Object[] linha;
+
+        Iterator<MotoristaModel> listMotorista = motoristaBll.getAll();
+        for (Iterator<MotoristaModel> it = listMotorista; it.hasNext();) {
+            MotoristaModel aux = it.next();
+            linha = new Object[]{
+                aux.getMotorista_idem(),
+                aux.getMotorista_nome(),
+                aux.getMotorista_cpf(),
+                aux.getCnh_numeroRegistro(),
+                aux.getCnh_categoria(),};
+            model.addRow(linha);
+
+        }
+    }
+
+    private void imprimirNaGrid(List<MotoristaModel> dados) {
         try {
             DefaultTableModel model = (DefaultTableModel) jTableMotoristaControl.getModel();
             model.setNumRows(0);
-            int pos = 1;
+            int pos = 0;
             while (pos < dados.size()) {
                 String[] linha = new String[5];
                 MotoristaModel obj = dados.get(pos);
-                linha[0] = obj.getMotorista_idem()+ "";
+                linha[0] = obj.getMotorista_idem() + "";
                 linha[1] = obj.getMotorista_nome();
                 linha[2] = obj.getMotorista_cpf();
-                linha[3] = obj.getCnh_numeroRegistro()+"";
-                linha[4] = obj.getCnh_categoria()+"";
+                linha[3] = obj.getCnh_numeroRegistro() + "";
+                linha[4] = obj.getCnh_categoria() + "";
                 model.addRow(linha);
                 pos++;
             }
@@ -721,6 +988,7 @@ public class MotoristaView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -796,8 +1064,8 @@ public class MotoristaView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableMotorista;
     private javax.swing.JTable jTableMotoristaControl;
-    private javax.swing.JTable jTableUsuarios;
     private javax.swing.JTextField jTextFieldpesquisa;
     private javax.swing.JLabel lblImagem;
     private javax.swing.JFormattedTextField txtCpf;

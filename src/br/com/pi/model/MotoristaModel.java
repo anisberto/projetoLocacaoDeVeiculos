@@ -104,8 +104,20 @@ public class MotoristaModel {
         this.motorista_endereco = motorista_endereco;
     }
 
+    public int compareToo(MotoristaModel element) {
+        int res = 0;
+        if (this.motorista_idem < element.getMotorista_idem()) {
+            res =- 1;
+        }
+        if (this.motorista_idem > element.getMotorista_idem()) {
+            res = 1;
+        }
+        return res;
+    }
+
     @Override
     public String toString() {
         return motorista_nome ;
     }
+
 }

@@ -1,11 +1,15 @@
 package br.com.pi.dal;
 
+import br.com.pi.bll.EnderecoBll;
+import br.com.pi.bll.MotoristaBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+import br.com.pi.model.EnderecoModel;
 import br.com.pi.model.MotoristaModel;
 import br.com.pi.util.AdpterConexao;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,25 +22,81 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
         conec = new AdpterConexao().getConnectionAdapter();
     }
 
+    public void addAll(MotoristaModel motoristaModel, EnderecoModel endereco) throws Exception {
+        EnderecoBll enderecoBll;
+        MotoristaBll motoristaBll;
+        try {
+            enderecoBll = new EnderecoBll();
+            motoristaBll = new MotoristaBll();
+            conec.setAutoCommit(false);
+            int idEndereco = enderecoBll.addReturn(endereco);
+            endereco.setEndereco_iden(idEndereco);
+            motoristaModel.setMotorista_endereco(endereco);
+            motoristaBll.add(motoristaModel);
+            conec.commit();
+        } catch (Exception e) {
+            conec.rollback();
+            throw e;
+        }
+    }
+
+    public void updateAll(MotoristaModel motoristaModel, EnderecoModel endereco) throws Exception {
+        EnderecoBll enderecoBll;
+        MotoristaBll motoristaBll;
+        try {
+            enderecoBll = new EnderecoBll();
+            motoristaBll = new MotoristaBll();
+            conec.setAutoCommit(false);
+            enderecoBll.update(endereco);
+            motoristaModel.setMotorista_endereco(endereco);
+            motoristaBll.update(motoristaModel);
+            conec.commit();
+        } catch (Exception e) {
+            conec.rollback();
+            throw e;
+        }
+    }
+
+    public void deleteAll(int MotoristaId, int Idendereco) throws Exception {
+        EnderecoBll enderecoBll;
+        MotoristaBll motoristaBll;
+        try {
+            enderecoBll = new EnderecoBll();
+            motoristaBll = new MotoristaBll();
+            conec.setAutoCommit(false);
+            enderecoBll.delete(Idendereco);
+
+            motoristaBll.delete(MotoristaId);
+            conec.commit();
+        } catch (Exception e) {
+            conec.rollback();
+            throw e;
+        }
+
+    }
+
     @Override
     public void add(MotoristaModel objeto) throws Exception {
+
+        String sql = "INSERT INTO motorista (motorista_categoria, motorista_dataDeValidade,"
+                + "motorista_imagem, motorista_numeroDoRegistro, motorista_cpf,"
+                + "motorista_nome, motorista_rg, motorista_telefone, motorista_email,"
+                + "motorista_endereco) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
-            PreparedStatement prep = conec.prepareStatement("INSERT INTO motorista(\n"
-                    + "	motorista_categoria, motorista_datadevalidade, \n"
-                    + "	motorista_imagem, motorista_numerodoregistro, motorista_cpf, motorista_nome, \n"
-                    + "	motorista_rg, motorista_telefone, motorista_email)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-            prep.setString(5, objeto.getMotorista_cpf());
-            prep.setString(6, objeto.getMotorista_nome());
-            prep.setString(7, objeto.getMotorista_rg());
-            prep.setString(8, objeto.getMotorista_telefone());
-            prep.setString(9, objeto.getMotorista_email());
+            PreparedStatement prep = conec.prepareStatement(sql);
             prep.setString(1, objeto.getCnh_categoria());
-            prep.setDate(2, new java.sql.Date(objeto.getCnh_dataValidade().getTime()));
+            prep.setObject(2, objeto.getCnh_dataValidade());
             prep.setBytes(3, objeto.getCnh_imagem());
-            prep.setInt(4, objeto.getCnh_numeroRegistro());
-            prep.executeLargeUpdate();
+            prep.setObject(4, objeto.getCnh_numeroRegistro());
+            prep.setObject(5, objeto.getMotorista_cpf());
+            prep.setObject(6, objeto.getMotorista_nome());
+            prep.setObject(7, objeto.getMotorista_rg());
+            prep.setObject(8, objeto.getMotorista_telefone());
+            prep.setObject(9, objeto.getMotorista_email());
+            prep.setObject(10, objeto.getMotorista_endereco().getEndereco_iden());
+            prep.executeUpdate();
         } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -62,7 +122,7 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
                     + "	motorista_email=?\n"
                     + "	WHERE motorista_idem=?;");
             prep.setString(1, objeto.getCnh_categoria());
-            prep.setDate(2, new java.sql.Date(objeto.getCnh_dataValidade().getTime()));
+            prep.setObject(2, objeto.getCnh_dataValidade());
             prep.setBytes(3, objeto.getCnh_imagem());
             prep.setInt(4, objeto.getCnh_numeroRegistro());
             prep.setString(5, objeto.getMotorista_cpf());
@@ -73,11 +133,13 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
             prep.setInt(10, objeto.getMotorista_idem());
             prep.executeUpdate();
         } catch (Exception e) {
+            throw e;
         }
     }
 
     @Override
     public Iterator getAll() throws Exception {
+        EnderecoDal enderecoDal = new EnderecoDal();
         ArrayList<MotoristaModel> listaDeMotoristas = new ArrayList<>();
         try {
             Statement stat = conec.createStatement();
@@ -94,6 +156,8 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
                 motorista.setCnh_dataValidade(result.getDate("motorista_datadevalidade"));
                 motorista.setCnh_imagem(result.getBytes("motorista_imagem"));
                 motorista.setCnh_numeroRegistro(result.getInt("motorista_numerodoregistro"));
+                motorista.setMotorista_endereco((EnderecoModel) enderecoDal.getById(result.getInt("motorista_endereco")));
+
                 listaDeMotoristas.add(motorista);
             }
             return listaDeMotoristas.iterator();
@@ -104,12 +168,14 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
 
     @Override
     public MotoristaModel getById(int n) throws Exception {
+        EnderecoDal enderecoDal = new EnderecoDal();
         try {
             PreparedStatement prep = conec.prepareStatement("SELECT * FROM motorista WHERE motorista_idem=?");
             prep.setInt(1, n);
             ResultSet result = prep.executeQuery();
             MotoristaModel motorista = new MotoristaModel();
             while (result.next()) {
+                motorista = new MotoristaModel();
                 motorista.setMotorista_idem(result.getInt("motorista_idem"));
                 motorista.setMotorista_cpf(result.getString("motorista_cpf"));
                 motorista.setMotorista_nome(result.getString("motorista_nome"));
@@ -120,6 +186,8 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
                 motorista.setCnh_dataValidade(result.getDate("motorista_datadevalidade"));
                 motorista.setCnh_imagem(result.getBytes("motorista_imagem"));
                 motorista.setCnh_numeroRegistro(result.getInt("motorista_numerodoregistro"));
+
+                motorista.setMotorista_endereco((EnderecoModel) enderecoDal.getById(result.getInt("motorista_endereco")));
             }
             return motorista;
         } catch (Exception e) {
@@ -129,6 +197,7 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
 
     @Override
     public MotoristaModel getByNome(String nome) throws Exception {
+        EnderecoDal enderecoDal = new EnderecoDal();
         try {
             PreparedStatement prep = conec.prepareStatement("SELECT * FROM motorista WHERE motorista_nome=?");
             prep.setString(1, nome);
@@ -145,6 +214,8 @@ public class MotoristaDal implements ICRUD_GENERIC<MotoristaModel> {
                 motorista.setCnh_dataValidade(result.getDate("motorista_datadevalidade"));
                 motorista.setCnh_imagem(result.getBytes("motorista_imagem"));
                 motorista.setCnh_numeroRegistro(result.getInt("motorista_numerodoregistro"));
+
+                motorista.setMotorista_endereco((EnderecoModel) enderecoDal.getById(result.getInt("motorista_endereco")));
             }
             return motorista;
         } catch (Exception e) {

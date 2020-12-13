@@ -999,7 +999,7 @@ public class ClienteView extends javax.swing.JFrame {
         try {
             DefaultTableModel model = (DefaultTableModel) jTableUsuarios2.getModel();
             model.setNumRows(0);
-            int pos = 1;
+            int pos = 0;
             while (pos < dados.size()) {
                 String[] linha = new String[4];
                 PessoaModel obj = dados.get(pos);

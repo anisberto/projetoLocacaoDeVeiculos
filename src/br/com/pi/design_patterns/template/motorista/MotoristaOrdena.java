@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -28,8 +29,8 @@ public abstract class MotoristaOrdena {
 
     public abstract boolean ePrimeiro(MotoristaModel pessoa1, MotoristaModel pessoa2);
 
-    public ArrayList getAll() throws Exception {
-        ArrayList<MotoristaModel> listaDeMotoristas = new ArrayList<>();
+    public List getAll() throws Exception {
+        List<MotoristaModel> listaDeMotoristas = new ArrayList<>();
         try {
             Statement stat = conec.createStatement();
             ResultSet result = stat.executeQuery("SELECT * FROM motorista");
@@ -48,16 +49,18 @@ public abstract class MotoristaOrdena {
                 listaDeMotoristas.add(motorista);
             }
 
-            for (int i = 1; i < listaDeMotoristas.size(); i++) {
+            for (int i = 0; i < listaDeMotoristas.size(); i++) {
                 for (int j = i; j < listaDeMotoristas.size(); j++) {
 
                     if (!ePrimeiro(listaDeMotoristas.get(i), listaDeMotoristas.get(j))) {
                         MotoristaModel temp = listaDeMotoristas.get(j);
                         listaDeMotoristas.set(j, listaDeMotoristas.get(i));
+
                         listaDeMotoristas.set(i, temp);
                     }
                 }
             }
+
             return listaDeMotoristas;
 
         } catch (Exception e) {
@@ -65,4 +68,22 @@ public abstract class MotoristaOrdena {
         }
 
     }
+
+    public void bubbleSortArrayList(ArrayList<MotoristaModel> list) {
+        MotoristaModel temp;
+        boolean sorted = false;
+
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < list.size() - 1; i++) {
+                if (list.get(i).compareToo(list.get(i + 1)) > 0) {
+                    temp = list.get(i);
+                    list.set(i, list.get(i + 1));
+                    list.set(i + 1, temp);
+                    sorted = false;
+                }
+            }
+        }
+    }
+
 }
