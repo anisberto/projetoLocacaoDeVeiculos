@@ -707,6 +707,7 @@ public class VeiculoView extends javax.swing.JFrame {
         try {
             enableButtFields(false);
             clearFields();
+            setItemMarca();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -740,21 +741,26 @@ public class VeiculoView extends javax.swing.JFrame {
             if (incluir) {
                 veiculoInclud.add(newVeiculo);
                 JOptionPane.showMessageDialog(null, "Processo Finalizado");
+                enableButtFields(false);
+                clearFields();
             } else {
                 newVeiculo.setVeiculo_idem(Integer.parseInt(tableVeiculos.getValueAt(tableVeiculos.getSelectedRow(), 0).toString()));
                 veiculoInclud.update(newVeiculo);
             }
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            if (e.getMessage().contains("empt")) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            } else {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
         } catch (Exception ilegal) {
-            JOptionPane.showMessageDialog(this, ilegal.getMessage());
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos");
         } finally {
-            enableButtFields(false);
-            clearFields();
+
             try {
                 imprimirDadosNaGrid(veiculoInclud.getAll());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos");
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -926,15 +932,15 @@ public class VeiculoView extends javax.swing.JFrame {
                 marca = new OrdenaMarca();
                 imprimir(marca.getAll());
             }
-            if(jcBuscapor.getSelectedItem().toString().contains("Modelo")){
+            if (jcBuscapor.getSelectedItem().toString().contains("Modelo")) {
                 modelo = new OrdenaModelo();
                 imprimir(modelo.getAll());
             }
-            if(jcBuscapor.getSelectedItem().toString().contains("Ano de Fabricacao")){
+            if (jcBuscapor.getSelectedItem().toString().contains("Ano de Fabricacao")) {
                 anofabricacao = new OrdenaAnoFabricacao();
                 imprimir(anofabricacao.getAll());
             }
-            if(jcBuscapor.getSelectedItem().toString().contains("Ano de Modelo")){
+            if (jcBuscapor.getSelectedItem().toString().contains("Ano de Modelo")) {
                 modelo = new OrdenaModelo();
                 imprimir(modelo.getAll());
             }
@@ -942,7 +948,7 @@ public class VeiculoView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jcBuscaporActionPerformed
 
-        private void imprimir(ArrayList<VeiculoModel> dados) {
+    private void imprimir(ArrayList<VeiculoModel> dados) {
         try {
             DefaultTableModel model = (DefaultTableModel) jTableUsuarios2.getModel();
             model.setNumRows(0);
@@ -950,13 +956,13 @@ public class VeiculoView extends javax.swing.JFrame {
             while (pos < dados.size()) {
                 String[] linha = new String[7];
                 VeiculoModel obj = dados.get(pos);
-                linha[0] = obj.getVeiculo_idem()+ "";
+                linha[0] = obj.getVeiculo_idem() + "";
                 linha[1] = obj.getVeiculo_modelo().getModelo_descricao();
                 linha[2] = obj.getVeiculo_modelo().getModelo_marca().getMarca_descricao();
-                linha[3] = obj.getVeiculo_anoModelo()+ "";
-                linha[4] = obj.getVeiculo_anoFabrica()+ "";
-                linha[5] = obj.getVeiculo_renavam()+ "";
-                linha[6] = obj.getVeiculo_situacaoVeiculo()+ "";
+                linha[3] = obj.getVeiculo_anoModelo() + "";
+                linha[4] = obj.getVeiculo_anoFabrica() + "";
+                linha[5] = obj.getVeiculo_renavam() + "";
+                linha[6] = obj.getVeiculo_situacaoVeiculo() + "";
                 model.addRow(linha);
                 pos++;
             }
@@ -1105,9 +1111,6 @@ public class VeiculoView extends javax.swing.JFrame {
     }
 
     public void clearFields() {
-        jcModelo.removeAllItems();
-        jcModelo.addItem("Modelo");
-
         txtPrecoVenda.setText("");
         txtPrecoCompra.setText("");
         txtNumeroPessoas.setText("");

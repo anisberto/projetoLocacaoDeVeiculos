@@ -44,6 +44,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
         jLabel3 = new javax.swing.JLabel();
         lblDescriptionStatus = new javax.swing.JLabel();
         lblDescriptionStatusImg = new javax.swing.JLabel();
+        jRadioButtonShowSenha = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jmCadastro = new javax.swing.JMenuItem();
@@ -115,6 +116,13 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
 
         lblDescriptionStatusImg.setText(".");
 
+        jRadioButtonShowSenha.setText("Exibir Senha");
+        jRadioButtonShowSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonShowSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,21 +135,22 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblDescriptionStatusImg))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel1)))))
-                .addContainerGap(85, Short.MAX_VALUE))
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 70, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3)
+                    .addComponent(jRadioButtonShowSenha)
+                    .addComponent(txtSenha)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,15 +161,17 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButtonShowSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionStatus)
                     .addComponent(lblDescriptionStatusImg))
@@ -187,8 +198,8 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,18 +215,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         try {
-            Spinner spi = new Spinner();
-            spi.setVisible(true);
-            this.dispose();
-            for (int i = 0; i <= 100; i++) {
-                Thread.sleep(40);
-                spi.lblPer.setText(i + "%");
-                if (i == 100) {
-                    saveUser();
-                    spi.dispose();
-                }
-            }
-
+            saveUser();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
@@ -283,6 +283,14 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
         }
     }//GEN-LAST:event_formWindowActivated
 
+    private void jRadioButtonShowSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonShowSenhaActionPerformed
+        if (txtSenha.getEchoChar() == '*') {
+            txtSenha.setEchoChar((char) 0);
+        } else {
+            txtSenha.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jRadioButtonShowSenhaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -314,7 +322,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
                     new LoginView().setVisible(true);
                 } catch (IllegalArgumentException e) {
                     JOptionPane.showMessageDialog(null, "Erro na Conexão!", "Erro ao conectar no Banco", JOptionPane.ERROR_MESSAGE);
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro na Conexão!", "Erro ao conectar no Banco", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -330,6 +338,7 @@ public class LoginView extends javax.swing.JFrame implements ConnectionObserver 
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButtonShowSenha;
     private javax.swing.JMenuItem jmCadastro;
     private javax.swing.JLabel lblDescriptionStatus;
     private javax.swing.JLabel lblDescriptionStatusImg;

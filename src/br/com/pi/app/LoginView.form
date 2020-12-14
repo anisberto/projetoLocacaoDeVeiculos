@@ -51,8 +51,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,27 +81,27 @@
                           <Component id="lblDescriptionStatusImg" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtUsuario" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnEntrar" min="-2" pref="117" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCancelar" min="-2" pref="117" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtSenha" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="85" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="70" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jRadioButtonShowSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtSenha" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnEntrar" min="-2" pref="117" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnCancelar" min="-2" pref="117" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtUsuario" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,16 +114,18 @@
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtUsuario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtSenha" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jRadioButtonShowSenha" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnEntrar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="btnCancelar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblDescriptionStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblDescriptionStatusImg" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -196,6 +198,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="."/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonShowSenha">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Exibir Senha"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonShowSenhaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

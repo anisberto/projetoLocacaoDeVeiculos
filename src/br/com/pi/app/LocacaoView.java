@@ -1390,24 +1390,25 @@ public class LocacaoView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ "+locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
-                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() +"\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
+                            + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
                             + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
                             + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
+                    enableButtFields(false);
+                    enableFielsCrud(false);
                 } else {
 
                 }
             }
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Preencha as datas corretamente: " + e.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos ", "Worning", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Element Error: " + ex.getMessage(), "Worning", JOptionPane.ERROR_MESSAGE);
         } finally {
-            enableButtFields(false);
-            enableFielsCrud(false);
+
             try {
                 imprimirDadosNaGrid(incluirLocacao.getAll());
             } catch (Exception ex) {
@@ -1602,22 +1603,29 @@ public class LocacaoView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "SEU COMPROVANTE DE LOCAÇÃO FOI ENVIADO POR E-MAIL\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "# CLIENTE :....... " + locaVeiculo.getLocacao_pessoa().getPessoa_nome() + "\n"
-                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ "+locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
+                            + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
                             + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
                             + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
                             + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
-
+                    enableButtFieldsReserva(false);
+                    enableFielsCrudReserva(false);
                 } else {
 
                 }
             }
         } catch (Exception e) {
-        } finally {
+            JOptionPane.showMessageDialog(this, "Refaça o Processo e Preencha todos os dados.");
             enableButtFieldsReserva(false);
             enableFielsCrudReserva(false);
+        } finally {
+            try {
+                transFerirReservas(reservabll.getAll());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Atention: " + ex.getMessage() + "\nLocale: " + ex.getClass().getName(), "Worning", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnSalvarReservaActionPerformed
 
@@ -1689,16 +1697,22 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(JtLocaGerir.getValueAt(JtLocaGerir.getSelectedRow(), 0).toString());
             LocacaoModel locDevolucao = incluirLocacao.getById(id);
-            locDevolucao.getLocacao_veiculo().setVeiculo_situacaoVeiculo("Disponivel");
-            veiculobll.update(locDevolucao.getLocacao_veiculo());
+            String kmFinal = JOptionPane.showInputDialog(this, "Informe o KM Final do Veiculo!", "KM Final! Devolução", JOptionPane.QUESTION_MESSAGE);
+            if (kmFinal.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe o KM Final do Veiculo!", "KM Final! Devolução", JOptionPane.ERROR_MESSAGE);
+            } else {
+                locDevolucao.setLocacao_quilometragemFinal(Float.parseFloat(kmFinal));
+                locDevolucao.getLocacao_veiculo().setVeiculo_situacaoVeiculo("Disponivel");
+                veiculobll.update(locDevolucao.getLocacao_veiculo());
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Atenção: " + e.getMessage());
-        }finally{
+        } finally {
             clearDevoFields();
         }
     }//GEN-LAST:event_btnDevolverActionPerformed
-    public void clearDevoFields(){
-         txtNomeDevo.setText("");
+    public void clearDevoFields() {
+        txtNomeDevo.setText("");
         txtcpfDevo.setText("");
         txtnomeMotDevo.setText("");
         txtCnhDevo.setText("");
@@ -1707,6 +1721,7 @@ public class LocacaoView extends javax.swing.JFrame {
         txtVeiculoDevo.setText("");
         txtRenavamDevo.setText("");
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1948,14 +1963,14 @@ public class LocacaoView extends javax.swing.JFrame {
             txtValorCaucao.setText("");
             txtValorSeguro.setText("");
 
-            jcMotorista.removeAllItems();
-            jcMotorista.addItem("Motorista");
-            jcVeiculo.removeAllItems();
-            jcVeiculo.addItem("Veiculo");
-            jcClienteFisica.removeAllItems();
-            jcClienteFisica.addItem("Cliente Fisico");
-            jcClienteJuridica.removeAllItems();
-            jcClienteJuridica.addItem("Cliente Juridico");
+//            jcMotorista.removeAllItems();
+//            jcMotorista.addItem("Motorista");
+//            jcVeiculo.removeAllItems();
+//            jcVeiculo.addItem("Veiculo");
+//            jcClienteFisica.removeAllItems();
+//            jcClienteFisica.addItem("Cliente Fisico");
+//            jcClienteJuridica.removeAllItems();
+//            jcClienteJuridica.addItem("Cliente Juridico");
             txtRenavamVeiculo.setText("");
         } else {
             txtRenavamVeiculo.setText("");
@@ -1983,14 +1998,14 @@ public class LocacaoView extends javax.swing.JFrame {
             txtValorCaucao.setText("");
             txtValorSeguro.setText("");
 
-            jcMotorista.removeAllItems();
-            jcMotorista.addItem("Motorista");
-            jcVeiculo.removeAllItems();
-            jcVeiculo.addItem("Veiculo");
-            jcClienteFisica.removeAllItems();
-            jcClienteFisica.addItem("Cliente Fisico");
-            jcClienteJuridica.removeAllItems();
-            jcClienteJuridica.addItem("Cliente Juridico");
+//            jcMotorista.removeAllItems();
+//            jcMotorista.addItem("Motorista");
+//            jcVeiculo.removeAllItems();
+//            jcVeiculo.addItem("Veiculo");
+//            jcClienteFisica.removeAllItems();
+//            jcClienteFisica.addItem("Cliente Fisico");
+//            jcClienteJuridica.removeAllItems();
+//            jcClienteJuridica.addItem("Cliente Juridico");
         }
     }
 
@@ -2095,7 +2110,7 @@ public class LocacaoView extends javax.swing.JFrame {
             if (!verif) {
                 linha[0] = objVeiculo.getReserva_idem() + "";
                 linha[1] = objVeiculo.getReserva_cliente().getPessoa_nome() + "";
-//                linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
+                linha[2] = objVeiculo.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao();
                 linha[3] = formatDateStruct(objVeiculo.getReserva_dataReserva());
                 linha[4] = formatDateStruct(objVeiculo.getReserva_dataExpiracao());
                 model.addRow(linha);
@@ -2107,7 +2122,7 @@ public class LocacaoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JtLocaGerir.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
-            String[] linha = new String[6]; 
+            String[] linha = new String[6];
             LocacaoModel locaTable = (LocacaoModel) conjunto.next();
             linha[0] = locaTable.getLocacao_idem() + "";
             linha[1] = locaTable.getLocacao_codigoDelocacao() + "";
@@ -2115,13 +2130,13 @@ public class LocacaoView extends javax.swing.JFrame {
             linha[3] = locaTable.getLocacao_motorista().getMotorista_nome();
             linha[4] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
             String situ = "";
-            if(locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("Disponivel")){
+            if (locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("Disponivel")) {
                 situ = "Veiculo Devolvido";
-            }else{
+            } else {
                 situ = locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo();
             }
             linha[5] = situ;
-            
+
             model.addRow(linha);
         }
     }
