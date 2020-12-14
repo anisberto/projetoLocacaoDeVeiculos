@@ -839,7 +839,8 @@ public class MotoristaView extends javax.swing.JFrame {
             atualizarGrid();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Preenchar todos os campos vazios - " + e.getMessage());
+            //JOptionPane.showMessageDialog(rootPane, e.getMessage());
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarMotoristaActionPerformed
