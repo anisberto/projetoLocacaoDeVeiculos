@@ -663,7 +663,7 @@ public class ClienteView extends javax.swing.JFrame {
             if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
                 pessoaPFModel = (PessoaPFModel) FabricaModel.getTipoDeFuncionario(EnumClasses.getPessoapf());
                 //Pegando dados de endereço
-                endereco.setEndereco_cep(txtClientesCep.getText());
+                endereco.setEndereco_cep(txtClientesCep.getText().replace("-", ""));
                 endereco.setEndereco_cidade(txtCidade.getText());
                 endereco.setEndereco_bairro(txtClientesBairro.getText());
                 endereco.setEndereco_rua(txtClientesRua.getText());
@@ -673,10 +673,10 @@ public class ClienteView extends javax.swing.JFrame {
                 //Pegando dados de Pessoa
                 pessoaPFModel.setPessoa_nome(txtNomePessoa.getText());
                 pessoaPFModel.setPessoa_email(txtEmail.getText());
-                pessoaPFModel.setPessoa_telefone(txtTelefone.getText());
+                pessoaPFModel.setPessoa_telefone(txtTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
                 pessoaPFModel.setPessoa_endereco(endereco);
                 //Pegando dados de pessoaPF
-                pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText());
+                pessoaPFModel.setPessoa_pf_cpf(txtCpfPessoa.getText().replace(".","").replace("-",""));
                 pessoaPFModel.setPessoa_pf_rg(txtRgPessoa.getText());
                 pessoaPFModel.setPessoa(pessoaPFModel);
                 pessoaPFBll.addAll(endereco, pessoaPFModel);
