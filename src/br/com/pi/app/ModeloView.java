@@ -282,6 +282,8 @@ public class ModeloView extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString());
             idDelete = id;
+            txtDescricao.setText(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 1).toString());
+            jcMarca.setSelectedItem(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
 
         } catch (Exception e) {
         }
@@ -304,6 +306,7 @@ public class ModeloView extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
+            modeloModel = new ModeloModel();
             marcaModel = marcabll.getByNome(jcMarca.getSelectedItem().toString());
             modeloModel.setModelo_descricao(txtDescricao.getText());
             modeloModel.setModelo_marca(marcaModel);
@@ -318,6 +321,7 @@ public class ModeloView extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
+            modeloModel = new ModeloModel();
             marcaModel = marcabll.getByNome(jcMarca.getSelectedItem().toString());
             modeloModel.setModelo_descricao(txtDescricao.getText());
             modeloModel.setModelo_marca(marcaModel);

@@ -33,7 +33,11 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel> {
         try {
             dal.delete(n);
         } catch (Exception e) {
-            throw e;
+            String erro = e.getMessage();
+            if(erro.contains("update or delete on table \"modelo\"")){
+             erro = "Nao é possivel deletar porque esse modelo está vinculada a um veiculo";
+            }
+            throw new Exception(erro);
         }
 
     }
@@ -87,6 +91,12 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel> {
             if (descricao.contains("" + invalidos.charAt(i))) {
                 throw new Exception("Nome de Modelo inválido!");
             }
+        }
+        if(objeto.getModelo_descricao().isEmpty() == true){
+            throw new Exception("Nome invalido");
+        }
+        if(objeto.getModelo_marca().getMarca_descricao().equals("Marca")){
+            throw new Exception("Selecione alguma marca");
         }
         //Iterator tratando para nao ter duas marcas iguais!!!
         Iterator<ModeloModel> listaDeUsuario = dal.getAll();
