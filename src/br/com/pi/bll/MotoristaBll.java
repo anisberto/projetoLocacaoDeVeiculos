@@ -57,13 +57,13 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         } catch (Exception e) {
             String erro = e.getMessage();
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_cpf_key\"")) {
-                erro = "Ja existe esse CPF no nosso sistema de motorista.";
+                erro = "Já existe esse CPF no nosso sistema de motorista.";
             }
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_rg_key\"")) {
-                erro = "Ja existe esse RG no nosso sistema de motorista.";
+                erro = "Já existe esse RG no nosso sistema de motorista.";
             }
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_email_key\"")) {
-                erro = "Ja existe esse Email no nosso sistema de motorista.";
+                erro = "Já existe esse E-mail no nosso sistema de motorista.";
             }
             throw new Exception(erro);
         }
@@ -86,13 +86,13 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         } catch (Exception e) {
             String erro = e.getMessage();
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_cpf_key\"")) {
-                erro = "Ja existe esse CPF no nosso sistema de motorista.";
+                erro = "Já existe esse CPF no nosso sistema de motorista.";
             }
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_rg_key\"")) {
-                erro = "Ja existe esse RG no nosso sistema de motorista.";
+                erro = "Já existe esse RG no nosso sistema de motorista.";
             }
             if (erro.contains("duplicate key value violates unique constraint \"motorista_motorista_email_key\"")) {
-                erro = "Ja existe esse Email no nosso sistema de motorista.";
+                erro = "Já existe esse E-mail no nosso sistema de motorista.";
             }
             throw new Exception(erro);
         }
@@ -105,7 +105,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
             return motoristaDal.getAll();
         } catch (Exception e) {
         }
-        throw new IllegalArgumentException("Dados não acessiveis");
+        throw new IllegalArgumentException("Dados não acessíveis");
     }
 
     @Override
@@ -114,7 +114,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
             return motoristaDal.getById(n);
         } catch (Exception e) {
         }
-        throw new IllegalArgumentException("Dados não acessiveis");
+        throw new IllegalArgumentException("Dados não acessíveis");
     }
 
     @Override
@@ -123,7 +123,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
             return motoristaDal.getByNome(nome);
         } catch (Exception e) {
         }
-        throw new IllegalArgumentException("Dados não acessiveis");
+        throw new IllegalArgumentException("Dados não acessíveis");
     }
 
     @Override
@@ -136,7 +136,7 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
             throw new Exception("Preencha o nome");
         }
         if (obj.getMotorista_email().isEmpty()) {
-            throw new Exception("Preencha o Email");
+            throw new Exception("Preencha o E-mail");
         }
         if (obj.getMotorista_rg().isEmpty()) {
             throw new Exception("Preencha o RG");
@@ -160,10 +160,10 @@ public class MotoristaBll implements ICRUD_GENERIC<MotoristaModel> {
         }
         Date dataAtual = new Date();
         if (obj.getCnh_dataValidade().getTime() < dataAtual.getTime()) {
-            throw new Exception("Você nao pode adicionar uma CNH vencida!");
+            throw new Exception("Você não pode adicionar uma CNH vencida!");
         }
         if (obj.getCnh_numeroRegistro() == 0) {
-            throw new Exception("Numero de registro invalido");
+            throw new Exception("Número de registro inválido");
         }
 
 

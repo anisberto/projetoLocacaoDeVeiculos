@@ -25,13 +25,13 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         } catch (Exception e) {
             String erro = e.getMessage();
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
-                erro = "Esse email ja existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_cpf_key\"")){
-                erro = "Esse CPF ja existe no nosso cadastro de usuários!";
+                erro = "Esse CPF já existe no nosso cadastro de usuários!";
             }
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_rg_key\"")){
-                erro = "Esse RG ja existe no nosso cadastro de usuários!";
+                erro = "Esse RG já existe no nosso cadastro de usuários!";
             }
            throw new Exception(erro);
         }
@@ -44,13 +44,13 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         } catch (Exception e) {
             String erro = e.getMessage();
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
-                erro = "Esse email ja existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_cpf_key\"")){
-                erro = "Esse CPF ja existe no nosso cadastro de usuários!";
+                erro = "Esse CPF já existe no nosso cadastro de usuários!";
             }
             if(erro.contains("duplicate key value violates unique constraint \"pessoas_pf_pf_rg_key\"")){
-                erro = "Esse RG ja existe no nosso cadastro de usuários!";
+                erro = "Esse RG já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
@@ -130,14 +130,14 @@ public class PessoaPFBll implements ICRUD_GENERIC {
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
             if (nome.contains("" + invalidos.charAt(i))) {
-                throw new Exception("Nome de usuario inválido!");
+                throw new Exception("Nome de usuário inválido!");
             }
         }
 
         // Verifica se EMAIL é válido
         if (isValidEmailAddressRegex(objeto.getPessoa().getPessoa_email()) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
-                    + "\nO EMAIL informado não é válido");
+                    + "\nO E-mail informado não é válido");
         }
         //valida CPF
         if (isValidCPF(objeto.getPessoa_pf_cpf().replace(".", "").replace("-", "")) == false) {
@@ -149,14 +149,14 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             throw new Exception("Informe o Nome do usuario");
         }
         if(objeto.getPessoa().getPessoa_telefone().contains("   ")){
-            throw new Exception("Telefone invado");
+            throw new Exception("Telefone inválido");
         }
 
         if (objeto.getPessoa_pf_cpf().isEmpty()) {
-            throw new Exception("Informe o CPF do usuario");
+            throw new Exception("Informe o CPF do usuário");
         }
         if (objeto.getPessoa_pf_rg().equals("")) {
-            throw new Exception("Informe o RG do usuario");
+            throw new Exception("Informe o RG do usuário");
         }
    
         

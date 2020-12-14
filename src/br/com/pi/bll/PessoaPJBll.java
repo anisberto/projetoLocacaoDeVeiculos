@@ -28,7 +28,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
             }
             if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
-                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
@@ -43,7 +43,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
             }
             if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
-                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
@@ -68,7 +68,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
             }
             if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
-                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
@@ -95,7 +95,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
             }
             if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
-                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
+                erro = "Esse E-mail já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
@@ -132,7 +132,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
     public void validaPessoa(PessoaPJModel objeto) throws Exception {
 
         if (objeto.getPessoaModel().getPessoa_nome().isEmpty() == true) {
-            throw new Exception("Preencha o nome de usuario");
+            throw new Exception("Preencha o nome de usuário");
         }
 
         if (isCNPJ(objeto.getPessoa_pj_cnpj().replace(".", "").replace("/", "").replace("-", "")) == false) {
@@ -142,26 +142,26 @@ public class PessoaPJBll implements ICRUD_GENERIC {
 
         if (isValidEmailAddressRegex(objeto.getPessoaModel().getPessoa_email()) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
-                    + "\nO EMAIL informado não é válido");
+                    + "\nO E-mail informado não é válido");
         }
 
         if (objeto.getPessoa_pj_cnpj().equals("")) {
-            throw new Exception("Informe o CNPJ do usuario");
+            throw new Exception("Informe o CNPJ do usuário");
         }
         if (objeto.getPessoa_pj_nomeFantasia().equals("")) {
-            throw new Exception("Informe o nome fantasia do usuario");
+            throw new Exception("Informe o nome fantasia do usuário");
         }
         if (objeto.getPessoa_pj_razaoSocial().equals("")) {
             throw new Exception("Informe a razão social");
         }
         if (objeto.getPessoa_email().equals("")) {
-            throw new Exception("Informe o Email do usuario");
+            throw new Exception("Informe o E-mail do usuário");
         }
         if (objeto.getPessoa_nome().equals("")) {
-            throw new Exception("Informe a nome do usuario");
+            throw new Exception("Informe a nome do usuário");
         }
         if (objeto.getPessoaModel().getPessoa_telefone().trim().length() < 9) {
-            throw new Exception("Telefone Invalido");
+            throw new Exception("Telefone Inválido");
         }
 
         Iterator<PessoaPJModel> listaDeUsuario = dal.getAll();
@@ -170,11 +170,11 @@ public class PessoaPJBll implements ICRUD_GENERIC {
 
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pj_cnpj().toUpperCase().
                     equalsIgnoreCase(aux.getPessoa_pj_cnpj().toUpperCase()))) {
-                throw new Exception("O CNPJ --> " + objeto.getPessoa_pj_cnpj() + "\nJá existe no cadastro de usuarios!\n");
+                throw new Exception("O CNPJ --> " + objeto.getPessoa_pj_cnpj() + "\nJá existe no cadastro de usuários!\n");
             }
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_pj_razaoSocial().toUpperCase().
                     equalsIgnoreCase(aux.getPessoa_pj_razaoSocial().toUpperCase()))) {
-                throw new Exception("A razao social --> " + objeto.getPessoa_pj_razaoSocial() + "\nJá existe no cadastro de usuarios!\n");
+                throw new Exception("A razão social --> " + objeto.getPessoa_pj_razaoSocial() + "\nJá existe no cadastro de usuários!\n");
             }
 
         }

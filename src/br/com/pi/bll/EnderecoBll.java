@@ -94,7 +94,7 @@ public class EnderecoBll implements ICRUD_GENERIC {
             throw new Exception("Preencha o CEP");
         }
         if (endereco.getEndereco_cep().trim().length() < 9) {
-            throw new Exception("CEP INVALIDO");
+            throw new Exception("CEP inválido");
         }
         if (endereco.getEndereco_cidade().isEmpty()) {
             throw new Exception("Preencha a Cidade");

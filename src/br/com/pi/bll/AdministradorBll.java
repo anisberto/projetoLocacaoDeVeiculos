@@ -82,15 +82,15 @@ public class AdministradorBll implements ICRUD_GENERIC<AdministradorModel> {
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
             if (nome.contains("" + invalidos.charAt(i))) {
-                throw new Exception("Nome de usuario inválido!");
+                throw new Exception("Nome de usuário inválido!");
             }
         }
 
         if (objeto.getAdministrador_nome().equals("")) {
-            throw new Exception("Informe a Senha do usuario");
+            throw new Exception("Informe a Senha do usuário");
         }
         if (objeto.getAdministrador_senha().equals("")) {
-            throw new Exception("Informe a Senha do usuario");
+            throw new Exception("Informe a Senha do usuário");
         }
 
         Iterator<AdministradorModel> listaDeUsuario = dal.getAll();

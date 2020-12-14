@@ -105,7 +105,7 @@ public class PessoaBll implements ICRUD_GENERIC {
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
             if (nome.contains("" + invalidos.charAt(i))) {
-                throw new Exception("Nome de usuario inválido!");
+                throw new Exception("Nome de usuário inválido!");
             }
         }
 
@@ -113,17 +113,17 @@ public class PessoaBll implements ICRUD_GENERIC {
         // Verifica se EMAIL é válido
         if (isValidEmailAddressRegex(objeto.getPessoa_email()) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
-                    + "\nO EMAIL informado não é válido");
+                    + "\nO E-mail informado não é válido");
         }
 
         if (objeto.getPessoa_email().isEmpty()) {
-            throw new Exception("Informe o Email do usuario");
+            throw new Exception("Informe o E-mail do usuário");
         }
         if (objeto.getPessoa_nome().isEmpty()) {
-            throw new Exception("Informe a nome do usuario");
+            throw new Exception("Informe o nome do usuário");
         }
         if (objeto.getPessoa_telefone().contains("   ")) {
-            throw new Exception("Informe a telefone do usuario");
+            throw new Exception("Informe o telefone do usuário");
         }
 
 
@@ -134,11 +134,11 @@ public class PessoaBll implements ICRUD_GENERIC {
 
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_email().toUpperCase().
                     equals(aux.getPessoa_email().toUpperCase()))){
-                throw new Exception("O Email --> " + objeto.getPessoa_email() + "\nJá existe no cadastro de usuarios!\n");
+                throw new Exception("O E-mail --> " + objeto.getPessoa_email() + "\nJá existe no cadastro de usuários!\n");
             }
             if ((objeto.getPessoa_idem() != aux.getPessoa_idem()) && (objeto.getPessoa_telefone().toUpperCase().
                     equalsIgnoreCase(aux.getPessoa_telefone().toUpperCase()))){
-                throw new Exception("O Telefone --> " + objeto.getPessoa_telefone() + "\nJá existe no cadastro de usuarios!\n");
+                throw new Exception("O Telefone --> " + objeto.getPessoa_telefone() + "\nJá existe no cadastro de usuários!\n");
             }
 
         }

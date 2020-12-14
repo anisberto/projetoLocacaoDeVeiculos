@@ -77,10 +77,10 @@ public class ReservaBll implements ICRUD_GENERIC {
     public void validaReserva(ReservaModel objeto) throws Exception {
         Date dataAtual = new Date();
         if(new java.util.Date(objeto.getReserva_dataReserva()).getTime() < dataAtual.getTime()){
-            throw new Exception("Data invalida, coloque uma data superior a hoje");
+            throw new Exception("Data inválida, coloque uma data superior a hoje");
         }
         if(new java.util.Date(objeto.getReserva_dataExpiracao()).getTime() < dataAtual.getTime()){
-            throw new Exception("Data invalida, coloque uma data superior a hoje");
+            throw new Exception("Data inválida, coloque uma data superior a hoje");
         }
         if(new java.util.Date(objeto.getReserva_dataExpiracao()).getTime() < new java.util.Date(objeto.getReserva_dataReserva()).getTime()){
             throw new Exception("A data de expiração deve ser maior que a data de reserva");
@@ -93,7 +93,7 @@ public class ReservaBll implements ICRUD_GENERIC {
             throw new Exception("Informe a data da reserva");
         }
         if (objeto.getReserva_veiculo().getVeiculo_anoFabrica().isEmpty()) {
-            throw new Exception("Informe um veiculo");
+            throw new Exception("Informe um veículo");
         }
         if (objeto.getReserva_cliente().getPessoa_nome().isEmpty()) {
             throw new Exception("Informe um Cliente");

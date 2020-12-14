@@ -86,10 +86,10 @@ public class LocacaoBll implements ICRUD_GENERIC<LocacaoModel> {
 //            throw new IllegalArgumentException("Data Invalida! Defina uma data para Locação");
 //        }
         if(objetoTeste.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("locado")){
-            throw new IllegalArgumentException("Veiculo já locado");
+            throw new IllegalArgumentException("Veículo já locado");
         }
         if(objetoTeste.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("vendido")){
-            throw new IllegalArgumentException("Veiculo vendido");
+            throw new IllegalArgumentException("Veículo vendido");
         }
     }
 
