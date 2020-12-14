@@ -38,7 +38,7 @@ public class ReservaBll implements ICRUD_GENERIC {
     @Override
     public void update(Object objeto) throws Exception {
         try {
-            validaReserva((ReservaModel) objeto);
+         //   validaReserva((ReservaModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
             throw e;

@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,15 +31,14 @@ public class ReservaDal implements ICRUD_GENERIC {
     @Override
     public void add(Object objeto) throws Exception {
 
-
         try {
             reserva = (ReservaModel) objeto;
 
             String sql = "INSERT INTO reserva (reserva_datafinal,reserva_dataDareserva ,reserva_veiculos_idem, reserva_pessoas_idem) VALUES (?, ?, ?,?)";
 
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setDate(1,  (new java.sql.Date(new Date(reserva.getReserva_dataExpiracao()).getTime())));
-            ps.setDate(2,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataReserva()).getTime())));
+            ps.setDate(1, formataData(reserva.getReserva_dataExpiracao()));
+            ps.setDate(2, formataData(reserva.getReserva_dataReserva()));
             ps.setObject(3, reserva.getReserva_veiculo().getVeiculo_idem());
             ps.setObject(4, reserva.getReserva_cliente().getPessoa_idem());
             ps.executeUpdate();
@@ -66,11 +68,10 @@ public class ReservaDal implements ICRUD_GENERIC {
 
         try {
             reserva = (ReservaModel) objeto;
-            String sql = "UPDATE reserva SET reserva_datafinal =?,reserva_dataDareserva =? WHERE reserva_idem=?";
+            String sql = "UPDATE reserva SET reserva_dataFinal =?,reserva_dataDareserva =? WHERE reserva_idem=?";
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setDate(1,  (new java.sql.Date(new Date(reserva.getReserva_dataExpiracao()).getTime())));
-            ps.setDate(2,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataReserva()).getTime())));
-
+            ps.setDate(1, formataData(reserva.getReserva_dataExpiracao()));
+            ps.setDate(2, formataData(reserva.getReserva_dataReserva()));
             ps.setObject(3, reserva.getReserva_idem());
             ps.executeUpdate();
 
@@ -96,13 +97,13 @@ public class ReservaDal implements ICRUD_GENERIC {
                 reserva.setReserva_dataReserva(rs.getString("reserva_dataDareserva"));
                 reserva.setReserva_dataExpiracao(rs.getString("reserva_dataFinal"));
                 reserva.setReserva_cliente((PessoaModel) pessoaDal.getById(rs.getInt("reserva_pessoas_idem")));
-                reserva.setReserva_veiculo(veiculoDal.getById(rs.getInt( "reserva_veiculos_idem")));
+                reserva.setReserva_veiculo(veiculoDal.getById(rs.getInt("reserva_veiculos_idem")));
 
                 list.add(reserva);
             }
 
             return list.iterator();
-            
+
         } catch (Exception e) {
             throw new Exception("Erro ao Listar: " + e.getMessage());
         }
@@ -150,5 +151,20 @@ public class ReservaDal implements ICRUD_GENERIC {
     @Override
     public int addReturn(Object objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static java.sql.Date formataData(String data) throws Exception {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+
+        java.sql.Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            date = new java.sql.Date(((java.util.Date) formatter.parse(data)).getTime());
+        } catch (ParseException e) {
+            throw e;
+        }
+        return date;
     }
 }
