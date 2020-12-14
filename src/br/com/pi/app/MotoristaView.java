@@ -643,7 +643,7 @@ public class MotoristaView extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Hitorico de Motorista", jPanel8);
+        jTabbedPane1.addTab("Histórico de Motorista", jPanel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
