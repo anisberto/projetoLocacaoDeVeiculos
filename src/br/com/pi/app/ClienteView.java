@@ -70,7 +70,6 @@ public class ClienteView extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btnClienteDeletar = new javax.swing.JButton();
-        btnClienteIncluir = new javax.swing.JButton();
         btnClienteCancelar = new javax.swing.JButton();
         btnClienteVoltar = new javax.swing.JButton();
         btnClientesSalvar = new javax.swing.JButton();
@@ -136,19 +135,6 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
-        btnClienteIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
-        btnClienteIncluir.setText("Incluir");
-        btnClienteIncluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnClienteIncluir.setFocusPainted(false);
-        btnClienteIncluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnClienteIncluir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnClienteIncluir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnClienteIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClienteIncluirActionPerformed(evt);
-            }
-        });
-
         btnClienteCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/cancel_77947.png"))); // NOI18N
         btnClienteCancelar.setText("Cancelar");
         btnClienteCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -203,8 +189,6 @@ public class ClienteView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnClienteIncluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClientesSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClienteAlterar)
@@ -224,7 +208,6 @@ public class ClienteView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnClienteIncluir)
                             .addComponent(btnClienteDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClientesSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClienteAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -644,15 +627,6 @@ public class ClienteView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnClienteVoltarActionPerformed
-    /**
-     * Botão incluir um novo dado no banco de dados e ativa o botão SALVAR
-     *
-     * @param evt
-     */
-    private void btnClienteIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteIncluirActionPerformed
-
-
-    }//GEN-LAST:event_btnClienteIncluirActionPerformed
 
     private void btnClientesSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesSalvarActionPerformed
         try {
@@ -749,6 +723,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtNomeFantasia.setText("");
         txtRazaoSocial.setText("");
         txtTelefone.setText("");
+        jComboxEstado.setSelectedItem("<Selecione UF>");
 
     }
 
@@ -756,7 +731,6 @@ public class ClienteView extends javax.swing.JFrame {
         if (txtClientesNumero.getText().isEmpty() == true) {
             throw new Exception("Preencha o campo de numero");
         }
-
 
     }
 
@@ -949,7 +923,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnClienteCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteCancelarActionPerformed
         try {
-
+            limparCampos();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnClienteCancelarActionPerformed
@@ -1058,7 +1032,6 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JButton btnClienteAlterar;
     private javax.swing.JButton btnClienteCancelar;
     private javax.swing.JButton btnClienteDeletar;
-    private javax.swing.JButton btnClienteIncluir;
     private javax.swing.JButton btnClienteVoltar;
     private javax.swing.JButton btnClientesSalvar;
     private javax.swing.JComboBox<String> jComboBoxPesquisa;

@@ -13,23 +13,23 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class ModeloView extends javax.swing.JFrame {
-    
+
     boolean incluir = true;
     ICRUD_GENERIC<ModeloModel> incluirModelo;
     String nomeUsuarioLogado;
     int idDelete;
     private MarcaBll marca_bll = new MarcaBll();
     ICRUD_GENERIC<MarcaModel> marca;
-    
+
     public ModeloView() throws Exception {
         initComponents();
-        
+
         incluirModelo = new ModeloBll();
         jcMarcas();
-            
+
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        //imprimirDadosNaGrid(marca_bll.getAll());
     }
 
     /**
@@ -291,14 +291,14 @@ public class ModeloView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void imprimirDadosNaGrid(Iterator conjunto) {
         DefaultTableModel model = (DefaultTableModel) jTableModelos.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
             String[] linha = new String[3];
             ModeloModel objetoModelo = (ModeloModel) conjunto.next();
-            linha[0] = objetoModelo.getModelo_idem()+ "";
+            linha[0] = objetoModelo.getModelo_idem() + "";
             linha[1] = objetoModelo.getModelo_descricao();
             linha[2] = objetoModelo.getModelo_marca().getMarca_descricao();
 
@@ -307,21 +307,16 @@ public class ModeloView extends javax.swing.JFrame {
     }
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-            if (!txtDescricao.getText().isEmpty() ) { //falta incluir para deletar a marca
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção da Modelo: " + incluirModelo.getById(idDelete).getModelo_descricao(), "Deleção",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
-                if (conf == 0) {
-                    incluirModelo.delete(Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString()));
-                    JOptionPane.showMessageDialog(null, "Modelo deletada com sucesso");
-                    clearFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
-                }
-                imprimirDadosNaGrid(incluirModelo.getAll());
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Modelo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
-            }
+            marca_bll = new MarcaBll();
+            ModeloBll bll = new ModeloBll();
+            MarcaModel marcamodel;
+            //      marcamodel = marca_bll.getByNome(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
+            //       marca_bll.delete(marcamodel.getMarca_idem());
+            bll.delete(idDelete);
+            imprimirDadosNaGrid(marca_bll.getAll());
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
@@ -374,23 +369,33 @@ public class ModeloView extends javax.swing.JFrame {
             try {
                 imprimirDadosNaGrid(incluirModelo.getAll());
             } catch (Exception ex) {
-                
+
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
-            enableButt(true);
-            incluir = false;
+            marca_bll = new MarcaBll();
+            MarcaModel marcamodel;
+            ModeloModel modeloModel = new ModeloModel();
+            modeloModel.setModelo_descricao(txtDescricao.getText());
+            modeloModel.setModelo_idem(idDelete);
+
+            marcamodel = marca_bll.getByNome(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
+            modeloModel.setModelo_marca(marcamodel);
+            marca_bll.update(marcamodel);
+            imprimirDadosNaGrid(marca_bll.getAll());
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void jTableModelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableModelosMouseClicked
-        
+
         try {
             int id = Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString());
+            idDelete = id;
             transFerirDados(id);
         } catch (Exception e) {
         }
@@ -410,15 +415,16 @@ public class ModeloView extends javax.swing.JFrame {
     private void jcMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcMarcaActionPerformed
-    private void jcMarcas () throws Exception{
+    private void jcMarcas() throws Exception {
         MarcaBll marck_bll = new MarcaBll();
         Iterator<MarcaModel> listaMarca = marck_bll.getAll();
         jcMarca.removeAllItems();
-        for(Iterator<MarcaModel> mm = listaMarca; mm.hasNext(); ){
+        for (Iterator<MarcaModel> mm = listaMarca; mm.hasNext();) {
             MarcaModel mark = mm.next();
             jcMarca.addItem(mark.getMarca_descricao());
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -505,7 +511,7 @@ public class ModeloView extends javax.swing.JFrame {
 
     private void transFerirDados(int codigo) {
         try {
-            ModeloModel modelo = (ModeloModel)incluirModelo.getById(codigo);
+            ModeloModel modelo = (ModeloModel) incluirModelo.getById(codigo);
             txtDescricao.setText(modelo.getModelo_descricao());
             idDelete = codigo;
         } catch (Exception e) {

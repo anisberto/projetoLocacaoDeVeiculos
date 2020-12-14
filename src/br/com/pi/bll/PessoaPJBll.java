@@ -24,34 +24,38 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             dal.addAll(endereco, pessoa);
         } catch (Exception e) {
             String erro = e.getMessage();
-            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")){
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")) {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
-            }if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
-                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
             }
-           throw new Exception(erro);
-        }
-    }
-    public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
-        try {
-            dal.updateAll(endereco, pessoaModel, pessoa);
-        }catch (Exception e){
-            String erro = e.getMessage();
-            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")){
-                erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
-            }if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
                 erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
         }
     }
-       public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
-              try {
+
+    public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
+        try {
+            dal.updateAll(endereco, pessoaModel, pessoa);
+        } catch (Exception e) {
+            String erro = e.getMessage();
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")) {
+                erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
+            }
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
+                erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
+            }
+            throw new Exception(erro);
+        }
+    }
+
+    public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
+        try {
             dal.deleteAll(endereco, pessoapj, pessoa);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
-       }
+    }
 
     @Override
     public void add(Object objeto) throws Exception {
@@ -60,9 +64,10 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             dal.add(objeto);
         } catch (Exception e) {
             String erro = e.getMessage();
-            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")){
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")) {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
-            }if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
+            }
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
                 erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
@@ -86,9 +91,10 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             dal.update(objeto);
         } catch (Exception e) {
             String erro = e.getMessage();
-            if(erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")){
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pj_pj_cnpj_key\"")) {
                 erro = "Esse CNPJ já existe no nosso cadastro de usuários!";
-            }if(erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")){
+            }
+            if (erro.contains("duplicate key value violates unique constraint \"pessoas_pessoa_email_key\"")) {
                 erro = "Esse EMAIL já existe no nosso cadastro de usuários!";
             }
             throw new Exception(erro);
@@ -124,21 +130,17 @@ public class PessoaPJBll implements ICRUD_GENERIC {
     }
 
     public void validaPessoa(PessoaPJModel objeto) throws Exception {
-        String nome = objeto.getPessoa_pj_razaoSocial().trim().toLowerCase();
-        String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
-        for (int i = 0; i < invalidos.length(); i++) {
-            if (nome.contains("" + invalidos.charAt(i))) {
-                throw new Exception("Nome de usuario inválido!");
-            }
+
+        if (objeto.getPessoaModel().getPessoa_nome().isEmpty() == true) {
+            throw new Exception("Preencha o nome de usuario");
         }
 
-
-        if (isCNPJ(objeto.getPessoa_pj_cnpj().replace(".","").replace("/", "").replace("-","")) == false) {
+        if (isCNPJ(objeto.getPessoa_pj_cnpj().replace(".", "").replace("/", "").replace("-", "")) == false) {
 
             throw new Exception("CNPJ inválido!");
         }
 
-        if (isValidEmailAddressRegex(objeto.getPessoa().getPessoa_email()) == false) {
+        if (isValidEmailAddressRegex(objeto.getPessoaModel().getPessoa_email()) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
                     + "\nO EMAIL informado não é válido");
         }
@@ -158,8 +160,8 @@ public class PessoaPJBll implements ICRUD_GENERIC {
         if (objeto.getPessoa_nome().equals("")) {
             throw new Exception("Informe a nome do usuario");
         }
-        if (objeto.getPessoa_telefone().equals("")) {
-            throw new Exception("Informe a telefone do usuario");
+        if (objeto.getPessoaModel().getPessoa_telefone().trim().length() < 9) {
+            throw new Exception("Telefone Invalido");
         }
 
         Iterator<PessoaPJModel> listaDeUsuario = dal.getAll();
@@ -177,6 +179,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
 
         }
     }
+
     public static boolean isValidEmailAddressRegex(String email) {
         boolean isEmailIdValid = false;
         if (email != null && email.length() > 0) {
@@ -189,7 +192,6 @@ public class PessoaPJBll implements ICRUD_GENERIC {
         }
         return isEmailIdValid;
     }
-
 
     public boolean isCNPJ(String CNPJ) {
 // considera-se erro CNPJ's formados por uma sequencia de numeros iguais
@@ -263,6 +265,7 @@ public class PessoaPJBll implements ICRUD_GENERIC {
     public int addReturn(Object objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     public static boolean isValidCPF(String CPF) {
         // considera-se erro CPF's formados por uma sequencia de numeros iguais
         if (CPF.equals("00000000000")
@@ -324,6 +327,5 @@ public class PessoaPJBll implements ICRUD_GENERIC {
             return (false);
         }
     }
-
 
 }

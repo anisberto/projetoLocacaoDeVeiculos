@@ -32,16 +32,13 @@ public class PessoaPJModel extends PessoaModel {
         this.pessoa_pj_razaoSocial = pessoa_pj_razaoSocial;
     }
 
-    public PessoaModel getPessoa() {
-        return pessoaModel;
+
+    public void setPessoa_pj_idem(int pessoa_pj_idem) {
+        this.pessoa_pj_idem = pessoa_pj_idem;
     }
 
     public int getPessoa_pj_idem() {
         return pessoa_pj_idem;
-    }
-
-    public void setPessoa_pj_idem(int pessoa_pj_idem) {
-        this.pessoa_pj_idem = pessoa_pj_idem;
     }
 
     public PessoaModel getPessoaModel() {
@@ -51,10 +48,8 @@ public class PessoaPJModel extends PessoaModel {
     public void setPessoaModel(PessoaModel pessoaModel) {
         this.pessoaModel = pessoaModel;
     }
+    
 
-    public void setPessoa(PessoaModel pessoaModel) {
-        this.pessoaModel = pessoaModel;
-    }
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package br.com.pi.dal;
 
-
+import br.com.pi.bll.EnderecoBll;
+import br.com.pi.bll.PessoaBll;
 import br.com.pi.bll.PessoaPJBll;
 import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.EnderecoModel;
@@ -28,17 +29,17 @@ public class PessoaPJDal implements ICRUD_GENERIC {
     }
 
     public void addAll(EnderecoModel endereco, PessoaPJModel pessoa) throws Exception {
-        EnderecoDal enderecoDal = new EnderecoDal();
-        PessoaDal pessoaDal = new PessoaDal();
+        EnderecoBll enderecoDal = new EnderecoBll();
+        PessoaBll pessoaDal = new PessoaBll();
+        PessoaPJBll pessoaPJBll = new PessoaPJBll();
         try {
             conexao.setAutoCommit(false);
             int idendereco = enderecoDal.addReturn(endereco);
             endereco.setEndereco_iden(idendereco);
             int idPessoa = pessoaDal.addReturn(pessoa);
             pessoa.setPessoa_idem(idPessoa);
-            add(pessoa);
+            pessoaPJBll.add(pessoa);
             conexao.commit();
-
 
         } catch (Exception e) {
             conexao.rollback();
@@ -48,13 +49,13 @@ public class PessoaPJDal implements ICRUD_GENERIC {
     }
 
     public void updateAll(EnderecoModel endereco, PessoaModel pessoaModel, PessoaPJModel pessoa) throws Exception {
-        EnderecoDal enderecoBll = new EnderecoDal();
-        PessoaDal pessoaBll = new PessoaDal();
+        EnderecoBll enderecoDal = new EnderecoBll();
+        PessoaBll pessoaDal = new PessoaBll();
         PessoaPJBll pessoaPJBll = new PessoaPJBll();
         try {
             conexao.setAutoCommit(false);
-            enderecoBll.update(endereco);
-            pessoaBll.update(pessoaModel);
+            enderecoDal.update(endereco);
+            pessoaDal.update(pessoaModel);
             pessoaPJBll.update(pessoa);
             conexao.commit();
 
@@ -63,17 +64,17 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             throw e;
         }
     }
-    
-        public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
-        EnderecoDal enderecoBll = new EnderecoDal();
-        PessoaDal pessoaBll = new PessoaDal();
+
+    public void deleteAll(int endereco, int pessoapj, int pessoa) throws Exception {
+        EnderecoBll enderecoDal = new EnderecoBll();
+        PessoaBll pessoaDal = new PessoaBll();
         PessoaPJBll pessoaPJBll = new PessoaPJBll();
         try {
             conexao.setAutoCommit(false);
-            enderecoBll.delete(endereco);
-            pessoaBll.delete(pessoa);
+            enderecoDal.delete(endereco);
+            pessoaDal.delete(pessoa);
             pessoaPJBll.delete(pessoapj);
-           
+
             conexao.commit();
 
         } catch (Exception e) {
@@ -81,7 +82,6 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             throw e;
         }
     }
-
 
     @Override
     public void add(Object objeto) throws Exception {
@@ -92,7 +92,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
         ps.setObject(1, pessoaPJModel.getPessoa_pj_cnpj());
         ps.setObject(2, pessoaPJModel.getPessoa_pj_nomeFantasia());
         ps.setObject(3, pessoaPJModel.getPessoa_pj_razaoSocial());
-        ps.setObject(4, pessoaPJModel.getPessoa().getPessoa_idem());
+        ps.setObject(4, pessoaPJModel.getPessoaModel().getPessoa_idem());
         ps.executeUpdate();
 
     }
@@ -116,7 +116,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             ps.setObject(1, pessoaPJModel.getPessoa_pj_cnpj());
             ps.setObject(2, pessoaPJModel.getPessoa_pj_nomeFantasia());
             ps.setObject(3, pessoaPJModel.getPessoa_pj_razaoSocial());
-            ps.setObject(4, pessoaPJModel.getPessoa().getPessoa_idem());
+            ps.setObject(4, pessoaPJModel.getPessoaModel().getPessoa_idem());
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -142,7 +142,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             pessoaPj.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
             pessoaPj.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
             pessoaPj.setPessoa_pj_razaoSocial("pj_razao_social");
-            pessoaPj.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
+            pessoaPj.setPessoaModel((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 
             list.add(pessoaPj);
         }
@@ -165,7 +165,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             pessoaPJModel.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
             pessoaPJModel.setPessoa_pj_razaoSocial(rs.getString("pj_razao_social"));
 
-            pessoaPJModel.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
+            pessoaPJModel.setPessoaModel((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 
         }
         return pessoaPJModel;
@@ -184,7 +184,7 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             pessoaPJModel.setPessoa_pj_nomeFantasia(rs.getString("pj_nome_fantasia"));
             pessoaPJModel.setPessoa_pj_cnpj(rs.getString("pj_cnpj"));
             pessoaPJModel.setPessoa_pj_razaoSocial("pj_razao_social");
-            pessoaPJModel.setPessoa((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
+            pessoaPJModel.setPessoaModel((PessoaModel) pessoaDal.getById(rs.getInt("pj_pessoas_idem")));
 
         }
         return pessoaPJModel;
@@ -201,13 +201,13 @@ public class PessoaPJDal implements ICRUD_GENERIC {
             ps.setObject(1, pessoaPJModel.getPessoa_pj_cnpj());
             ps.setObject(2, pessoaPJModel.getPessoa_pj_nomeFantasia());
             ps.setObject(3, pessoaPJModel.getPessoa_pj_razaoSocial());
-            ps.setObject(4, pessoaPJModel.getPessoa().getPessoa_idem());
+            ps.setObject(4, pessoaPJModel.getPessoaModel().getPessoa_idem());
             id = ps.executeUpdate();
             if (id == 0) {
                 throw new SQLException("Falhar ao inserir cliente do banco.");
             }
 
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getInt(1);
                 } else {

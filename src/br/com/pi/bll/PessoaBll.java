@@ -147,6 +147,7 @@ public class PessoaBll implements ICRUD_GENERIC {
     @Override
     public int addReturn(Object objeto) throws Exception {
         try {
+            validaPessoa((PessoaModel) objeto);
             return dal.addReturn(objeto);
         } catch (Exception e) {
             throw e;

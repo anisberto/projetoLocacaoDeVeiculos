@@ -1931,7 +1931,7 @@ public class LocacaoView extends javax.swing.JFrame {
             jcClienteJuridica.removeAllItems();
             Iterator<PessoaPJModel> pJuridica = pj.getAll();
             while (pJuridica.hasNext()) {
-                jcClienteJuridica.addItem(pJuridica.next().getPessoa());
+                jcClienteJuridica.addItem(pJuridica.next().getPessoaModel());
             }
         } catch (Exception e) {
         }

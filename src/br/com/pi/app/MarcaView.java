@@ -17,8 +17,10 @@ public class MarcaView extends javax.swing.JFrame {
     public MarcaView() throws Exception {
         initComponents();
 
+            MarcaBll marcabll = new MarcaBll();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
         btnSalvar.setEnabled(true);
+        imprimirDadosNaGrid(marcabll.getAll());
     }
 
     /**
@@ -194,13 +196,13 @@ public class MarcaView extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addContainerGap()
                 .addComponent(btnSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeletar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVoltar)
@@ -265,7 +267,7 @@ public class MarcaView extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 0).toString());
             idDelete = id;
-            transFerirDados(id);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jTableMarcasMouseClicked
@@ -399,16 +401,7 @@ public class MarcaView extends javax.swing.JFrame {
     public void clearFields() {
         txtDescricao.setText("");
 
-        txtDescricao.setEnabled(false);
+     
     }
 
-    private void transFerirDados(int codigo) {
-        try {
-            MarcaBll marcabll = new MarcaBll();
-            MarcaModel mark = (MarcaModel) marcabll.getById(codigo);
-            txtDescricao.setText(mark.getMarca_descricao());
-            idDelete = codigo;
-        } catch (Exception e) {
-        }
-    }
 }
