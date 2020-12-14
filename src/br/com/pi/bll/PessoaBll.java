@@ -119,10 +119,10 @@ public class PessoaBll implements ICRUD_GENERIC {
             throw new Exception("Informe o Email do usuario");
         }
         if (objeto.getPessoa_nome().equals("")) {
-            throw new Exception("Informe a Senha do usuario");
+            throw new Exception("Informe a nome do usuario");
         }
         if (objeto.getPessoa_telefone().equals("")) {
-            throw new Exception("Informe a Senha do usuario");
+            throw new Exception("Informe a telefone do usuario");
         }
 
         Iterator<PessoaModel> listaDeUsuario = dal.getAll();

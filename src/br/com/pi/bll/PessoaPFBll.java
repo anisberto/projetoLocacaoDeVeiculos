@@ -133,6 +133,15 @@ public class PessoaPFBll implements ICRUD_GENERIC {
                 throw new Exception("Nome de usuario inválido!");
             }
         }
+        if (objeto.getPessoa_email().equals("")) {
+            throw new Exception("Informe o Email do usuario");
+        }
+        if (objeto.getPessoa_nome().equals("")) {
+            throw new Exception("Informe a nome do usuario");
+        }
+        if (objeto.getPessoa_telefone().equals("")) {
+            throw new Exception("Informe a telefone do usuario");
+        }
 
 
 

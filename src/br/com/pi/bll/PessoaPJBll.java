@@ -152,6 +152,15 @@ public class PessoaPJBll implements ICRUD_GENERIC {
         if (objeto.getPessoa_pj_razaoSocial().equals("")) {
             throw new Exception("Informe a razão social");
         }
+        if (objeto.getPessoa_email().equals("")) {
+            throw new Exception("Informe o Email do usuario");
+        }
+        if (objeto.getPessoa_nome().equals("")) {
+            throw new Exception("Informe a nome do usuario");
+        }
+        if (objeto.getPessoa_telefone().equals("")) {
+            throw new Exception("Informe a telefone do usuario");
+        }
 
         Iterator<PessoaPJModel> listaDeUsuario = dal.getAll();
         for (Iterator<PessoaPJModel> it = listaDeUsuario; it.hasNext();) {
