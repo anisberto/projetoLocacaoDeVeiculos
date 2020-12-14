@@ -227,7 +227,7 @@ public class ModeloView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Modelo", "Marca"
+                "Modelo", "Marca", "Identificador"
             }
         ) {
             boolean[] canEdit = new boolean [] {

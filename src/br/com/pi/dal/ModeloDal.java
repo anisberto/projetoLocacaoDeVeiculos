@@ -79,7 +79,6 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
     @Override
     public ModeloModel getById(int n) throws Exception {
         String sql = "SELECT * FROM modelo WHERE modelo_idem = ?";
-        ModeloModel modeloByID = new ModeloModel();
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,n);
         ResultSet rs = preparedStatement.executeQuery();
