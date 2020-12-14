@@ -33,11 +33,15 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM marca WHERE marca_idem =?";
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setObject(1, n);
-        ps.executeUpdate();
+        try {
+            String sql = "DELETE FROM marca WHERE marca_idem =?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setObject(1, n);
+            ps.executeUpdate();
 
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
@@ -60,7 +64,7 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
-           MarcaModel marcaLista = new MarcaModel();
+            MarcaModel marcaLista = new MarcaModel();
             marcaLista.setMarca_idem(rs.getInt("marca_idem"));
             marcaLista.setMarca_descricao(rs.getString("marca_descricao"));
 
@@ -77,7 +81,7 @@ public class MarcaDal implements ICRUD_GENERIC<MarcaModel> {
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
 
-            MarcaModel marcaById = new MarcaModel();
+        MarcaModel marcaById = new MarcaModel();
         if (rs.next()) {
             marcaById.setMarca_idem(rs.getInt("marca_idem"));
             marcaById.setMarca_descricao(rs.getString("marca_descricao"));

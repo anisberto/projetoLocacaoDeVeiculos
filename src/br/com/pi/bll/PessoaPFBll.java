@@ -134,15 +134,22 @@ public class PessoaPFBll implements ICRUD_GENERIC {
             }
         }
 
-//        // Verifica se EMAIL é válido
-//        if (isValidEmailAddressRegex(objeto.getPessoa_email()) == false) {
-//            throw new Exception("Não foi possível concluir sua solicitação"
-//                    + "\nO EMAIL informado não é válido");
-//        }
+        // Verifica se EMAIL é válido
+        if (isValidEmailAddressRegex(objeto.getPessoa().getPessoa_email()) == false) {
+            throw new Exception("Não foi possível concluir sua solicitação"
+                    + "\nO EMAIL informado não é válido");
+        }
         //valida CPF
         if (isValidCPF(objeto.getPessoa_pf_cpf().replace(".", "").replace("-", "")) == false) {
             throw new Exception("Não foi possível concluir sua solicitação"
                     + "\nO CPF informado não é válido");
+        }
+        
+        if(objeto.getPessoa().getPessoa_nome().isEmpty() == true){
+            throw new Exception("Informe o Nome do usuario");
+        }
+        if(objeto.getPessoa().getPessoa_telefone().contains("   ")){
+            throw new Exception("Telefone invado");
         }
 
         if (objeto.getPessoa_pf_cpf().isEmpty()) {

@@ -30,6 +30,7 @@ public class PessoaBll implements ICRUD_GENERIC {
             validaPessoa((PessoaModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
+            throw e;
 
         }
 
@@ -115,10 +116,10 @@ public class PessoaBll implements ICRUD_GENERIC {
                     + "\nO EMAIL informado não é válido");
         }
 
-        if (objeto.getPessoa_email().equals("")) {
+        if (objeto.getPessoa_email().isEmpty()) {
             throw new Exception("Informe o Email do usuario");
         }
-        if (objeto.getPessoa_nome().equals("")) {
+        if (objeto.getPessoa_nome().isEmpty()) {
             throw new Exception("Informe a nome do usuario");
         }
         if (objeto.getPessoa_telefone().contains("   ")) {

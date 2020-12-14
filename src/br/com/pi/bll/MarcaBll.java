@@ -30,6 +30,7 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
             validaMarca((MarcaModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
+            throw e;
 
         }
 
@@ -40,6 +41,11 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
         try {
             dal.delete(n);
         } catch (Exception e) {
+            String erro = e.getMessage();
+            if(erro.contains("update or delete on table \"marca\" violates foreign key constraint")){
+                erro = "Não é possivel deletar, pois essa marca está vinculada a um Modelo";
+            }
+            throw new Exception(erro);
 
         }
 
@@ -51,6 +57,7 @@ public class MarcaBll implements ICRUD_GENERIC<MarcaModel> {
             validaMarca((MarcaModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
+            throw e;
 
         }
 

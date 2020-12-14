@@ -1,4 +1,3 @@
-
 package br.com.pi.app;
 
 import br.com.pi.bll.MarcaBll;
@@ -10,18 +9,16 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class MarcaView extends javax.swing.JFrame {
-    
-    boolean incluir = true;
-    ICRUD_GENERIC<MarcaModel> incluirMarca;
+
     String nomeUsuarioLogado;
     int idDelete;
-    
+
     public MarcaView() throws Exception {
         initComponents();
-        incluirMarca = new MarcaBll();
+
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
+        btnSalvar.setEnabled(true);
     }
 
     /**
@@ -42,7 +39,6 @@ public class MarcaView extends javax.swing.JFrame {
         jTableMarcas = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
         btnDeletar = new javax.swing.JButton();
-        btnIncluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -145,19 +141,6 @@ public class MarcaView extends javax.swing.JFrame {
             }
         });
 
-        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
-        btnIncluir.setText("Incluir");
-        btnIncluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIncluir.setFocusPainted(false);
-        btnIncluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnIncluir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnIncluir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncluirActionPerformed(evt);
-            }
-        });
-
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/cancel_77947.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -211,15 +194,13 @@ public class MarcaView extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnIncluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(80, 80, 80)
                 .addComponent(btnSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeletar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVoltar)
@@ -232,7 +213,6 @@ public class MarcaView extends javax.swing.JFrame {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIncluir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 6, Short.MAX_VALUE))
@@ -268,22 +248,22 @@ public class MarcaView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void imprimirDadosNaGrid(Iterator conjunto) {
         DefaultTableModel model = (DefaultTableModel) jTableMarcas.getModel();
         model.setNumRows(0);
         while (conjunto.hasNext()) {
             String[] linha = new String[2];
             MarcaModel objetoMarca = (MarcaModel) conjunto.next();
-            linha[0] = objetoMarca.getMarca_descricao();
-            linha[1] = objetoMarca.getMarca_idem()+ "";
+            linha[0] = objetoMarca.getMarca_idem() + "";
+            linha[1] = objetoMarca.getMarca_descricao();
 
             model.addRow(linha);
         }
     }
     private void jTableMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMarcasMouseClicked
         try {
-            int id = Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 1).toString());
+            int id = Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 0).toString());
             idDelete = id;
             transFerirDados(id);
         } catch (Exception e) {
@@ -292,36 +272,22 @@ public class MarcaView extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-            if (!txtDescricao.getText().isEmpty()) {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção da Marca: " + incluirMarca.getById(idDelete).getMarca_descricao(), "Deleção",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
-                if (conf == 0) {
-                    incluirMarca.delete(idDelete);
-                    JOptionPane.showMessageDialog(null, "Marca deletada com sucesso");
-                    clearFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
-                }
-                imprimirDadosNaGrid(incluirMarca.getAll());
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Marca na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
-            }
+
+            MarcaBll marcabll = new MarcaBll();
+            marcabll.delete(idDelete);
+            JOptionPane.showMessageDialog(null, "Marca deletada com sucesso");
+            clearFields();
+            imprimirDadosNaGrid(marcabll.getAll());
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        try {
-            clearFields();
-            enableButt(true);
-            incluir = true;
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnIncluirActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
-            enableButt(false);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -338,45 +304,41 @@ public class MarcaView extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            if (!txtDescricao.getText().isEmpty()) {
-                MarcaModel mark = new MarcaModel();
-                mark.setMarca_descricao(txtDescricao.getText());
-                if (incluir) {
-                    incluirMarca.add(mark);
-                    JOptionPane.showMessageDialog(null, "Marca Cadastrado com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    mark.setMarca_idem(Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 1).toString()));
-                    incluirMarca.update(mark);
-                    JOptionPane.showMessageDialog(null, "Marca Alterada com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
-            }
+            MarcaBll marcabll = new MarcaBll();
+            MarcaModel marcaModel = new MarcaModel();
+
+            marcaModel.setMarca_descricao(txtDescricao.getText());
+
+            marcabll.add(marcaModel);
+            imprimirDadosNaGrid(marcabll.getAll());
+            clearFields();
         } catch (Exception e) {
-        } finally {
-            enableButt(false);
-            try {
-                imprimirDadosNaGrid(incluirMarca.getAll());
-            } catch (Exception ex) {
-                
-            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try {
-            enableButt(true);
-            incluir = false;
+            MarcaBll marcabll = new MarcaBll();
+            MarcaModel marcaModel = new MarcaModel();
+
+            marcaModel.setMarca_descricao(txtDescricao.getText());
+            marcaModel.setMarca_idem(idDelete);
+
+            marcabll.update(marcaModel);
+            imprimirDadosNaGrid(marcabll.getAll());
+            clearFields();
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         try {
-            imprimirDadosNaGrid(incluirMarca.getAll());
+            MarcaBll marcabll = new MarcaBll();
+            imprimirDadosNaGrid(marcabll.getAll());
         } catch (Exception e) {
         }
-    
+
     }//GEN-LAST:event_formWindowActivated
 
     /**
@@ -422,7 +384,6 @@ public class MarcaView extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel12;
@@ -434,27 +395,6 @@ public class MarcaView extends javax.swing.JFrame {
     private javax.swing.JTable jTableMarcas;
     private javax.swing.JFormattedTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
-    
-    private void enableButt(boolean butt) {
-        if (butt) {
-            btnIncluir.setEnabled(false);
-            btnAlterar.setEnabled(false);
-            btnCancelar.setEnabled(true);
-            btnDeletar.setEnabled(false);
-            btnSalvar.setEnabled(true);
-            btnVoltar.setEnabled(false);
-
-            txtDescricao.setEnabled(true);
-        } else {
-            btnIncluir.setEnabled(true);
-            btnAlterar.setEnabled(true);
-            btnCancelar.setEnabled(true);
-            btnDeletar.setEnabled(true);
-            btnVoltar.setEnabled(true);
-            btnSalvar.setEnabled(false);
-            clearFields();
-        }
-    }
 
     public void clearFields() {
         txtDescricao.setText("");
@@ -464,7 +404,8 @@ public class MarcaView extends javax.swing.JFrame {
 
     private void transFerirDados(int codigo) {
         try {
-            MarcaModel mark = (MarcaModel)incluirMarca.getById(codigo);
+            MarcaBll marcabll = new MarcaBll();
+            MarcaModel mark = (MarcaModel) marcabll.getById(codigo);
             txtDescricao.setText(mark.getMarca_descricao());
             idDelete = codigo;
         } catch (Exception e) {
