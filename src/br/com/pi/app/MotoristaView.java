@@ -863,6 +863,7 @@ public class MotoristaView extends javax.swing.JFrame {
             txtMotoristaComplemento.setText(motoristaModel.getMotorista_endereco().getEndereco_complemento());
             txtMotoristaNumero.setText(motoristaModel.getMotorista_endereco().getEndereco_numero() + "");
             txtMotoristaRua.setText(motoristaModel.getMotorista_endereco().getEndereco_rua());
+            cboMotoristaUF.setSelectedItem(motoristaModel.getMotorista_endereco().getEndereco_estado());
             //cnh
 
             SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");

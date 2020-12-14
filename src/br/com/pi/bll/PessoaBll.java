@@ -41,6 +41,11 @@ public class PessoaBll implements ICRUD_GENERIC {
         try {
         dal.delete(n);
         } catch (Exception e) {
+            String erro = e.getMessage();
+            if(erro.contains("update or delete on table \"pessoas\" violates foreign key constraint \"fk_locacao_3\"")){
+                erro ="Não é possivel deletar esse usuario, pois o mesmo possui uma locação em andamento";
+            }
+            throw new Exception(erro);
 
         }
 

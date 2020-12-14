@@ -35,7 +35,7 @@ public class ReservaDal implements ICRUD_GENERIC {
             String sql = "INSERT INTO reserva (reserva_datafinal,reserva_dataDareserva ,reserva_veiculos_idem, reserva_pessoas_idem) VALUES (?, ?, ?,?)";
 
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setDate(1,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataExpiracao()).getTime())));
+            ps.setDate(1,  (new java.sql.Date(new Date(reserva.getReserva_dataExpiracao()).getTime())));
             ps.setDate(2,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataReserva()).getTime())));
             ps.setObject(3, reserva.getReserva_veiculo().getVeiculo_idem());
             ps.setObject(4, reserva.getReserva_cliente().getPessoa_idem());

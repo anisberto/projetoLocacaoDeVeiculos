@@ -38,6 +38,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     int idg;
     int idPessoa;
+    int idControl;
 
     boolean incluirEndereco = true;
     int idDeleteCliente;
@@ -117,6 +118,7 @@ public class ClienteView extends javax.swing.JFrame {
         jTableUsuarios2 = new javax.swing.JTable();
         jTextFieldPesquisa = new javax.swing.JTextField();
         jComboBoxPesquisa = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cliente");
@@ -519,7 +521,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Clientes", jPanel4);
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações"));
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
 
         jTableUsuarios2.setAutoCreateRowSorter(true);
         jTableUsuarios2.setModel(new javax.swing.table.DefaultTableModel(
@@ -530,6 +532,11 @@ public class ClienteView extends javax.swing.JFrame {
                 "Identificador", "Nome", "Telefone", "E-mail"
             }
         ));
+        jTableUsuarios2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsuarios2MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableUsuarios2);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -555,6 +562,13 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("DELETE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -563,7 +577,9 @@ public class ClienteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jComboBoxPesquisa, 0, 378, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
@@ -577,8 +593,9 @@ public class ClienteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(629, Short.MAX_VALUE))
+                    .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(653, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                     .addContainerGap(202, Short.MAX_VALUE)
@@ -955,6 +972,81 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBoxPesquisaActionPerformed
 
+    private void jTableUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarios2MouseClicked
+      idControl = Integer.parseInt(jTableUsuarios2.getValueAt(jTableUsuarios2.getSelectedRow(), 0).toString());
+      
+      jTextFieldPesquisa.setText(jTableUsuarios2.getValueAt(jTableUsuarios2.getSelectedRow(), 1).toString());
+      
+       
+
+        pessoaPFModel = new PessoaPFModel();
+        pessoaPJModel = new PessoaPJModel();
+
+        limparCampos();
+
+        try {
+
+            //Setando pessoa
+            pessoamodel = (PessoaModel) pessoaBll.getById(idControl);
+            txtNomePessoa.setText(pessoamodel.getPessoa_nome());
+            txtEmail.setText(pessoamodel.getPessoa_email());
+            txtTelefone.setText(pessoamodel.getPessoa_telefone());
+            //Sentando Endereço
+            txtClientesBairro.setText(pessoamodel.getPessoa_endereco().getEndereco_bairro());
+            txtClientesCep.setText(pessoamodel.getPessoa_endereco().getEndereco_cep());
+            txtCidade.setText(pessoamodel.getPessoa_endereco().getEndereco_cidade());
+            txtClientesNumero.setText(pessoamodel.getPessoa_endereco().getEndereco_numero() + "");
+            txtClientesRua.setText(pessoamodel.getPessoa_endereco().getEndereco_rua());
+            txtId.setText(pessoamodel.getPessoa_endereco().getEndereco_iden() + "");
+            txtClientesComplemento.setText(pessoamodel.getPessoa_endereco().getEndereco_complemento());
+            jComboxEstado.setSelectedItem(pessoamodel.getPessoa_endereco().getEndereco_estado());
+
+            pessoaPFModel.setPessoa_pf_cpf(null);
+            pessoaPJModel.setPessoa_pj_cnpj(null);
+
+            pessoaPFModel = (PessoaPFModel) pessoaPFBll.getById(idControl);
+
+            if (pessoaPFModel.getPessoa_pf_cpf() != null) {
+                idPessoa = pessoaPFModel.getPessoa_idem();
+                txtRgPessoa.setText(pessoaPFModel.getPessoa_pf_rg());
+                txtCpfPessoa.setText(pessoaPFModel.getPessoa_pf_cpf());
+                jComboBoxTipoPessoa.setSelectedItem("Pessoa Fisica");
+
+            } else {
+                pessoaPJModel = (PessoaPJModel) pessoaPJBll.getById(idControl);
+                idPessoa = pessoaPJModel.getPessoa_idem();
+                txtCnpj.setText(pessoaPJModel.getPessoa_pj_cnpj());
+                txtNomeFantasia.setText(pessoaPJModel.getPessoa_pj_nomeFantasia());
+                txtRazaoSocial.setText(pessoaPJModel.getPessoa_pj_razaoSocial());
+                jComboBoxTipoPessoa.setSelectedItem("Pessoa Juridica");
+
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+
+        }
+    }//GEN-LAST:event_jTableUsuarios2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         try {
+            if (jComboBoxTipoPessoa.getSelectedItem().toString().equalsIgnoreCase("Pessoa Fisica")) {
+                pessoaPFBll.deleteAll(Integer.parseInt(txtId.getText()), idg, idg);
+                limparCampos();
+                atualizarGrid();
+                jComboBoxPesquisaActionPerformed(null);
+            } else {
+                pessoaPJBll.deleteAll(Integer.parseInt(txtId.getText()), idg, idg);
+                limparCampos();
+                atualizarGrid();
+                jComboBoxPesquisaActionPerformed(null);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void atualizarGrid() throws Exception {
         DefaultTableModel model = (DefaultTableModel) tabViewClientes.getModel();
         model.setRowCount(0);
@@ -1034,6 +1126,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JButton btnClienteDeletar;
     private javax.swing.JButton btnClienteVoltar;
     private javax.swing.JButton btnClientesSalvar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxPesquisa;
     private javax.swing.JComboBox<String> jComboBoxTipoPessoa;
     private javax.swing.JComboBox<String> jComboxEstado;
