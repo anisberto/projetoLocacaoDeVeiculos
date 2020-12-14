@@ -219,7 +219,7 @@ public class ReservaView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome", "Email"
+                "ID", "Nome", "E-mail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -248,7 +248,7 @@ public class ReservaView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Marca", "Modelo", "Ano Fabrica"
+                "ID", "Marca", "Modelo", "Ano Fabricação"
             }
         ));
         jTableVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -266,8 +266,8 @@ public class ReservaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,7 +299,7 @@ public class ReservaView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Veiculos", jPanel7);
+        jTabbedPane3.addTab("Veículos", jPanel7);
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
 

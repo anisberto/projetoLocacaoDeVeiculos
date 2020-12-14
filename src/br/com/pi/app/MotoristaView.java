@@ -594,7 +594,7 @@ public class MotoristaView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jComboBoxpesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome", "CPF", "Email", "RG" }));
+        jComboBoxpesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar Por", "Nome", "CPF", "E-mail", "RG" }));
         jComboBoxpesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxpesquisaActionPerformed(evt);

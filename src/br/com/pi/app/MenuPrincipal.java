@@ -111,7 +111,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/car_black.png"))); // NOI18N
-        jButton4.setText("VEICULO");
+        jButton4.setText("VEÍCULO");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);

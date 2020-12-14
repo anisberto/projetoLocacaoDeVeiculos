@@ -931,7 +931,7 @@
                     <StringItem index="0" value="Buscar Por"/>
                     <StringItem index="1" value="Nome"/>
                     <StringItem index="2" value="CPF"/>
-                    <StringItem index="3" value="Email"/>
+                    <StringItem index="3" value="E-mail"/>
                     <StringItem index="4" value="RG"/>
                   </StringArray>
                 </Property>

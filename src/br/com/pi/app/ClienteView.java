@@ -393,7 +393,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel7.setText("Rua");
 
-        jLabel16.setText("Cidade *");
+        jLabel16.setText("Cidade");
 
         jLabel17.setText("Bairro");
 
@@ -414,7 +414,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jComboxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione UF>", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
-        jLabel8.setText("Número *");
+        jLabel8.setText("Número");
 
         txtClientesNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -437,7 +437,7 @@ public class ClienteView extends javax.swing.JFrame {
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(jLabel16)
                         .addGap(17, 17, 17)
                         .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -586,7 +586,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Hitorico de Clientes", jPanel8);
+        jTabbedPane1.addTab("Histórico de clientes", jPanel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

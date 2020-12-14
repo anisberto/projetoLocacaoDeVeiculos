@@ -332,9 +332,9 @@ public class VeiculoView extends javax.swing.JFrame {
 
         txtMarcaVeiculo.setEnabled(false);
 
-        jLabel2.setText("Marca: ");
+        jLabel2.setText("Marca");
 
-        jLabel3.setText("Modelo: ");
+        jLabel3.setText("Modelo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -370,7 +370,7 @@ public class VeiculoView extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jcModelo, 0, 146, Short.MAX_VALUE)
+                                        .addComponent(jcModelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnNovoModelo)
                                         .addGap(12, 12, 12)))
@@ -510,7 +510,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane3.addTab("Veiculos", jPanel7);
+        jTabbedPane3.addTab("Veículos", jPanel7);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Veiculos"));
 
@@ -651,7 +651,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane3.addTab("Controle de Veiculos", jPanel11);
+        jTabbedPane3.addTab("Controle de Veículos", jPanel11);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

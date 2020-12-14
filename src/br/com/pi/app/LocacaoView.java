@@ -269,7 +269,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Locações"));
 
-        jLabel1.setText("Codigo");
+        jLabel1.setText("Código");
 
         jLabel2.setText("Data de Retirada");
 
@@ -383,14 +383,14 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Cliente"));
 
-        jrFisica.setText("Pessoa Fisica");
+        jrFisica.setText("Pessoa Física");
         jrFisica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrFisicaActionPerformed(evt);
             }
         });
 
-        jrJuridica.setText("Pessoa Juridica");
+        jrJuridica.setText("Pessoa Jurídica");
         jrJuridica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrJuridicaActionPerformed(evt);
@@ -585,7 +585,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Codigo", "Cliente", "Motorista", "Veiculo"
+                "Identificador", "Código", "Cliente", "Motorista", "Veículo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -739,7 +739,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
         txtVeiculoDevo.setEnabled(false);
 
-        jLabel16.setText("Veiculo");
+        jLabel16.setText("Veículo");
 
         txtRenavamDevo.setEnabled(false);
 
@@ -873,7 +873,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Codigo", "Cliente", "Motorista", "Veiculo", "Data de Devolução", "Data de Locação"
+                "Identificador", "Código", "Cliente", "Motorista", "Veículo", "Data de Devolução", "Data de Locação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -928,7 +928,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Hitorico de Locações", jPanel8);
+        jTabbedPane1.addTab("Histórico de Locações", jPanel8);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Locações"));
 
@@ -1031,7 +1031,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Locações"));
 
-        jLabel18.setText("Codigo");
+        jLabel18.setText("Código");
 
         jLabel19.setText("Data de Retirada");
 
@@ -1105,7 +1105,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
         txtVeiculoReserva.setEnabled(false);
 
-        jLabel27.setText("Veiculo");
+        jLabel27.setText("Veículo");
 
         jLabel28.setText("Cliente");
 
@@ -1200,7 +1200,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addComponent(jLabel23)
                     .addComponent(txtVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
@@ -1211,7 +1211,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Cliente", "Veiculo", "Data de Reserva", "Experação Reserva"
+                "Identificador", "Cliente", "Veículo", "Data de Reserva", "Experação Reserva"
             }
         ) {
             boolean[] canEdit = new boolean [] {
