@@ -25,13 +25,17 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void add(ModeloModel objeto) throws Exception {
-        String sql = "INSERT INTO modelo(modelo_descricao, modelo_marca_idem)"
-                + "VALUES (?, ?)";
+     try {
+         String sql = "INSERT INTO modelo(modelo_descricao, modelo_marca_idem)"
+                 + "VALUES (?, ?)";
 
-        PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setString(1, objeto.getModelo_descricao());
-        ps.setInt(2, objeto.getModelo_marca().getMarca_idem());
-        ps.executeUpdate();
+         PreparedStatement ps = conexao.prepareStatement(sql);
+         ps.setString(1, objeto.getModelo_descricao());
+         ps.setInt(2, objeto.getModelo_marca().getMarca_idem());
+         ps.executeUpdate();
+     }catch (Exception e){
+         throw e;
+     }
 
     }
 

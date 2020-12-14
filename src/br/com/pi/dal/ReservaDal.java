@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -65,13 +65,11 @@ public class ReservaDal implements ICRUD_GENERIC {
     public void update(Object objeto) throws Exception {
 
         try {
-            String sql = "UPDATE reserva SET reserva_datafinal=?, reserva_datadareserva=?"
-                    + "reserva_pessoas_idem=? WHERE reserva_idem=?";
+            reserva = (ReservaModel) objeto;
+            String sql = "UPDATE reserva SET reserva_datafinal =?,reserva_dataDareserva =? WHERE reserva_idem=?";
             PreparedStatement ps = conexao.prepareStatement(sql);
-
-            ps.setObject(1, reserva.getReserva_dataExpiracao());
-            ps.setObject(2, reserva.getReserva_dataReserva());
-            //ps.setObject(3, reserva.getReserva_veiculo());
+            ps.setDate(1,  (new java.sql.Date(new Date(reserva.getReserva_dataExpiracao()).getTime())));
+            ps.setDate(2,  (new java.sql.Date(new java.util.Date(reserva.getReserva_dataReserva()).getTime())));
 
             ps.setObject(3, reserva.getReserva_idem());
             ps.executeUpdate();

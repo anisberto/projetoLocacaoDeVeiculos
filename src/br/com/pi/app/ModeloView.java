@@ -15,21 +15,22 @@ import javax.swing.table.DefaultTableModel;
 
 public class ModeloView extends javax.swing.JFrame {
 
-    boolean incluir = true;
-    ICRUD_GENERIC<ModeloModel> incluirModelo;
     String nomeUsuarioLogado;
     int idDelete;
-    private MarcaBll marca_bll = new MarcaBll();
-    ICRUD_GENERIC<MarcaModel> marca;
+    private MarcaBll marcabll;
+    ModeloBll modeloBll;
+    ModeloModel modeloModel;
+    MarcaModel marcaModel;
 
     public ModeloView() throws Exception {
         initComponents();
 
-        incluirModelo = new ModeloBll();
-        jcMarcas();
-
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/rental_car_key.png")).getImage());
-        //imprimirDadosNaGrid(marca_bll.getAll());
+        modeloBll = new ModeloBll();
+        marcabll = new MarcaBll();
+        atualizarGrid();
+
+        jcMarcas();
     }
 
     /**
@@ -43,8 +44,6 @@ public class ModeloView extends javax.swing.JFrame {
 
         jPanel8 = new javax.swing.JPanel();
         btnDeletar = new javax.swing.JButton();
-        btnIncluir = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -79,31 +78,6 @@ public class ModeloView extends javax.swing.JFrame {
             }
         });
 
-        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
-        btnIncluir.setText("Incluir");
-        btnIncluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIncluir.setFocusPainted(false);
-        btnIncluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnIncluir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnIncluir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncluirActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/cancel_77947.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerifyInputWhenFocusTarget(false);
-        btnCancelar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/voltar.png"))); // NOI18N
         btnVoltar.setText("Voltar");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -118,7 +92,6 @@ public class ModeloView extends javax.swing.JFrame {
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/salve-24.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnSalvar.setEnabled(false);
         btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalvar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -146,16 +119,12 @@ public class ModeloView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnIncluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVoltar)
                 .addContainerGap())
         );
@@ -163,10 +132,8 @@ public class ModeloView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIncluir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 6, Short.MAX_VALUE))
@@ -227,17 +194,9 @@ public class ModeloView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Modelo", "Marca", "Identificador"
+                "Identificador", "Modelo", "Marca"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jTableModelos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableModelosMouseClicked(evt);
@@ -292,49 +251,6 @@ public class ModeloView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void imprimirDadosNaGrid(Iterator conjunto) {
-        DefaultTableModel model = (DefaultTableModel) jTableModelos.getModel();
-        model.setNumRows(0);
-        while (conjunto.hasNext()) {
-            String[] linha = new String[3];
-            ModeloModel objetoModelo = (ModeloModel) conjunto.next();
-            linha[0] = objetoModelo.getModelo_idem() + "";
-            linha[1] = objetoModelo.getModelo_descricao();
-            linha[2] = objetoModelo.getModelo_marca().getMarca_descricao();
-
-            model.addRow(linha);
-        }
-    }
-    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        try {
-            marca_bll = new MarcaBll();
-            ModeloBll bll = new ModeloBll();
-            MarcaModel marcamodel;
-            //      marcamodel = marca_bll.getByNome(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
-            //       marca_bll.delete(marcamodel.getMarca_idem());
-            bll.delete(idDelete);
-            imprimirDadosNaGrid(marca_bll.getAll());
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-        }
-    }//GEN-LAST:event_btnDeletarActionPerformed
-
-    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        try {
-            clearFields();
-            enableButt(true);
-            incluir = true;
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnIncluirActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-            enableButt(false);
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         try {
@@ -345,69 +261,39 @@ public class ModeloView extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnVoltarActionPerformed
+    private void atualizarGrid() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) jTableModelos.getModel();
+        model.setRowCount(0);
+        Object[] linha;
+        modeloBll = new ModeloBll();
+        Iterator<ModeloModel> listaDeUsuario = modeloBll.getAll();
+        for (Iterator<ModeloModel> it = listaDeUsuario; it.hasNext();) {
+            ModeloModel aux = it.next();
+            linha = new Object[]{
+                aux.getModelo_idem(),
+                aux.getModelo_descricao(),
+                aux.getModelo_marca().getMarca_descricao(),};
+            model.addRow(linha);
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
-            if (!txtDescricao.getText().isEmpty()) { //falta selecionar as maracas
-                ModeloModel modelo = new ModeloModel();
-                modelo.setModelo_descricao(txtDescricao.getText());
-                modelo.setModelo_marca(marca_bll.getByNome(jcMarca.getSelectedItem().toString()));
-                if (incluir) {
-                    incluirModelo.add(modelo);
-                    JOptionPane.showMessageDialog(null, "Modelo Cadastrado com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    modelo.setModelo_idem(Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString()));
-                    incluirModelo.update(modelo);
-                    JOptionPane.showMessageDialog(null, "Modelo Alterada com Sucesso!", "Inclusão", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Preencha todos os Campos!", "Erro ao Incluir", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-        } finally {
-            enableButt(false);
-            try {
-                imprimirDadosNaGrid(incluirModelo.getAll());
-            } catch (Exception ex) {
-
-            }
         }
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        try {
-            marca_bll = new MarcaBll();
-            MarcaModel marcamodel;
-            ModeloModel modeloModel = new ModeloModel();
-            modeloModel.setModelo_descricao(txtDescricao.getText());
-            modeloModel.setModelo_idem(idDelete);
-
-            marcamodel = marca_bll.getByNome(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 2).toString());
-            modeloModel.setModelo_marca(marcamodel);
-            marca_bll.update(marcamodel);
-            imprimirDadosNaGrid(marca_bll.getAll());
-
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
+    }
     private void jTableModelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableModelosMouseClicked
 
         try {
             int id = Integer.parseInt(jTableModelos.getValueAt(jTableModelos.getSelectedRow(), 0).toString());
             idDelete = id;
-            transFerirDados(id);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jTableModelosMouseClicked
 
     private void txtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescricaoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtDescricaoActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         try {
-            imprimirDadosNaGrid(incluirModelo.getAll());
+            atualizarGrid();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_formWindowActivated
@@ -415,6 +301,46 @@ public class ModeloView extends javax.swing.JFrame {
     private void jcMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcMarcaActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            marcaModel = marcabll.getByNome(jcMarca.getSelectedItem().toString());
+            modeloModel.setModelo_descricao(txtDescricao.getText());
+            modeloModel.setModelo_marca(marcaModel);
+
+            modeloBll.add(modeloModel);
+            atualizarGrid();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        try {
+            marcaModel = marcabll.getByNome(jcMarca.getSelectedItem().toString());
+            modeloModel.setModelo_descricao(txtDescricao.getText());
+            modeloModel.setModelo_marca(marcaModel);
+            modeloModel.setModelo_idem(idDelete);
+
+            modeloBll.update(modeloModel);
+            atualizarGrid();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+
+            modeloBll.delete(idDelete);
+            atualizarGrid();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
     private void jcMarcas() throws Exception {
         MarcaBll marck_bll = new MarcaBll();
         Iterator<MarcaModel> listaMarca = marck_bll.getAll();
@@ -466,9 +392,7 @@ public class ModeloView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel12;
@@ -482,39 +406,9 @@ public class ModeloView extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
 
-    private void enableButt(boolean butt) {
-        if (butt) {
-            btnIncluir.setEnabled(false);
-            btnAlterar.setEnabled(false);
-            btnCancelar.setEnabled(true);
-            btnDeletar.setEnabled(false);
-            btnSalvar.setEnabled(true);
-            btnVoltar.setEnabled(false);
-
-            txtDescricao.setEnabled(true);
-        } else {
-            btnIncluir.setEnabled(true);
-            btnAlterar.setEnabled(true);
-            btnCancelar.setEnabled(true);
-            btnDeletar.setEnabled(true);
-            btnVoltar.setEnabled(true);
-            btnSalvar.setEnabled(false);
-            clearFields();
-        }
-    }
-
     public void clearFields() {
         txtDescricao.setText("");
 
-        txtDescricao.setEnabled(false);
     }
 
-    private void transFerirDados(int codigo) {
-        try {
-            ModeloModel modelo = (ModeloModel) incluirModelo.getById(codigo);
-            txtDescricao.setText(modelo.getModelo_descricao());
-            idDelete = codigo;
-        } catch (Exception e) {
-        }
-    }
 }

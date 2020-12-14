@@ -546,8 +546,8 @@ public class ReservaView extends javax.swing.JFrame {
 
             reserva.setReserva_cliente((PessoaModel) pessoabll.getById(idCliente));
             reserva.setReserva_veiculo(veiculobll.getById(idVeiculo));
-            reserva.setReserva_dataExpiracao(txtDataExpiracao.getText());
-            reserva.setReserva_dataReserva(txtDateReserva.getText());
+            reserva.setReserva_dataExpiracao(new java.sql.Date(new java.util.Date(txtDataExpiracao.getText()).getTime()).toString());
+            reserva.setReserva_dataReserva(new java.sql.Date(new java.util.Date(txtDateReserva.getText()).getTime()).toString());
 
             reservaBll.add(reserva);
             limparCampos();

@@ -267,6 +267,7 @@ public class MarcaView extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 0).toString());
             idDelete = id;
+            txtDescricao.setText(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 1).toString());
 
         } catch (Exception e) {
         }
@@ -283,7 +284,7 @@ public class MarcaView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
-            System.out.println(e.getMessage());
+           
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
@@ -315,6 +316,7 @@ public class MarcaView extends javax.swing.JFrame {
             imprimirDadosNaGrid(marcabll.getAll());
             clearFields();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

@@ -4,15 +4,16 @@ package br.com.pi.bll;
 import br.com.pi.dal.ModeloDal;
 import br.com.pi.model.ModeloModel;
 import br.com.pi.interfaces.ICRUD_GENERIC;
+
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
+public class ModeloBll implements ICRUD_GENERIC<ModeloModel> {
 
     private ModeloDal dal;
 
-    public ModeloBll () throws Exception {
+    public ModeloBll() throws Exception {
         dal = new ModeloDal();
     }
 
@@ -22,7 +23,7 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
             validaModelo((ModeloModel) objeto);
             dal.add(objeto);
         } catch (Exception e) {
-
+            throw e;
         }
 
     }
@@ -30,9 +31,9 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
     @Override
     public void delete(int n) throws Exception {
         try {
-        dal.delete(n);
+            dal.delete(n);
         } catch (Exception e) {
-
+            throw e;
         }
 
     }
@@ -43,7 +44,7 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
             validaModelo((ModeloModel) objeto);
             dal.update(objeto);
         } catch (Exception e) {
-
+            throw e;
         }
 
     }
@@ -73,13 +74,13 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
         try {
             return dal.getByNome(nome);
         } catch (Exception e) {
-        throw e;
+            throw e;
         }
 
     }
-    
+
     //Validações
-    public void validaModelo(ModeloModel objeto)throws Exception{
+    public void validaModelo(ModeloModel objeto) throws Exception {
         String descricao = objeto.getModelo_descricao().trim().toLowerCase();
         String invalidos = "1234567890'\"!@#$%¨&*()-_+={[}]/?><;:";
         for (int i = 0; i < invalidos.length(); i++) {
@@ -93,7 +94,7 @@ public class ModeloBll implements ICRUD_GENERIC<ModeloModel>  {
             ModeloModel aux = it.next();
 
             if ((objeto.getModelo_idem() != aux.getModelo_idem()) && (objeto.getModelo_descricao().toUpperCase().
-                    equalsIgnoreCase(aux.getModelo_descricao().toUpperCase()))){
+                    equalsIgnoreCase(aux.getModelo_descricao().toUpperCase()))) {
                 throw new Exception("A descrição --> " + objeto.getModelo_descricao() + "\nJá existe no cadastro de modelos!\n");
             }
         }
