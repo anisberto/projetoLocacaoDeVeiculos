@@ -47,7 +47,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public void delete(int n) throws Exception {
-        String sql = "DELETE FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
+        String sql = "DELETE FROM modelo WHERE modelo_idem = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setObject(1,n);
         ps.executeUpdate();
@@ -87,7 +87,7 @@ public class ModeloDal implements ICRUD_GENERIC<ModeloModel> {
 
     @Override
     public ModeloModel getById(int n) throws Exception {
-        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?, modelo_marca_idem = ?";
+        String sql = "SELECT * FROM modelo WHERE modelo_idem = ?";
 
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1,n);

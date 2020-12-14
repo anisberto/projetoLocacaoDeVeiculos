@@ -225,7 +225,7 @@ public class ModeloView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Modelo", "Marca"
+                "Modelo", "Marca", "Identificador"
             }
         ));
         jTableModelos.addMouseListener(new java.awt.event.MouseAdapter() {
