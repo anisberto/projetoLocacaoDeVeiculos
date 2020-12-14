@@ -32,21 +32,21 @@ public class LocacaoDal implements ICRUD_GENERIC<LocacaoModel> {
                 + "locacao_pessoas_idem,locacao_motorista_idem,locacao_administrador_idem)"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setDate(1, new java.sql.Date(locacaoModel.getLocacao_dataRetirada().getTime()));
-        ps.setDate(2, new java.sql.Date(locacaoModel.getLocacao_dataDevolucao().getTime()));
-        ps.setFloat(3, locacaoModel.getLocacao_quilometragemInicial());
-        ps.setFloat(4, locacaoModel.getLocacao_quilometragemFinal());
-        ps.setFloat(5, locacaoModel.getLocacao_valorLocacao());
-        ps.setFloat(6, locacaoModel.getLocacao_valorCalcao());
-        ps.setFloat(7, locacaoModel.getLocacao_valorSeguro());
-        ps.setFloat(8, locacaoModel.getLocacao_multaAtraso());
-        ps.setDate(9, new java.sql.Date(locacaoModel.getLocacao_dataDeAlugamento().getTime()));
-        ps.setInt(10, locacaoModel.getLocacao_codigoDelocacao());
-        ps.setInt(11, locacaoModel.getLocacao_tanqueCheio());
-        ps.setInt(12, locacaoModel.getLocacao_veiculo().getVeiculo_idem());
-        ps.setInt(13, locacaoModel.getLocacao_pessoa().getPessoa_idem());
-        ps.setInt(14, locacaoModel.getLocacao_motorista().getMotorista_idem());
-        ps.setInt(15, locacaoModel.getLocacao_administrador().getAdministrador_idem());
+        ps.setObject(1, objeto.getLocacao_dataRetirada());
+        ps.setObject(2,objeto.getLocacao_dataDevolucao());
+        ps.setFloat(3, objeto.getLocacao_quilometragemInicial());
+        ps.setFloat(4, objeto.getLocacao_quilometragemFinal());
+        ps.setFloat(5, objeto.getLocacao_valorLocacao());
+        ps.setFloat(6, objeto.getLocacao_valorCalcao());
+        ps.setFloat(7, objeto.getLocacao_valorSeguro());
+        ps.setFloat(8, objeto.getLocacao_multaAtraso());
+        ps.setDate(9, new java.sql.Date(objeto.getLocacao_dataDeAlugamento().getTime()));
+        ps.setInt(10, objeto.getLocacao_codigoDelocacao());
+        ps.setInt(11, objeto.getLocacao_tanqueCheio());
+        ps.setInt(12, objeto.getLocacao_veiculo().getVeiculo_idem());
+        ps.setInt(13, objeto.getLocacao_pessoa().getPessoa_idem());
+        ps.setInt(14, objeto.getLocacao_motorista().getMotorista_idem());
+        ps.setInt(15, objeto.getLocacao_administrador().getAdministrador_idem());
         ps.executeUpdate();
 
     }
@@ -68,21 +68,21 @@ public class LocacaoDal implements ICRUD_GENERIC<LocacaoModel> {
                 + "locacao_pessoas_idem=?,locacao_motorista_idem=?,locacao_administrador_idem=?"
                 + "WHERE locacao_idem =?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setDate(1, new java.sql.Date(locacaoModel.getLocacao_dataRetirada().getTime()));
-        ps.setDate(2, new java.sql.Date(locacaoModel.getLocacao_dataDevolucao().getTime()));
-        ps.setFloat(3, locacaoModel.getLocacao_quilometragemInicial());
-        ps.setFloat(4, locacaoModel.getLocacao_quilometragemFinal());
-        ps.setFloat(5, locacaoModel.getLocacao_valorLocacao());
-        ps.setFloat(6, locacaoModel.getLocacao_valorCalcao());
-        ps.setFloat(7, locacaoModel.getLocacao_valorSeguro());
-        ps.setFloat(8, locacaoModel.getLocacao_multaAtraso());
-        ps.setDate(9, new java.sql.Date(locacaoModel.getLocacao_dataDeAlugamento().getTime()));
-        ps.setInt(10, locacaoModel.getLocacao_codigoDelocacao());
-        ps.setInt(11, locacaoModel.getLocacao_tanqueCheio());
-        ps.setInt(12, locacaoModel.getLocacao_veiculo().getVeiculo_idem());
-        ps.setInt(13, locacaoModel.getLocacao_pessoa().getPessoa_idem());
-        ps.setInt(14, locacaoModel.getLocacao_motorista().getMotorista_idem());
-        ps.setInt(15, locacaoModel.getLocacao_administrador().getAdministrador_idem());
+        ps.setDate(1, new java.sql.Date(objeto.getLocacao_dataRetirada().getTime()));
+        ps.setDate(2, new java.sql.Date(objeto.getLocacao_dataDevolucao().getTime()));
+        ps.setFloat(3, objeto.getLocacao_quilometragemInicial());
+        ps.setFloat(4, objeto.getLocacao_quilometragemFinal());
+        ps.setFloat(5, objeto.getLocacao_valorLocacao());
+        ps.setFloat(6, objeto.getLocacao_valorCalcao());
+        ps.setFloat(7, objeto.getLocacao_valorSeguro());
+        ps.setFloat(8, objeto.getLocacao_multaAtraso());
+        ps.setDate(9, new java.sql.Date(objeto.getLocacao_dataDeAlugamento().getTime()));
+        ps.setInt(10, objeto.getLocacao_codigoDelocacao());
+        ps.setInt(11, objeto.getLocacao_tanqueCheio());
+        ps.setInt(12, objeto.getLocacao_veiculo().getVeiculo_idem());
+        ps.setInt(13, objeto.getLocacao_pessoa().getPessoa_idem());
+        ps.setInt(14, objeto.getLocacao_motorista().getMotorista_idem());
+        ps.setInt(15, objeto.getLocacao_administrador().getAdministrador_idem());
         ps.executeUpdate();
     }
 
@@ -130,27 +130,27 @@ public class LocacaoDal implements ICRUD_GENERIC<LocacaoModel> {
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setObject(1, n);
         ResultSet rs = preparedStatement.executeQuery();
+            LocacaoModel locaModelBuId = new LocacaoModel();
         if (rs.next()) {
-            locacaoModel = new LocacaoModel();
-            locacaoModel.setLocacao_idem(rs.getInt("locacao_idem"));
-            locacaoModel.setLocacao_dataRetirada(rs.getDate("locacao_dataDeRetirada"));
-            locacaoModel.setLocacao_dataDevolucao(rs.getDate("locacao_dataDeDevolucao"));
-            locacaoModel.setLocacao_quilometragemInicial(rs.getFloat("locacao_quilometragemInicial"));
-            locacaoModel.setLocacao_quilometragemFinal(rs.getFloat("locacao_quilometragemFinal"));
-            locacaoModel.setLocacao_valorLocacao(rs.getFloat("locacao_valorDaLocacao"));
-            locacaoModel.setLocacao_valorCalcao(rs.getFloat("locacao_valorCalcao"));
-            locacaoModel.setLocacao_valorSeguro(rs.getFloat("locacao_valorDoSeguro"));
-            locacaoModel.setLocacao_multaAtraso(rs.getFloat("locacao_multaAtraso"));
-            locacaoModel.setLocacao_dataDeAlugamento(rs.getDate("locacao_dataDoAlugamento"));
-            locacaoModel.setLocacao_codigoDelocacao(rs.getInt("locacao_codigoDalocacao"));
-            locacaoModel.setLocacao_tanqueCheio(rs.getInt("locacao_tanqueCheio"));
-            locacaoModel.setLocacao_veiculo(veiculoDal.getById(rs.getInt("locacao_veiculos_idem")));
-            locacaoModel.setLocacao_pessoa((PessoaModel) pessoaDal.getById(rs.getInt("locacao_pessoas_idem")));
-            locacaoModel.setLocacao_motorista(motoristaDal.getById(rs.getInt("locacao_motorista_idem")));
-            locacaoModel.setLocacao_administrador((AdministradorModel) administradorDal.getById(rs.getInt("locacao_administrador_idem")));
+            locaModelBuId.setLocacao_idem(rs.getInt("locacao_idem"));
+            locaModelBuId.setLocacao_dataRetirada(rs.getDate("locacao_dataDeRetirada"));
+            locaModelBuId.setLocacao_dataDevolucao(rs.getDate("locacao_dataDeDevolucao"));
+            locaModelBuId.setLocacao_quilometragemInicial(rs.getFloat("locacao_quilometragemInicial"));
+            locaModelBuId.setLocacao_quilometragemFinal(rs.getFloat("locacao_quilometragemFinal"));
+            locaModelBuId.setLocacao_valorLocacao(rs.getFloat("locacao_valorDaLocacao"));
+            locaModelBuId.setLocacao_valorCalcao(rs.getFloat("locacao_valorCalcao"));
+            locaModelBuId.setLocacao_valorSeguro(rs.getFloat("locacao_valorDoSeguro"));
+            locaModelBuId.setLocacao_multaAtraso(rs.getFloat("locacao_multaAtraso"));
+            locaModelBuId.setLocacao_dataDeAlugamento(rs.getDate("locacao_dataDoAlugamento"));
+            locaModelBuId.setLocacao_codigoDelocacao(rs.getInt("locacao_codigoDalocacao"));
+            locaModelBuId.setLocacao_tanqueCheio(rs.getInt("locacao_tanqueCheio"));
+            locaModelBuId.setLocacao_veiculo(veiculoDal.getById(rs.getInt("locacao_veiculos_idem")));
+            locaModelBuId.setLocacao_pessoa((PessoaModel) pessoaDal.getById(rs.getInt("locacao_pessoas_idem")));
+            locaModelBuId.setLocacao_motorista(motoristaDal.getById(rs.getInt("locacao_motorista_idem")));
+            locaModelBuId.setLocacao_administrador((AdministradorModel) administradorDal.getById(rs.getInt("locacao_administrador_idem")));
 
         }
-        return locacaoModel;
+        return locaModelBuId;
     }
 
     @Override

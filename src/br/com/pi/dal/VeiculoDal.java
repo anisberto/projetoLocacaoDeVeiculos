@@ -122,8 +122,8 @@ public class VeiculoDal implements ICRUD_GENERIC<VeiculoModel> {
             prep.setInt(1, n);
             ResultSet result = prep.executeQuery();
 
+                VeiculoModel veiculo = new VeiculoModel();
             while (result.next()) {
-                veiculo = new VeiculoModel();
                 veiculo.setVeiculo_idem(result.getInt("veiculo_idem"));
                 veiculo.setVeiculo_renavam(result.getString("veiculo_renavam"));
                 veiculo.setVeiculo_precoCompra(result.getFloat("veiculo_precodecompra"));

@@ -36,6 +36,7 @@ public class LocacaoView extends javax.swing.JFrame {
     PessoaPFBll pf;
     PessoaPJBll pj;
     String nomeUsuarioLogado;
+    int idReservaAtendida;
     int idDelecao = 0;
     AdministradorBll adm;
     boolean incluir = true;
@@ -69,10 +70,8 @@ public class LocacaoView extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtDataRetirada = new javax.swing.JFormattedTextField();
-        txtCodigo = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDataDevolucao = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -136,10 +135,8 @@ public class LocacaoView extends javax.swing.JFrame {
         btnCancelar2 = new javax.swing.JButton();
         btnCancelarReserva1 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         txtDataRetiradaReserva = new javax.swing.JFormattedTextField();
-        txtCodigoReserva = new javax.swing.JFormattedTextField();
         jLabel20 = new javax.swing.JLabel();
         txtDataDevolucaoReserva = new javax.swing.JFormattedTextField();
         jLabel21 = new javax.swing.JLabel();
@@ -269,8 +266,6 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Locações"));
 
-        jLabel1.setText("Código");
-
         jLabel2.setText("Data de Retirada");
 
         try {
@@ -279,8 +274,6 @@ public class LocacaoView extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtDataRetirada.setEnabled(false);
-
-        txtCodigo.setEnabled(false);
 
         jLabel3.setText("Data Prevista de Devolução");
 
@@ -495,22 +488,6 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorSeguro, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jcMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNovoMotorista)
@@ -519,23 +496,39 @@ public class LocacaoView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNovoVeiculo)
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKMInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDataRetirada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtKMInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorCaucao, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtRenavamVeiculo))
-                    .addComponent(jSeparator1))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtValorCaucao, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtRenavamVeiculo))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtValorSeguro, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -543,10 +536,8 @@ public class LocacaoView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(txtDataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
@@ -585,11 +576,11 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Código", "Cliente", "Motorista", "Veículo"
+                "Identificador", "Cliente", "Motorista", "Veículo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -653,11 +644,11 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Codigo", "Cliente", "Motorista", "Veiculo", "Situação Veiculo"
+                "Identificador", "Cliente", "Motorista", "Veiculo", "Situação Veiculo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -765,7 +756,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(txtKmDevo, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                        .addComponent(txtKmDevo, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                         .addGap(12, 12, 12)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -841,7 +832,7 @@ public class LocacaoView extends javax.swing.JFrame {
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jComboBox4, 0, 340, Short.MAX_VALUE)
+                        .addComponent(jComboBox4, 0, 404, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -873,11 +864,11 @@ public class LocacaoView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador", "Código", "Cliente", "Motorista", "Veículo", "Data de Devolução", "Data de Locação"
+                "Identificador", "Cliente", "Motorista", "Veículo", "Data de Devolução", "Data de Locação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -911,7 +902,7 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 956, Short.MAX_VALUE)
+            .addGap(0, 1020, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addContainerGap()
@@ -1031,8 +1022,6 @@ public class LocacaoView extends javax.swing.JFrame {
 
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Locações"));
 
-        jLabel18.setText("Código");
-
         jLabel19.setText("Data de Retirada");
 
         try {
@@ -1041,8 +1030,6 @@ public class LocacaoView extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtDataRetiradaReserva.setEnabled(false);
-
-        txtCodigoReserva.setEnabled(false);
 
         jLabel20.setText("Data Prevista de Devolução");
 
@@ -1120,44 +1107,42 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtKMInicialReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDataRetiradaReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(txtValorLocacaoReserva))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addComponent(jLabel20)
+                                .addComponent(txtKMInicialReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtDataDevolucaoReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtValorLocacaoReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                .addGap(0, 0, 0))
                             .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addComponent(jLabel25)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDataRetiradaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel25))
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addComponent(txtValorCaucaoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                 .addComponent(jLabel28)
-                                .addGap(22, 22, 22))))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtDataDevolucaoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37))))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jcMotoristaReserva, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtVeiculoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(86, 86, 86)))
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel24)
@@ -1175,10 +1160,8 @@ public class LocacaoView extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
                     .addComponent(jLabel19)
                     .addComponent(txtDataRetiradaReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(txtDataDevolucaoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24)
@@ -1241,7 +1224,7 @@ public class LocacaoView extends javax.swing.JFrame {
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1253,7 +1236,7 @@ public class LocacaoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 7, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1353,15 +1336,15 @@ public class LocacaoView extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            if (txtCodigo.getText().isEmpty() || txtDataDevolucao.getText().isEmpty() || txtDataRetirada.getText().isEmpty()
+            if (txtDataRetirada.getText().isEmpty() || txtDataDevolucao.getText().isEmpty()
                     || txtKMInicial.getText().isEmpty() || txtValorCaucao.getText().isEmpty() || txtValorLocacao.getText().isEmpty()
                     || txtValorSeguro.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Dados para Inclusão", JOptionPane.ERROR_MESSAGE);
             } else {
                 LocacaoModel locaVeiculo = new LocacaoModel();
                 AdministradorModel admInclud = adm.getByNome(nomeUsuarioLogado);
-                locaVeiculo.setLocacao_dataRetirada(new Date(txtDataRetirada.getText()));
-                locaVeiculo.setLocacao_dataDevolucao(new Date(txtDataDevolucao.getText()));
+                locaVeiculo.setLocacao_dataRetirada(new java.sql.Date(new java.util.Date(txtDataRetirada.getText()).getTime()));
+                locaVeiculo.setLocacao_dataDevolucao(new java.sql.Date(new java.util.Date(txtDataDevolucao.getText()).getTime()));
                 locaVeiculo.setLocacao_dataDeAlugamento(new Date());
                 locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguro.getText().replace(".", "").replace(",", "")));
                 locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicial.getText().replace(".", "").replace(",", "")));
@@ -1393,8 +1376,6 @@ public class LocacaoView extends javax.swing.JFrame {
                             + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
                             + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
-                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
-                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
                     enableButtFields(false);
@@ -1577,15 +1558,15 @@ public class LocacaoView extends javax.swing.JFrame {
 
     private void btnSalvarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarReservaActionPerformed
         try {
-            if (txtCodigoReserva.getText().isEmpty() || txtDataDevolucaoReserva.getText().isEmpty() || txtDataRetiradaReserva.getText().isEmpty()
+            if (txtDataDevolucaoReserva.getText().isEmpty() || txtDataRetiradaReserva.getText().isEmpty()
                     || txtValorCaucaoReserva.getText().isEmpty() || txtValorLocacaoReserva.getText().isEmpty()
                     || txtValorSeguroReserva.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Dados para Inclusão", JOptionPane.ERROR_MESSAGE);
             } else {
                 LocacaoModel locaVeiculo = new LocacaoModel();
                 AdministradorModel admInclud = adm.getByNome(nomeUsuarioLogado);
-                locaVeiculo.setLocacao_dataRetirada(new Date(txtDataRetiradaReserva.getText()));
-                locaVeiculo.setLocacao_dataDevolucao(new Date(txtDataDevolucaoReserva.getText()));
+                locaVeiculo.setLocacao_dataRetirada(new java.sql.Date(new java.util.Date(txtDataRetiradaReserva.getText()).getTime()));
+                locaVeiculo.setLocacao_dataDevolucao(new java.sql.Date(new java.util.Date(txtDataDevolucaoReserva.getText()).getTime()));
                 locaVeiculo.setLocacao_dataDeAlugamento(new Date());
                 locaVeiculo.setLocacao_valorSeguro(Integer.parseInt(txtValorSeguroReserva.getText().replace(".", "").replace(",", "")));
                 locaVeiculo.setLocacao_quilometragemInicial(Float.parseFloat(txtKMInicialReserva.getText().replace(".", "").replace(",", "")));
@@ -1606,10 +1587,9 @@ public class LocacaoView extends javax.swing.JFrame {
                             + "# VEICULO :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao() + " - # MARCA :................ " + locaVeiculo.getLocacao_veiculo().getVeiculo_modelo().getModelo_marca().getMarca_descricao() + "\n"
                             + "# RENAVAM DO VEICULO :..... " + locaVeiculo.getLocacao_veiculo().getVeiculo_renavam() + "\n"
                             + "# E-mail :........................... " + locaVeiculo.getLocacao_pessoa().getPessoa_email() + "\n"
-                            + "# DATA DE DEVOLUÇÃO :..... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataDevolucao()) + "\n"
-                            + "# DATA DE RETIRADA DO VEICULO :...... " + new SimpleDateFormat("dd 'de' MMMM 'de' yyyy ").format(locaVeiculo.getLocacao_dataRetirada()) + "\n"
                             + "--------------------------------------------------------------------------------------------------------------------\n"
                             + "\n----------------------------------«««« Locação de Veiculos »»»»---------------------------------------\n\n", "Comprovante de Locação", JOptionPane.PLAIN_MESSAGE);
+                    reservabll.delete(idReservaAtendida);
                     enableButtFieldsReserva(false);
                     enableFielsCrudReserva(false);
                 } else {
@@ -1617,7 +1597,7 @@ public class LocacaoView extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Refaça o Processo e Preencha todos os dados.");
+            JOptionPane.showMessageDialog(this, e.getMessage());
             enableButtFieldsReserva(false);
             enableFielsCrudReserva(false);
         } finally {
@@ -1698,6 +1678,9 @@ public class LocacaoView extends javax.swing.JFrame {
             int id = Integer.parseInt(JtLocaGerir.getValueAt(JtLocaGerir.getSelectedRow(), 0).toString());
             LocacaoModel locDevolucao = incluirLocacao.getById(id);
             String kmFinal = JOptionPane.showInputDialog(this, "Informe o KM Final do Veiculo!", "KM Final! Devolução", JOptionPane.QUESTION_MESSAGE);
+            if(txtNomeDevo.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Selecione o Veiculo!", "Devolução", JOptionPane.ERROR_MESSAGE);
+            }
             if (kmFinal.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Informe o KM Final do Veiculo!", "KM Final! Devolução", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -1777,7 +1760,6 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1785,7 +1767,6 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1836,8 +1817,6 @@ public class LocacaoView extends javax.swing.JFrame {
     private javax.swing.JTable tabelaLocacao;
     private javax.swing.JFormattedTextField txtClienteReserva;
     private javax.swing.JTextField txtCnhDevo;
-    private javax.swing.JFormattedTextField txtCodigo;
-    private javax.swing.JFormattedTextField txtCodigoReserva;
     private javax.swing.JTextField txtDataDevo;
     private javax.swing.JFormattedTextField txtDataDevolucao;
     private javax.swing.JFormattedTextField txtDataDevolucaoReserva;
@@ -1893,10 +1872,9 @@ public class LocacaoView extends javax.swing.JFrame {
             String[] linha = new String[5];
             LocacaoModel locaTable = (LocacaoModel) conjunto.next();
             linha[0] = locaTable.getLocacao_idem() + "";
-            linha[1] = locaTable.getLocacao_codigoDelocacao() + "";
-            linha[2] = locaTable.getLocacao_pessoa().getPessoa_nome();
-            linha[3] = locaTable.getLocacao_motorista().getMotorista_nome();
-            linha[4] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
+            linha[1] = locaTable.getLocacao_pessoa().getPessoa_nome();
+            linha[2] = locaTable.getLocacao_motorista().getMotorista_nome();
+            linha[3] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
             model.addRow(linha);
         }
     }
@@ -1939,9 +1917,8 @@ public class LocacaoView extends javax.swing.JFrame {
 
     public void enableFielsCrud(boolean action) {
         if (action) {
-            txtCodigo.setEnabled(true);
-            txtDataRetirada.setEnabled(true);
             txtDataDevolucao.setEnabled(true);
+            txtDataRetirada.setEnabled(true);
             txtKMInicial.setEnabled(true);
             txtValorLocacao.setEnabled(true);
             txtValorCaucao.setEnabled(true);
@@ -1955,7 +1932,6 @@ public class LocacaoView extends javax.swing.JFrame {
             btnNovoMotorista.setEnabled(false);
             btnNovoVeiculo.setEnabled(false);
 
-            txtCodigo.setText("");
             txtDataRetirada.setText("");
             txtDataDevolucao.setText("");
             txtKMInicial.setText("");
@@ -1974,9 +1950,8 @@ public class LocacaoView extends javax.swing.JFrame {
             txtRenavamVeiculo.setText("");
         } else {
             txtRenavamVeiculo.setText("");
-            txtCodigo.setEnabled(false);
-            txtDataRetirada.setEnabled(false);
             txtDataDevolucao.setEnabled(false);
+            txtDataRetirada.setEnabled(false);
             txtKMInicial.setEnabled(false);
             txtValorLocacao.setEnabled(false);
             txtValorCaucao.setEnabled(false);
@@ -1990,7 +1965,6 @@ public class LocacaoView extends javax.swing.JFrame {
             btnNovoMotorista.setEnabled(true);
             btnNovoVeiculo.setEnabled(true);
 
-            txtCodigo.setText("");
             txtDataRetirada.setText("");
             txtDataDevolucao.setText("");
             txtKMInicial.setText("");
@@ -2011,7 +1985,6 @@ public class LocacaoView extends javax.swing.JFrame {
 
     public void enableFielsCrudReserva(boolean action) {
         if (action) {
-            txtCodigoReserva.setEnabled(true);
             txtDataRetiradaReserva.setEnabled(true);
             txtDataDevolucaoReserva.setEnabled(true);
             txtValorLocacaoReserva.setEnabled(true);
@@ -2020,7 +1993,6 @@ public class LocacaoView extends javax.swing.JFrame {
             txtKMInicialReserva.setEnabled(true);
             jcMotoristaReserva.setEnabled(true);
 
-            txtCodigoReserva.setText("");
             txtDataRetiradaReserva.setText("");
             txtDataDevolucaoReserva.setText("");
             txtKMInicialReserva.setText("");
@@ -2035,7 +2007,6 @@ public class LocacaoView extends javax.swing.JFrame {
             jcMotoristaReserva.removeAllItems();
             jcMotoristaReserva.addItem("Motorista");
         } else {
-            txtCodigoReserva.setEnabled(false);
             txtDataRetiradaReserva.setEnabled(false);
             txtDataDevolucaoReserva.setEnabled(false);
             txtKMInicialReserva.setEnabled(false);
@@ -2044,7 +2015,6 @@ public class LocacaoView extends javax.swing.JFrame {
             txtValorSeguroReserva.setEnabled(false);
             jcMotoristaReserva.setEnabled(false);
 
-            txtCodigoReserva.setText("");
             txtDataRetiradaReserva.setText("");
             txtDataDevolucaoReserva.setText("");
             txtKMInicialReserva.setText("");
@@ -2125,17 +2095,16 @@ public class LocacaoView extends javax.swing.JFrame {
             String[] linha = new String[6];
             LocacaoModel locaTable = (LocacaoModel) conjunto.next();
             linha[0] = locaTable.getLocacao_idem() + "";
-            linha[1] = locaTable.getLocacao_codigoDelocacao() + "";
-            linha[2] = locaTable.getLocacao_pessoa().getPessoa_nome();
-            linha[3] = locaTable.getLocacao_motorista().getMotorista_nome();
-            linha[4] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
+            linha[1] = locaTable.getLocacao_pessoa().getPessoa_nome();
+            linha[2] = locaTable.getLocacao_motorista().getMotorista_nome();
+            linha[3] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
             String situ = "";
             if (locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo().equalsIgnoreCase("Disponivel")) {
                 situ = "Veiculo Devolvido";
             } else {
                 situ = locaTable.getLocacao_veiculo().getVeiculo_situacaoVeiculo();
             }
-            linha[5] = situ;
+            linha[4] = situ;
 
             model.addRow(linha);
         }
@@ -2148,12 +2117,11 @@ public class LocacaoView extends javax.swing.JFrame {
             String[] linha = new String[7];
             LocacaoModel locaTable = (LocacaoModel) conjunto.next();
             linha[0] = locaTable.getLocacao_idem() + "";
-            linha[1] = locaTable.getLocacao_codigoDelocacao() + "";
-            linha[2] = locaTable.getLocacao_pessoa().getPessoa_nome();
-            linha[3] = locaTable.getLocacao_motorista().getMotorista_nome();
-            linha[4] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
-            linha[5] = new SimpleDateFormat("dd/MM/yyyy").format(locaTable.getLocacao_dataDevolucao());
-            linha[6] = new SimpleDateFormat("dd/MM/yyyy").format(locaTable.getLocacao_dataDeAlugamento());
+            linha[1] = locaTable.getLocacao_pessoa().getPessoa_nome();
+            linha[2] = locaTable.getLocacao_motorista().getMotorista_nome();
+            linha[3] = locaTable.getLocacao_veiculo().getVeiculo_modelo().getModelo_descricao();
+            linha[4] = new SimpleDateFormat("dd/MM/yyyy").format(locaTable.getLocacao_dataDevolucao());
+            linha[5] = new SimpleDateFormat("dd/MM/yyyy").format(locaTable.getLocacao_dataDeAlugamento());
 
             model.addRow(linha);
         }
@@ -2166,6 +2134,7 @@ public class LocacaoView extends javax.swing.JFrame {
 
     private void transFerirDadosReserva() throws Exception {
         int id = Integer.parseInt(jTableReservas.getValueAt(jTableReservas.getSelectedRow(), 0).toString());
+        idReservaAtendida = id;
         ReservaModel reserv = (ReservaModel) reservabll.getById(id);
         txtClienteReserva.setText(reserv.getReserva_cliente().getPessoa_nome());
         txtVeiculoReserva.setText(reserv.getReserva_veiculo().getVeiculo_modelo().getModelo_descricao());
