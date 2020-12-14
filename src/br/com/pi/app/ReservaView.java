@@ -7,6 +7,9 @@ import br.com.pi.interfaces.ICRUD_GENERIC;
 import br.com.pi.model.PessoaModel;
 import br.com.pi.model.ReservaModel;
 import br.com.pi.model.VeiculoModel;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +26,7 @@ public class ReservaView extends javax.swing.JFrame {
     int idCliente;
     int idVeiculo;
     int IdReserva;
+    DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
 
     public ReservaView() throws Exception {
         initComponents();
@@ -49,7 +53,6 @@ public class ReservaView extends javax.swing.JFrame {
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        btnReservaIncluir = new javax.swing.JButton();
         btnReservaCancelar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnReservaSalvar = new javax.swing.JButton();
@@ -71,7 +74,6 @@ public class ReservaView extends javax.swing.JFrame {
         btnSalvarcontrol = new javax.swing.JButton();
         btnCancelar1 = new javax.swing.JButton();
         btnVoltar1 = new javax.swing.JButton();
-        btnalterarControl = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldControlemail = new javax.swing.JTextField();
@@ -86,19 +88,6 @@ public class ReservaView extends javax.swing.JFrame {
         setTitle("Gestão de Reservas");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestão de Reservas"));
-
-        btnReservaIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/mais.png"))); // NOI18N
-        btnReservaIncluir.setText("Incluir");
-        btnReservaIncluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnReservaIncluir.setFocusPainted(false);
-        btnReservaIncluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReservaIncluir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnReservaIncluir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnReservaIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReservaIncluirActionPerformed(evt);
-            }
-        });
 
         btnReservaCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/cancel_77947.png"))); // NOI18N
         btnReservaCancelar.setText("Cancelar");
@@ -141,8 +130,6 @@ public class ReservaView extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnReservaIncluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReservaSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReservaCancelar)
@@ -155,7 +142,6 @@ public class ReservaView extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnReservaIncluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReservaSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReservaCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -325,7 +311,7 @@ public class ReservaView extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -372,26 +358,12 @@ public class ReservaView extends javax.swing.JFrame {
             }
         });
 
-        btnalterarControl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pi/icons/papel.png"))); // NOI18N
-        btnalterarControl.setText("Alterar");
-        btnalterarControl.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnalterarControl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnalterarControl.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnalterarControl.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnalterarControl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnalterarControlActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnalterarControl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalvarcontrol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar1)
@@ -404,7 +376,6 @@ public class ReservaView extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnalterarControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalvarcontrol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -511,15 +482,6 @@ public class ReservaView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnReservaIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaIncluirActionPerformed
-        try {
-
-            incluir = true;
-
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnReservaIncluirActionPerformed
-
     private void btnReservaCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaCancelarActionPerformed
         try {
 
@@ -574,7 +536,7 @@ public class ReservaView extends javax.swing.JFrame {
         try {
             ReservaBll reservaBll = new ReservaBll();
             reservaBll.delete(IdReserva);
-               limparCampos();
+            limparCampos();
             atualizarGridControl();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
@@ -591,27 +553,6 @@ public class ReservaView extends javax.swing.JFrame {
         menu.transferirDados(nomeUsuarioLogado);
         this.dispose();
     }//GEN-LAST:event_btnVoltar1ActionPerformed
-
-    private void btnalterarControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalterarControlActionPerformed
-        try {
-            ReservaModel reserva = new ReservaModel();
-            PessoaBll pessoabll = new PessoaBll();
-            VeiculoBll veiculobll = new VeiculoBll();
-            ReservaBll reservaBll = new ReservaBll();
-
-           reserva.setReserva_cliente((PessoaModel) pessoabll.getById(idCliente));
-            reserva.setReserva_veiculo(veiculobll.getById(idVeiculo));
-            reserva.setReserva_dataExpiracao(txtDataExpiracao.getText());
-            reserva.setReserva_dataReserva(txtDateReserva.getText());
-            reserva.setReserva_idem(IdReserva);
-
-            reservaBll.update(reserva);
-            limparCampos();
-            atualizarGridControl();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-        }
-    }//GEN-LAST:event_btnalterarControlActionPerformed
 
     private void jTableVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVeiculosMouseClicked
         idVeiculo = Integer.parseInt(jTableVeiculos.getValueAt(jTableVeiculos.getSelectedRow(), 0).toString());
@@ -680,6 +621,21 @@ public class ReservaView extends javax.swing.JFrame {
         }
     }
 
+    public static java.sql.Date formataData(String data) throws Exception {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+
+        java.sql.Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            date = new java.sql.Date(((java.util.Date) formatter.parse(data)).getTime());
+        } catch (ParseException e) {
+            throw e;
+        }
+        return date;
+    }
+
     private void limparCampos() {
         txtDataExpiracao.setText("");
         txtDateReserva.setText("");
@@ -731,12 +687,10 @@ public class ReservaView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnReservaCancelar;
-    private javax.swing.JButton btnReservaIncluir;
     private javax.swing.JButton btnReservaSalvar;
     private javax.swing.JButton btnSalvarcontrol;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JButton btnVoltar1;
-    private javax.swing.JButton btnalterarControl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
