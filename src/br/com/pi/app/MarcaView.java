@@ -284,6 +284,7 @@ public class MarcaView extends javax.swing.JFrame {
     private void jTableMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMarcasMouseClicked
         try {
             int id = Integer.parseInt(jTableMarcas.getValueAt(jTableMarcas.getSelectedRow(), 1).toString());
+            idDelete = id;
             transFerirDados(id);
         } catch (Exception e) {
         }
