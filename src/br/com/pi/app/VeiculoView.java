@@ -688,7 +688,7 @@ public class VeiculoView extends javax.swing.JFrame {
                 }
                 imprimirDadosNaGrid(veiculoInclud.getAll());
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Veiculo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecione o Veículo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -874,22 +874,22 @@ public class VeiculoView extends javax.swing.JFrame {
     private void btnDeletarTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarTableActionPerformed
         try {
             if (jpDelecao.isVisible()) {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Veiculo RENAVAM Nº: " + veiculoInclud.getById(idDelete).getVeiculo_renavam(), "Deleção",
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Veículo RENAVAM Nº: " + veiculoInclud.getById(idDelete).getVeiculo_renavam(), "Deleção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
                     veiculoInclud.delete(idDelete);
-                    JOptionPane.showMessageDialog(null, "Veiculo deletado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Veículo deletado com sucesso");
                     clearFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
                 }
                 imprimirDadosNaGrid(veiculoInclud.getAll());
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Veiculo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecione o Veículo na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não é Possivel Deletar este Veiculo!", "Veiculo vinculado a uma locação", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não é Possivel Deletar este Veículo!", "Veículo vinculado a uma locação", JOptionPane.ERROR_MESSAGE);
             int conf = JOptionPane.showConfirmDialog(null, "Ir para locações", "Locações",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
             if (conf == 0) {

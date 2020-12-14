@@ -1299,11 +1299,11 @@ public class LocacaoView extends javax.swing.JFrame {
         try {
 
             if (idDelecao > 0) {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção da locacao Id Nº: " + idDelecao, "Deleção",
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção da locação Id Nº: " + idDelecao, "Deleção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
                     incluirLocacao.delete(idDelecao);
-                    JOptionPane.showMessageDialog(null, "Locação deletado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Locação deletado com sucesso!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
                 }

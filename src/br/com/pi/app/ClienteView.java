@@ -729,7 +729,7 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void validaCampo() throws Exception {
         if (txtClientesNumero.getText().isEmpty() == true) {
-            throw new Exception("Preencha o campo de numero");
+            throw new Exception("Preencha o campo de número");
         }
 
     }

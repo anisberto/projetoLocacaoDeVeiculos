@@ -368,18 +368,18 @@ public class LoginViewCrud extends javax.swing.JFrame {
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
             if (!txtLogin.getText().isEmpty() && !txtNome.getText().isEmpty() && !txtSenha.getPassword().toString().isEmpty()) {
-                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Usuario: " + inclurUsuario.getById(idDelete).getAdministrador_nome(), "Deleção",
+                int conf = JOptionPane.showConfirmDialog(null, "Confirmar a deleção do Usuário: " + inclurUsuario.getById(idDelete).getAdministrador_nome(), "Deleção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
                 if (conf == 0) {
                     inclurUsuario.delete(idDelete);
-                    JOptionPane.showMessageDialog(null, "Usuario deletado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Usuário deletado com sucesso");
                     clearFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "Deleção Cancelada!");
                 }
                 imprimirDadosNaGrid(inclurUsuario.getAll());
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione o Usuario na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecione o Usuário na Tabela", "Deleção", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
         }
